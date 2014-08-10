@@ -7,13 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
+		FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
+		FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
+		FD4131361997486B00141578 /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
+		FD4131371997486B00141578 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
+		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
+		FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41313D1997541300141578 /* SDEPAVCDataSource.m */; };
 		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
 		FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
 		FD67D888197DFCFB00D2CCDA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
 		FD67D88E197DFCFB00D2CCDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */; };
 		FD67D890197DFCFB00D2CCDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D88F197DFCFB00D2CCDA /* main.m */; };
-		FD67D894197DFCFB00D2CCDA /* SDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDAppDelegate.m */; };
+		FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */; };
 		FD67D897197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */; };
 		FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
 		FD67D8A0197DFCFB00D2CCDA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D89F197DFCFB00D2CCDA /* XCTest.framework */; };
@@ -22,6 +29,36 @@
 		FD67D8A3197DFCFB00D2CCDA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
 		FD67D8AB197DFCFB00D2CCDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D8A9197DFCFB00D2CCDA /* InfoPlist.strings */; };
 		FD67D8AD197DFCFB00D2CCDA /* FaceAlbumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8AC197DFCFB00D2CCDA /* FaceAlbumTests.m */; };
+		FD67D8D1197DFD4A00D2CCDA /* FaceppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8B8197DFD4A00D2CCDA /* FaceppAPI.m */; };
+		FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BB197DFD4A00D2CCDA /* FaceppClient.m */; };
+		FD67D8D3197DFD4A00D2CCDA /* FaceppDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BD197DFD4A00D2CCDA /* FaceppDetection.m */; };
+		FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BF197DFD4A00D2CCDA /* FaceppFaceset.m */; };
+		FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C1197DFD4A00D2CCDA /* FaceppGroup.m */; };
+		FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C3197DFD4A00D2CCDA /* FaceppGrouping.m */; };
+		FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C5197DFD4A00D2CCDA /* FaceppInfo.m */; };
+		FD67D8D8197DFD4A00D2CCDA /* FaceppPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C7197DFD4A00D2CCDA /* FaceppPerson.m */; };
+		FD67D8D9197DFD4A00D2CCDA /* FaceppRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C9197DFD4A00D2CCDA /* FaceppRecognition.m */; };
+		FD67D8DA197DFD4A00D2CCDA /* FaceppTrainer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8CB197DFD4A00D2CCDA /* FaceppTrainer.m */; };
+		FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8CE197DFD4A00D2CCDA /* FaceppError.m */; };
+		FD67D8DC197DFD4A00D2CCDA /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8D0197DFD4A00D2CCDA /* FaceppResult.m */; };
+		FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */; };
+		FD67D8E4197DFD6100D2CCDA /* libFaceppLocalDetector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */; };
+		FD67D8FA197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */; };
+		FD67D8FD197E048400D2CCDA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8FC197E048400D2CCDA /* Store.m */; };
+		FD732782197F5C03006C5A2C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD732781197F5C03006C5A2C /* AssetsLibrary.framework */; };
+		FD7327A7197FA082006C5A2C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7327A6197FA082006C5A2C /* QuartzCore.framework */; };
+		FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
+		FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */; };
+		FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F99197E97C7004E8FFD /* AlbumGroup.m */; };
+		FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9C197E97C7004E8FFD /* Face.m */; };
+		FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9F197E97C7004E8FFD /* Person.m */; };
+		FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
+		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
+		FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
+		FD9590481987CD5B001C2345 /* SDEPersonAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */; };
+		FDA4D1EA19892747008DD849 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA4D1E919892747008DD849 /* LineLayout.m */; };
+		FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* AvatorCell.m */; };
+		FDE09ABC1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +72,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD3802B51981040100AE51DF /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Main_iPad.storyboard; sourceTree = "<group>"; };
+		FD41312C1997486B00141578 /* SDEScanRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEScanRoomViewController.m; sourceTree = "<group>"; };
+		FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEFaceVCDataSource.h; sourceTree = "<group>"; };
+		FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEFaceVCDataSource.m; sourceTree = "<group>"; };
+		FD41312F1997486B00141578 /* SDEScanRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEScanRoomViewController.h; sourceTree = "<group>"; };
+		FD4131301997486B00141578 /* FaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceCell.h; sourceTree = "<group>"; };
+		FD4131311997486B00141578 /* FaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceCell.m; sourceTree = "<group>"; };
+		FD4131321997486B00141578 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
+		FD4131331997486B00141578 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
+		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
+		FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
+		FD41313C1997541300141578 /* SDEPAVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPAVCDataSource.h; sourceTree = "<group>"; };
+		FD41313D1997541300141578 /* SDEPAVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPAVCDataSource.m; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -44,8 +95,8 @@
 		FD67D88D197DFCFB00D2CCDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD67D88F197DFCFB00D2CCDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FD67D891197DFCFB00D2CCDA /* FaceAlbum-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceAlbum-Prefix.pch"; sourceTree = "<group>"; };
-		FD67D892197DFCFB00D2CCDA /* SDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDAppDelegate.h; sourceTree = "<group>"; };
-		FD67D893197DFCFB00D2CCDA /* SDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDAppDelegate.m; sourceTree = "<group>"; };
+		FD67D892197DFCFB00D2CCDA /* SDEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDEAppDelegate.h; sourceTree = "<group>"; };
+		FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDEAppDelegate.m; sourceTree = "<group>"; };
 		FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
 		FD67D898197DFCFB00D2CCDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD67D89E197DFCFB00D2CCDA /* FaceAlbumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceAlbumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +104,63 @@
 		FD67D8A8197DFCFB00D2CCDA /* FaceAlbumTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FaceAlbumTests-Info.plist"; sourceTree = "<group>"; };
 		FD67D8AA197DFCFB00D2CCDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD67D8AC197DFCFB00D2CCDA /* FaceAlbumTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceAlbumTests.m; sourceTree = "<group>"; };
+		FD67D8B7197DFD4A00D2CCDA /* FaceppAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppAPI.h; sourceTree = "<group>"; };
+		FD67D8B8197DFD4A00D2CCDA /* FaceppAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppAPI.m; sourceTree = "<group>"; };
+		FD67D8BA197DFD4A00D2CCDA /* FaceppClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppClient.h; sourceTree = "<group>"; };
+		FD67D8BB197DFD4A00D2CCDA /* FaceppClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppClient.m; sourceTree = "<group>"; };
+		FD67D8BC197DFD4A00D2CCDA /* FaceppDetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppDetection.h; sourceTree = "<group>"; };
+		FD67D8BD197DFD4A00D2CCDA /* FaceppDetection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppDetection.m; sourceTree = "<group>"; };
+		FD67D8BE197DFD4A00D2CCDA /* FaceppFaceset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppFaceset.h; sourceTree = "<group>"; };
+		FD67D8BF197DFD4A00D2CCDA /* FaceppFaceset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppFaceset.m; sourceTree = "<group>"; };
+		FD67D8C0197DFD4A00D2CCDA /* FaceppGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppGroup.h; sourceTree = "<group>"; };
+		FD67D8C1197DFD4A00D2CCDA /* FaceppGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppGroup.m; sourceTree = "<group>"; };
+		FD67D8C2197DFD4A00D2CCDA /* FaceppGrouping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppGrouping.h; sourceTree = "<group>"; };
+		FD67D8C3197DFD4A00D2CCDA /* FaceppGrouping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppGrouping.m; sourceTree = "<group>"; };
+		FD67D8C4197DFD4A00D2CCDA /* FaceppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppInfo.h; sourceTree = "<group>"; };
+		FD67D8C5197DFD4A00D2CCDA /* FaceppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppInfo.m; sourceTree = "<group>"; };
+		FD67D8C6197DFD4A00D2CCDA /* FaceppPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppPerson.h; sourceTree = "<group>"; };
+		FD67D8C7197DFD4A00D2CCDA /* FaceppPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppPerson.m; sourceTree = "<group>"; };
+		FD67D8C8197DFD4A00D2CCDA /* FaceppRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppRecognition.h; sourceTree = "<group>"; };
+		FD67D8C9197DFD4A00D2CCDA /* FaceppRecognition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppRecognition.m; sourceTree = "<group>"; };
+		FD67D8CA197DFD4A00D2CCDA /* FaceppTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppTrainer.h; sourceTree = "<group>"; };
+		FD67D8CB197DFD4A00D2CCDA /* FaceppTrainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppTrainer.m; sourceTree = "<group>"; };
+		FD67D8CD197DFD4A00D2CCDA /* FaceppError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppError.h; sourceTree = "<group>"; };
+		FD67D8CE197DFD4A00D2CCDA /* FaceppError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppError.m; sourceTree = "<group>"; };
+		FD67D8CF197DFD4A00D2CCDA /* FaceppResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppResult.h; sourceTree = "<group>"; };
+		FD67D8D0197DFD4A00D2CCDA /* FaceppResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppResult.m; sourceTree = "<group>"; };
+		FD67D8DE197DFD6100D2CCDA /* APIKey+APISecret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIKey+APISecret.h"; sourceTree = "<group>"; };
+		FD67D8DF197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FaceppDetection+LocalResultUploader.h"; sourceTree = "<group>"; };
+		FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FaceppDetection+LocalResultUploader.m"; sourceTree = "<group>"; };
+		FD67D8E1197DFD6100D2CCDA /* FaceppLocalDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppLocalDetector.h; sourceTree = "<group>"; };
+		FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFaceppLocalDetector.a; sourceTree = "<group>"; };
+		FD67D8F8197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		FD67D8FB197E048400D2CCDA /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
+		FD67D8FC197E048400D2CCDA /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
+		FD732781197F5C03006C5A2C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		FD7327A6197FA082006C5A2C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEMRVCDataSource.h; sourceTree = "<group>"; };
+		FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEMRVCDataSource.m; sourceTree = "<group>"; };
+		FD7D2F93197E7B55004E8FFD /* SDEMontageRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEMontageRoomViewController.h; sourceTree = "<group>"; };
+		FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEMontageRoomViewController.m; sourceTree = "<group>"; };
+		FD7D2F98197E97C7004E8FFD /* AlbumGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumGroup.h; sourceTree = "<group>"; };
+		FD7D2F99197E97C7004E8FFD /* AlbumGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumGroup.m; sourceTree = "<group>"; };
+		FD7D2F9B197E97C7004E8FFD /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		FD7D2F9C197E97C7004E8FFD /* Face.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Face.m; sourceTree = "<group>"; };
+		FD7D2F9E197E97C7004E8FFD /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		FD7D2F9F197E97C7004E8FFD /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		FD7D2FA1197E97C7004E8FFD /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		FD7D2FA2197E97C7004E8FFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 2.xcdatamodel"; sourceTree = "<group>"; };
+		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
+		FD9590461987CD5B001C2345 /* SDEPersonAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonAlbumViewController.h; sourceTree = "<group>"; };
+		FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonAlbumViewController.m; sourceTree = "<group>"; };
+		FDA4D1E819892747008DD849 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
+		FDA4D1E919892747008DD849 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
+		FDE09AB71980A96400CDB283 /* AvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatorCell.h; sourceTree = "<group>"; };
+		FDE09AB81980A96400CDB283 /* AvatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatorCell.m; sourceTree = "<group>"; };
+		FDE09ABB1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2014_Smartisan_icon_180x180.png; path = ../../../Downloads/2014_Smartisan_icon_180x180.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +168,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD7327A7197FA082006C5A2C /* QuartzCore.framework in Frameworks */,
+				FD732782197F5C03006C5A2C /* AssetsLibrary.framework in Frameworks */,
+				FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */,
+				FD67D8E4197DFD6100D2CCDA /* libFaceppLocalDetector.a in Frameworks */,
 				FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */,
 				FD67D888197DFCFB00D2CCDA /* CoreData.framework in Frameworks */,
 				FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */,
@@ -81,10 +193,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD4131281997050A00141578 /* ScanRoom */ = {
+			isa = PBXGroup;
+			children = (
+				FD41312F1997486B00141578 /* SDEScanRoomViewController.h */,
+				FD41312C1997486B00141578 /* SDEScanRoomViewController.m */,
+				FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */,
+				FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */,
+				FD4131301997486B00141578 /* FaceCell.h */,
+				FD4131311997486B00141578 /* FaceCell.m */,
+				FD4131321997486B00141578 /* PhotoCell.h */,
+				FD4131331997486B00141578 /* PhotoCell.m */,
+				FD41313819974A5E00141578 /* PhotoScanManager.h */,
+				FD41313919974A5E00141578 /* PhotoScanManager.mm */,
+			);
+			name = ScanRoom;
+			sourceTree = "<group>";
+		};
+		FD4131291997052500141578 /* MontageRoom */ = {
+			isa = PBXGroup;
+			children = (
+				FD7D2F93197E7B55004E8FFD /* SDEMontageRoomViewController.h */,
+				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
+				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
+				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
+				FDE09AB71980A96400CDB283 /* AvatorCell.h */,
+				FDE09AB81980A96400CDB283 /* AvatorCell.m */,
+			);
+			name = MontageRoom;
+			sourceTree = "<group>";
+		};
+		FD41312A1997053400141578 /* AlbumRoom */ = {
+			isa = PBXGroup;
+			children = (
+				FD9590461987CD5B001C2345 /* SDEPersonAlbumViewController.h */,
+				FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */,
+				FD41313C1997541300141578 /* SDEPAVCDataSource.h */,
+				FD41313D1997541300141578 /* SDEPAVCDataSource.m */,
+			);
+			name = AlbumRoom;
+			sourceTree = "<group>";
+		};
+		FD41312B199706A100141578 /* LineLayout */ = {
+			isa = PBXGroup;
+			children = (
+				FDA4D1E819892747008DD849 /* LineLayout.h */,
+				FDA4D1E919892747008DD849 /* LineLayout.m */,
+			);
+			name = LineLayout;
+			path = FaceAlbum;
+			sourceTree = "<group>";
+		};
 		FD67D875197DFCFB00D2CCDA = {
 			isa = PBXGroup;
 			children = (
+				FD9590411985FA76001C2345 /* Source */,
+				FD67D8F6197DFD8900D2CCDA /* ThirdPackage */,
 				FD67D889197DFCFB00D2CCDA /* FaceAlbum */,
+				FD7D2F97197E8C90004E8FFD /* ManagedObjectSubclass */,
 				FD67D8A6197DFCFB00D2CCDA /* FaceAlbumTests */,
 				FD67D880197DFCFB00D2CCDA /* Frameworks */,
 				FD67D87F197DFCFB00D2CCDA /* Products */,
@@ -103,6 +269,9 @@
 		FD67D880197DFCFB00D2CCDA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD7327A6197FA082006C5A2C /* QuartzCore.framework */,
+				FD732781197F5C03006C5A2C /* AssetsLibrary.framework */,
+				FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */,
 				FD67D881197DFCFB00D2CCDA /* Foundation.framework */,
 				FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */,
 				FD67D885197DFCFB00D2CCDA /* UIKit.framework */,
@@ -115,10 +284,13 @@
 		FD67D889197DFCFB00D2CCDA /* FaceAlbum */ = {
 			isa = PBXGroup;
 			children = (
-				FD67D892197DFCFB00D2CCDA /* SDAppDelegate.h */,
-				FD67D893197DFCFB00D2CCDA /* SDAppDelegate.m */,
-				FD67D898197DFCFB00D2CCDA /* Images.xcassets */,
-				FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */,
+				FD67D892197DFCFB00D2CCDA /* SDEAppDelegate.h */,
+				FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */,
+				FD67D8FB197E048400D2CCDA /* Store.h */,
+				FD67D8FC197E048400D2CCDA /* Store.m */,
+				FD4131281997050A00141578 /* ScanRoom */,
+				FD4131291997052500141578 /* MontageRoom */,
+				FD41312A1997053400141578 /* AlbumRoom */,
 				FD67D88A197DFCFB00D2CCDA /* Supporting Files */,
 			);
 			path = FaceAlbum;
@@ -127,6 +299,7 @@
 		FD67D88A197DFCFB00D2CCDA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FD67D898197DFCFB00D2CCDA /* Images.xcassets */,
 				FD67D88B197DFCFB00D2CCDA /* FaceAlbum-Info.plist */,
 				FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */,
 				FD67D88F197DFCFB00D2CCDA /* main.m */,
@@ -151,6 +324,113 @@
 				FD67D8A9197DFCFB00D2CCDA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FD67D8B6197DFD4A00D2CCDA /* FaceppSDK */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8B7197DFD4A00D2CCDA /* FaceppAPI.h */,
+				FD67D8B8197DFD4A00D2CCDA /* FaceppAPI.m */,
+				FD67D8B9197DFD4A00D2CCDA /* FaceppAPISource */,
+				FD67D8CC197DFD4A00D2CCDA /* FaceppResult */,
+			);
+			path = FaceppSDK;
+			sourceTree = "<group>";
+		};
+		FD67D8B9197DFD4A00D2CCDA /* FaceppAPISource */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8BA197DFD4A00D2CCDA /* FaceppClient.h */,
+				FD67D8BB197DFD4A00D2CCDA /* FaceppClient.m */,
+				FD67D8BC197DFD4A00D2CCDA /* FaceppDetection.h */,
+				FD67D8BD197DFD4A00D2CCDA /* FaceppDetection.m */,
+				FD67D8BE197DFD4A00D2CCDA /* FaceppFaceset.h */,
+				FD67D8BF197DFD4A00D2CCDA /* FaceppFaceset.m */,
+				FD67D8C0197DFD4A00D2CCDA /* FaceppGroup.h */,
+				FD67D8C1197DFD4A00D2CCDA /* FaceppGroup.m */,
+				FD67D8C2197DFD4A00D2CCDA /* FaceppGrouping.h */,
+				FD67D8C3197DFD4A00D2CCDA /* FaceppGrouping.m */,
+				FD67D8C4197DFD4A00D2CCDA /* FaceppInfo.h */,
+				FD67D8C5197DFD4A00D2CCDA /* FaceppInfo.m */,
+				FD67D8C6197DFD4A00D2CCDA /* FaceppPerson.h */,
+				FD67D8C7197DFD4A00D2CCDA /* FaceppPerson.m */,
+				FD67D8C8197DFD4A00D2CCDA /* FaceppRecognition.h */,
+				FD67D8C9197DFD4A00D2CCDA /* FaceppRecognition.m */,
+				FD67D8CA197DFD4A00D2CCDA /* FaceppTrainer.h */,
+				FD67D8CB197DFD4A00D2CCDA /* FaceppTrainer.m */,
+			);
+			path = FaceppAPISource;
+			sourceTree = "<group>";
+		};
+		FD67D8CC197DFD4A00D2CCDA /* FaceppResult */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8CD197DFD4A00D2CCDA /* FaceppError.h */,
+				FD67D8CE197DFD4A00D2CCDA /* FaceppError.m */,
+				FD67D8CF197DFD4A00D2CCDA /* FaceppResult.h */,
+				FD67D8D0197DFD4A00D2CCDA /* FaceppResult.m */,
+			);
+			path = FaceppResult;
+			sourceTree = "<group>";
+		};
+		FD67D8DD197DFD6100D2CCDA /* FaceppLocalDetector */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8DE197DFD6100D2CCDA /* APIKey+APISecret.h */,
+				FD67D8DF197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.h */,
+				FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */,
+				FD67D8E1197DFD6100D2CCDA /* FaceppLocalDetector.h */,
+				FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */,
+			);
+			path = FaceppLocalDetector;
+			sourceTree = "<group>";
+		};
+		FD67D8F6197DFD8900D2CCDA /* ThirdPackage */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8B6197DFD4A00D2CCDA /* FaceppSDK */,
+				FD41312B199706A100141578 /* LineLayout */,
+				FD67D8DD197DFD6100D2CCDA /* FaceppLocalDetector */,
+				FD67D8F7197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout */,
+			);
+			name = ThirdPackage;
+			sourceTree = "<group>";
+		};
+		FD67D8F7197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D8F8197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.h */,
+				FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */,
+			);
+			path = LXReorderableCollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
+		FD7D2F97197E8C90004E8FFD /* ManagedObjectSubclass */ = {
+			isa = PBXGroup;
+			children = (
+				FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */,
+				FD7D2FA1197E97C7004E8FFD /* Photo.h */,
+				FD7D2FA2197E97C7004E8FFD /* Photo.m */,
+				FD7D2F9E197E97C7004E8FFD /* Person.h */,
+				FD7D2F9F197E97C7004E8FFD /* Person.m */,
+				FD7D2F9B197E97C7004E8FFD /* Face.h */,
+				FD7D2F9C197E97C7004E8FFD /* Face.m */,
+				FD7D2F98197E97C7004E8FFD /* AlbumGroup.h */,
+				FD7D2F99197E97C7004E8FFD /* AlbumGroup.m */,
+			);
+			name = ManagedObjectSubclass;
+			path = FaceAlbumTests;
+			sourceTree = "<group>";
+		};
+		FD9590411985FA76001C2345 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FD3802B51981040100AE51DF /* Main_iPad.storyboard */,
+				FD95903F1985FA4C001C2345 /* avator@weibo.jpg */,
+				FDE09ABB1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png */,
+			);
+			name = Source;
+			path = FaceAlbum;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +481,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = seedante;
 				TargetAttributes = {
+					FD67D87D197DFCFB00D2CCDA = {
+						DevelopmentTeam = 6Z8XUV9H6J;
+					};
 					FD67D89D197DFCFB00D2CCDA = {
 						TestTargetID = FD67D87D197DFCFB00D2CCDA;
 					};
@@ -230,7 +513,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD67D88E197DFCFB00D2CCDA /* InfoPlist.strings in Resources */,
+				FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */,
 				FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */,
+				FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */,
+				FDE09ABC1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,9 +535,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA4D1EA19892747008DD849 /* LineLayout.m in Sources */,
+				FD67D8D3197DFD4A00D2CCDA /* FaceppDetection.m in Sources */,
+				FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */,
+				FD67D8DA197DFD4A00D2CCDA /* FaceppTrainer.m in Sources */,
+				FD67D8DC197DFD4A00D2CCDA /* FaceppResult.m in Sources */,
+				FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */,
+				FD67D8D8197DFD4A00D2CCDA /* FaceppPerson.m in Sources */,
+				FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */,
 				FD67D890197DFCFB00D2CCDA /* main.m in Sources */,
-				FD67D894197DFCFB00D2CCDA /* SDAppDelegate.m in Sources */,
+				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
+				FD67D8FA197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m in Sources */,
+				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
+				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
+				FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */,
+				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
+				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
+				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
+				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
+				FD9590481987CD5B001C2345 /* SDEPersonAlbumViewController.m in Sources */,
+				FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */,
+				FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */,
+				FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */,
 				FD67D897197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld in Sources */,
+				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
+				FD4131361997486B00141578 /* FaceCell.m in Sources */,
+				FD67D8D9197DFD4A00D2CCDA /* FaceppRecognition.m in Sources */,
+				FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */,
+				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
+				FD67D8D1197DFD4A00D2CCDA /* FaceppAPI.m in Sources */,
+				FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */,
+				FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */,
+				FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */,
+				FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,10 +686,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
 				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FaceppLocalDetector",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -383,9 +711,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
 				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FaceppLocalDetector",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -450,6 +789,7 @@
 				FD67D8B2197DFCFB00D2CCDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD67D8B3197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +798,7 @@
 				FD67D8B5197DFCFB00D2CCDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -465,10 +806,13 @@
 		FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */,
+				FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */,
 				FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */,
 			);
 			currentVersion = FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */;
-			path = FaceAlbum.xcdatamodeld;
+			name = FaceAlbum.xcdatamodeld;
+			path = ../FaceAlbum/FaceAlbum.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
