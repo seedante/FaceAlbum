@@ -11,6 +11,4 @@
 
 @interface SDEMontageRoomViewController : UICollectionViewController<LXReorderableCollectionViewDelegateFlowLayout>
 
-- (void)checkPhotoLibraryChange;
-
 @end

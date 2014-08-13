@@ -18,8 +18,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    //choice one scene to show on the screen when app start.
+    
+    NSString *startSceneName = [self startScene];
+    NSLog(@"Start Scene: %@", startSceneName);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
+    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:startSceneName];
     self.window.rootViewController = initialViewController;
     Store *dataStore = [Store sharedStore];
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];
@@ -28,6 +32,34 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (NSString *)startScene
+{
+    NSString *startScene;
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    [defaultConfig registerDefaults:@{@"isFirstScan": @YES}];
+    [defaultConfig registerDefaults:@{@"isGalleryOpened": @NO}];
+    [defaultConfig registerDefaults:@{@"shouldBeMontageRoom": @YES}];
+    [defaultConfig synchronize];
+    
+    BOOL isGalleryOpened = [defaultConfig boolForKey:@"isGalleryOpened"];
+    if (isGalleryOpened) {
+        startScene = @"PersonGallery";
+        return startScene;
+    }
+    
+    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
+    if (isFirstScan) {
+        startScene = @"ScanRoom";
+        return startScene;
+    }
+
+    BOOL shouldBeMontageRoom = [defaultConfig boolForKey:@"shouldBeMontageRoom"];
+    if (shouldBeMontageRoom) {
+        startScene = @"MontageRoom";
+    }
+    return startScene;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -27,6 +27,7 @@ static NSString *cellIdentifier = @"photoCell";
     int pipelineWorkIndex;
 }
 
+#pragma mark - view prepare
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,6 +75,12 @@ static NSString *cellIdentifier = @"photoCell";
     return _photoLibrary;
 }
 
+- (void)configFirstScene:(BOOL)isFinished
+{
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    [defaultConfig setBool:isFinished forKey:@"isFirstScan"];
+    [defaultConfig synchronize];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -81,9 +88,18 @@ static NSString *cellIdentifier = @"photoCell";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - segue 
+/*
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"Segue Identifier: %@", segue.identifier);
+    NSLog(@"Source VC: %@", segue.sourceViewController);
+    NSLog(@"Destination VC: %@", segue.destinationViewController);
+}
+ */
+
 
 #pragma mark - UICollectionViewDataSource
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -106,11 +122,13 @@ static NSString *cellIdentifier = @"photoCell";
     [self productionlineStart];
 }
 
+
 - (void)productionlineStart
 {
     [self lineScan];
 }
 
+#pragma mark - production line work
 - (void)lineScan
 {
     if ([self.faceDataSource numberOfSectionsInCollectionView:self.faceCollectionView]) {
@@ -177,6 +195,10 @@ static NSString *cellIdentifier = @"photoCell";
             currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
             pipelineWorkIndex = 0;
             NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
+            //[self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
+            [self.photoScanManager saveAfterScan];
+            [self configFirstScene:NO];
+            [self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
             return;
         }else
             [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.5];
@@ -201,6 +223,9 @@ static NSString *cellIdentifier = @"photoCell";
     }
     if (self.allAssets.count == 0) {
         NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
+        [self.photoScanManager saveAfterScan];
+        [self configFirstScene:NO];
+        [self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
         return;
     }else if (self.allAssets.count >= 3){
         [self.showAssets removeAllObjects];
@@ -220,7 +245,7 @@ static NSString *cellIdentifier = @"photoCell";
             [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
         }else
             [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0]]];
-        
+        //[self.photoScanManager saveAfterScan];
         [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.05];
     }
 }

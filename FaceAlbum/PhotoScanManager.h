@@ -26,5 +26,6 @@ typedef enum : NSUInteger {
 - (NSArray *)allFacesInPhoto;
 - (void)cleanCache;
 - (void)filterAssets;
+- (void)saveAfterScan;
 
 @end

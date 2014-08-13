@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDEPersonAlbumViewController : UICollectionViewController
+@interface SDEPersonGalleryViewController : UICollectionViewController
 
 @end

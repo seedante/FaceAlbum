@@ -133,11 +133,11 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     return _facesInAPhoto;
 }
 
-- (void)save
+- (void)saveAfterScan
 {
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
-        NSLog(@"PhotoScanManager Save Error: %@", error);
+        NSLog(@"Scan Finish and Save Error: %@", error);
     }
 }
 

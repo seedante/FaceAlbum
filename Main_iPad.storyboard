@@ -4,23 +4,23 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Montage Room View Controller-->
+        <!--Montage Room View Controller - MontageRoom-->
         <scene sceneID="3aI-TT-JMx">
             <objects>
-                <collectionViewController storyboardIdentifier="MontageRoom" autoresizesArchivedViewToFullSize="NO" id="3O8-fZ-xdw" customClass="SDEMontageRoomViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="0YA-ok-D2X">
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" title="MontageRoom" id="3O8-fZ-xdw" customClass="SDEMontageRoomViewController" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="0YA-ok-D2X">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fVy-v7-jZt" customClass="LXReorderableCollectionViewFlowLayout">
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="fVy-v7-jZt" customClass="LXReorderableCollectionViewFlowLayout">
                             <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="15" maxX="20" maxY="15"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="AvatorCell">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <rect key="frame" x="20" y="79" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -51,23 +51,22 @@
                         </connections>
                     </collectionView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="nXJ-LS-Ybg">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="ICb-bv-9mf">
-                            <connections>
-                                <action selector="scanPhotoLibrary:" destination="3O8-fZ-xdw" id="o5P-C5-ETe"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="MontageRoom" id="nXJ-LS-Ybg">
+                        <barButtonItem key="backBarButtonItem" title="ScanRoom" id="cwv-mp-8r0"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="w27-g2-BwB" kind="push" identifier="enterGallxy" id="2nP-oH-Xbz"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-D4-GVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1258" y="-660"/>
+            <point key="canvasLocation" x="3382" y="-643"/>
         </scene>
-        <!--Person Album View Controller-->
+        <!--Person Gallery View Controller-->
         <scene sceneID="uq3-mO-hye">
             <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="w27-g2-BwB" customClass="SDEPersonAlbumViewController" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PersonGallery" autoresizesArchivedViewToFullSize="NO" id="w27-g2-BwB" customClass="SDEPersonGalleryViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="edy-JO-fVd">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -79,8 +78,8 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="2EJ-2O-x7X">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="personCell" id="2EJ-2O-x7X">
+                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -97,12 +96,12 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8C5-QC-Vsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2090" y="-663"/>
+            <point key="canvasLocation" x="5012" y="-663"/>
         </scene>
         <!--Scan Room View Controller - Scan Room-->
         <scene sceneID="hbB-3X-cdK">
             <objects>
-                <viewController storyboardIdentifier="ScanRoom" title="Scan Room" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tMj-7K-Ytg" customClass="SDEScanRoomViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScanRoom" title="Scan Room" id="tMj-7K-Ytg" customClass="SDEScanRoomViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Lm-n1-paf"/>
                         <viewControllerLayoutGuide type="bottom" id="a25-aR-8dq"/>
@@ -235,15 +234,38 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="SmC-v0-Te6"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="assetCollectionView" destination="9Va-1O-m5e" id="JLN-wW-wDs"/>
                         <outlet property="faceCollectionView" destination="Pvi-kF-v33" id="w0Q-yH-Rxi"/>
+                        <segue destination="GxB-uN-ZSN" kind="modal" identifier="gotoEditRoom" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="A6W-3Z-wQ3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EdH-Jh-tWa" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="432" y="-660"/>
+            <point key="canvasLocation" x="1406" y="-660"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XnN-jB-v14">
+            <objects>
+                <navigationController storyboardIdentifier="MontageRoom" automaticallyAdjustsScrollViewInsets="NO" id="GxB-uN-ZSN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="hZj-LL-hNv">
+                        <barButtonItem key="backBarButtonItem" title="ScanRoom" id="vW8-GE-k3h"/>
+                    </navigationItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4ED-To-bHw">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3O8-fZ-xdw" kind="relationship" relationship="rootViewController" id="Gn0-8Q-kQj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14L-Pd-t6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2408" y="-643"/>
         </scene>
     </scenes>
     <resources>

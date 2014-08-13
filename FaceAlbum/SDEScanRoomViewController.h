@@ -15,4 +15,5 @@
 @property (nonatomic) NSMutableArray *showAssets;
 
 - (IBAction)showAllPhotos:(id)sender;
+
 @end

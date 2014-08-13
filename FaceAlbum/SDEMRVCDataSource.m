@@ -198,9 +198,6 @@ static NSString * const cellIdentifier = @"avatorCell";
     [sectionChange removeAllObjects];
     [objectChange removeAllObjects];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadData];
-    });
 }
 
 - (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
@@ -325,6 +322,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    NSLog(@"Section Number: %d", [[self.faceFetchedResultsController sections] count]);
     return [[self.faceFetchedResultsController sections] count];
 }
 

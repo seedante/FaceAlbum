@@ -14,6 +14,7 @@
 		FD4131371997486B00141578 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
 		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
 		FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41313D1997541300141578 /* SDEPAVCDataSource.m */; };
+		FD413140199764BB00141578 /* backupCode in Resources */ = {isa = PBXBuildFile; fileRef = FD41313F199764BB00141578 /* backupCode */; };
 		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
 		FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
@@ -55,7 +56,7 @@
 		FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
 		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
 		FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
-		FD9590481987CD5B001C2345 /* SDEPersonAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */; };
+		FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */; };
 		FDA4D1EA19892747008DD849 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA4D1E919892747008DD849 /* LineLayout.m */; };
 		FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* AvatorCell.m */; };
 		FDE09ABC1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png */; };
@@ -86,6 +87,7 @@
 		FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
 		FD41313C1997541300141578 /* SDEPAVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPAVCDataSource.h; sourceTree = "<group>"; };
 		FD41313D1997541300141578 /* SDEPAVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPAVCDataSource.m; sourceTree = "<group>"; };
+		FD41313F199764BB00141578 /* backupCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backupCode; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -154,8 +156,8 @@
 		FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 2.xcdatamodel"; sourceTree = "<group>"; };
 		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
-		FD9590461987CD5B001C2345 /* SDEPersonAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonAlbumViewController.h; sourceTree = "<group>"; };
-		FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonAlbumViewController.m; sourceTree = "<group>"; };
+		FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonGalleryViewController.h; sourceTree = "<group>"; };
+		FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonGalleryViewController.m; sourceTree = "<group>"; };
 		FDA4D1E819892747008DD849 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
 		FDA4D1E919892747008DD849 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		FDE09AB71980A96400CDB283 /* AvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatorCell.h; sourceTree = "<group>"; };
@@ -200,12 +202,12 @@
 				FD41312C1997486B00141578 /* SDEScanRoomViewController.m */,
 				FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */,
 				FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */,
+				FD41313819974A5E00141578 /* PhotoScanManager.h */,
+				FD41313919974A5E00141578 /* PhotoScanManager.mm */,
 				FD4131301997486B00141578 /* FaceCell.h */,
 				FD4131311997486B00141578 /* FaceCell.m */,
 				FD4131321997486B00141578 /* PhotoCell.h */,
 				FD4131331997486B00141578 /* PhotoCell.m */,
-				FD41313819974A5E00141578 /* PhotoScanManager.h */,
-				FD41313919974A5E00141578 /* PhotoScanManager.mm */,
 			);
 			name = ScanRoom;
 			sourceTree = "<group>";
@@ -223,15 +225,15 @@
 			name = MontageRoom;
 			sourceTree = "<group>";
 		};
-		FD41312A1997053400141578 /* AlbumRoom */ = {
+		FD41312A1997053400141578 /* PersonGallery */ = {
 			isa = PBXGroup;
 			children = (
-				FD9590461987CD5B001C2345 /* SDEPersonAlbumViewController.h */,
-				FD9590471987CD5B001C2345 /* SDEPersonAlbumViewController.m */,
+				FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */,
+				FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */,
 				FD41313C1997541300141578 /* SDEPAVCDataSource.h */,
 				FD41313D1997541300141578 /* SDEPAVCDataSource.m */,
 			);
-			name = AlbumRoom;
+			name = PersonGallery;
 			sourceTree = "<group>";
 		};
 		FD41312B199706A100141578 /* LineLayout */ = {
@@ -247,6 +249,7 @@
 		FD67D875197DFCFB00D2CCDA = {
 			isa = PBXGroup;
 			children = (
+				FD41313F199764BB00141578 /* backupCode */,
 				FD9590411985FA76001C2345 /* Source */,
 				FD67D8F6197DFD8900D2CCDA /* ThirdPackage */,
 				FD67D889197DFCFB00D2CCDA /* FaceAlbum */,
@@ -290,7 +293,7 @@
 				FD67D8FC197E048400D2CCDA /* Store.m */,
 				FD4131281997050A00141578 /* ScanRoom */,
 				FD4131291997052500141578 /* MontageRoom */,
-				FD41312A1997053400141578 /* AlbumRoom */,
+				FD41312A1997053400141578 /* PersonGallery */,
 				FD67D88A197DFCFB00D2CCDA /* Supporting Files */,
 			);
 			path = FaceAlbum;
@@ -517,6 +520,7 @@
 				FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */,
 				FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */,
 				FDE09ABC1981025E00CDB283 /* 2014_Smartisan_icon_180x180.png in Resources */,
+				FD413140199764BB00141578 /* backupCode in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +557,7 @@
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
-				FD9590481987CD5B001C2345 /* SDEPersonAlbumViewController.m in Sources */,
+				FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */,
 				FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */,
 				FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */,
 				FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */,

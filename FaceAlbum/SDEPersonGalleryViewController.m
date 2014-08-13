@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 seedante. All rights reserved.
 //
 
-#import "SDEPersonAlbumViewController.h"
+#import "SDEPersonGalleryViewController.h"
 
-@interface SDEPersonAlbumViewController ()
+@interface SDEPersonGalleryViewController ()
 
 @end
 
-@implementation SDEPersonAlbumViewController
+@implementation SDEPersonGalleryViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -13,7 +13,6 @@
 #import "PhotoScanManager.h"
 #import <QuartzCore/QuartzCore.h>
 
-
 static NSString *cellIdentifier = @"faceCell";
 
 @interface SDEFaceVCDataSource ()
@@ -23,7 +22,6 @@ static NSString *cellIdentifier = @"faceCell";
 @end
 
 @implementation SDEFaceVCDataSource
-
 
 + (instancetype)sharedDataSource{
     static SDEFaceVCDataSource *sharedInstance = nil;
