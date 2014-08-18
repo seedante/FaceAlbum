@@ -11,6 +11,7 @@
 #import "Person.h"
 #import "Store.h"
 #import "AvatorCell.h"
+#import "SDEPersonProfileHeader.h"
 
 static NSString * const cellIdentifier = @"avatorCell";
 
@@ -79,22 +80,22 @@ static NSString * const cellIdentifier = @"avatorCell";
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    //[self.collectionView.collectionViewLayout invalidateLayout];
-    NSLog(@"WILL UPDATE SCREEN");
+    NSLog(@"Process I: WILL UPDATE SCREEN");
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    
+    NSLog(@"Process II: Record Section Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
-    
     switch(type) {
         case NSFetchedResultsChangeInsert:
+            NSLog(@"ADD New Section At Index: %d", sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
         case NSFetchedResultsChangeDelete:
+            NSLog(@"Delete Section: %d", sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
     }
@@ -106,11 +107,12 @@ static NSString * const cellIdentifier = @"avatorCell";
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    NSLog(@"ADD CELL");
+    NSLog(@"Process III: Record Cell Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
+            NSLog(@"Insert Cell At Section: %d Index: %d", newIndexPath.section, newIndexPath.item);
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
@@ -120,6 +122,7 @@ static NSString * const cellIdentifier = @"avatorCell";
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
+            NSLog(@"Move Cell From S%dI%d To S%dI%d", indexPath.section, indexPath.item, newIndexPath.section, newIndexPath.item);
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
@@ -128,18 +131,21 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    NSLog(@"Process IV: Batch Update");
+    //NSLog(@"Section change: %@", sectionChange);
+    //NSLog(@"Content Change: %@", objectChange);
     if ([sectionChange count] > 0)
     {
+        //[self.collectionView.collectionViewLayout invalidateLayout];
         [self.collectionView performBatchUpdates:^{
-            
             for (NSDictionary *change in sectionChange)
             {
                 [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                    
                     NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                     switch (type)
                     {
                         case NSFetchedResultsChangeInsert:
+                            NSLog(@"ADD Person");
                             [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                             break;
                         case NSFetchedResultsChangeDelete:
@@ -151,11 +157,15 @@ static NSString * const cellIdentifier = @"avatorCell";
                     }
                 }];
             }
-        } completion:nil];
+        } completion:^(BOOL finished){
+            [self.collectionView.collectionViewLayout invalidateLayout];
+        }];
+        
     }
     
-    if ([objectChange count] > 0 && [sectionChange count] == 0)
+    if ([objectChange count] > 0 )
     {
+        NSLog(@"Update Content");
         if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
             // This is to prevent a bug in UICollectionView from occurring.
             // The bug presents itself when inserting the first object or deleting the last object in a collection view.
@@ -163,23 +173,22 @@ static NSString * const cellIdentifier = @"avatorCell";
             // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
             // http://openradar.appspot.com/12954582
             [self.collectionView reloadData];
-            
-        } else {
-            NSLog(@"UPDATE SCREEN");
-            
+        }
+        if (YES) {
+            //NSLog(@"UPDATE SCREEN");
             [self.collectionView performBatchUpdates:^{
-                
                 for (NSDictionary *change in objectChange)
                 {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                        
                         NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                         switch (type)
                         {
                             case NSFetchedResultsChangeInsert:
+                                NSLog(@"ADD CELL");
                                 [self.collectionView insertItemsAtIndexPaths:@[obj]];
                                 break;
                             case NSFetchedResultsChangeDelete:
+                                NSLog(@"Delete CELL");
                                 [self.collectionView deleteItemsAtIndexPaths:@[obj]];
                                 break;
                             case NSFetchedResultsChangeUpdate:
@@ -187,6 +196,9 @@ static NSString * const cellIdentifier = @"avatorCell";
                                 break;
                             case NSFetchedResultsChangeMove:
                                 [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                                NSIndexPath *fromIndex = (NSIndexPath *)obj[0];
+                                NSIndexPath *toIndex = (NSIndexPath *)obj[1];
+                                NSLog(@"Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
                                 break;
                         }
                     }];
@@ -328,7 +340,6 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:section];
     NSLog(@"cell number: %d in section: %d", [sectionInfo numberOfObjects], section+1);
     return [sectionInfo numberOfObjects];
@@ -345,6 +356,13 @@ static NSString * const cellIdentifier = @"avatorCell";
     
     cell.order.text = [NSString stringWithFormat:@"%.2f", face.order];
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    SDEPersonProfileHeader *personProfile = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
+    
+    return personProfile;
 }
 
 

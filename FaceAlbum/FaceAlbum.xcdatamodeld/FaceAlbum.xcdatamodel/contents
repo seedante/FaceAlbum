@@ -21,7 +21,7 @@
         <attribute name="section" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="whetherToDisplay" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="personOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="allFaces" inverseEntity="Person" syncable="YES"/>
+        <relationship name="personOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="ownedFaces" inverseEntity="Person" syncable="YES"/>
         <relationship name="photoOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="faceset" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
@@ -32,7 +32,7 @@
         <attribute name="personID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="whetherToDisplay" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="allFaces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="personOwner" inverseEntity="Face" syncable="YES"/>
+        <relationship name="ownedFaces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="personOwner" inverseEntity="Face" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName="Photo" syncable="YES">
         <attribute name="faceCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -44,9 +44,9 @@
         <relationship name="faceset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="photoOwner" inverseEntity="Face" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AlbumGroup" positionX="-45" positionY="45" width="128" height="150"/>
-        <element name="Face" positionX="-63" positionY="-18" width="128" height="240"/>
-        <element name="Person" positionX="-45" positionY="63" width="128" height="163"/>
-        <element name="Photo" positionX="-27" positionY="72" width="128" height="150"/>
+        <element name="AlbumGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Face" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Person" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Photo" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

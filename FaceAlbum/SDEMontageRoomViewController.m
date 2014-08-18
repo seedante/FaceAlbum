@@ -10,6 +10,8 @@
 #import "SDEMRVCDataSource.h"
 #import "PhotoScanManager.h"
 #import "Store.h"
+#import "Person.h"
+#import "Face.h"
 
 @interface SDEMontageRoomViewController ()
 {
@@ -22,7 +24,10 @@
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *cancelBarButton;
-@property (nonatomic) NSMutableArray *selectedFaces;
+@property (nonatomic) UIBarButtonItem *moveBarButton;
+@property (nonatomic) UIBarButtonItem *hiddenBarButton;
+@property (nonatomic) UIBarButtonItem *addBarButton;
+@property (nonatomic) NSMutableSet *selectedFaces;
 
 @end
 
@@ -32,27 +37,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
+    [self.navigationItem setRightBarButtonItem:self.selectBarButton];
+
     changedAlbumGroups = [[NSMutableSet alloc] init];
-    self.selectedFaces = [[NSMutableArray alloc] init];
+    self.selectedFaces = [[NSMutableSet alloc] init];
+    self.collectionView.allowsSelection = NO;
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
     self.collectionView.dataSource = self.dataSource;
     self.dataSource.collectionView = self.collectionView;
+    self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
     
     self.photoScaner = [PhotoScanManager sharedPhotoScanManager];
     
-    self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
-    [self.navigationItem setRightBarButtonItem:self.selectBarButton];
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
     NSLog(@"FetchedObjects include %d objects", [[self.faceFetchedResultsController fetchedObjects] count]);
-    
 }
 
 
@@ -102,21 +105,61 @@
     return _selectBarButton;
 }
 
+- (UIBarButtonItem *)hiddenBarButton
+{
+    if (_hiddenBarButton) {
+        return _hiddenBarButton;
+    }
+    _hiddenBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteSelectedFaces)];
+    _hiddenBarButton.enabled = NO;
+    return _hiddenBarButton;
+}
+
+- (UIBarButtonItem *)addBarButton
+{
+    if (_addBarButton) {
+        return _addBarButton;
+    }
+    _addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewPerson)];
+    _addBarButton.enabled = NO;
+    return _addBarButton;
+}
+
+- (UIBarButtonItem *)moveBarButton
+{
+    if (_moveBarButton) {
+        return _moveBarButton;
+    }
+    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Move To" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToAnotherPerson)];
+    _moveBarButton.enabled = NO;
+    return _moveBarButton;
+}
+
 - (void)selectFaces
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
     self.navigationItem.title = @"Select Faces";
     self.navigationItem.rightBarButtonItem = self.cancelBarButton;
-    
-    UIBarButtonItem *deleteBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteSelectedFaces)];
-    deleteBarButton.enabled = NO;
-    UIBarButtonItem *addPersonBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewPerson)];
-    addPersonBarButton.enabled = NO;
-    UIBarButtonItem *moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Move To" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToAnotherPerson)];
-    moveBarButton.enabled = NO;
-    NSArray *leftBarButtonItems = @[deleteBarButton, addPersonBarButton, moveBarButton];
+
+    NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
+    
+    [self.selectedFaces removeAllObjects];
+}
+
+- (void)enableLeftBarButtonItems
+{
+    self.hiddenBarButton.enabled = YES;
+    self.addBarButton.enabled = YES;
+    self.moveBarButton.enabled = YES;
+}
+
+- (void)unenableLeftBarButtonItems
+{
+    self.hiddenBarButton.enabled = NO;
+    self.addBarButton.enabled = NO;
+    self.moveBarButton.enabled = NO;
 }
 
 - (UIBarButtonItem *)cancelBarButton
@@ -130,36 +173,67 @@
 
 - (void)cancelSelect
 {
+    if (self.selectedFaces.count > 0) {
+        for (NSIndexPath *indexPath in self.selectedFaces) {
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            cell.layer.borderWidth = 0.0f;
+        }
+    }
+    
+    [self.selectedFaces removeAllObjects];
+    [self unenableLeftBarButtonItems];
+    self.collectionView.allowsSelection = NO;
+    self.collectionView.allowsMultipleSelection = NO;
+    
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.rightBarButtonItem = self.selectBarButton;
-    
-    NSArray *selectedItems = [self.collectionView indexPathsForSelectedItems];
-    if (selectedItems.count > 0) {
-        for (NSIndexPath *indexPath in selectedItems) {
-            UICollectionViewCell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
-            selectedCell.layer.borderWidth = 0.0f;
-            selectedCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        }
-    }
-    self.collectionView.allowsSelection = NO;
-    self.collectionView.allowsMultipleSelection = NO;
 }
 
 
 - (void)addNewPerson
 {
+    NSLog(@"add New Person");
+    //Person *newPerson = [Person insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
+
+    NSUInteger sectionForNow = [[self.faceFetchedResultsController sections] count];
+    Face *tmporaryFaceUnit = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
+    tmporaryFaceUnit.section = sectionForNow;
+    Face *SentryFace = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
+    SentryFace.whetherToDisplay = YES;
+    SentryFace.avatorImage = [UIImage imageNamed:@"avator@weibo.jpg"];
+    SentryFace.section = sectionForNow;
+    SentryFace.order = 1000.0f;
+    //SentryFace.personOwner = newPerson;
     
+    /*
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        face.section = sectionForNow;
+        face.order = (double)indexPath.item;
+        [newPerson addOwnedFacesObject:face];
+    }
+    UIImage *profileAvatorImage = [[self.faceFetchedResultsController objectAtIndexPath:(NSIndexPath *)self.selectedFaces.firstObject ] avatorImage];
+    [newPerson setAvatorImage:profileAvatorImage];
+     */
 }
 
 - (void)moveSelectedFacesToAnotherPerson
 {
-    
+    NSLog(@"Check selectedFaces: %@", self.selectedFaces);
+    [self.collectionView reloadData];
 }
 
 - (void)deleteSelectedFaces
 {
-    
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        face.whetherToDisplay = NO;
+        //[self.faceFetchedResultsController.managedObjectContext deleteObject:face];
+    }
+    [self.selectedFaces removeAllObjects];
+    [self unenableLeftBarButtonItems];
 }
 
 - (void)hiddenSelectedFaces
@@ -250,21 +324,42 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *selectedCell = [collectionView cellForItemAtIndexPath:indexPath];
-    //
-    //selectedCell.layer.backgroundColor = [[UIColor blueColor] CGColor];
-    selectedCell.layer.borderWidth = 3.0f;
-    selectedCell.layer.borderColor = [[UIColor greenColor] CGColor];
-    
-    selectedCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    [self processCellAtIndexPath:indexPath type:@"Select"];
     //selectedCell.alpha = 0.9f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *selectedCell = [collectionView cellForItemAtIndexPath:indexPath];
-    selectedCell.layer.borderWidth = 0.0f;
-    selectedCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    [self processCellAtIndexPath:indexPath type:@"Deselect"];
 }
+
+- (void)processCellAtIndexPath:(NSIndexPath *)indexPath type:(NSString *)type
+{
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    if ([type isEqual:@"Select"]) {
+        NSLog(@"Select Cell: %d, %d", indexPath.section, indexPath.item);
+        [self.selectedFaces addObject:indexPath];
+        [self enableLeftBarButtonItems];
+
+        //selectedCell.layer.backgroundColor = [[UIColor blueColor] CGColor];
+        cell.layer.borderColor = [[UIColor greenColor] CGColor];
+        cell.layer.borderWidth = 3.0f;
+        cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    }
+    
+    if ([type isEqual:@"Deselect"]) {
+        NSLog(@"Deselect Cell: %d, %d", indexPath.section, indexPath.item);
+        cell.layer.borderColor = [[UIColor blueColor] CGColor];
+        cell.layer.borderWidth = 3.0f;
+        cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        
+        [self.selectedFaces removeObject:indexPath];
+        if (self.selectedFaces.count == 0) {
+            [self unenableLeftBarButtonItems];
+        }
+    }
+}
+
+
 
 @end

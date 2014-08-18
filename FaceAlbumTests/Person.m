@@ -19,7 +19,7 @@
 @dynamic order;
 @dynamic photoCount;
 @dynamic whetherToDisplay;
-@dynamic allFaces;
+@dynamic ownedFaces;
 
 
 +(NSString *)entityName

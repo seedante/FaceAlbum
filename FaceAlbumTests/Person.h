@@ -20,15 +20,15 @@
 @property (nonatomic) int32_t photoCount;
 @property (nonatomic) int32_t order;
 @property (nonatomic) BOOL whetherToDisplay;
-@property (nonatomic, retain) NSSet *allFaces;
+@property (nonatomic, retain) NSSet *ownedFaces;
 @end
 
 @interface Person (CoreDataGeneratedAccessors)
 
-- (void)addAllFacesObject:(Face *)value;
-- (void)removeAllFacesObject:(Face *)value;
-- (void)addAllFaces:(NSSet *)values;
-- (void)removeAllFaces:(NSSet *)values;
+- (void)addOwnedFacesObject:(Face *)value;
+- (void)removeOwnedFacesObject:(Face *)value;
+- (void)addOwnedFaces:(NSSet *)values;
+- (void)removeOwnedFaces:(NSSet *)values;
 
 + (instancetype)insertNewObjectInManagedObjectContext:(NSManagedObjectContext *)moc;
 

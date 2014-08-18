@@ -15,6 +15,7 @@
 		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
 		FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41313D1997541300141578 /* SDEPAVCDataSource.m */; };
 		FD413140199764BB00141578 /* backupCode in Resources */ = {isa = PBXBuildFile; fileRef = FD41313F199764BB00141578 /* backupCode */; };
+		FD413625199D99C400141578 /* SDEPersonProfileHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD413624199D99C400141578 /* SDEPersonProfileHeader.m */; };
 		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
 		FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
@@ -88,6 +89,8 @@
 		FD41313C1997541300141578 /* SDEPAVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPAVCDataSource.h; sourceTree = "<group>"; };
 		FD41313D1997541300141578 /* SDEPAVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPAVCDataSource.m; sourceTree = "<group>"; };
 		FD41313F199764BB00141578 /* backupCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backupCode; sourceTree = "<group>"; };
+		FD413623199D99C400141578 /* SDEPersonProfileHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeader.h; sourceTree = "<group>"; };
+		FD413624199D99C400141578 /* SDEPersonProfileHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonProfileHeader.m; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -219,6 +222,8 @@
 				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
 				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
 				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
+				FD413623199D99C400141578 /* SDEPersonProfileHeader.h */,
+				FD413624199D99C400141578 /* SDEPersonProfileHeader.m */,
 				FDE09AB71980A96400CDB283 /* AvatorCell.h */,
 				FDE09AB81980A96400CDB283 /* AvatorCell.m */,
 			);
@@ -551,6 +556,7 @@
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
 				FD67D8FA197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m in Sources */,
 				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
+				FD413625199D99C400141578 /* SDEPersonProfileHeader.m in Sources */,
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
 				FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */,
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,

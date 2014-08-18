@@ -8,7 +8,6 @@
 
 #import "Face.h"
 
-
 @implementation Face
 
 @dynamic avatorImage;
