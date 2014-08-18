@@ -17,11 +17,13 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 @interface SDEMRVCDataSource ()
 {
-    NSMutableArray *sectionChange;
-    NSMutableArray *objectChange;
+    NSMutableArray *sectionChanges;
+    NSMutableArray *objectChanges;
 }
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic) BOOL blendBatchUpdateMode;
 
 @end
 
@@ -30,8 +32,9 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (instancetype)init
 {
     self = [super init];
-    sectionChange = [[NSMutableArray alloc] init];
-    objectChange = [[NSMutableArray alloc] init];
+    sectionChanges = [[NSMutableArray alloc] init];
+    objectChanges = [[NSMutableArray alloc] init];
+    self.blendBatchUpdateMode = NO;
     return self;
 }
 
@@ -100,7 +103,7 @@ static NSString * const cellIdentifier = @"avatorCell";
             break;
     }
     
-    [sectionChange addObject:change];
+    [sectionChanges addObject:change];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -126,95 +129,213 @@ static NSString * const cellIdentifier = @"avatorCell";
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
-    [objectChange addObject:change];
+    [objectChanges addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     NSLog(@"Process IV: Batch Update");
-    //NSLog(@"Section change: %@", sectionChange);
-    //NSLog(@"Content Change: %@", objectChange);
-    if ([sectionChange count] > 0)
+    NSLog(@"Section change: %@", sectionChanges);
+    NSLog(@"Content Change: %@", objectChanges);
+    if ([sectionChanges count] > 0)
     {
-        //[self.collectionView.collectionViewLayout invalidateLayout];
-        [self.collectionView performBatchUpdates:^{
-            for (NSDictionary *change in sectionChange)
+        NSDictionary *firstJob = sectionChanges[0];
+        NSNumber * changeTypeNumber = (NSNumber *)firstJob.allKeys[0];
+        NSFetchedResultsChangeType changeType = [changeTypeNumber unsignedIntegerValue];
+        
+        switch (changeType) {
+            case NSFetchedResultsChangeDelete:{
+                NSLog(@"Section Change Type: Delete Section");
+                for (NSDictionary *change in sectionChanges) {
+                    NSNumber * section = (NSNumber *)[change objectForKey:@(NSFetchedResultsChangeDelete)];
+                    //NSLog(@"section: %@", section);
+                    NSUInteger itemNumberInSection = [self.collectionView numberOfItemsInSection:[section unsignedIntegerValue]];
+                    //NSLog(@"Item Number: %d", itemNumberInSection);
+                    for (NSUInteger i = 0; i < itemNumberInSection; i++) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:[section unsignedIntegerValue]];
+                        NSDictionary *deletedItemInfo = @{@(NSFetchedResultsChangeDelete):indexPath};
+                        [objectChanges removeObject:deletedItemInfo];
+                    }
+                }
+                if (objectChanges.count > 0) {
+                    self.blendBatchUpdateMode = YES;
+                    NSLog(@"Blend Change");
+                }else{
+                    self.blendBatchUpdateMode = NO;
+                    NSLog(@"Regular Change");
+                }
+                break;
+            }
+            case NSFetchedResultsChangeInsert:
+                NSLog(@"Section Change Type: Insert Section. Ignored.");
+                break;
+            case NSFetchedResultsChangeUpdate:
+                NSLog(@"Section Change Type: Insert Section. Ignored.");
+                break;
+            case NSFetchedResultsChangeMove:
+                NSLog(@"Section Change Type: Insert Section. Ignored.");
+                break;
+            default:
+                NSLog(@"Impossible");
+                break;
+        }
+    }
+    
+    if (self.blendBatchUpdateMode)
+    {
+        [self blendBatchUpdate];
+    }else{
+        if (sectionChanges.count > 0) {
+            NSLog(@"Update Section");
+            [self batchUpdateSection];
+        }
+        
+        if (objectChanges.count > 0 && sectionChanges.count == 0) {
+            NSLog(@"Update Content");
+            [self batchUpdateCell];
+        }
+        
+        [sectionChanges removeAllObjects];
+        [objectChanges removeAllObjects];
+    }
+    
+    if (sectionChanges.count > 0 || objectChanges.count > 0) {
+        NSLog(@"Something is wrong.");
+    }
+}
+
+- (void)batchUpdateSection
+{
+    [self.collectionView performBatchUpdates:^{
+        for (NSDictionary *change in sectionChanges)
+        {
+            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch (type)
+                {
+                    case NSFetchedResultsChangeInsert:
+                        NSLog(@"ADD Person");
+                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                }
+            }];
+        }
+    } completion:nil];
+    
+}
+
+- (void)batchUpdateCell
+{
+    /*
+     if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
+     // This is to prevent a bug in UICollectionView from occurring.
+     // The bug presents itself when inserting the first object or deleting the last object in a collection view.
+     // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
+     // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
+     // http://openradar.appspot.com/12954582
+     [self.collectionView reloadData];
+     }
+     */
+    
+    [self.collectionView performBatchUpdates:^{
+        for (NSDictionary *change in objectChanges)
+        {
+            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch (type)
+                {
+                    case NSFetchedResultsChangeInsert:
+                        NSLog(@"ADD CELL");
+                        [self.collectionView insertItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        NSLog(@"Delete CELL");
+                        [self.collectionView deleteItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        [self.collectionView reloadItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                        NSIndexPath *fromIndex = (NSIndexPath *)obj[0];
+                        NSIndexPath *toIndex = (NSIndexPath *)obj[1];
+                        NSLog(@"Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
+                        break;
+                }
+            }];
+        }
+    } completion:nil];
+}
+
+- (void)blendBatchUpdate
+{
+    [self.collectionView performBatchUpdates:^{
+        
+        for (NSDictionary *change in objectChanges) {
+            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch (type)
+                {
+                    case NSFetchedResultsChangeInsert:
+                        NSLog(@"ADD CELL");
+                        [self.collectionView insertItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        NSLog(@"Delete CELL");
+                        [self.collectionView deleteItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        NSLog(@"Update Cell");
+                        [self.collectionView reloadItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                        NSIndexPath *fromIndex = (NSIndexPath *)obj[0];
+                        NSIndexPath *toIndex = (NSIndexPath *)obj[1];
+                        NSLog(@"Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
+                        break;
+                }
+            }];
+            
+            for (NSDictionary *change in sectionChanges)
             {
                 [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                     NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                     switch (type)
                     {
                         case NSFetchedResultsChangeInsert:
-                            NSLog(@"ADD Person");
+                            NSLog(@"ADD New Section");
                             [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                             break;
                         case NSFetchedResultsChangeDelete:
+                            NSLog(@"Delete Section %d", [obj unsignedIntegerValue]);
                             [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                             break;
                         case NSFetchedResultsChangeUpdate:
+                            NSLog(@"Update Section %d", [obj unsignedIntegerValue]);
                             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                             break;
                     }
                 }];
             }
-        } completion:^(BOOL finished){
-            [self.collectionView.collectionViewLayout invalidateLayout];
-        }];
-        
-    }
-    
-    if ([objectChange count] > 0 )
-    {
-        NSLog(@"Update Content");
-        if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
-            // This is to prevent a bug in UICollectionView from occurring.
-            // The bug presents itself when inserting the first object or deleting the last object in a collection view.
-            // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
-            // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
-            // http://openradar.appspot.com/12954582
-            [self.collectionView reloadData];
+            
         }
-        if (YES) {
-            //NSLog(@"UPDATE SCREEN");
-            [self.collectionView performBatchUpdates:^{
-                for (NSDictionary *change in objectChange)
-                {
-                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                        switch (type)
-                        {
-                            case NSFetchedResultsChangeInsert:
-                                NSLog(@"ADD CELL");
-                                [self.collectionView insertItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeDelete:
-                                NSLog(@"Delete CELL");
-                                [self.collectionView deleteItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeUpdate:
-                                [self.collectionView reloadItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeMove:
-                                [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
-                                NSIndexPath *fromIndex = (NSIndexPath *)obj[0];
-                                NSIndexPath *toIndex = (NSIndexPath *)obj[1];
-                                NSLog(@"Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
-                                break;
-                        }
-                    }];
-                }
-            } completion:nil];
-        }
-    }
-    
-    [sectionChange removeAllObjects];
-    [objectChange removeAllObjects];
-    
+    }completion:^(BOOL finished){
+        self.blendBatchUpdateMode = NO;
+        [sectionChanges removeAllObjects];
+        [objectChanges removeAllObjects];
+    }];
 }
 
 - (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
     __block BOOL shouldReload = NO;
-    for (NSDictionary *change in objectChange) {
+    for (NSDictionary *change in objectChanges) {
         [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSFetchedResultsChangeType type = [key unsignedIntegerValue];
             NSIndexPath *indexPath = obj;
@@ -273,39 +394,39 @@ static NSString * const cellIdentifier = @"avatorCell";
         if (toIndexPath.item < fromIndexPath.item) {
             if (toIndexPath.item > 0) {
                 lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order];
-                NSLog(@"lowerBound: %f", lowerBound);
+                //NSLog(@"lowerBound: %f", lowerBound);
             }else{
                 lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:toIndexPath.section]] order] - 2.0;
-                NSLog(@"lowerBound: %f", lowerBound);
+                //NSLog(@"lowerBound: %f", lowerBound);
             }
             
             if (toIndexPath.item < [self collectionView:collectionView numberOfItemsInSection:toIndexPath.section]-1) {
                 upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item inSection:toIndexPath.section]] order];
-                NSLog(@"upperBound: %f", upperBound);
+                //NSLog(@"upperBound: %f", upperBound);
             }else{
                 upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order] + 2.0;
-                NSLog(@"upperBound: %f", upperBound);
+                //NSLog(@"upperBound: %f", upperBound);
             }
             
             newOrder = (lowerBound + upperBound)/2.0;
-            NSLog(@"New Order:%f", newOrder);
+            //NSLog(@"New Order:%f", newOrder);
         }else{
             lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item inSection:toIndexPath.section]] order];
-            NSLog(@"lowerBound: %f", lowerBound);
+            //NSLog(@"lowerBound: %f", lowerBound);
             
             
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:toIndexPath.section];
             NSUInteger number = [sectionInfo numberOfObjects];
             if (toIndexPath.item < number - 1) {
                 upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item + 1 inSection:toIndexPath.section]] order];
-                NSLog(@"upperBound: %f", upperBound);
+                //NSLog(@"upperBound: %f", upperBound);
             }else{
                 upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order] + 2.0;
-                NSLog(@"upperBound: %f", upperBound);
+                //NSLog(@"upperBound: %f", upperBound);
             }
             
             newOrder = (lowerBound + upperBound)/2.0;
-            NSLog(@"New Order:%f", newOrder);
+            //NSLog(@"New Order:%f", newOrder);
         }
         
         movedFace.order = newOrder;

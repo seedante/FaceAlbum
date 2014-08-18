@@ -89,14 +89,6 @@ static NSString *cellIdentifier = @"photoCell";
 }
 
 #pragma mark - segue 
-/*
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSLog(@"Segue Identifier: %@", segue.identifier);
-    NSLog(@"Source VC: %@", segue.sourceViewController);
-    NSLog(@"Destination VC: %@", segue.destinationViewController);
-}
- */
 
 
 #pragma mark - UICollectionViewDataSource

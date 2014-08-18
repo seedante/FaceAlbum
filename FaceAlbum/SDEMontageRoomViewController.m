@@ -22,12 +22,16 @@
 @property (nonatomic) SDEMRVCDataSource *dataSource;
 @property (nonatomic) PhotoScanManager *photoScaner;
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
+
 @property (nonatomic) UIBarButtonItem *selectBarButton;
-@property (nonatomic) UIBarButtonItem *cancelBarButton;
+@property (nonatomic) UIBarButtonItem *DoneBarButton;
 @property (nonatomic) UIBarButtonItem *moveBarButton;
 @property (nonatomic) UIBarButtonItem *hiddenBarButton;
 @property (nonatomic) UIBarButtonItem *addBarButton;
+
 @property (nonatomic) NSMutableSet *selectedFaces;
+@property (nonatomic) NSUInteger historySectionNumber;
+@property (nonatomic) NSManagedObjectID *guardObjectID;
 
 @end
 
@@ -50,6 +54,12 @@
     
     self.photoScaner = [PhotoScanManager sharedPhotoScanManager];
     
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    [defaultConfig registerDefaults:@{@"historySectionNumber": @(1)}];
+    [defaultConfig synchronize];
+    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] unsignedIntegerValue];
+    NSLog(@"historySectionNumber is %d", self.historySectionNumber);
+    
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
@@ -58,6 +68,18 @@
     NSLog(@"FetchedObjects include %d objects", [[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
+- (void)saveEdit
+{
+    NSError *error = nil;
+    NSManagedObjectContext *moc = self.faceFetchedResultsController.managedObjectContext;
+    if (moc != nil) {
+        if ([moc hasChanges] && ![moc save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Edit Save error %@, %@", error, [error userInfo]);
+        }
+    }
+}
 
 - (void)scanPhotoLibrary:(id)sender
 {
@@ -130,7 +152,7 @@
     if (_moveBarButton) {
         return _moveBarButton;
     }
-    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Move To" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToAnotherPerson)];
+    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Move To" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToPerson)];
     _moveBarButton.enabled = NO;
     return _moveBarButton;
 }
@@ -140,7 +162,7 @@
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
     self.navigationItem.title = @"Select Faces";
-    self.navigationItem.rightBarButtonItem = self.cancelBarButton;
+    self.navigationItem.rightBarButtonItem = self.DoneBarButton;
 
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
@@ -162,16 +184,16 @@
     self.moveBarButton.enabled = NO;
 }
 
-- (UIBarButtonItem *)cancelBarButton
+- (UIBarButtonItem *)DoneBarButton
 {
-    if (_cancelBarButton) {
-        return _cancelBarButton;
+    if (_DoneBarButton) {
+        return _DoneBarButton;
     }
-    _cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSelect)];
-    return _cancelBarButton;
+    _DoneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEdit)];
+    return _DoneBarButton;
 }
 
-- (void)cancelSelect
+- (void)doneEdit
 {
     if (self.selectedFaces.count > 0) {
         for (NSIndexPath *indexPath in self.selectedFaces) {
@@ -189,40 +211,66 @@
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.rightBarButtonItem = self.selectBarButton;
+    
+    [self saveEdit];
 }
 
 
 - (void)addNewPerson
 {
     NSLog(@"add New Person");
-    //Person *newPerson = [Person insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-
-    NSUInteger sectionForNow = [[self.faceFetchedResultsController sections] count];
-    Face *tmporaryFaceUnit = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-    tmporaryFaceUnit.section = sectionForNow;
-    Face *SentryFace = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-    SentryFace.whetherToDisplay = YES;
-    SentryFace.avatorImage = [UIImage imageNamed:@"avator@weibo.jpg"];
-    SentryFace.section = sectionForNow;
-    SentryFace.order = 1000.0f;
-    //SentryFace.personOwner = newPerson;
+    NSIndexPath *lastSelectedIndexPath = self.selectedFaces.allObjects.lastObject;
+    Face *lastSelectedFace = [self.faceFetchedResultsController objectAtIndexPath:lastSelectedIndexPath];
+    self.guardObjectID = lastSelectedFace.objectID;
+    NSLog(@"Last selected indexpath: %@", lastSelectedIndexPath);
+    Face *guardItem = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
+    guardItem.section = self.historySectionNumber;
+    guardItem.order = lastSelectedFace.order;
+    guardItem.avatorImage = lastSelectedFace.avatorImage;
+    guardItem.pathForBackup = lastSelectedFace.pathForBackup;
+    guardItem.detectedFaceImage = lastSelectedFace.detectedFaceImage;
+    guardItem.detectedFaceRect = lastSelectedFace.detectedFaceRect;
+    guardItem.faceID = lastSelectedFace.faceID;
+    guardItem.posterImage = lastSelectedFace.posterImage;
+    guardItem.tag = lastSelectedFace.tag;
+    guardItem.isMyStar = lastSelectedFace.isMyStar;
+    guardItem.photoOwner = lastSelectedFace.photoOwner;
+    guardItem.personOwner = lastSelectedFace.personOwner;
+    guardItem.whetherToDisplay = YES;
+    [self.selectedFaces removeObject:lastSelectedIndexPath];
     
-    /*
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        face.section = sectionForNow;
-        face.order = (double)indexPath.item;
-        [newPerson addOwnedFacesObject:face];
-    }
-    UIImage *profileAvatorImage = [[self.faceFetchedResultsController objectAtIndexPath:(NSIndexPath *)self.selectedFaces.firstObject ] avatorImage];
-    [newPerson setAvatorImage:profileAvatorImage];
-     */
+    [self performSelector:@selector(moveOtherFaceItemsBehindGuardFaceItem) withObject:nil afterDelay:0.1];
 }
 
-- (void)moveSelectedFacesToAnotherPerson
+- (void)moveOtherFaceItemsBehindGuardFaceItem
 {
-    NSLog(@"Check selectedFaces: %@", self.selectedFaces);
-    [self.collectionView reloadData];
+    NSLog(@"Move other faces");
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        selectedFace.section = self.historySectionNumber;
+    }
+    self.historySectionNumber += 1;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:@(self.historySectionNumber) forKey:@"historySectionNumber"];
+    [defaults synchronize];
+    
+    [self.selectedFaces removeAllObjects];
+    [self unenableLeftBarButtonItems];
+    
+    [self performSelector:@selector(deleteOriginalFaceItem) withObject:nil afterDelay:0.1];
+}
+
+- (void)deleteOriginalFaceItem
+{
+    NSLog(@"Delete Original Face Item.");
+    Face *originalFace = (Face *)[self.faceFetchedResultsController.managedObjectContext existingObjectWithID:self.guardObjectID error:nil];
+    [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
+}
+
+- (void)moveSelectedFacesToPerson
+{
+    
 }
 
 - (void)deleteSelectedFaces
