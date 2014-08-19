@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LXReorderableCollectionViewFlowLayout.h"
+#import "SDEReorderableCollectionViewFlowLayout.h"
 
 @interface SDEMRVCDataSource : NSObject<LXReorderableCollectionViewDataSource, NSFetchedResultsControllerDelegate>
 

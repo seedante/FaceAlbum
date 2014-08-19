@@ -12,8 +12,8 @@
 @implementation FaceppDetection (LocalResultUploader)
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    int width = newSize.width;
-    int height = newSize.height;
+    size_t width = (size_t)newSize.width;
+    size_t height = (size_t)newSize.height;
     
     unsigned char *rawData = (unsigned char*) malloc(width*height*sizeof(unsigned char));
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
@@ -32,7 +32,7 @@
 -(FaceppResult*) uploadLocalResult: (FaceppLocalResult*)result attribute:(FaceppDetectionAttribute)attribute tag:(NSString*)tag {
     // resize to 600x600
     int sizeLimit = 600;
-    float scale = MAX([result.image size].width / sizeLimit, [result.image size].height / sizeLimit);
+    double scale = MAX([result.image size].width / sizeLimit, [result.image size].height / sizeLimit);
     if (scale > 1) {
         result.image = [FaceppDetection imageWithImage:result.image scaledToSize:
                         CGSizeMake([result.image size].width/scale, [result.image size].height/scale)];
@@ -42,7 +42,7 @@
     for (size_t i=0; i<result.faces.count; i++) {
         if (i>0)
             [offline_result appendString: @","];
-        FaceppLocalFace *face = [result.faces objectAtIndex:i];
+        FaceppLocalFace *face = result.faces[i];
         [offline_result appendFormat:@"[%d,%d,%d,%d]",
          (int)(face.bounds.origin.x / scale),
          (int)(face.bounds.origin.y / scale),

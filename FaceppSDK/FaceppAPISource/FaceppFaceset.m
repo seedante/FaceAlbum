@@ -16,7 +16,7 @@
     if ((faceId != nil) && ([faceId count]>0)) {
         [params addObject:@"face_id"];
         NSMutableString *faces = [NSMutableString stringWithString:[faceId objectAtIndex:0]];
-        for (int i=1; i<[faceId count]; i++)
+        for (NSUInteger i=1; i<faceId.count; i++)
             [faces appendFormat:@",%@", [faceId objectAtIndex:i]];
         [params addObject:faces];
     }
@@ -48,8 +48,8 @@
     if ((faceId != nil) && ([faceId count]>0)) {
         [params addObject:@"face_id"];
         NSMutableString *faces = [NSMutableString stringWithString:[faceId objectAtIndex:0]];
-        for (int i=1; i<[faceId count]; i++)
-            [faces appendFormat:@",%@", [faceId objectAtIndex:i]];
+        for (NSUInteger i=1; i<faceId.count; i++)
+            [faces appendFormat:@",%@", faceId[i]];
         [params addObject:faces];
     }
     return [FaceppClient requestWithFunction:@"faceset/create" params:params];
@@ -98,8 +98,8 @@
     if ((faceId != nil) && ([faceId count]>0)) {
         [params addObject:@"face_id"];
         NSMutableString *faces = [NSMutableString stringWithString:[faceId objectAtIndex:0]];
-        for (int i=1; i<[faceId count]; i++)
-            [faces appendFormat:@",%@", [faceId objectAtIndex:i]];
+        for (NSUInteger i=1; i<faceId.count; i++)
+            [faces appendFormat:@",%@", faceId[i]];
         [params addObject:faces];
     }
     return [FaceppClient requestWithFunction:@"faceset/remove_face" params:params];

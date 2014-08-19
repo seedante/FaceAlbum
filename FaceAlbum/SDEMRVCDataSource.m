@@ -22,7 +22,6 @@ static NSString * const cellIdentifier = @"avatorCell";
 }
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
-
 @property (nonatomic) BOOL blendBatchUpdateMode;
 
 @end
@@ -455,14 +454,14 @@ static NSString * const cellIdentifier = @"avatorCell";
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    NSLog(@"Section Number: %d", [[self.faceFetchedResultsController sections] count]);
+    NSLog(@"Section Number: %lu", (unsigned long)[[self.faceFetchedResultsController sections] count]);
     return [[self.faceFetchedResultsController sections] count];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"cell number: %d in section: %d", [sectionInfo numberOfObjects], section+1);
+    NSLog(@"cell number: %lu in section: %ld", (unsigned long)[sectionInfo numberOfObjects], section+1);
     return [sectionInfo numberOfObjects];
 }
 

@@ -45,7 +45,7 @@
 		FD67D8DC197DFD4A00D2CCDA /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8D0197DFD4A00D2CCDA /* FaceppResult.m */; };
 		FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */; };
 		FD67D8E4197DFD6100D2CCDA /* libFaceppLocalDetector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */; };
-		FD67D8FA197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */; };
+		FD67D8FA197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8F9197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m */; };
 		FD67D8FD197E048400D2CCDA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8FC197E048400D2CCDA /* Store.m */; };
 		FD732782197F5C03006C5A2C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD732781197F5C03006C5A2C /* AssetsLibrary.framework */; };
 		FD7327A7197FA082006C5A2C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7327A6197FA082006C5A2C /* QuartzCore.framework */; };
@@ -138,8 +138,8 @@
 		FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FaceppDetection+LocalResultUploader.m"; sourceTree = "<group>"; };
 		FD67D8E1197DFD6100D2CCDA /* FaceppLocalDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppLocalDetector.h; sourceTree = "<group>"; };
 		FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFaceppLocalDetector.a; sourceTree = "<group>"; };
-		FD67D8F8197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		FD67D8F8197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		FD67D8F9197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		FD67D8FB197E048400D2CCDA /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		FD67D8FC197E048400D2CCDA /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		FD732781197F5C03006C5A2C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -407,8 +407,8 @@
 		FD67D8F7197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
-				FD67D8F8197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.h */,
-				FD67D8F9197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m */,
+				FD67D8F8197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.h */,
+				FD67D8F9197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m */,
 			);
 			path = LXReorderableCollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -554,7 +554,7 @@
 				FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */,
 				FD67D890197DFCFB00D2CCDA /* main.m in Sources */,
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
-				FD67D8FA197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout.m in Sources */,
+				FD67D8FA197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
 				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
 				FD413625199D99C400141578 /* SDEPersonProfileHeader.m in Sources */,
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
@@ -655,6 +655,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -699,10 +700,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -710,8 +716,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FaceppLocalDetector",
 				);
+				OTHER_CFLAGS = "-Wno-gnu";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WARNING_CFLAGS = (
+					"-Wshadow",
+					"-Wimplicit-retain-self",
+					"-Wfloat-equal",
+					"-Wconversion",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -724,10 +738,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -735,7 +753,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FaceppLocalDetector",
 				);
+				OTHER_CFLAGS = "-Wno-gnu";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"-Wshadow",
+					"-Wimplicit-retain-self",
+					"-Wfloat-equal",
+					"-Wconversion",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

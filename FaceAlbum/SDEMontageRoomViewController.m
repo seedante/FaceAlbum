@@ -14,14 +14,12 @@
 #import "Face.h"
 
 @interface SDEMontageRoomViewController ()
-{
-    NSMutableSet *changedAlbumGroups;
-}
 
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 @property (nonatomic) SDEMRVCDataSource *dataSource;
 @property (nonatomic) PhotoScanManager *photoScaner;
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
+@property (nonatomic) NSMutableArray *changedAlbumGroups;
 
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
@@ -30,7 +28,7 @@
 @property (nonatomic) UIBarButtonItem *addBarButton;
 
 @property (nonatomic) NSMutableSet *selectedFaces;
-@property (nonatomic) NSUInteger historySectionNumber;
+@property (nonatomic, assign) int historySectionNumber;
 @property (nonatomic) NSManagedObjectID *guardObjectID;
 
 @end
@@ -42,8 +40,8 @@
     [super viewDidLoad];
     
     [self.navigationItem setRightBarButtonItem:self.selectBarButton];
-
-    changedAlbumGroups = [[NSMutableSet alloc] init];
+    
+    self.changedAlbumGroups = [NSMutableArray new];
     self.selectedFaces = [[NSMutableSet alloc] init];
     self.collectionView.allowsSelection = NO;
     
@@ -57,15 +55,15 @@
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     [defaultConfig registerDefaults:@{@"historySectionNumber": @(1)}];
     [defaultConfig synchronize];
-    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] unsignedIntegerValue];
-    NSLog(@"historySectionNumber is %d", self.historySectionNumber);
+    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] intValue];
+    NSLog(@"historySectionNumber is %lu", (unsigned long)self.historySectionNumber);
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
-    NSLog(@"FetchedObjects include %d objects", [[self.faceFetchedResultsController fetchedObjects] count]);
+    NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
 - (void)saveEdit
@@ -314,7 +312,7 @@
             NSString *groupName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
             NSURL *groupURL = (NSURL *)[group valueForKey:ALAssetsGroupPropertyURL];
             NSLog(@"Album Group: %@ change.", groupName);
-            [changedAlbumGroups addObject:groupURL];
+            [self.changedAlbumGroups addObject:groupURL];
             *stop = YES;
             return;
         }
@@ -327,14 +325,14 @@
         NSArray *array = [self.faceFetchedResultsController.managedObjectContext executeFetchRequest:assetFetchRequest error:nil];
         NSArray *URLArray = [array valueForKeyPath:@"allValues.firstObject"];
         if (URLArray != nil && URLArray.count > 0) {
-            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop){
+            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *shouldStop){
                 NSString *assetURLString = [(NSURL *)[result valueForProperty:ALAssetPropertyAssetURL] absoluteString];
                 if (![URLArray containsObject:assetURLString]) {
                     NSString *groupName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
                     NSURL *groupURL = (NSURL *)[group valueForKey:ALAssetsGroupPropertyURL];
                     NSLog(@"Album Group: %@ change.", groupName);
-                    [changedAlbumGroups addObject:groupURL];
-                    *stop = YES;
+                    [self.changedAlbumGroups addObject:groupURL];
+                    *shouldStop = YES;
                 }
             }];
         }
@@ -385,7 +383,7 @@
 {
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([type isEqual:@"Select"]) {
-        NSLog(@"Select Cell: %d, %d", indexPath.section, indexPath.item);
+        NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         [self.selectedFaces addObject:indexPath];
         [self enableLeftBarButtonItems];
 
@@ -396,7 +394,7 @@
     }
     
     if ([type isEqual:@"Deselect"]) {
-        NSLog(@"Deselect Cell: %d, %d", indexPath.section, indexPath.item);
+        NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         cell.layer.borderColor = [[UIColor blueColor] CGColor];
         cell.layer.borderWidth = 3.0f;
         cell.transform = CGAffineTransformMakeScale(1.0, 1.0);

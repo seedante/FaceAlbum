@@ -5,9 +5,9 @@
 //  Copyright (c) 2012 d--buzz. All rights reserved.
 //
 
-#import "LXReorderableCollectionViewFlowLayout.h"
-#import <QuartzCore/QuartzCore.h>
-#import <objc/runtime.h>
+#import "SDEReorderableCollectionViewFlowLayout.h"
+@import QuartzCore.QuartzCore;
+@import ObjectiveC.runtime;
 
 #define LX_FRAMES_PER_SECOND 60.0
 
@@ -61,7 +61,7 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
 
 @end
 
-@interface LXReorderableCollectionViewFlowLayout ()
+@interface SDEReorderableCollectionViewFlowLayout ()
 
 @property (strong, nonatomic) NSIndexPath *selectedItemIndexPath;
 @property (strong, nonatomic) UIView *currentView;
@@ -74,7 +74,7 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
 
 @end
 
-@implementation LXReorderableCollectionViewFlowLayout
+@implementation SDEReorderableCollectionViewFlowLayout
 
 - (void)setDefaults {
     _scrollingSpeed = 300.0f;

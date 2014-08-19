@@ -10,7 +10,7 @@
 #import "PhotoCell.h"
 #import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+@import AssetsLibrary;
 
 static NSString *cellIdentifier = @"photoCell";
 
@@ -53,7 +53,7 @@ static NSString *cellIdentifier = @"photoCell";
         if (group && *stop != YES) {
             //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
             NSLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
-            [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop){
+            [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                 if (asset && *stop != YES) {
                     if (self.showAssets.count < 3) {
                         [self.showAssets addObject:asset];
@@ -95,7 +95,7 @@ static NSString *cellIdentifier = @"photoCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.showAssets count];
+    return self.showAssets.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
