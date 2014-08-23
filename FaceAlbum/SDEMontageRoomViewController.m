@@ -13,6 +13,8 @@
 #import "Person.h"
 #import "Face.h"
 
+#import "SDESelectPersonView.h"
+
 @interface SDEMontageRoomViewController ()
 
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
