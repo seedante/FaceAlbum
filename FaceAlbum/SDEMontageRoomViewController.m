@@ -13,7 +13,7 @@
 #import "Person.h"
 #import "Face.h"
 
-#import "SDESelectPersonView.h"
+#import "SDECandidateCell.h"
 
 @interface SDEMontageRoomViewController ()
 
@@ -32,6 +32,10 @@
 @property (nonatomic) NSMutableSet *selectedFaces;
 @property (nonatomic, assign) int historySectionNumber;
 @property (nonatomic) NSManagedObjectID *guardObjectID;
+
+@property (nonatomic) BOOL isFirstSectionZero;
+
+@property (nonatomic) UICollectionView  *candidateView;
 
 @end
 
@@ -65,6 +69,11 @@
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
+    Face *firstItemInFirstSecion = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    if (firstItemInFirstSecion.section == 0) {
+        self.isFirstSectionZero = YES;
+    }else
+        self.isFirstSectionZero = NO;
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
@@ -96,6 +105,7 @@
     return CGSizeMake(100.0, 100.0);
 }
 
+
 #pragma mark - LXReorderableCollectionViewDelegateFlowLayout
 - (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -118,6 +128,23 @@
 }
 
 #pragma mark - BarButton Method
+- (void)enableLeftBarButtonItems
+{
+    self.hiddenBarButton.enabled = YES;
+    self.addBarButton.enabled = YES;
+    if (self.isFirstSectionZero && [self.collectionView numberOfSections] == 1) {
+        self.moveBarButton.enabled = NO;
+    }else
+        self.moveBarButton.enabled = YES;
+}
+
+- (void)unenableLeftBarButtonItems
+{
+    self.hiddenBarButton.enabled = NO;
+    self.addBarButton.enabled = NO;
+    self.moveBarButton.enabled = NO;
+}
+
 - (UIBarButtonItem *)selectBarButton
 {
     if (_selectBarButton) {
@@ -127,16 +154,41 @@
     return _selectBarButton;
 }
 
+- (void)selectFaces
+{
+    self.collectionView.allowsSelection = YES;
+    self.collectionView.allowsMultipleSelection = YES;
+    self.navigationItem.title = @"Select Faces";
+    self.navigationItem.rightBarButtonItem = self.DoneBarButton;
+    
+    NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
+    self.navigationItem.leftBarButtonItems = leftBarButtonItems;
+    
+    [self.selectedFaces removeAllObjects];
+}
+
+#pragma mark - hidden somebody
 - (UIBarButtonItem *)hiddenBarButton
 {
     if (_hiddenBarButton) {
         return _hiddenBarButton;
     }
-    _hiddenBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteSelectedFaces)];
+    _hiddenBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(hiddenSelectedFaces)];
     _hiddenBarButton.enabled = NO;
     return _hiddenBarButton;
 }
 
+- (void)hiddenSelectedFaces
+{
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        face.whetherToDisplay = NO;
+    }
+    [self.selectedFaces removeAllObjects];
+    [self unenableLeftBarButtonItems];
+}
+
+#pragma mark - add a new person
 - (UIBarButtonItem *)addBarButton
 {
     if (_addBarButton) {
@@ -147,6 +199,59 @@
     return _addBarButton;
 }
 
+- (void)addNewPerson
+{
+    NSLog(@"add New Person");
+    NSIndexPath *lastSelectedIndexPath = self.selectedFaces.allObjects.firstObject;
+    Face *lastSelectedFace = [self.faceFetchedResultsController objectAtIndexPath:lastSelectedIndexPath];
+    self.guardObjectID = lastSelectedFace.objectID;
+    NSLog(@"Last selected indexpath: %@", lastSelectedIndexPath);
+    Face *guardItem = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
+    guardItem.section = self.historySectionNumber;
+    guardItem.order = lastSelectedFace.order;
+    guardItem.avatorImage = lastSelectedFace.avatorImage;
+    guardItem.pathForBackup = lastSelectedFace.pathForBackup;
+    guardItem.detectedFaceImage = lastSelectedFace.detectedFaceImage;
+    guardItem.detectedFaceRect = lastSelectedFace.detectedFaceRect;
+    guardItem.faceID = lastSelectedFace.faceID;
+    guardItem.posterImage = lastSelectedFace.posterImage;
+    guardItem.tag = lastSelectedFace.tag;
+    guardItem.isMyStar = lastSelectedFace.isMyStar;
+    guardItem.photoOwner = lastSelectedFace.photoOwner;
+    guardItem.personOwner = lastSelectedFace.personOwner;
+    guardItem.whetherToDisplay = YES;
+    [self.selectedFaces removeObject:lastSelectedIndexPath];
+    
+    [self performSelector:@selector(moveOtherFaceItemsBehindGuardFaceItem) withObject:nil afterDelay:0.0];
+}
+
+- (void)moveOtherFaceItemsBehindGuardFaceItem
+{
+    NSLog(@"Move other faces");
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        selectedFace.section = self.historySectionNumber;
+    }
+    self.historySectionNumber += 1;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:@(self.historySectionNumber) forKey:@"historySectionNumber"];
+    [defaults synchronize];
+    
+    [self.selectedFaces removeAllObjects];
+    [self unenableLeftBarButtonItems];
+    
+    [self performSelector:@selector(deleteOriginalFaceItem) withObject:nil afterDelay:0.1];
+}
+
+- (void)deleteOriginalFaceItem
+{
+    NSLog(@"Delete Original Face Item.");
+    Face *originalFace = (Face *)[self.faceFetchedResultsController.managedObjectContext existingObjectWithID:self.guardObjectID error:nil];
+    [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
+}
+
+#pragma mark - move some faces
 - (UIBarButtonItem *)moveBarButton
 {
     if (_moveBarButton) {
@@ -157,33 +262,37 @@
     return _moveBarButton;
 }
 
-- (void)selectFaces
+- (void)moveSelectedFacesToPerson
 {
-    self.collectionView.allowsSelection = YES;
-    self.collectionView.allowsMultipleSelection = YES;
-    self.navigationItem.title = @"Select Faces";
-    self.navigationItem.rightBarButtonItem = self.DoneBarButton;
-
-    NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
-    self.navigationItem.leftBarButtonItems = leftBarButtonItems;
+    [self.view addSubview:self.candidateView];
+    [self.candidateView reloadData];
+    [self unenableLeftBarButtonItems];
     
-    [self.selectedFaces removeAllObjects];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(164.0f, 0.0f, 0.0f, 0.0f)];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 
-- (void)enableLeftBarButtonItems
+- (UICollectionView *)candidateView
 {
-    self.hiddenBarButton.enabled = YES;
-    self.addBarButton.enabled = YES;
-    self.moveBarButton.enabled = YES;
+    if (_candidateView) {
+        return _candidateView;
+    }
+    
+    CGRect frame = self.collectionView.frame;
+    frame.size.height = 120.0f;
+    frame.origin.y = 44.0f;
+    UICollectionViewFlowLayout *lineLayout = [[UICollectionViewFlowLayout alloc] init];
+    lineLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    lineLayout.itemSize = CGSizeMake(100.0f, 100.0f);
+    lineLayout.sectionInset = UIEdgeInsetsMake(10.0f, 25.0f, 10.0f, 25.0f);
+    _candidateView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:lineLayout];
+    [_candidateView registerClass:[SDECandidateCell class] forCellWithReuseIdentifier:@"candidateCell"];
+    _candidateView.dataSource = self;
+    _candidateView.delegate = self;
+    return _candidateView;
 }
 
-- (void)unenableLeftBarButtonItems
-{
-    self.hiddenBarButton.enabled = NO;
-    self.addBarButton.enabled = NO;
-    self.moveBarButton.enabled = NO;
-}
-
+#pragma mark - done and save
 - (UIBarButtonItem *)DoneBarButton
 {
     if (_DoneBarButton) {
@@ -215,81 +324,7 @@
     [self saveEdit];
 }
 
-
-- (void)addNewPerson
-{
-    NSLog(@"add New Person");
-    NSIndexPath *lastSelectedIndexPath = self.selectedFaces.allObjects.lastObject;
-    Face *lastSelectedFace = [self.faceFetchedResultsController objectAtIndexPath:lastSelectedIndexPath];
-    self.guardObjectID = lastSelectedFace.objectID;
-    NSLog(@"Last selected indexpath: %@", lastSelectedIndexPath);
-    Face *guardItem = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-    guardItem.section = self.historySectionNumber;
-    guardItem.order = lastSelectedFace.order;
-    guardItem.avatorImage = lastSelectedFace.avatorImage;
-    guardItem.pathForBackup = lastSelectedFace.pathForBackup;
-    guardItem.detectedFaceImage = lastSelectedFace.detectedFaceImage;
-    guardItem.detectedFaceRect = lastSelectedFace.detectedFaceRect;
-    guardItem.faceID = lastSelectedFace.faceID;
-    guardItem.posterImage = lastSelectedFace.posterImage;
-    guardItem.tag = lastSelectedFace.tag;
-    guardItem.isMyStar = lastSelectedFace.isMyStar;
-    guardItem.photoOwner = lastSelectedFace.photoOwner;
-    guardItem.personOwner = lastSelectedFace.personOwner;
-    guardItem.whetherToDisplay = YES;
-    [self.selectedFaces removeObject:lastSelectedIndexPath];
-    
-    [self performSelector:@selector(moveOtherFaceItemsBehindGuardFaceItem) withObject:nil afterDelay:0.1];
-}
-
-- (void)moveOtherFaceItemsBehindGuardFaceItem
-{
-    NSLog(@"Move other faces");
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        selectedFace.section = self.historySectionNumber;
-    }
-    self.historySectionNumber += 1;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:@(self.historySectionNumber) forKey:@"historySectionNumber"];
-    [defaults synchronize];
-    
-    [self.selectedFaces removeAllObjects];
-    [self unenableLeftBarButtonItems];
-    
-    [self performSelector:@selector(deleteOriginalFaceItem) withObject:nil afterDelay:0.1];
-}
-
-- (void)deleteOriginalFaceItem
-{
-    NSLog(@"Delete Original Face Item.");
-    Face *originalFace = (Face *)[self.faceFetchedResultsController.managedObjectContext existingObjectWithID:self.guardObjectID error:nil];
-    [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
-}
-
-- (void)moveSelectedFacesToPerson
-{
-    
-}
-
-- (void)deleteSelectedFaces
-{
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        face.whetherToDisplay = NO;
-        //[self.faceFetchedResultsController.managedObjectContext deleteObject:face];
-    }
-    [self.selectedFaces removeAllObjects];
-    [self unenableLeftBarButtonItems];
-}
-
-- (void)hiddenSelectedFaces
-{
-    
-}
-
-
+#pragma mark - check photo change
 - (void)checkPhotoLibraryChange
 {
     NSLog(@"Check PhotoLibrary change.");
@@ -364,6 +399,28 @@
     [self.photoLibrary enumerateGroupsWithTypes:groupTypes usingBlock:groupBlock failureBlock:nil];
 }
 
+#pragma mark - Select Candidate UICollectionView Data Source
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSInteger sectionNumber = [self.collectionView numberOfSections];
+    //if (self.isFirstSectionZero) {
+    //    sectionNumber -= 1;
+    //}
+    NSLog(@"Candidate Number: %ld", (long)sectionNumber);
+    return sectionNumber;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SDECandidateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"candidateCell" forIndexPath:indexPath];
+    Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
+    if (firstItemInSection.section == 0) {
+        [cell setCellImage:[UIImage imageNamed:@"Smartisan.png"]];
+    }else
+        [cell setCellImage:firstItemInSection.avatorImage];
+    return cell;
+}
+
 #pragma mark - UICollectionView Delegate Method
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -372,8 +429,24 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self processCellAtIndexPath:indexPath type:@"Select"];
-    //selectedCell.alpha = 0.9f;
+    if ([collectionView isEqual:self.collectionView]) {
+        [self processCellAtIndexPath:indexPath type:@"Select"];;
+    }else{
+        Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
+        int newSection = firstItemInSection.section;
+        for (NSIndexPath *selectedIndexPath in self.selectedFaces) {
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedIndexPath];
+            if (faceItem.section != newSection) {
+                faceItem.section = newSection;
+            }
+        }
+        [self.selectedFaces removeAllObjects];
+        [self unenableLeftBarButtonItems];
+        [self.candidateView removeFromSuperview];
+        [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath

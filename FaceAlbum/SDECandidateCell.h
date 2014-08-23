@@ -1,5 +1,5 @@
 //
-//  SDESelectPersonView.h
+//  SDESelectPersonCell.h
 //  FaceAlbum
 //
 //  Created by seedante on 14-8-23.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDESelectPersonView : UICollectionView
+@interface SDECandidateCell : UICollectionViewCell
+
+- (void)setCellImage:(UIImage *)image;
 
 @end

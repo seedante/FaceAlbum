@@ -179,6 +179,8 @@ static NSString * const cellIdentifier = @"avatorCell";
                 break;
         }
     }
+    NSLog(@"Section change: %@", sectionChanges);
+    NSLog(@"Content Change: %@", objectChanges);
     
     if (self.blendBatchUpdateMode)
     {
@@ -198,9 +200,6 @@ static NSString * const cellIdentifier = @"avatorCell";
         [objectChanges removeAllObjects];
     }
     
-    if (sectionChanges.count > 0 || objectChanges.count > 0) {
-        NSLog(@"Something is wrong.");
-    }
 }
 
 - (void)batchUpdateSection
@@ -275,55 +274,58 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)blendBatchUpdate
 {
     [self.collectionView performBatchUpdates:^{
-        
+        NSLog(@"BlendBatchUpdate:");
+        NSLog(@"First: objectChanges: %@", objectChanges);
         for (NSDictionary *change in objectChanges) {
+            NSLog(@"object change: %@", change);
             [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        NSLog(@"ADD CELL");
+                        NSLog(@"Blend update: ADD CELL");
                         [self.collectionView insertItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        NSLog(@"Delete CELL");
+                        NSLog(@"Blend update: Delete CELL");
                         [self.collectionView deleteItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeUpdate:
-                        NSLog(@"Update Cell");
+                        NSLog(@"Blend update: Update Cell");
                         [self.collectionView reloadItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeMove:
                         [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
                         NSIndexPath *fromIndex = (NSIndexPath *)obj[0];
                         NSIndexPath *toIndex = (NSIndexPath *)obj[1];
-                        NSLog(@"Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
+                        NSLog(@"Blend update: Move Cell From Section: %d Index: %d To Section: %d Index: %d", fromIndex.section, fromIndex.item, toIndex.section, toIndex.item);
                         break;
                 }
             }];
-            
-            for (NSDictionary *change in sectionChanges)
-            {
-                [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                    NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                    switch (type)
-                    {
-                        case NSFetchedResultsChangeInsert:
-                            NSLog(@"ADD New Section");
-                            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                        case NSFetchedResultsChangeDelete:
-                            NSLog(@"Delete Section %d", [obj unsignedIntegerValue]);
-                            [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                        case NSFetchedResultsChangeUpdate:
-                            NSLog(@"Update Section %d", [obj unsignedIntegerValue]);
-                            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                    }
-                }];
-            }
-            
+        }
+        
+        NSLog(@"Then SectionChanges: %@", sectionChanges);
+        for (NSDictionary *sectionChange in sectionChanges)
+        {
+            NSLog(@"Section Change: %@", sectionChange);
+            [sectionChange enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch (type)
+                {
+                    case NSFetchedResultsChangeInsert:
+                        NSLog(@"Blend update: ADD New Section");
+                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        NSLog(@"xxxBlend update: Delete Section %d", [obj unsignedIntegerValue]);
+                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        NSLog(@"Blend update: Update Section %d", [obj unsignedIntegerValue]);
+                        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                }
+            }];
         }
     }completion:^(BOOL finished){
         self.blendBatchUpdateMode = NO;
@@ -461,7 +463,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"cell number: %lu in section: %ld", (unsigned long)[sectionInfo numberOfObjects], section+1);
+    NSLog(@"cell number: %lu in section: %d", (unsigned long)[sectionInfo numberOfObjects], section+1);
     return [sectionInfo numberOfObjects];
 }
 
