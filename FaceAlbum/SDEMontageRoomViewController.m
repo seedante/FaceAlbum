@@ -34,9 +34,6 @@
 @property (nonatomic) NSMutableSet *includedSections;
 @property (nonatomic) NSMutableSet *triggeredDeletedSections;
 @property (nonatomic) NSMutableSet *guardObjectIDs;
-@property (nonatomic, assign) NSInteger historySectionNumber;
-
-@property (nonatomic) BOOL isFirstSectionZero;
 
 @property (nonatomic) UICollectionView  *candidateView;
 
@@ -66,22 +63,11 @@
     
     self.photoScaner = [PhotoScanManager sharedPhotoScanManager];
     
-    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    [defaultConfig registerDefaults:@{@"historySectionNumber": @(1)}];
-    [defaultConfig synchronize];
-    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] integerValue];
-    NSLog(@"historySectionNumber is %d", self.historySectionNumber);
-    
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
-    Face *firstItemInFirstSecion = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-    if (firstItemInFirstSecion.section == 0) {
-        self.isFirstSectionZero = YES;
-    }else
-        self.isFirstSectionZero = NO;
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
@@ -91,8 +77,6 @@
     NSManagedObjectContext *moc = self.faceFetchedResultsController.managedObjectContext;
     if (moc != nil) {
         if ([moc hasChanges] && ![moc save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Edit Save error %@, %@", error, [error userInfo]);
         }
     }
@@ -140,7 +124,15 @@
 {
     self.hiddenBarButton.enabled = YES;
     self.addBarButton.enabled = YES;
-    if (self.isFirstSectionZero && [self.collectionView numberOfSections] == 1) {
+    
+    BOOL isFirstSectionZero = YES;
+    Face *firstItemInFirstSecion = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    if (firstItemInFirstSecion.section == 0) {
+        isFirstSectionZero = YES;
+    }else
+        isFirstSectionZero = NO;
+    
+    if (isFirstSectionZero && [self.collectionView numberOfSections] == 1) {
         self.moveBarButton.enabled = NO;
     }else
         self.moveBarButton.enabled = YES;
@@ -173,11 +165,13 @@
     [self.selectedFaces removeAllObjects];
     [self.includedSections removeAllObjects];
     
+    [self saveEdit];
     [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
 }
 
 - (void)filterSelectedItemSet
 {
+    NSLog(@"STEP 1");
     [self.guardObjectIDs removeAllObjects];
     [self.triggeredDeletedSections removeAllObjects];
     
@@ -199,6 +193,7 @@
 
 - (void)createCopyItemInTargetSection:(NSInteger)targetSection
 {
+    NSLog(@"STEP 2");
     if (self.triggeredDeletedSections.count > 0) {
         for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
             NSInteger section = sectionNumber.integerValue;
@@ -256,6 +251,7 @@
 
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
+    NSLog(@"STEP 3");
     NSInteger targetSection = [targetSectionNumber integerValue];
     NSLog(@"Move other faces");
     for (NSIndexPath *indexPath in self.selectedFaces) {
@@ -271,6 +267,7 @@
 
 - (void)deleteOriginalItems
 {
+    NSLog(@"STEP 4");
     if (self.guardObjectIDs.count > 0) {
         for (NSManagedObjectID *objectID in self.guardObjectIDs) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
@@ -326,6 +323,7 @@
     }
     [self.selectedFaces removeAllObjects];
     [self unenableLeftBarButtonItems];
+    [self cleanUsedData];
 }
 
 #pragma mark - add a new person
@@ -343,14 +341,11 @@
 {
     NSLog(@"add New Person");
     [self filterSelectedItemSet];
-    NSInteger newSection = self.historySectionNumber;
+    NSInteger sectionCount = [self.collectionView numberOfSections];
+    Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
+    NSInteger newSection = firstItemInSection.section + 1;
     [self createCopyItemInTargetSection:newSection];
-    
-    self.historySectionNumber += 1;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:@(self.historySectionNumber) forKey:@"historySectionNumber"];
-    [defaults synchronize];
-    
+    [self unenableLeftBarButtonItems];
 }
 
 
@@ -415,16 +410,14 @@
         }
     }
     
-    [self.selectedFaces removeAllObjects];
     [self unenableLeftBarButtonItems];
     self.collectionView.allowsSelection = NO;
-    self.collectionView.allowsMultipleSelection = NO;
-    
+
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.rightBarButtonItem = self.selectBarButton;
     
-    [self saveEdit];
+    [self cleanUsedData];
 }
 
 #pragma mark - check photo change
@@ -506,9 +499,6 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger sectionNumber = [self.collectionView numberOfSections];
-    //if (self.isFirstSectionZero) {
-    //    sectionNumber -= 1;
-    //}
     NSLog(@"Candidate Number: %ld", (long)sectionNumber);
     return sectionNumber;
 }
@@ -525,11 +515,6 @@
 }
 
 #pragma mark - UICollectionView Delegate Method
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
@@ -540,13 +525,10 @@
     }else{
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int newSection = firstItemInSection.section;
-        for (NSIndexPath *selectedIndexPath in self.selectedFaces) {
-            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedIndexPath];
-            if (faceItem.section != newSection) {
-                faceItem.section = newSection;
-            }
-        }
-        [self.selectedFaces removeAllObjects];
+        
+        [self filterSelectedItemSet];
+        [self createCopyItemInTargetSection:newSection];
+        
         [self unenableLeftBarButtonItems];
         [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];

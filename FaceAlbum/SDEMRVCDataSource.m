@@ -134,8 +134,8 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     NSLog(@"Process IV: Batch Update");
-    NSLog(@"Section change: %@", sectionChanges);
-    NSLog(@"Content Change: %@", objectChanges);
+    //NSLog(@"Section change: %@", sectionChanges);
+    //NSLog(@"Content Change: %@", objectChanges);
     if ([sectionChanges count] > 0)
     {
         NSDictionary *firstJob = sectionChanges[0];
