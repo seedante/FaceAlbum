@@ -18,6 +18,7 @@
 @interface SDEMontageRoomViewController ()
 
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
+@property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) SDEMRVCDataSource *dataSource;
 @property (nonatomic) PhotoScanManager *photoScaner;
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
@@ -30,8 +31,10 @@
 @property (nonatomic) UIBarButtonItem *addBarButton;
 
 @property (nonatomic) NSMutableSet *selectedFaces;
-@property (nonatomic, assign) int historySectionNumber;
-@property (nonatomic) NSManagedObjectID *guardObjectID;
+@property (nonatomic) NSMutableSet *includedSections;
+@property (nonatomic) NSMutableSet *triggeredDeletedSections;
+@property (nonatomic) NSMutableSet *guardObjectIDs;
+@property (nonatomic, assign) NSInteger historySectionNumber;
 
 @property (nonatomic) BOOL isFirstSectionZero;
 
@@ -49,20 +52,25 @@
     
     self.changedAlbumGroups = [NSMutableArray new];
     self.selectedFaces = [[NSMutableSet alloc] init];
+    self.includedSections = [[NSMutableSet alloc] init];
+    self.triggeredDeletedSections = [NSMutableSet new];
+    self.guardObjectIDs = [NSMutableSet new];
+    
     self.collectionView.allowsSelection = NO;
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
     self.collectionView.dataSource = self.dataSource;
     self.dataSource.collectionView = self.collectionView;
     self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
+    self.managedObjectContext = self.faceFetchedResultsController.managedObjectContext;
     
     self.photoScaner = [PhotoScanManager sharedPhotoScanManager];
     
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     [defaultConfig registerDefaults:@{@"historySectionNumber": @(1)}];
     [defaultConfig synchronize];
-    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] intValue];
-    NSLog(@"historySectionNumber is %lu", (unsigned long)self.historySectionNumber);
+    self.historySectionNumber = [[defaultConfig valueForKey:@"historySectionNumber"] integerValue];
+    NSLog(@"historySectionNumber is %d", self.historySectionNumber);
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
@@ -127,7 +135,7 @@
     NSLog(@"Drag End.");
 }
 
-#pragma mark - BarButton Method
+#pragma mark - Fundamental Method of BarButton Action
 - (void)enableLeftBarButtonItems
 {
     self.hiddenBarButton.enabled = YES;
@@ -144,6 +152,138 @@
     self.addBarButton.enabled = NO;
     self.moveBarButton.enabled = NO;
 }
+
+- (void)deselectAllSelectedItems
+{
+    self.collectionView.allowsSelection = NO;
+    
+    [self performSelector:@selector(tryToAllowSelect) withObject:nil afterDelay:0.1];
+}
+
+- (void)tryToAllowSelect
+{
+    self.collectionView.allowsSelection = YES;
+    self.collectionView.allowsMultipleSelection = YES;
+}
+
+- (void)cleanUsedData
+{
+    [self.triggeredDeletedSections removeAllObjects];
+    [self.guardObjectIDs removeAllObjects];
+    [self.selectedFaces removeAllObjects];
+    [self.includedSections removeAllObjects];
+    
+    [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
+}
+
+- (void)filterSelectedItemSet
+{
+    [self.guardObjectIDs removeAllObjects];
+    [self.triggeredDeletedSections removeAllObjects];
+    
+    for (NSNumber *sectionNumber in self.includedSections) {
+        NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
+        NSArray *matchedItems = [self.selectedFaces.allObjects filteredArrayUsingPredicate:sectionPredicate];
+        if (matchedItems.count > 0) {
+            NSInteger section = [sectionNumber integerValue];
+            NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+            if (itemCount == matchedItems.count) {
+                NSLog(@"All items at section: %d are choiced. This will trigger detele section.", section+1);
+                [self.triggeredDeletedSections addObject:sectionNumber];
+                [self.selectedFaces removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
+            }
+        }
+    }
+    [self.includedSections removeAllObjects];
+}
+
+- (void)createCopyItemInTargetSection:(NSInteger)targetSection
+{
+    if (self.triggeredDeletedSections.count > 0) {
+        for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
+            NSInteger section = sectionNumber.integerValue;
+            if (section == targetSection) {
+                NSLog(@"Items in section:%d don't need to move.", section);
+                [self filterSelectedItemsInSection:targetSection];
+            }else{
+                Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+                copyFaceItem.section = targetSection;
+                copyFaceItem.whetherToDisplay = YES;
+            }
+        }
+    }else{
+        NSIndexPath *anyIndexPath = self.selectedFaces.anyObject;
+        if (anyIndexPath.section == targetSection) {
+            NSLog(@"Don't move this item");
+            [self filterSelectedItemsInSection:targetSection];
+        }else{
+            Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
+            singleCopyFaceItem.section = targetSection;
+            singleCopyFaceItem.whetherToDisplay = YES;
+        }
+        [self.selectedFaces removeObject:anyIndexPath];
+    }
+    
+    [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetSection) afterDelay:0.1];
+}
+
+- (void)filterSelectedItemsInSection:(NSInteger)section
+{
+    NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(section)];
+    [self.selectedFaces filterUsingPredicate:sectionPredicate];
+}
+
+- (NSManagedObject *)copyManagedObjectAtIndexPath:(NSIndexPath *)indexPath;
+{
+    Face *originalFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    NSManagedObjectID *objectID = originalFaceItem.objectID;
+    [self.guardObjectIDs addObject:objectID];
+    Face *copyFaceItem = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
+    copyFaceItem.avatorImage = originalFaceItem.avatorImage;
+    copyFaceItem.pathForBackup = originalFaceItem.pathForBackup;
+    copyFaceItem.detectedFaceImage = originalFaceItem.detectedFaceImage;
+    copyFaceItem.detectedFaceRect = originalFaceItem.detectedFaceRect;
+    copyFaceItem.faceID = originalFaceItem.faceID;
+    copyFaceItem.order = originalFaceItem.order;
+    copyFaceItem.posterImage = originalFaceItem.posterImage;
+    copyFaceItem.tag = originalFaceItem.tag;
+    copyFaceItem.isMyStar = originalFaceItem.isMyStar;
+    copyFaceItem.personOwner = originalFaceItem.personOwner;
+    copyFaceItem.photoOwner = originalFaceItem.photoOwner;
+    
+    return copyFaceItem;
+}
+
+- (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
+{
+    NSInteger targetSection = [targetSectionNumber integerValue];
+    NSLog(@"Move other faces");
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        if (selectedFace.section != targetSection) {
+            selectedFace.section = targetSection;
+        }
+    }
+    
+    [self.selectedFaces removeAllObjects];
+    [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.1];
+}
+
+- (void)deleteOriginalItems
+{
+    if (self.guardObjectIDs.count > 0) {
+        for (NSManagedObjectID *objectID in self.guardObjectIDs) {
+            Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
+            [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
+        }
+        [self.guardObjectIDs removeAllObjects];
+    }
+    
+    [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.1];
+}
+
+
+#pragma mark - select Method
 
 - (UIBarButtonItem *)selectBarButton
 {
@@ -202,54 +342,17 @@
 - (void)addNewPerson
 {
     NSLog(@"add New Person");
-    NSIndexPath *lastSelectedIndexPath = self.selectedFaces.allObjects.firstObject;
-    Face *lastSelectedFace = [self.faceFetchedResultsController objectAtIndexPath:lastSelectedIndexPath];
-    self.guardObjectID = lastSelectedFace.objectID;
-    NSLog(@"Last selected indexpath: %@", lastSelectedIndexPath);
-    Face *guardItem = [Face insertNewObjectInManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-    guardItem.section = self.historySectionNumber;
-    guardItem.order = lastSelectedFace.order;
-    guardItem.avatorImage = lastSelectedFace.avatorImage;
-    guardItem.pathForBackup = lastSelectedFace.pathForBackup;
-    guardItem.detectedFaceImage = lastSelectedFace.detectedFaceImage;
-    guardItem.detectedFaceRect = lastSelectedFace.detectedFaceRect;
-    guardItem.faceID = lastSelectedFace.faceID;
-    guardItem.posterImage = lastSelectedFace.posterImage;
-    guardItem.tag = lastSelectedFace.tag;
-    guardItem.isMyStar = lastSelectedFace.isMyStar;
-    guardItem.photoOwner = lastSelectedFace.photoOwner;
-    guardItem.personOwner = lastSelectedFace.personOwner;
-    guardItem.whetherToDisplay = YES;
-    [self.selectedFaces removeObject:lastSelectedIndexPath];
+    [self filterSelectedItemSet];
+    NSInteger newSection = self.historySectionNumber;
+    [self createCopyItemInTargetSection:newSection];
     
-    [self performSelector:@selector(moveOtherFaceItemsBehindGuardFaceItem) withObject:nil afterDelay:0.0];
-}
-
-- (void)moveOtherFaceItemsBehindGuardFaceItem
-{
-    NSLog(@"Move other faces");
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        selectedFace.section = self.historySectionNumber;
-    }
     self.historySectionNumber += 1;
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:@(self.historySectionNumber) forKey:@"historySectionNumber"];
     [defaults synchronize];
     
-    [self.selectedFaces removeAllObjects];
-    [self unenableLeftBarButtonItems];
-    
-    [self performSelector:@selector(deleteOriginalFaceItem) withObject:nil afterDelay:0.1];
 }
 
-- (void)deleteOriginalFaceItem
-{
-    NSLog(@"Delete Original Face Item.");
-    Face *originalFace = (Face *)[self.faceFetchedResultsController.managedObjectContext existingObjectWithID:self.guardObjectID error:nil];
-    [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
-}
 
 #pragma mark - move some faces
 - (UIBarButtonItem *)moveBarButton
@@ -430,7 +533,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
-        [self processCellAtIndexPath:indexPath type:@"Select"];;
+        [self processCellAtIndexPath:indexPath type:@"Select"];
+        if (![self.includedSections containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+            [self.includedSections addObject:@(indexPath.section)];
+        }
     }else{
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int newSection = firstItemInSection.section;
@@ -460,6 +566,7 @@
     if ([type isEqual:@"Select"]) {
         NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         [self.selectedFaces addObject:indexPath];
+        [self.includedSections addObject:[NSNumber numberWithInteger:indexPath.section]];
         [self enableLeftBarButtonItems];
 
         //selectedCell.layer.backgroundColor = [[UIColor blueColor] CGColor];

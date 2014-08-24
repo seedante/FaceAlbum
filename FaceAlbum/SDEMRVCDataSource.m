@@ -187,12 +187,12 @@ static NSString * const cellIdentifier = @"avatorCell";
         [self blendBatchUpdate];
     }else{
         if (sectionChanges.count > 0) {
-            NSLog(@"Update Section");
+            NSLog(@"Regular Update Section");
             [self batchUpdateSection];
         }
         
         if (objectChanges.count > 0 && sectionChanges.count == 0) {
-            NSLog(@"Update Content");
+            NSLog(@"Regular Update Content");
             [self batchUpdateCell];
         }
         
@@ -212,14 +212,19 @@ static NSString * const cellIdentifier = @"avatorCell";
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        NSLog(@"ADD Person");
+                        NSLog(@"ADD Section: %d", [obj unsignedIntegerValue]);
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeDelete:
+                        NSLog(@"Delete Section: %d", [obj unsignedIntegerValue]);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeUpdate:
+                        NSLog(@"Update Section: %d", [obj unsignedIntegerValue]);
                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        NSLog(@"MOVE Section. NOT FINISHED NOW.");
                         break;
                 }
             }];
@@ -249,11 +254,11 @@ static NSString * const cellIdentifier = @"avatorCell";
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        NSLog(@"ADD CELL");
+                        NSLog(@"ADD CELL AT %@", (NSIndexPath *)obj);
                         [self.collectionView insertItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        NSLog(@"Delete CELL");
+                        NSLog(@"Delete Cell AT %@", (NSIndexPath *)obj);
                         [self.collectionView deleteItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeUpdate:
