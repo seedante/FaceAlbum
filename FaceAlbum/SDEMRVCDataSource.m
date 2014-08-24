@@ -118,9 +118,11 @@ static NSString * const cellIdentifier = @"avatorCell";
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
+            NSLog(@"Delete Cell At Section: %d Index: %d", newIndexPath.section, newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
+            NSLog(@"Update Cell At Section: %d Index: %d", newIndexPath.section, newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
@@ -179,8 +181,8 @@ static NSString * const cellIdentifier = @"avatorCell";
                 break;
         }
     }
-    NSLog(@"Section change: %@", sectionChanges);
-    NSLog(@"Content Change: %@", objectChanges);
+    //NSLog(@"Section change: %@", sectionChanges);
+    //NSLog(@"Content Change: %@", objectChanges);
     
     if (self.blendBatchUpdateMode)
     {

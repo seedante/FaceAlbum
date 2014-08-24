@@ -149,10 +149,11 @@
 {
     self.collectionView.allowsSelection = NO;
     
-    [self performSelector:@selector(tryToAllowSelect) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(enableSelect) withObject:nil afterDelay:0.1];
+    
 }
 
-- (void)tryToAllowSelect
+- (void)enableSelect
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
@@ -171,7 +172,7 @@
 
 - (void)filterSelectedItemSet
 {
-    NSLog(@"STEP 1");
+    NSLog(@"STEP 1: filter selected items.");
     [self.guardObjectIDs removeAllObjects];
     [self.triggeredDeletedSections removeAllObjects];
     
@@ -193,7 +194,7 @@
 
 - (void)createCopyItemInTargetSection:(NSInteger)targetSection
 {
-    NSLog(@"STEP 2");
+    NSLog(@"STEP 2: create copy items in target section.");
     if (self.triggeredDeletedSections.count > 0) {
         for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
             NSInteger section = sectionNumber.integerValue;
@@ -251,30 +252,34 @@
 
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
-    NSLog(@"STEP 3");
-    NSInteger targetSection = [targetSectionNumber integerValue];
-    NSLog(@"Move other faces");
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        if (selectedFace.section != targetSection) {
-            selectedFace.section = targetSection;
+    NSLog(@"STEP 3: move left items to target section.");
+    if (self.selectedFaces.count > 0) {
+        NSInteger targetSection = [targetSectionNumber integerValue];
+        for (NSIndexPath *indexPath in self.selectedFaces) {
+            Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            if (selectedFace.section != targetSection) {
+                selectedFace.section = targetSection;
+            }
         }
-    }
-    
-    [self.selectedFaces removeAllObjects];
+        
+        [self.selectedFaces removeAllObjects];
+    }else
+        NSLog(@"There is no item to be move.");
+
     [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.1];
 }
 
 - (void)deleteOriginalItems
 {
-    NSLog(@"STEP 4");
+    NSLog(@"STEP 4: delete original items.");
     if (self.guardObjectIDs.count > 0) {
         for (NSManagedObjectID *objectID in self.guardObjectIDs) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
             [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
         }
         [self.guardObjectIDs removeAllObjects];
-    }
+    }else
+        NSLog(@"There is no item to delete.");
     
     [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.1];
 }
@@ -321,9 +326,9 @@
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         face.whetherToDisplay = NO;
     }
-    [self.selectedFaces removeAllObjects];
-    [self unenableLeftBarButtonItems];
+
     [self cleanUsedData];
+    [self unenableLeftBarButtonItems];
 }
 
 #pragma mark - add a new person
@@ -345,7 +350,8 @@
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
     [self createCopyItemInTargetSection:newSection];
-    [self unenableLeftBarButtonItems];
+    
+    [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
 
 
@@ -410,14 +416,25 @@
         }
     }
     
-    [self unenableLeftBarButtonItems];
-    self.collectionView.allowsSelection = NO;
+    if ([self.view.subviews containsObject:self.candidateView]) {
+        [self.candidateView removeFromSuperview];
+        [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
 
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.rightBarButtonItem = self.selectBarButton;
     
-    [self cleanUsedData];
+    [self unenableLeftBarButtonItems];
+    self.collectionView.allowsSelection = NO;
+    [self.selectedFaces removeAllObjects];
+    [self.includedSections removeAllObjects];
+    [self.triggeredDeletedSections removeAllObjects];
+    [self.guardObjectIDs removeAllObjects];
+    
+    [self saveEdit];
+
 }
 
 #pragma mark - check photo change
