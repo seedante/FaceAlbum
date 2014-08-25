@@ -20,9 +20,6 @@
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) SDEMRVCDataSource *dataSource;
-@property (nonatomic) PhotoScanManager *photoScaner;
-@property (nonatomic) ALAssetsLibrary *photoLibrary;
-@property (nonatomic) NSMutableArray *changedAlbumGroups;
 
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
@@ -47,12 +44,12 @@
     
     [self.navigationItem setRightBarButtonItem:self.selectBarButton];
     
-    self.changedAlbumGroups = [NSMutableArray new];
     self.selectedFaces = [[NSMutableSet alloc] init];
     self.includedSections = [[NSMutableSet alloc] init];
     self.triggeredDeletedSections = [NSMutableSet new];
     self.guardObjectIDs = [NSMutableSet new];
     
+    [self registerAsObserver];
     self.collectionView.allowsSelection = NO;
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
@@ -60,8 +57,6 @@
     self.dataSource.collectionView = self.collectionView;
     self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
     self.managedObjectContext = self.faceFetchedResultsController.managedObjectContext;
-    
-    self.photoScaner = [PhotoScanManager sharedPhotoScanManager];
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
@@ -82,13 +77,39 @@
     }
 }
 
-- (void)scanPhotoLibrary:(id)sender
+#pragma mark - KVC Complaint for @property selectedFaces
+- (void)addSelectedFaces:(NSSet *)objects
 {
-    if ([self.dataSource numberOfSectionsInCollectionView:self.collectionView] == 0) {
-        self.photoScaner.numberOfItemsInFirstSection = 0;
+    [self.selectedFaces unionSet:objects];
+}
+
+- (void)removeSelectedFaces:(NSSet *)objects
+{
+    [self.selectedFaces minusSet:objects];
+}
+
+#pragma mark - KVO Notification and Response
+- (void)registerAsObserver
+{
+    [self addObserver:self forKeyPath:@"selectedFaces" options:0 context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"selectedFaces"]) {
+        [self updateTitle];
+    }
+}
+
+- (void)updateTitle
+{
+    NSString *newTitle;
+    if (self.selectedFaces.count > 1) {
+        newTitle = [NSString stringWithFormat:@"select %d faces", self.selectedFaces.count];
     }else
-        self.photoScaner.numberOfItemsInFirstSection = [self.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
-    //[self.photoScaner scanPhotoLibrary];
+        newTitle = [NSString stringWithFormat:@"select %d face", self.selectedFaces.count];
+    
+    self.navigationItem.title = newTitle;
 }
 
 #pragma mark <UICollectionViewDelegateFlowLayout>
@@ -163,7 +184,7 @@
 {
     [self.triggeredDeletedSections removeAllObjects];
     [self.guardObjectIDs removeAllObjects];
-    [self.selectedFaces removeAllObjects];
+    [self removeSelectedFaces:[self.selectedFaces copy]];
     [self.includedSections removeAllObjects];
     
     [self saveEdit];
@@ -175,6 +196,12 @@
     NSLog(@"STEP 1: filter selected items.");
     [self.guardObjectIDs removeAllObjects];
     [self.triggeredDeletedSections removeAllObjects];
+    
+    //remove bordercolor effect.
+    for (NSIndexPath *indexPath in self.selectedFaces) {
+        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        cell.layer.borderWidth = 0.0f;
+    }
     
     for (NSNumber *sectionNumber in self.includedSections) {
         NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
@@ -300,7 +327,7 @@
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
-    self.navigationItem.title = @"Select Faces";
+    self.navigationItem.title = @"Select 0 Faces";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
@@ -437,80 +464,6 @@
 
 }
 
-#pragma mark - check photo change
-- (void)checkPhotoLibraryChange
-{
-    NSLog(@"Check PhotoLibrary change.");
-    NSFetchRequest *albumFetchQuest = [[NSFetchRequest alloc] initWithEntityName:@"AlbumGroup"];
-    [albumFetchQuest setResultType:NSDictionaryResultType];
-    NSEntityDescription *AlbumGroupDescription = [NSEntityDescription entityForName:@"AlbumGroup" inManagedObjectContext:self.faceFetchedResultsController.managedObjectContext];
-    NSPropertyDescription *persistentIDDescription = [[AlbumGroupDescription propertiesByName] objectForKey:@"persistentID"];
-    NSPropertyDescription *photoCountDescription = [[AlbumGroupDescription propertiesByName] objectForKey:@"photoCount"];
-    [albumFetchQuest setPropertiesToFetch:@[persistentIDDescription, photoCountDescription]];
-    NSArray *queryResult = [self.faceFetchedResultsController.managedObjectContext executeFetchRequest:albumFetchQuest error:nil];
-    NSMutableDictionary *albumGroupInfo = [NSMutableDictionary new];
-    
-    for (NSDictionary *result in queryResult) {
-        [albumGroupInfo setObject:result[@"photoCount"] forKey:result[@"persistentID"]];
-    }
-    
-    //Now, just check if there is a different photo and tell the app the photo library is changed, just scan.
-    ALAssetsLibraryGroupsEnumerationResultsBlock groupBlock = ^(ALAssetsGroup *group, BOOL *stop){
-        NSInteger currentCount = [group numberOfAssets];
-        NSString *persistentIDString = [group valueForProperty:ALAssetsGroupPropertyPersistentID];
-        if ([albumGroupInfo valueForKey:persistentIDString] == nil || (NSInteger)albumGroupInfo[persistentIDString] != currentCount) {
-            NSString *groupName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
-            NSURL *groupURL = (NSURL *)[group valueForKey:ALAssetsGroupPropertyURL];
-            NSLog(@"Album Group: %@ change.", groupName);
-            [self.changedAlbumGroups addObject:groupURL];
-            *stop = YES;
-            return;
-        }
-        
-        NSFetchRequest *assetFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
-        [assetFetchRequest setResultType:NSDictionaryResultType];
-        
-        NSSortDescriptor *URLStringDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"uniqueURLString" ascending:YES];
-        [assetFetchRequest setPropertiesToFetch:@[URLStringDescriptor]];
-        NSArray *array = [self.faceFetchedResultsController.managedObjectContext executeFetchRequest:assetFetchRequest error:nil];
-        NSArray *URLArray = [array valueForKeyPath:@"allValues.firstObject"];
-        if (URLArray != nil && URLArray.count > 0) {
-            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *shouldStop){
-                NSString *assetURLString = [(NSURL *)[result valueForProperty:ALAssetPropertyAssetURL] absoluteString];
-                if (![URLArray containsObject:assetURLString]) {
-                    NSString *groupName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
-                    NSURL *groupURL = (NSURL *)[group valueForKey:ALAssetsGroupPropertyURL];
-                    NSLog(@"Album Group: %@ change.", groupName);
-                    [self.changedAlbumGroups addObject:groupURL];
-                    *shouldStop = YES;
-                }
-            }];
-        }
-        
-        /*
-         __block NSFetchRequest *assetFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
-         [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop){
-         NSString *URLString = [(NSURL *)[result valueForProperty:ALAssetPropertyAssetURL] absoluteString];
-         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uniqueURLString == %@", URLString];
-         [assetFetchRequest setPredicate:predicate];
-         NSArray *array = [self.faceFetchedResultsController.managedObjectContext executeFetchRequest:assetFetchRequest error:nil];
-         if (array != nil && array.count > 0) {
-         ;
-         }else{
-         *stop = YES;
-         NSString *groupName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
-         NSURL *groupURL = (NSURL *)[group valueForKey:ALAssetsGroupPropertyURL];
-         NSLog(@"Album Group:%@ Change.", groupName);
-         [changedAlbumGroups addObject:groupURL];
-         return;
-         }
-         }];
-         */
-    };
-    
-    NSUInteger groupTypes = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
-    [self.photoLibrary enumerateGroupsWithTypes:groupTypes usingBlock:groupBlock failureBlock:nil];
-}
 
 #pragma mark - Select Candidate UICollectionView Data Source
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -564,8 +517,17 @@
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([type isEqual:@"Select"]) {
         NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
+        /*
         [self.selectedFaces addObject:indexPath];
-        [self.includedSections addObject:[NSNumber numberWithInteger:indexPath.section]];
+        NSUInteger faceCount = self.selectedFaces.count;
+        if (faceCount == 1) {
+            self.navigationItem.title = [NSString stringWithFormat:@"Select 1 Face"];
+        }else
+            self.navigationItem.title = [NSString stringWithFormat:@"Select %lu Faces", (unsigned long)faceCount];
+         */
+        //USE KVO
+        [self addSelectedFaces:[NSSet setWithObject:indexPath]];
+        
         [self enableLeftBarButtonItems];
 
         //selectedCell.layer.backgroundColor = [[UIColor blueColor] CGColor];
@@ -576,11 +538,21 @@
     
     if ([type isEqual:@"Deselect"]) {
         NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
-        cell.layer.borderColor = [[UIColor blueColor] CGColor];
-        cell.layer.borderWidth = 3.0f;
+        //cell.layer.borderColor = [[UIColor blueColor] CGColor];
+        cell.layer.borderWidth = 0.0f;
         cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
         
+        /*
         [self.selectedFaces removeObject:indexPath];
+        NSUInteger faceCount = self.selectedFaces.count;
+        if (faceCount == 1) {
+            self.navigationItem.title = [NSString stringWithFormat:@"Select 1 Face"];
+        }else
+            self.navigationItem.title = [NSString stringWithFormat:@"Select %lu Faces", (unsigned long)faceCount];
+         */
+        //use KVO
+        [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
+        
         if (self.selectedFaces.count == 0) {
             [self unenableLeftBarButtonItems];
         }
