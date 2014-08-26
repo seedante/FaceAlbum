@@ -121,27 +121,6 @@
 }
 
 
-#pragma mark - LXReorderableCollectionViewDelegateFlowLayout
-- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Will Begin drag");
-}
-
-- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Dragging");
-}
-
-- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Will End Drag.");
-}
-
-- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Drag End.");
-}
-
 #pragma mark - Fundamental Method of BarButton Action
 - (void)enableLeftBarButtonItems
 {
@@ -553,5 +532,8 @@
     }
 }
 
-
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
 @end

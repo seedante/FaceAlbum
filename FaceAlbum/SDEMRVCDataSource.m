@@ -11,7 +11,6 @@
 #import "Person.h"
 #import "Store.h"
 #import "AvatorCell.h"
-#import "SDEPersonProfileHeader.h"
 
 static NSString * const cellIdentifier = @"avatorCell";
 
@@ -487,12 +486,6 @@ static NSString * const cellIdentifier = @"avatorCell";
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    SDEPersonProfileHeader *personProfile = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
-    
-    return personProfile;
-}
 
 
 @end
