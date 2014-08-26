@@ -52,11 +52,11 @@
                     </collectionView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="MontageRoom" id="nXJ-LS-Ybg">
-                        <barButtonItem key="backBarButtonItem" title="ScanRoom" id="cwv-mp-8r0"/>
+                        <barButtonItem key="backBarButtonItem" title="I don't want this." id="KY8-xY-Dyk"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="w27-g2-BwB" kind="push" identifier="enterGallxy" id="2nP-oH-Xbz"/>
+                        <segue destination="w27-g2-BwB" kind="push" identifier="enterGallery" id="2nP-oH-Xbz"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-D4-GVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -71,7 +71,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3xb-f6-wLl">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3xb-f6-wLl" customClass="LineLayout">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -93,10 +93,11 @@
                             <outlet property="delegate" destination="w27-g2-BwB" id="yYc-xG-nB4"/>
                         </connections>
                     </collectionView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8C5-QC-Vsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5012" y="-663"/>
+            <point key="canvasLocation" x="4360" y="-643"/>
         </scene>
         <!--Scan Room View Controller - Scan Room-->
         <scene sceneID="hbB-3X-cdK">
@@ -239,7 +240,7 @@
                     <connections>
                         <outlet property="assetCollectionView" destination="9Va-1O-m5e" id="JLN-wW-wDs"/>
                         <outlet property="faceCollectionView" destination="Pvi-kF-v33" id="w0Q-yH-Rxi"/>
-                        <segue destination="GxB-uN-ZSN" kind="modal" identifier="gotoEditRoom" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="A6W-3Z-wQ3"/>
+                        <segue destination="GxB-uN-ZSN" kind="modal" identifier="enterMontageRoom" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="A6W-3Z-wQ3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EdH-Jh-tWa" sceneMemberID="firstResponder"/>
@@ -259,6 +260,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="lzV-Md-vbo">
+                        <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="3O8-fZ-xdw" kind="relationship" relationship="rootViewController" id="Gn0-8Q-kQj"/>
                     </connections>

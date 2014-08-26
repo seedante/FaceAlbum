@@ -23,6 +23,7 @@
 
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
+@property (nonatomic) UIBarButtonItem *showGalleryBarButton;
 @property (nonatomic) UIBarButtonItem *moveBarButton;
 @property (nonatomic) UIBarButtonItem *hiddenBarButton;
 @property (nonatomic) UIBarButtonItem *addBarButton;
@@ -42,7 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setRightBarButtonItem:self.selectBarButton];
+    [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
+    [self.navigationItem setRightBarButtonItem:self.showGalleryBarButton];
     
     self.selectedFaces = [[NSMutableSet alloc] init];
     self.includedSections = [[NSMutableSet alloc] init];
@@ -166,6 +168,17 @@
     self.moveBarButton.enabled = NO;
 }
 
+- (void)cleanUsedData
+{
+    [self.triggeredDeletedSections removeAllObjects];
+    [self.guardObjectIDs removeAllObjects];
+    [self removeSelectedFaces:[self.selectedFaces copy]];
+    [self.includedSections removeAllObjects];
+    
+    [self saveEdit];
+    [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
+}
+
 - (void)deselectAllSelectedItems
 {
     self.collectionView.allowsSelection = NO;
@@ -178,17 +191,6 @@
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
-}
-
-- (void)cleanUsedData
-{
-    [self.triggeredDeletedSections removeAllObjects];
-    [self.guardObjectIDs removeAllObjects];
-    [self removeSelectedFaces:[self.selectedFaces copy]];
-    [self.includedSections removeAllObjects];
-    
-    [self saveEdit];
-    [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
 }
 
 - (void)filterSelectedItemSet
@@ -219,7 +221,7 @@
     [self.includedSections removeAllObjects];
 }
 
-- (void)createCopyItemInTargetSection:(NSInteger)targetSection
+- (void)manageSelectedItemsWithTargetSection:(NSInteger)targetSection
 {
     NSLog(@"STEP 2: create copy items in target section.");
     if (self.triggeredDeletedSections.count > 0) {
@@ -288,7 +290,6 @@
                 selectedFace.section = targetSection;
             }
         }
-        
         [self.selectedFaces removeAllObjects];
     }else
         NSLog(@"There is no item to be move.");
@@ -327,7 +328,7 @@
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
-    self.navigationItem.title = @"Select 0 Faces";
+    self.navigationItem.title = @"Select 0 Face";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
@@ -376,7 +377,7 @@
     NSInteger sectionCount = [self.collectionView numberOfSections];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
-    [self createCopyItemInTargetSection:newSection];
+    [self manageSelectedItemsWithTargetSection:newSection];
     
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
@@ -451,7 +452,8 @@
 
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
-    self.navigationItem.rightBarButtonItem = self.selectBarButton;
+    self.navigationItem.leftBarButtonItem = self.selectBarButton;
+    self.navigationItem.rightBarButtonItem = self.showGalleryBarButton;
     
     [self unenableLeftBarButtonItems];
     self.collectionView.allowsSelection = NO;
@@ -461,9 +463,22 @@
     [self.guardObjectIDs removeAllObjects];
     
     [self saveEdit];
-
 }
 
+#pragma mark - go to Gallery Scene
+- (UIBarButtonItem *)showGalleryBarButton
+{
+    if (_showGalleryBarButton) {
+        return _showGalleryBarButton;
+    }
+    _showGalleryBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(jumpToGalleryScene)];
+    return _showGalleryBarButton;
+}
+
+- (void)jumpToGalleryScene
+{
+    [self performSegueWithIdentifier:@"enterGallery" sender:self];
+}
 
 #pragma mark - Select Candidate UICollectionView Data Source
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -497,7 +512,7 @@
         int newSection = firstItemInSection.section;
         
         [self filterSelectedItemSet];
-        [self createCopyItemInTargetSection:newSection];
+        [self manageSelectedItemsWithTargetSection:newSection];
         
         [self unenableLeftBarButtonItems];
         [self.candidateView removeFromSuperview];
@@ -517,20 +532,9 @@
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([type isEqual:@"Select"]) {
         NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
-        /*
-        [self.selectedFaces addObject:indexPath];
-        NSUInteger faceCount = self.selectedFaces.count;
-        if (faceCount == 1) {
-            self.navigationItem.title = [NSString stringWithFormat:@"Select 1 Face"];
-        }else
-            self.navigationItem.title = [NSString stringWithFormat:@"Select %lu Faces", (unsigned long)faceCount];
-         */
-        //USE KVO
         [self addSelectedFaces:[NSSet setWithObject:indexPath]];
         
         [self enableLeftBarButtonItems];
-
-        //selectedCell.layer.backgroundColor = [[UIColor blueColor] CGColor];
         cell.layer.borderColor = [[UIColor greenColor] CGColor];
         cell.layer.borderWidth = 3.0f;
         cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
@@ -538,18 +542,8 @@
     
     if ([type isEqual:@"Deselect"]) {
         NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
-        //cell.layer.borderColor = [[UIColor blueColor] CGColor];
         cell.layer.borderWidth = 0.0f;
         cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        
-        /*
-        [self.selectedFaces removeObject:indexPath];
-        NSUInteger faceCount = self.selectedFaces.count;
-        if (faceCount == 1) {
-            self.navigationItem.title = [NSString stringWithFormat:@"Select 1 Face"];
-        }else
-            self.navigationItem.title = [NSString stringWithFormat:@"Select %lu Faces", (unsigned long)faceCount];
-         */
         //use KVO
         [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
         
@@ -558,7 +552,6 @@
         }
     }
 }
-
 
 
 @end

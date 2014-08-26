@@ -13,6 +13,7 @@
 @import AssetsLibrary;
 
 static NSString *cellIdentifier = @"photoCell";
+static NSString *segueIdentifier = @"enterMontageRoom";
 
 @interface SDEScanRoomViewController ()
 @property (nonatomic)SDEFaceVCDataSource *faceDataSource;
@@ -87,8 +88,6 @@ static NSString *cellIdentifier = @"photoCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - segue 
 
 
 #pragma mark - UICollectionViewDataSource
@@ -187,10 +186,9 @@ static NSString *cellIdentifier = @"photoCell";
             currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
             pipelineWorkIndex = 0;
             NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
-            //[self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
             [self.photoScanManager saveAfterScan];
             [self configFirstScene:NO];
-            [self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
+            [self performSegueWithIdentifier:segueIdentifier sender:self];
             return;
         }else
             [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.5];
@@ -217,7 +215,7 @@ static NSString *cellIdentifier = @"photoCell";
         NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
         [self.photoScanManager saveAfterScan];
         [self configFirstScene:NO];
-        [self performSegueWithIdentifier:@"gotoEditRoom" sender:self];
+        [self performSegueWithIdentifier:segueIdentifier sender:self];
         return;
     }else if (self.allAssets.count >= 3){
         [self.showAssets removeAllObjects];
