@@ -63,7 +63,7 @@
             </objects>
             <point key="canvasLocation" x="3382" y="-643"/>
         </scene>
-        <!--Person Gallery View Controller-->
+        <!--Person Gallery View Controller - Person Name-->
         <scene sceneID="uq3-mO-hye">
             <objects>
                 <collectionViewController storyboardIdentifier="PersonGallery" autoresizesArchivedViewToFullSize="NO" id="w27-g2-BwB" customClass="SDEPersonGalleryViewController" sceneMemberID="viewController">
@@ -71,30 +71,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3xb-f6-wLl" customClass="LineLayout">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="otz-Nr-rQf" customClass="LineLayout"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="portraitCell" id="2EJ-2O-x7X">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PortraitCell" id="6oG-Tj-0Tf">
+                                <rect key="frame" x="0.0" y="64" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CfU-Wr-spW">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <size key="customSize" width="300" height="300"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="dataSource" destination="w27-g2-BwB" id="wU2-Df-MY1"/>
                             <outlet property="delegate" destination="w27-g2-BwB" id="yYc-xG-nB4"/>
                         </connections>
                     </collectionView>
-                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Person Name" id="YXg-2m-yTG">
+                        <barButtonItem key="rightBarButtonItem" title="42" id="xRq-0E-Pbx">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8C5-QC-Vsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

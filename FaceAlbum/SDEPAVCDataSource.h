@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SDEPAVCDataSource : NSObject
+@interface SDEPAVCDataSource : NSObject<UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
 
 @end

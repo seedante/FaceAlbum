@@ -13,7 +13,7 @@
 
 + (instancetype)sharedDataSource;
 
-@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 
 @end

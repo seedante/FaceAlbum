@@ -7,8 +7,11 @@
 //
 
 #import "SDEPersonGalleryViewController.h"
+#import "SDEPAVCDataSource.h"
 
 @interface SDEPersonGalleryViewController ()
+
+@property (nonatomic) SDEPAVCDataSource *dataSource;
 
 @end
 
@@ -20,6 +23,11 @@
     // Do any additional setup after loading the view.
     //self.navigationItem.hidesBackButton = YES;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    self.dataSource = [[SDEPAVCDataSource alloc] init];
+    self.collectionView.dataSource = self.dataSource;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
