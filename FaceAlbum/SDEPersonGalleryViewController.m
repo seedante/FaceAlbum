@@ -27,7 +27,6 @@
     self.dataSource = [[SDEPAVCDataSource alloc] init];
     self.collectionView.dataSource = self.dataSource;
     
-    
 }
 
 - (void)didReceiveMemoryWarning

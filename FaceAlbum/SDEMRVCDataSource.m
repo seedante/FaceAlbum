@@ -61,17 +61,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         return _faceFetchedResultsController;
     }
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
-    [fetchRequest setFetchBatchSize:100];
-    
-    NSSortDescriptor *SectionOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
-    NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
-    [fetchRequest setSortDescriptors:@[SectionOrderDescriptor, ItemOrderDescriptor]];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
-    [fetchRequest setPredicate:predicate];
-    
-    _faceFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"section" cacheName:@"allFaces"];
+    _faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
     _faceFetchedResultsController.delegate = self;
     
     return _faceFetchedResultsController;
@@ -372,90 +362,6 @@ static NSString * const cellIdentifier = @"avatorCell";
     }
     
     return shouldReload;
-}
-
-
-#pragma mark - LXReorderableCollectionViewDataSource
-- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath canMoveToIndexPath:(NSIndexPath *)toIndexPath;
-{
-    if ([fromIndexPath isEqual:toIndexPath]) {
-        return NO;
-    }
-    return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath willMoveToIndexPath:(NSIndexPath *)toIndexPath
-{
-    Face *movedFace = [self.faceFetchedResultsController objectAtIndexPath:fromIndexPath];
-    
-    double lowerBound = 0.0;
-    double upperBound = 0.0;
-    double newOrder = 0.0;
-    
-    if (toIndexPath.section == fromIndexPath.section) {
-        if (toIndexPath.item < fromIndexPath.item) {
-            if (toIndexPath.item > 0) {
-                lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order];
-                //NSLog(@"lowerBound: %f", lowerBound);
-            }else{
-                lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:toIndexPath.section]] order] - 2.0;
-                //NSLog(@"lowerBound: %f", lowerBound);
-            }
-            
-            if (toIndexPath.item < [self collectionView:collectionView numberOfItemsInSection:toIndexPath.section]-1) {
-                upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item inSection:toIndexPath.section]] order];
-                //NSLog(@"upperBound: %f", upperBound);
-            }else{
-                upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order] + 2.0;
-                //NSLog(@"upperBound: %f", upperBound);
-            }
-            
-            newOrder = (lowerBound + upperBound)/2.0;
-            //NSLog(@"New Order:%f", newOrder);
-        }else{
-            lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item inSection:toIndexPath.section]] order];
-            //NSLog(@"lowerBound: %f", lowerBound);
-            
-            
-            id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:toIndexPath.section];
-            NSUInteger number = [sectionInfo numberOfObjects];
-            if (toIndexPath.item < number - 1) {
-                upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item + 1 inSection:toIndexPath.section]] order];
-                //NSLog(@"upperBound: %f", upperBound);
-            }else{
-                upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order] + 2.0;
-                //NSLog(@"upperBound: %f", upperBound);
-            }
-            
-            newOrder = (lowerBound + upperBound)/2.0;
-            //NSLog(@"New Order:%f", newOrder);
-        }
-        
-        movedFace.order = newOrder;
-    }else{
-        Face *toItem = [self.faceFetchedResultsController objectAtIndexPath:toIndexPath];
-        
-        if (toIndexPath.item == 0) {
-            newOrder = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:toIndexPath.section]] order] - 1;
-        }else{
-            lowerBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item - 1 inSection:toIndexPath.section]] order];
-            upperBound = [(Face *)[self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:toIndexPath.item inSection:toIndexPath.section]] order];
-            newOrder = (lowerBound + upperBound)/2.0;
-        }
-        
-        movedFace.section = toItem.section;
-        movedFace.order = newOrder;
-    }
-}
-
-- (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath didMoveToIndexPath:(NSIndexPath *)toIndexPath
-{
-    NSLog(@"Cell Remove Finish.");
 }
 
 

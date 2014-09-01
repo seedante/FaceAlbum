@@ -11,7 +11,6 @@
 @interface Store ()
 
 @property (nonatomic, readwrite) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic) NSFetchedResultsController * personFetchedResultsController;
 
 @end
 
@@ -42,6 +41,26 @@
     self.managedObjectContext.persistentStoreCoordinator = psc;
 }
 
+- (NSFetchedResultsController *)faceFetchedResultsController
+{
+    if (_faceFetchedResultsController != nil) {
+        return _faceFetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
+    [fetchRequest setFetchBatchSize:100];
+    
+    NSSortDescriptor *SectionOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
+    NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+    [fetchRequest setSortDescriptors:@[SectionOrderDescriptor, ItemOrderDescriptor]];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
+    [fetchRequest setPredicate:predicate];
+    
+    _faceFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"section" cacheName:@"allFaces"];
+    
+    return _faceFetchedResultsController;
+}
 
 - (NSFetchedResultsController *)personFetchedResultsController
 {
@@ -61,6 +80,7 @@
     
     return _personFetchedResultsController;
 }
+
 
 
 @end

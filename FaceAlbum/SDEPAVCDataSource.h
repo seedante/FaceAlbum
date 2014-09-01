@@ -10,4 +10,9 @@
 
 @interface SDEPAVCDataSource : NSObject<UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
 
+@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
+@property (nonatomic) NSFetchedResultsController *personFetchedResultsController;
+
++ (instancetype)sharedDataSource;
 @end

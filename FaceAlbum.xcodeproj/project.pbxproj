@@ -229,12 +229,12 @@
 			children = (
 				FD7D2F93197E7B55004E8FFD /* SDEMontageRoomViewController.h */,
 				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
+				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
+				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
 				FDE09AB71980A96400CDB283 /* AvatorCell.h */,
 				FDE09AB81980A96400CDB283 /* AvatorCell.m */,
 				FD1164E619A8808500C1A41F /* SDECandidateCell.h */,
 				FD1164E719A8808500C1A41F /* SDECandidateCell.m */,
-				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
-				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
 			);
 			name = MontageRoom;
 			sourceTree = "<group>";

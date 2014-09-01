@@ -11,7 +11,8 @@
 @interface Store : NSObject
 
 @property (nonatomic, readonly)NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
+@property (nonatomic) NSFetchedResultsController *personFetchedResultsController;
 
 + (Store *)sharedStore;
 - (void)setupStoreWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;
