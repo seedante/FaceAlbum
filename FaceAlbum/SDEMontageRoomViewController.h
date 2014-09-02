@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SDEReorderableCollectionViewFlowLayout.h"
 
-@interface SDEMontageRoomViewController : UICollectionViewController<LXReorderableCollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
 @end

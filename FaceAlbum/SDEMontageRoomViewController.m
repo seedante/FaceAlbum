@@ -15,6 +15,11 @@
 
 #import "SDECandidateCell.h"
 
+typedef enum {
+    MontageEditTypeAdd,
+    MontageEditTypeMove,
+} MontageEditType;
+
 @interface SDEMontageRoomViewController ()
 
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
@@ -107,7 +112,7 @@
 {
     NSString *newTitle;
     if (self.selectedFaces.count > 1) {
-        newTitle = [NSString stringWithFormat:@"select %d faces", self.selectedFaces.count];
+        newTitle = [NSString stringWithFormat:@"select %lu faces", (unsigned long)self.selectedFaces.count];
     }else
         newTitle = [NSString stringWithFormat:@"select %d face", self.selectedFaces.count];
     
@@ -172,7 +177,7 @@
     self.collectionView.allowsMultipleSelection = YES;
 }
 
-- (void)filterSelectedItemSet
+- (void)filterSelectedItemSetWithTargetViewSection:(NSInteger)targetViewSection
 {
     NSLog(@"STEP 1: filter selected items.");
     [self.guardObjectIDs removeAllObjects];
@@ -182,8 +187,14 @@
     for (NSIndexPath *indexPath in self.selectedFaces) {
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         cell.layer.borderWidth = 0.0f;
+        cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
     }
     
+    NSPredicate *targetViewSectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(targetViewSection)];
+    [self.selectedFaces filterUsingPredicate:targetViewSectionPredicate];
+    [self.includedSections removeObject:@(targetViewSection)];
+    
+    //if selected items include a whole section's items, handle it.
     for (NSNumber *sectionNumber in self.includedSections) {
         NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
         NSArray *matchedItems = [self.selectedFaces.allObjects filteredArrayUsingPredicate:sectionPredicate];
@@ -200,35 +211,38 @@
     [self.includedSections removeAllObjects];
 }
 
-- (void)manageSelectedItemsWithTargetSection:(NSInteger)targetSection
+- (void)manageSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
 {
     NSLog(@"STEP 2: create copy items in target section.");
     if (self.triggeredDeletedSections.count > 0) {
         for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
             NSInteger section = sectionNumber.integerValue;
-            if (section == targetSection) {
-                NSLog(@"Items in section:%d don't need to move.", section);
-                [self filterSelectedItemsInSection:targetSection];
+            if (section == targetDataSection) {
+                NSLog(@"It's impossible!!!");
             }else{
                 Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-                copyFaceItem.section = targetSection;
+                copyFaceItem.section = targetDataSection;
                 copyFaceItem.whetherToDisplay = YES;
             }
         }
     }else{
-        NSIndexPath *anyIndexPath = self.selectedFaces.anyObject;
-        if (anyIndexPath.section == targetSection) {
-            NSLog(@"Don't move this item");
-            [self filterSelectedItemsInSection:targetSection];
-        }else{
-            Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
-            singleCopyFaceItem.section = targetSection;
-            singleCopyFaceItem.whetherToDisplay = YES;
+        if (self.selectedFaces.count > 0) {
+            NSIndexPath *anyIndexPath = self.selectedFaces.anyObject;
+            NSLog(@"Index: %@", anyIndexPath);
+            Face *anyFace = [self.faceFetchedResultsController objectAtIndexPath:anyIndexPath];
+            if (anyFace.section == targetDataSection) {
+                NSLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
+                //[self filterSelectedItemsInSection:targetDataSection];
+            }else{
+                Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
+                singleCopyFaceItem.section = targetDataSection;
+                singleCopyFaceItem.whetherToDisplay = YES;
+            }
+            [self.selectedFaces removeObject:anyIndexPath];
         }
-        [self.selectedFaces removeObject:anyIndexPath];
     }
     
-    [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetSection) afterDelay:0.1];
+    [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetDataSection) afterDelay:0.1];
 }
 
 - (void)filterSelectedItemsInSection:(NSInteger)section
@@ -260,8 +274,8 @@
 
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
-    NSLog(@"STEP 3: move left items to target section.");
     if (self.selectedFaces.count > 0) {
+        NSLog(@"STEP 3: move left items to target section.");
         NSInteger targetSection = [targetSectionNumber integerValue];
         for (NSIndexPath *indexPath in self.selectedFaces) {
             Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
@@ -271,15 +285,15 @@
         }
         [self.selectedFaces removeAllObjects];
     }else
-        NSLog(@"There is no item to be move.");
+        NSLog(@"There is no item need to move.");
 
     [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.1];
 }
 
 - (void)deleteOriginalItems
 {
-    NSLog(@"STEP 4: delete original items.");
     if (self.guardObjectIDs.count > 0) {
+        NSLog(@"STEP 4: delete original items.");
         for (NSManagedObjectID *objectID in self.guardObjectIDs) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
             [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
@@ -352,11 +366,12 @@
 - (void)addNewPerson
 {
     NSLog(@"add New Person");
-    [self filterSelectedItemSet];
+    
     NSInteger sectionCount = [self.collectionView numberOfSections];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
-    [self manageSelectedItemsWithTargetSection:newSection];
+    [self filterSelectedItemSetWithTargetViewSection:sectionCount];
+    [self manageSelectedItemsWithTargetDataSection:newSection];
     
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
@@ -488,17 +503,16 @@
         }
     }else{
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-        int newSection = firstItemInSection.section;
+        int targetSection = firstItemInSection.section;
         
-        [self filterSelectedItemSet];
-        [self manageSelectedItemsWithTargetSection:newSection];
+        [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
+        [self manageSelectedItemsWithTargetDataSection:targetSection];
         
         [self unenableLeftBarButtonItems];
         [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     }
-    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath

@@ -9,6 +9,11 @@
 #import "SDEPAVCDataSource.h"
 #import "Store.h"
 
+typedef enum: NSUInteger{
+    ProtraitLayout,
+    HorizontalGridLayout
+} LayoutType;
+
 @interface SDEPAVCDataSource ()
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -43,17 +48,7 @@
         return _faceFetchedResultsController;
     }
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
-    [fetchRequest setFetchBatchSize:100];
-    
-    NSSortDescriptor *SectionOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
-    NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
-    [fetchRequest setSortDescriptors:@[SectionOrderDescriptor, ItemOrderDescriptor]];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
-    [fetchRequest setPredicate:predicate];
-    
-    _faceFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"section" cacheName:@"allFaces"];
+    _faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
     _faceFetchedResultsController.delegate = self;
     
     return _faceFetchedResultsController;
@@ -70,5 +65,25 @@
     
     return _personFetchedResultsController;
 }
+
+#pragma mark - UICollectionView Data Source
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *portraitCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortraitCell" forIndexPath:indexPath];
+    
+    return portraitCell;
+}
+
+
 
 @end

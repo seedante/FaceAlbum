@@ -71,16 +71,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="otz-Nr-rQf" customClass="LineLayout"/>
+                        <collectionViewLayout key="collectionViewLayout" id="otz-Nr-rQf" customClass="SDEPortraitLayout"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PortraitCell" id="6oG-Tj-0Tf">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PortraitCell" id="6oG-Tj-0Tf" customClass="SDEPortraitCell">
                                 <rect key="frame" x="0.0" y="64" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CfU-Wr-spW">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CfU-Wr-spW">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -88,10 +88,14 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <size key="customSize" width="300" height="300"/>
+                                <connections>
+                                    <outlet property="PortraitView" destination="CfU-Wr-spW" id="tSi-sf-DYE"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="delegate" destination="w27-g2-BwB" id="yYc-xG-nB4"/>
+                            <outlet property="dataSource" destination="w27-g2-BwB" id="Nb9-Tx-2C3"/>
+                            <outlet property="delegate" destination="w27-g2-BwB" id="iXZ-2R-42e"/>
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Person Name" id="YXg-2m-yTG">

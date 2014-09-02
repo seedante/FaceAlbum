@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDEPersonGalleryViewController : UICollectionViewController
+@interface SDEPersonGalleryViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate>
 
 @end

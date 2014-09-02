@@ -59,6 +59,9 @@
 		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
 		FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
 		FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */; };
+		FDC2609D19B42D980010FF57 /* SDEPortraitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEPortraitCell.m */; };
+		FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
+		FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
 		FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* AvatorCell.m */; };
 		FDE09ABC1981025E00CDB283 /* Smartisan.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* Smartisan.png */; };
 /* End PBXBuildFile section */
@@ -163,6 +166,12 @@
 		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
 		FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonGalleryViewController.h; sourceTree = "<group>"; };
 		FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonGalleryViewController.m; sourceTree = "<group>"; };
+		FDC2609B19B42D980010FF57 /* SDEPortraitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPortraitCell.h; sourceTree = "<group>"; };
+		FDC2609C19B42D980010FF57 /* SDEPortraitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPortraitCell.m; sourceTree = "<group>"; };
+		FDC2609E19B433F80010FF57 /* SDEPortraitLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPortraitLayout.h; sourceTree = "<group>"; };
+		FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPortraitLayout.m; sourceTree = "<group>"; };
+		FDC260A119B434710010FF57 /* SDEHorizontalGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEHorizontalGridLayout.h; sourceTree = "<group>"; };
+		FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEHorizontalGridLayout.m; sourceTree = "<group>"; };
 		FDE09AB71980A96400CDB283 /* AvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatorCell.h; sourceTree = "<group>"; };
 		FDE09AB81980A96400CDB283 /* AvatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatorCell.m; sourceTree = "<group>"; };
 		FDE09ABB1981025E00CDB283 /* Smartisan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Smartisan.png; path = ../../../Downloads/Smartisan.png; sourceTree = "<group>"; };
@@ -246,6 +255,12 @@
 				FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */,
 				FD41313C1997541300141578 /* SDEPAVCDataSource.h */,
 				FD41313D1997541300141578 /* SDEPAVCDataSource.m */,
+				FDC2609B19B42D980010FF57 /* SDEPortraitCell.h */,
+				FDC2609C19B42D980010FF57 /* SDEPortraitCell.m */,
+				FDC2609E19B433F80010FF57 /* SDEPortraitLayout.h */,
+				FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */,
+				FDC260A119B434710010FF57 /* SDEHorizontalGridLayout.h */,
+				FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */,
 			);
 			name = PersonGallery;
 			sourceTree = "<group>";
@@ -552,6 +567,7 @@
 				FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */,
 				FD67D890197DFCFB00D2CCDA /* main.m in Sources */,
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
+				FDC2609D19B42D980010FF57 /* SDEPortraitCell.m in Sources */,
 				FD67D8FA197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
 				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
@@ -559,6 +575,8 @@
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
+				FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */,
+				FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */,

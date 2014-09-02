@@ -15,4 +15,5 @@
 @property (nonatomic) NSFetchedResultsController *personFetchedResultsController;
 
 + (instancetype)sharedDataSource;
+
 @end
