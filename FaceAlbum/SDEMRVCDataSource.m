@@ -387,8 +387,8 @@ static NSString * const cellIdentifier = @"avatorCell";
     Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     UIImage *headImage = face.avatorImage;
     [cell.avatorView setImage:headImage];
-    
-    cell.order.text = [NSString stringWithFormat:@"%.2f", face.order];
+    cell.order.hidden = YES;
+    //cell.order.text = [NSString stringWithFormat:@"%.2f", face.order];
     return cell;
 }
 

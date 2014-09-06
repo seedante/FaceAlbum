@@ -10,7 +10,4 @@
 
 @interface SDEPortraitLayout : UICollectionViewFlowLayout
 
-- (void)transformToPortraitLayOut;
-- (void)transformToHorizontalGridLayout;
-
 @end

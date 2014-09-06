@@ -10,4 +10,6 @@
 
 @interface SDEHorizontalGridLayout : UICollectionViewFlowLayout
 
+@property (nonatomic, assign) NSInteger cellCount;
+
 @end
