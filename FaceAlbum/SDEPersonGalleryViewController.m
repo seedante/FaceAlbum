@@ -42,10 +42,11 @@ typedef enum: NSUInteger{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //self.navigationItem.hidesBackButton = YES;
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
     
     self.currentPortraitIndex = 0;
     self.currentLayout = PortraitLayout;
+    //self.collectionView.contentOffset = CGPointMake(5, 5);
     //self.collectionView.collectionViewLayout = [[SDEHorizontalGridLayout alloc] init];
     //self.layout = (SDEHorizontalGridLayout *)self.collectionView.collectionViewLayout;
     //self.collectionView.pagingEnabled = YES;
@@ -130,7 +131,7 @@ typedef enum: NSUInteger{
         case PortraitLayout:{
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortraitCell" forIndexPath:indexPath];
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-            [cell setProtrait:firstFaceInSection.posterImage];
+            [cell setPortrait:firstFaceInSection.posterImage];
             break;
         }
         case HorizontalGridLayout:{
@@ -138,7 +139,7 @@ typedef enum: NSUInteger{
             NSInteger itemIndexBase = indexPath.section * ItemCountPerPageAtHorizontalMode;
             NSIndexPath *faceIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
-            [cell setProtrait:faceItem.avatorImage];
+            [cell setPortrait:faceItem.avatorImage];
             break;
         }
         default:

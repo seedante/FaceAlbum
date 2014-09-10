@@ -28,7 +28,7 @@
 }
 */
 
-- (void)setProtrait:(UIImage *)protraitImage
+- (void)setPortrait:(UIImage *)protraitImage
 {
     self.PortraitView.image = protraitImage;
 }

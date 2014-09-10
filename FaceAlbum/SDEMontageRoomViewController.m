@@ -471,7 +471,8 @@ typedef enum {
 
 - (void)jumpToGalleryScene
 {
-    [self performSegueWithIdentifier:@"enterGallery" sender:self];
+    //[self performSegueWithIdentifier:@"enterGallery" sender:self];
+    [self performSegueWithIdentifier:@"PageGallery" sender:self];
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source

@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *PortraitView;
 
-- (void)setProtrait:(UIImage *)protraitImage;
+- (void)setPortrait:(UIImage *)protraitImage;
 
 @end
