@@ -122,7 +122,7 @@ typedef enum: NSUInteger{
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSLog(@"Before");
-    if ([self countForPageViewController:nil] == 1) {
+    if ([self countForPageViewController] == 1) {
         return nil;
     }
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
@@ -130,6 +130,7 @@ typedef enum: NSUInteger{
     NSLog(@"Current VC: %@", viewController);
     NSLog(@"Array: %@", self.pageVCArray);
     if (self.currentPageIndex == 0 || self.currentPageIndex == NSNotFound) {
+        self.currentPageIndex = 0;
         NSLog(@"???");
         return nil;
     }
@@ -142,10 +143,10 @@ typedef enum: NSUInteger{
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     NSLog(@"After");
-    if ([self countForPageViewController:nil] == 1) {
+    if ([self countForPageViewController] == 1) {
         return nil;
     }
-    NSInteger countOfPage = [self countForPageViewController:nil];
+    NSInteger countOfPage = [self countForPageViewController];
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
     if (self.currentPageIndex >= countOfPage - 1 || self.currentPageIndex == NSNotFound) {
         NSLog(@"!!!");
@@ -161,8 +162,7 @@ typedef enum: NSUInteger{
         vc.collectionView.delegate = self;
         [self.pageVCArray addObject:vc];
         NSLog(@"Count of PageVCArray: %d", self.pageVCArray.count);
-    }else
-        NSLog(@"PageVC is full.");
+    }
         
     self.currentPageIndex++;
     vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:self.currentPageIndex];
@@ -171,10 +171,9 @@ typedef enum: NSUInteger{
     return vc;
 }
 
-- (NSInteger)countForPageViewController:(UIPageViewController *)pageViewController
+- (NSInteger)countForPageViewController
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
-    //NSUInteger itemCount = [sectionInfo numberOfObjects];
     NSInteger pageCount = ceil([sectionInfo numberOfObjects]/DoubleValueOfAvatorPerPage);
     return pageCount;
 }
@@ -182,16 +181,19 @@ typedef enum: NSUInteger{
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    NSLog(@"Count of Page: %ld", (long)[self countForPageViewController:pageViewController]);
-    return [self countForPageViewController:pageViewController];
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"Count of Page: %ld", (long)[self countForPageViewController]);
+    return [self countForPageViewController];
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
-    return self.currentPageIndex;
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
+    UIViewController *firstViewController = self.pageViewController.viewControllers.firstObject;
+    NSInteger index = [self.pageVCArray indexOfObjectIdenticalTo:firstViewController];
+    NSLog(@"Current Page Index: %d", index);
+    return index;
+    //return self.currentPageIndex;
 }
 
 
@@ -310,7 +312,7 @@ typedef enum: NSUInteger{
         startingViewController.collectionView.delegate = self;
         [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
         
-        [self addChildViewController:self.pageViewController];
+        //[self addChildViewController:self.pageViewController];
         [self.view addSubview:self.pageViewController.view];
         
         CGRect contentRect = self.galleryView.frame;
@@ -368,7 +370,7 @@ typedef enum: NSUInteger{
 - (void)dismissAvatorView
 {
     [self.pageViewController.view removeFromSuperview];
-    [self.pageViewController removeFromParentViewController];
+    //[self.pageViewController removeFromParentViewController];
     //self.pageViewController = nil;
     self.galleryView.hidden = NO;
     self.styleSwitch.hidden = YES;
