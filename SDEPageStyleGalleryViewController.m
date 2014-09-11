@@ -36,6 +36,8 @@ typedef enum: NSUInteger{
 @property (nonatomic) LayoutType currentLayoutType;
 
 @property (nonatomic) UICollectionView *detailContentView;
+@property (nonatomic) UICollectionViewController *singlePageViewController;
+@property (nonatomic) UICollectionView *singlePageCollectionView;
 
 @property (nonatomic) NSMutableArray *pageVCArray;
 @property (nonatomic) UIGestureRecognizer *swipeGestureRecognizer;
@@ -106,6 +108,30 @@ typedef enum: NSUInteger{
         _pageViewController.dataSource = self;
     }
     return _pageViewController;
+}
+
+- (UICollectionViewController *)singlePageViewController
+{
+    if (!_singlePageViewController) {
+        _singlePageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
+        [self addChildViewController:_singlePageViewController];
+        [_singlePageViewController didMoveToParentViewController:self];
+        
+        CGRect contentRect = self.galleryView.frame;
+        _singlePageViewController.collectionView.frame = contentRect;
+        _singlePageViewController.collectionView.dataSource = self;
+        _singlePageViewController.collectionView.delegate = self;
+        
+    }
+    return _singlePageViewController;
+}
+
+- (UICollectionView *)singlePageCollectionView
+{
+    if (!_singlePageViewController) {
+        _singlePageCollectionView = self.singlePageViewController.collectionView;
+    }
+    return _singlePageCollectionView;
 }
 
 - (SDEGalleryModel *)galleryModel
@@ -205,7 +231,9 @@ typedef enum: NSUInteger{
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    
     NSInteger numberOfItems;
+     /*
     if ([collectionView isEqual:self.galleryView]) {
         NSLog(@"There are %d person", [[self.faceFetchedResultsController sections] count]);
         numberOfItems = [[self.faceFetchedResultsController sections] count];
@@ -217,7 +245,8 @@ typedef enum: NSUInteger{
         }else
             numberOfItems = numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage;
     }
-    /*
+     */
+    
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             NSLog(@"There are %d person", [[self.faceFetchedResultsController sections] count]);
@@ -232,16 +261,18 @@ typedef enum: NSUInteger{
             }else
                 numberOfItems = numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage;
             break;
+            NSLog(@"Avator Number: %d in Page: %d", numberOfItems, self.currentPageIndex);
         }
         default:
             break;
-     
+            /*
         case DetailLineLayout:{
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
             numberOfItems = [sectionInfo numberOfObjects];
             break;
         }
-    }*/
+             */
+    }
     
     return numberOfItems;
 }
@@ -250,8 +281,8 @@ typedef enum: NSUInteger{
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    SDEPortraitCell *cell;
-    
+    SDEPortraitCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
+    /*
     if ([collectionView isEqual:self.galleryView]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
         Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
@@ -263,16 +294,19 @@ typedef enum: NSUInteger{
         Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
         [cell setPortrait:faceItem.avatorImage];
     }
-    /*
+     */
+    
     switch (self.currentLayoutType) {
         case PortraitLayout:{
-            cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
+            NSLog(@"Portrait Mode");
+            //cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
             [cell setPortrait:firstFaceInSection.posterImage];
             break;
         }
         case HorizontalGridLayout:{
-            cell = [collectionView dequeueReusableCellWithReuseIdentifier:AvatorCellIdentifier forIndexPath:indexPath];
+            NSLog(@"Horizontal Mode");
+            //cell = [collectionView dequeueReusableCellWithReuseIdentifier:AvatorCellIdentifier forIndexPath:indexPath];
             NSInteger itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
             NSIndexPath *faceIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
@@ -281,15 +315,17 @@ typedef enum: NSUInteger{
         }
         default:
             break;
+            /*
         case DetailLineLayout:{
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
             UIImage *backgroundImage = [UIImage imageNamed:@"bg4.jpg"];
             [cell setPortrait:backgroundImage];
             break;
         }
+             */
      
     }
-    */
+    
 
     //NSLog(@"Cell Size: %f %f", cell.bounds.size.height, cell.bounds.size.width);
     return cell;
@@ -298,6 +334,7 @@ typedef enum: NSUInteger{
 #pragma mark - UICollectionView Delegate Method
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     if ([collectionView isEqual:self.galleryView]) {
         self.currentPortraitIndex = indexPath.item;
         self.currentPageIndex = 0;
@@ -329,28 +366,62 @@ typedef enum: NSUInteger{
         [self dismissAvatorView];
         self.currentLayoutType = PortraitLayout;
     }
-    /*
+     */
+    NSLog(@"Select Item: %d", indexPath.item);
     switch (self.currentLayoutType) {
         case PortraitLayout:{
-
-            
+            NSLog(@"Switch to Horizontal Grid Mode.");
+            self.currentPortraitIndex = indexPath.item;
+            self.currentPageIndex = 0;
+            //Note: Must change layoutType before startingViewController, if not, startingViewController will get wrong data source
             self.currentLayoutType = HorizontalGridLayout;
+            
+            if (self.pageVCArray.count > 0) {
+                [self.pageVCArray removeAllObjects];
+            }
+            
+            
+            if ([self countForPageViewController] == 1) {
+                //CGRect contentRect = self.galleryView.frame;
+                NSLog(@"Single Page Mode");
+                self.galleryView.hidden = YES;
+                self.styleSwitch.hidden = NO;
+                
+                //self.startingCollectionView.frame = contentRect;
+                [self.view addSubview:self.singlePageCollectionView];
+                [self.singlePageCollectionView reloadData];
+            }else{
+                UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
+                startingViewController.collectionView.dataSource = self;
+                startingViewController.collectionView.delegate = self;
+                [self.pageVCArray addObject:startingViewController];
+                
+                [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+                
+                //[self addChildViewController:self.pageViewController];
+                [self.view addSubview:self.pageViewController.view];
+                
+                CGRect contentRect = self.galleryView.frame;
+                self.pageViewController.view.frame = contentRect;
+                self.galleryView.hidden = YES;
+                self.styleSwitch.hidden = NO;
+                
+                //[self.pageViewController didMoveToParentViewController:self];
+                self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+            }
+            
             break;
         }
         case HorizontalGridLayout:{
-            CGRect contentRect = self.galleryView.frame;
-            UICollectionViewFlowLayout *horizontalLayout = [[UICollectionViewFlowLayout alloc] init];
-            self.detailContentView = [[UICollectionView alloc] initWithFrame:contentRect collectionViewLayout:horizontalLayout];
-            self.detailContentView.dataSource = self;
-            self.detailContentView.delegate = self;
+            NSLog(@"Switch to Portrait Mode");
+            self.currentLayoutType = PortraitLayout;
+            [self dismissAvatorView];
             
-            self.pageViewController.view.hidden = YES;
-            [self.view addSubview:self.detailContentView];
-            self.currentLayoutType = DetailLineLayout;
             break;
         }
         default:
             break;
+            /*
         case DetailLineLayout:{
             if (self.detailContentView) {
                 [self.detailContentView removeFromSuperview];
@@ -361,15 +432,28 @@ typedef enum: NSUInteger{
             [self dismissAvatorView];
             break;
         }
+             CGRect contentRect = self.galleryView.frame;
+             UICollectionViewFlowLayout *horizontalLayout = [[UICollectionViewFlowLayout alloc] init];
+             self.detailContentView = [[UICollectionView alloc] initWithFrame:contentRect collectionViewLayout:horizontalLayout];
+             self.detailContentView.dataSource = self;
+             self.detailContentView.delegate = self;
+             
+             self.pageViewController.view.hidden = YES;
+             [self.view addSubview:self.detailContentView];
+             self.currentLayoutType = DetailLineLayout;
+             */
      
     }
-*/
     
 }
 
 - (void)dismissAvatorView
 {
-    [self.pageViewController.view removeFromSuperview];
+    if ([self countForPageViewController] == 1) {
+        [self.singlePageCollectionView removeFromSuperview];
+    }else{
+        [self.pageViewController.view removeFromSuperview];
+    }
     //[self.pageViewController removeFromParentViewController];
     //self.pageViewController = nil;
     self.galleryView.hidden = NO;
