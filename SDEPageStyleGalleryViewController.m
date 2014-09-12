@@ -11,6 +11,7 @@
 #import "Face.h"
 #import "SDEGalleryCell.h"
 #import "SDEGalleryModel.h"
+#import "LineLayout.h"
 
 static NSString *CellIdentifier = @"GalleryCell";
 
@@ -55,7 +56,8 @@ typedef enum: NSUInteger{
     // Do any additional setup after loading the view.
     self.galleryView.dataSource = self;
     self.galleryView.delegate = self;
-    
+    CGRect contentRect = self.galleryView.frame;
+    NSLog(@"Frame: %f %f %f %f", contentRect.origin.x, contentRect.origin.y, contentRect.size.width, contentRect.size.height);
     self.currentPortraitIndex = 0;
     self.pageVCArray = [NSMutableArray new];
     self.currentLayoutType = PortraitLayout;
@@ -85,6 +87,7 @@ typedef enum: NSUInteger{
     
     _faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
     //_faceFetchedResultsController.delegate = self;
+    [_faceFetchedResultsController performFetch:nil];
     
     return _faceFetchedResultsController;
 }
@@ -155,6 +158,7 @@ typedef enum: NSUInteger{
 {
     if (!_detailContentCollectionView) {
         _detailContentCollectionView = self.detailContentViewController.collectionView;
+        //[_detailContentCollectionView setCollectionViewLayout:[[LineLayout alloc] init]];
     }
     
     return _detailContentCollectionView;
@@ -259,20 +263,6 @@ typedef enum: NSUInteger{
 {
     
     NSInteger numberOfItems;
-     /*
-    if ([collectionView isEqual:self.galleryView]) {
-        NSLog(@"There are %d person", [[self.faceFetchedResultsController sections] count]);
-        numberOfItems = [[self.faceFetchedResultsController sections] count];
-    }else{
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
-        numberOfItems = [sectionInfo numberOfObjects];
-        if (numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage >= NumberOfAvatorPerPage) {
-            numberOfItems = NumberOfAvatorPerPage;
-        }else
-            numberOfItems = numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage;
-    }
-     */
-    
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             NSLog(@"There are %d person", [[self.faceFetchedResultsController sections] count]);
@@ -308,19 +298,6 @@ typedef enum: NSUInteger{
 {
     
     SDEGalleryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    /*
-    if ([collectionView isEqual:self.galleryView]) {
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
-        Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-        [cell setPortrait:firstFaceInSection.posterImage];
-    }else{
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:AvatorCellIdentifier forIndexPath:indexPath];
-        NSInteger itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
-        NSIndexPath *faceIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
-        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
-        [cell setPortrait:faceItem.avatorImage];
-    }
-     */
     
     switch (self.currentLayoutType) {
         case PortraitLayout:{
@@ -347,15 +324,6 @@ typedef enum: NSUInteger{
         }
         default:
             break;
-            /*
-        case DetailLineLayout:{
-            cell = [collectionView dequeueReusableCellWithReuseIdentifier:PortraitCellIdentifier forIndexPath:indexPath];
-            UIImage *backgroundImage = [UIImage imageNamed:@"bg4.jpg"];
-            [cell setPortrait:backgroundImage];
-            break;
-        }
-             */
-     
     }
     
 
@@ -366,39 +334,6 @@ typedef enum: NSUInteger{
 #pragma mark - UICollectionView Delegate Method
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-    if ([collectionView isEqual:self.galleryView]) {
-        self.currentPortraitIndex = indexPath.item;
-        self.currentPageIndex = 0;
-        
-        if (self.pageVCArray.count > 0) {
-            [self.pageVCArray removeAllObjects];
-        }
-        
-        UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
-        [self.pageVCArray addObject:startingViewController];
-        startingViewController.collectionView.dataSource = self;
-        startingViewController.collectionView.delegate = self;
-        [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-        
-        //[self addChildViewController:self.pageViewController];
-        [self.view addSubview:self.pageViewController.view];
-        
-        CGRect contentRect = self.galleryView.frame;
-        self.pageViewController.view.frame = contentRect;
-        self.galleryView.hidden = YES;
-        self.styleSwitch.hidden = NO;
-        
-        [self.pageViewController didMoveToParentViewController:self];
-        self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-        
-        self.currentLayoutType = HorizontalGridLayout;
-    }else{
-        //NSLog(@"What happen?");
-        [self dismissAvatorView];
-        self.currentLayoutType = PortraitLayout;
-    }
-     */
     NSLog(@"Select Item: %d", indexPath.item);
     switch (self.currentLayoutType) {
         case PortraitLayout:{
@@ -449,6 +384,7 @@ typedef enum: NSUInteger{
             NSLog(@"Switch to Detail  Mode");
             self.currentLayoutType = DetailLineLayout;
             self.styleSwitch.hidden = YES;
+            self.singlePageCollectionView.hidden = YES;
             self.pageViewController.view.hidden = YES;
             
             [self.view addSubview:self.detailContentCollectionView];
@@ -498,12 +434,6 @@ typedef enum: NSUInteger{
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
-         /*
-    if ([collectionView isEqual:self.galleryView]) {
-        edgeInsets = UIEdgeInsetsMake(200, 50, 200, 50);
-    }else
-        edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
-         */
 
     switch (self.currentLayoutType) {
         case PortraitLayout:
@@ -513,7 +443,7 @@ typedef enum: NSUInteger{
             edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
             break;
         case DetailLineLayout:
-            edgeInsets = UIEdgeInsetsMake(100, 50, 100, 50);
+            edgeInsets = UIEdgeInsetsMake(50, 262, 50, 287);
             break;
     }
 
@@ -523,12 +453,6 @@ typedef enum: NSUInteger{
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize cellSize = CGSizeZero;
-    /*
-    if ([collectionView isEqual:self.galleryView]) {
-        cellSize = CGSizeMake(200, 200);
-    }else
-        cellSize = CGSizeMake(150, 150);
-    */
     switch (self.currentLayoutType) {
         case PortraitLayout:
             cellSize = CGSizeMake(200, 200);
@@ -536,9 +460,11 @@ typedef enum: NSUInteger{
         case HorizontalGridLayout:
             cellSize = CGSizeMake(150, 150);
             break;
-        case DetailLineLayout:
+        case DetailLineLayout:{
+            NSLog(@"Cell Size in Detail Mode: 500x500");
             cellSize = CGSizeMake(500, 500);
             break;
+        }
     }
     
     return cellSize;
@@ -547,20 +473,38 @@ typedef enum: NSUInteger{
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     CGFloat space = 0.0f;
-    if ([collectionView isEqual:self.galleryView]) {
-        space = 50.0f;
-    }else
-        space = 20.0f;
+    switch (self.currentLayoutType) {
+        case PortraitLayout:
+            space = 50.0f;
+            break;
+        case HorizontalGridLayout:
+            space = 20.0f;
+            break;
+        case DetailLineLayout:
+            space = 10.0f;
+            break;
+        default:
+            break;
+    }
     return space;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     CGFloat space = 0.0f;
-    if ([collectionView isEqual:self.galleryView]) {
-        space = 50.0f;
-    }else
-        space = 10.0f;
+    switch (self.currentLayoutType) {
+        case PortraitLayout:
+            space = 50.0f;
+            break;
+        case HorizontalGridLayout:
+            space = 20.0f;
+            break;
+        case DetailLineLayout:
+            space = 524.0f;
+            break;
+        default:
+            break;
+    }
     return space;
 }
 
