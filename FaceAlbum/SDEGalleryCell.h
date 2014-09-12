@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDEPortraitCell : UICollectionViewCell
+@interface SDEGalleryCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *PortraitView;
+@property (nonatomic) IBOutlet UIImageView *galleryContentView;
 
-- (void)setPortrait:(UIImage *)protraitImage;
+- (void)setShowContent:(UIImage *)protraitImage;
 
 @end

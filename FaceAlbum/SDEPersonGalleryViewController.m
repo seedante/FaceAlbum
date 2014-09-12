@@ -8,7 +8,7 @@
 
 #import "SDEPersonGalleryViewController.h"
 #import "SDEPAVCDataSource.h"
-#import "SDEPortraitCell.h"
+#import "SDEGalleryCell.h"
 #import "SDEPortraitLayout.h"
 #import "SDEHorizontalGridLayout.h"
 #import "Store.h"
@@ -126,12 +126,12 @@ typedef enum: NSUInteger{
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //SDEPortraitCell *portraitCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortraitCell" forIndexPath:indexPath];
-    SDEPortraitCell *cell;
+    SDEGalleryCell *cell;
     switch (self.currentLayout) {
         case PortraitLayout:{
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortraitCell" forIndexPath:indexPath];
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-            [cell setPortrait:firstFaceInSection.posterImage];
+            [cell setShowContent:firstFaceInSection.posterImage];
             break;
         }
         case HorizontalGridLayout:{
@@ -139,7 +139,7 @@ typedef enum: NSUInteger{
             NSInteger itemIndexBase = indexPath.section * ItemCountPerPageAtHorizontalMode;
             NSIndexPath *faceIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
-            [cell setPortrait:faceItem.avatorImage];
+            [cell setShowContent:faceItem.avatorImage];
             break;
         }
         default:
