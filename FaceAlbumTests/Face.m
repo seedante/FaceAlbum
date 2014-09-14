@@ -21,6 +21,7 @@
 @dynamic posterImage;
 @dynamic tag;
 @dynamic isMyStar;
+@dynamic assetURLNSString;
 @dynamic personOwner;
 @dynamic photoOwner;
 

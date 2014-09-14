@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+@class Photo;
+@class Person;
 
 
 @interface Face : NSManagedObject
@@ -23,8 +25,9 @@
 @property (nonatomic, retain) UIImage * posterImage;
 @property (nonatomic, retain) NSString * tag;
 @property (nonatomic) BOOL isMyStar;
-@property (nonatomic, retain) NSManagedObject *personOwner;
-@property (nonatomic, retain) NSManagedObject *photoOwner;
+@property (nonatomic) NSString *assetURLNSString;
+@property (nonatomic, retain) Person *personOwner;
+@property (nonatomic, retain) Photo *photoOwner;
 
 + (instancetype)insertNewObjectInManagedObjectContext:(NSManagedObjectContext *)moc;
 

@@ -15,7 +15,7 @@
 #import "AlbumGroup.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define avatorSize 100.0
+#define avatorSize 150.0
 
 CGImageRef (^flipCGImage)(CGImageRef sourceCGImage) = ^CGImageRef(CGImageRef sourceCGImage){
     CGSize size = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
@@ -264,7 +264,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
                 CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
                 UIImage *headUIImage = CGImageToUIImage(headCGImage);
                 UIImage *avatorUIImage = nil;
-                if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 100.0) {
+                if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
                     avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
                 }else
                     avatorUIImage = headUIImage;
@@ -281,6 +281,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
                 newFace.order = currentItemNumberInFirstSection;
                 newFace.section = 0;
                 newFace.photoOwner = newPhoto;
+                newFace.assetURLNSString = newPhoto.uniqueURLString;
             }
             newPhoto.faceCount = detectResult.faces.count;
             newPhoto.whetherToDisplay = YES;

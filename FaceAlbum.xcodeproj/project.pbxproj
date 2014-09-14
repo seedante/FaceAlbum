@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FD1164E119A87B7300C1A41F /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E019A87B7300C1A41F /* LineLayout.m */; };
 		FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E719A8808500C1A41F /* SDECandidateCell.m */; };
+		FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */; };
 		FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
 		FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
 		FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
@@ -752,6 +753,9 @@
 		FD1164E019A87B7300C1A41F /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		FD1164E619A8808500C1A41F /* SDECandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDECandidateCell.h; sourceTree = "<group>"; };
 		FD1164E719A8808500C1A41F /* SDECandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDECandidateCell.m; sourceTree = "<group>"; };
+		FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeaderView.h; sourceTree = "<group>"; };
+		FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonProfileHeaderView.m; sourceTree = "<group>"; };
+		FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
 		FD3802B51981040100AE51DF /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Main_iPad.storyboard; sourceTree = "<group>"; };
 		FD41312C1997486B00141578 /* SDEScanRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEScanRoomViewController.m; sourceTree = "<group>"; };
 		FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEFaceVCDataSource.h; sourceTree = "<group>"; };
@@ -1584,6 +1588,8 @@
 				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
 				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
 				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
+				FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */,
+				FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */,
 				FDE09AB71980A96400CDB283 /* AvatorCell.h */,
 				FDE09AB81980A96400CDB283 /* AvatorCell.m */,
 				FD1164E619A8808500C1A41F /* SDECandidateCell.h */,
@@ -3947,6 +3953,7 @@
 				FD67D8FA197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
 				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
+				FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */,
 				FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */,
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
@@ -4231,6 +4238,7 @@
 		FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */,
 				FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */,
 				FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */,
 				FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */,

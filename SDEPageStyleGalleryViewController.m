@@ -9,9 +9,11 @@
 #import "SDEPageStyleGalleryViewController.h"
 #import "Store.h"
 #import "Face.h"
+#import "Photo.h"
 #import "SDEGalleryCell.h"
 #import "SDEGalleryModel.h"
 #import "LineLayout.h"
+@import AssetsLibrary;
 
 static NSString *CellIdentifier = @"GalleryCell";
 
@@ -40,6 +42,7 @@ typedef enum: NSUInteger{
 @property (nonatomic) UICollectionView *singlePageCollectionView;
 @property (nonatomic) UICollectionViewController *detailContentViewController;
 @property (nonatomic) UICollectionView *detailContentCollectionView;
+@property (nonatomic)ALAssetsLibrary *photoLibrary;
 
 @property (nonatomic) NSMutableArray *pageVCArray;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
@@ -69,6 +72,14 @@ typedef enum: NSUInteger{
      */
 }
 
+- (ALAssetsLibrary *)photoLibrary
+{
+    if (_photoLibrary != nil) {
+        return _photoLibrary;
+    }
+    _photoLibrary = [[ALAssetsLibrary alloc] init];
+    return _photoLibrary;
+}
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -298,7 +309,6 @@ typedef enum: NSUInteger{
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     SDEGalleryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
     switch (self.currentLayoutType) {
@@ -317,7 +327,12 @@ typedef enum: NSUInteger{
         case DetailLineLayout:{
             NSIndexPath *selectedPersonIndexPath = [NSIndexPath indexPathForItem:indexPath.item inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedPersonIndexPath];
-            [cell setShowContent:faceItem.avatorImage];
+            NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
+            [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
+                UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                [cell setShowContent:photoImage];
+            }failureBlock:nil];
+            
             break;
         }
         default:
@@ -542,7 +557,7 @@ typedef enum: NSUInteger{
             edgeInsets = UIEdgeInsetsMake(10, 60, 20, 60);
             break;
         case DetailLineLayout:
-            edgeInsets = UIEdgeInsetsMake(50, 262, 50, 262);
+            edgeInsets = UIEdgeInsetsMake(50, 162, 50, 162);
             break;
     }
 
@@ -560,7 +575,7 @@ typedef enum: NSUInteger{
             cellSize = CGSizeMake(144, 144);
             break;
         case DetailLineLayout:{
-            cellSize = CGSizeMake(500, 500);
+            cellSize = CGSizeMake(700, 500);
             break;
         }
     }
@@ -598,7 +613,7 @@ typedef enum: NSUInteger{
             space = 10.0f;
             break;
         case DetailLineLayout:
-            space = 524.0f;
+            space = 324.0f;
             break;
         default:
             break;
