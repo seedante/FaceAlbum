@@ -20,7 +20,7 @@
     // Override point for customization after application launch.
     //choice one scene to show on the screen when app start.
     
-    NSString *startSceneName = @"Gallery";
+    NSString *startSceneName = [self startScene];
     NSLog(@"Start Scene: %@", startSceneName);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:startSceneName];

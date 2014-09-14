@@ -22,6 +22,7 @@
 
 - (void)setShowContent:(UIImage *)protraitImage
 {
+    //self.galleryContentView.frame = self.bounds;
     self.galleryContentView.image = protraitImage;
 }
 
