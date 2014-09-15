@@ -244,7 +244,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     
     @autoreleasepool {
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-        CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
+        CGImageRef sourceCGImage = [assetRepresentation fullResolutionImage];
         UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
         
         Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
@@ -264,10 +264,13 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
                 CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
                 UIImage *headUIImage = CGImageToUIImage(headCGImage);
                 UIImage *avatorUIImage = nil;
+                avatorUIImage = headUIImage;
+                /*
                 if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
                     avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
                 }else
                     avatorUIImage = headUIImage;
+                 */
                 CGImageRelease(headCGImage);
                 [self.facesInAPhoto addObject:avatorUIImage];
                 

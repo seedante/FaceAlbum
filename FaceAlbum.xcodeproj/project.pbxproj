@@ -58,7 +58,6 @@
 		FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9F197E97C7004E8FFD /* Person.m */; };
 		FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
 		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
-		FD8D067F19BB4B1C007EF122 /* AppPrototype.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD8D067E19BB4B1C007EF122 /* AppPrototype.storyboard */; };
 		FD8D098F19BBFBAA007EF122 /* add_image-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A419BBFBA8007EF122 /* add_image-100.png */; };
 		FD8D099019BBFBAA007EF122 /* add_image-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A519BBFBA8007EF122 /* add_image-128.png */; };
 		FD8D099119BBFBAA007EF122 /* add_image-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A619BBFBA8007EF122 /* add_image-25.png */; };
@@ -734,7 +733,7 @@
 		FDC2609D19B42D980010FF57 /* SDEGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */; };
 		FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
 		FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
-		FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* AvatorCell.m */; };
+		FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */; };
 		FDE09ABC1981025E00CDB283 /* Smartisan.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* Smartisan.png */; };
 /* End PBXBuildFile section */
 
@@ -756,6 +755,7 @@
 		FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeaderView.h; sourceTree = "<group>"; };
 		FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonProfileHeaderView.m; sourceTree = "<group>"; };
 		FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
+		FD290B2A19C5FD13003A26DC /* FaceAlbum 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 5.xcdatamodel"; sourceTree = "<group>"; };
 		FD3802B51981040100AE51DF /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Main_iPad.storyboard; sourceTree = "<group>"; };
 		FD41312C1997486B00141578 /* SDEScanRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEScanRoomViewController.m; sourceTree = "<group>"; };
 		FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEFaceVCDataSource.h; sourceTree = "<group>"; };
@@ -837,7 +837,6 @@
 		FD7D2FA1197E97C7004E8FFD /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		FD7D2FA2197E97C7004E8FFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		FD8D067E19BB4B1C007EF122 /* AppPrototype.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AppPrototype.storyboard; sourceTree = "<group>"; };
 		FD8D06A419BBFBA8007EF122 /* add_image-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image-100.png"; sourceTree = "<group>"; };
 		FD8D06A519BBFBA8007EF122 /* add_image-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image-128.png"; sourceTree = "<group>"; };
 		FD8D06A619BBFBA8007EF122 /* add_image-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image-25.png"; sourceTree = "<group>"; };
@@ -1520,8 +1519,8 @@
 		FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPortraitLayout.m; sourceTree = "<group>"; };
 		FDC260A119B434710010FF57 /* SDEHorizontalGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEHorizontalGridLayout.h; sourceTree = "<group>"; };
 		FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEHorizontalGridLayout.m; sourceTree = "<group>"; };
-		FDE09AB71980A96400CDB283 /* AvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatorCell.h; sourceTree = "<group>"; };
-		FDE09AB81980A96400CDB283 /* AvatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatorCell.m; sourceTree = "<group>"; };
+		FDE09AB71980A96400CDB283 /* SDEAvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEAvatorCell.h; sourceTree = "<group>"; };
+		FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEAvatorCell.m; sourceTree = "<group>"; };
 		FDE09ABB1981025E00CDB283 /* Smartisan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Smartisan.png; path = ../../../Downloads/Smartisan.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1590,8 +1589,8 @@
 				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
 				FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */,
 				FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */,
-				FDE09AB71980A96400CDB283 /* AvatorCell.h */,
-				FDE09AB81980A96400CDB283 /* AvatorCell.m */,
+				FDE09AB71980A96400CDB283 /* SDEAvatorCell.h */,
+				FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */,
 				FD1164E619A8808500C1A41F /* SDECandidateCell.h */,
 				FD1164E719A8808500C1A41F /* SDECandidateCell.m */,
 			);
@@ -3158,7 +3157,6 @@
 				FD8D06A219BBFBA8007EF122 /* Photo_Video */,
 				FD8D089219BBFBAA007EF122 /* Users */,
 				FD3802B51981040100AE51DF /* Main_iPad.storyboard */,
-				FD8D067E19BB4B1C007EF122 /* AppPrototype.storyboard */,
 				FD95903F1985FA4C001C2345 /* avator@weibo.jpg */,
 				FDE09ABB1981025E00CDB283 /* Smartisan.png */,
 			);
@@ -3721,7 +3719,6 @@
 				FD8D0B2119BBFBAB007EF122 /* sports_mode-25.png in Resources */,
 				FD8D09A419BBFBAA007EF122 /* cable_release-50.png in Resources */,
 				FD8D0A4019BBFBAA007EF122 /* large_lens_filled-128.png in Resources */,
-				FD8D067F19BB4B1C007EF122 /* AppPrototype.storyboard in Resources */,
 				FD8D0ACB19BBFBAB007EF122 /* slr_camera2-32.png in Resources */,
 				FD8D0BED19BBFBAB007EF122 /* user_female3-512.png in Resources */,
 				FD8D0C2119BBFBAB007EF122 /* workers-25.png in Resources */,
@@ -3970,7 +3967,7 @@
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
 				FD4131361997486B00141578 /* FaceCell.m in Sources */,
 				FD67D8D9197DFD4A00D2CCDA /* FaceppRecognition.m in Sources */,
-				FDE09AB91980A96400CDB283 /* AvatorCell.m in Sources */,
+				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
 				FD1164E119A87B7300C1A41F /* LineLayout.m in Sources */,
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
 				FD67D8D1197DFD4A00D2CCDA /* FaceppAPI.m in Sources */,
@@ -4238,6 +4235,7 @@
 		FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD290B2A19C5FD13003A26DC /* FaceAlbum 5.xcdatamodel */,
 				FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */,
 				FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */,
 				FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */,

@@ -52,6 +52,7 @@ typedef enum: NSUInteger{
     //self.collectionView.pagingEnabled = YES;
 }
 
+
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext != nil) {

@@ -20,7 +20,7 @@
                             <inset key="sectionInset" minX="50" minY="20" maxX="50" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="AvatorCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
                                 <rect key="frame" x="50" y="134" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -51,11 +51,14 @@
                             <rect key="frame" x="0.0" y="64" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
-                                    <rect key="frame" x="50" y="10" width="97" height="30"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
+                                    <rect key="frame" x="50" y="10" width="200" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    <connections>
+                                        <action selector="userEndInput:" destination="18c-uM-ajg" eventType="editingDidEndOnExit" id="XRA-qu-klF"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="8 Avators" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRr-Ru-fZl">
                                     <rect key="frame" x="50" y="33" width="80" height="17"/>
@@ -79,7 +82,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="UMT-jw-iR7" kind="modal" identifier="PageGallery" modalTransitionStyle="crossDissolve" id="EBW-n3-u7s"/>
+                        <segue destination="UMT-jw-iR7" kind="push" identifier="PageGallery" id="EBW-n3-u7s"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-D4-GVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -276,11 +279,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLg-GC-xtf">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="90"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYX-9r-NlP">
-                                        <rect key="frame" x="702" y="10" width="46" height="76"/>
+                                        <rect key="frame" x="702" y="10" width="46" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="p8z-QG-HGH"/>
@@ -293,18 +296,18 @@
                                             <action selector="callActionCenter:" destination="UMT-jw-iR7" eventType="touchUpInside" id="wPT-SG-7Ul"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nolan &amp; Ali &amp; seedante" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vd-OL-nMQ">
-                                        <rect key="frame" x="184" y="28" width="400" height="34"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nolan &amp; Ali &amp; seedante &amp; Christophoter&amp; Hameimei &amp; Li &amp; lola &amp; Batman " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000007" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0vd-OL-nMQ">
+                                        <rect key="frame" x="84" y="28" width="600" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="400" id="6i6-1u-xfl"/>
+                                            <constraint firstAttribute="width" constant="600" id="6i6-1u-xfl"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhf-uc-2mr">
-                                        <rect key="frame" x="329" y="56" width="110" height="30"/>
+                                        <rect key="frame" x="329" y="60" width="110" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="JOL-Lp-WvL"/>
@@ -318,17 +321,17 @@
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="0vd-OL-nMQ" secondAttribute="centerX" id="9dn-wp-KEc"/>
                                     <constraint firstItem="0vd-OL-nMQ" firstAttribute="top" secondItem="aLg-GC-xtf" secondAttribute="top" constant="28" id="G1K-73-HKB"/>
-                                    <constraint firstAttribute="height" constant="100" id="OyU-f5-dX1"/>
+                                    <constraint firstAttribute="height" constant="90" id="OyU-f5-dX1"/>
                                     <constraint firstAttribute="trailing" secondItem="WYX-9r-NlP" secondAttribute="trailing" constant="20" id="S85-CI-k0e"/>
                                     <constraint firstAttribute="bottom" secondItem="WYX-9r-NlP" secondAttribute="bottom" constant="14" id="WRV-3d-TXa"/>
-                                    <constraint firstAttribute="bottom" secondItem="Yhf-uc-2mr" secondAttribute="bottom" constant="14" id="X6f-se-H0O"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yhf-uc-2mr" secondAttribute="bottom" id="X6f-se-H0O"/>
                                     <constraint firstItem="WYX-9r-NlP" firstAttribute="top" secondItem="aLg-GC-xtf" secondAttribute="top" constant="10" id="gyz-Jt-R0S"/>
                                     <constraint firstAttribute="centerX" secondItem="Yhf-uc-2mr" secondAttribute="centerX" id="iCb-8O-46T"/>
                                     <constraint firstItem="0vd-OL-nMQ" firstAttribute="centerX" secondItem="aLg-GC-xtf" secondAttribute="centerX" id="oix-7M-C86"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4DC-Df-qHV">
-                                <rect key="frame" x="0.0" y="100" width="768" height="875"/>
+                                <rect key="frame" x="0.0" y="90" width="768" height="885"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m1L-Sv-2JA">
@@ -392,7 +395,7 @@
                             <constraint firstAttribute="trailing" secondItem="aLg-GC-xtf" secondAttribute="trailing" id="abm-bf-dw9"/>
                             <constraint firstAttribute="centerX" secondItem="4DC-Df-qHV" secondAttribute="centerX" id="dr5-ps-AhQ"/>
                             <constraint firstAttribute="trailing" secondItem="4DC-Df-qHV" secondAttribute="trailing" id="tfr-Eh-new"/>
-                            <constraint firstItem="KiL-2l-sNB" firstAttribute="top" secondItem="1v0-U0-cER" secondAttribute="bottom" id="vX9-uR-03n"/>
+                            <constraint firstItem="KiL-2l-sNB" firstAttribute="top" secondItem="1v0-U0-cER" secondAttribute="bottom" constant="-44" id="vX9-uR-03n"/>
                             <constraint firstItem="aLg-GC-xtf" firstAttribute="trailing" secondItem="1v0-U0-cER" secondAttribute="trailing" id="xcg-0q-11b"/>
                         </constraints>
                     </view>

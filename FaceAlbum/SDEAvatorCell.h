@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AvatorCell : UICollectionViewCell
+@interface SDEAvatorCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatorView;
 @property (weak, nonatomic) IBOutlet UILabel *order;

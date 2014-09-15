@@ -13,4 +13,5 @@
 @property (nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic) IBOutlet UILabel *numberLabel;
 
+- (IBAction)userEndInput:(id)sender;
 @end

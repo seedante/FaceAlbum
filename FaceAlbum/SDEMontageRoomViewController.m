@@ -70,8 +70,15 @@ typedef enum {
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
+    [self registerForKeyboardNotifications];
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 
 - (void)saveEdit
 {
@@ -305,9 +312,7 @@ typedef enum {
     [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.1];
 }
 
-
 #pragma mark - select Method
-
 - (UIBarButtonItem *)selectBarButton
 {
     if (_selectBarButton) {
@@ -371,11 +376,25 @@ typedef enum {
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
     [self filterSelectedItemSetWithTargetViewSection:sectionCount];
+    Person *newPerson;
+    if (self.selectedFaces.count > 0) {
+        newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
+        newPerson.whetherToDisplay = YES;
+        for (NSIndexPath *indexPath in self.selectedFaces) {
+            Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            selectedFaceItem.personOwner = newPerson;
+        }
+    }
+    
     [self manageSelectedItemsWithTargetDataSection:newSection];
+    
+    if (newPerson) {
+        newPerson.order = newSection;
+    }
+    [self saveEdit];
     
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
-
 
 #pragma mark - move some faces
 - (UIBarButtonItem *)moveBarButton
@@ -506,6 +525,21 @@ typedef enum {
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int targetSection = firstItemInSection.section;
         
+        Person *selectedPerson;
+        NSFetchRequest *personFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order == %@", @(targetSection)];
+        [personFetchRequest setPredicate:predicate];
+        NSArray *Persons = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];
+        if (Persons && Persons.count > 0) {
+            selectedPerson = (Person *)Persons.firstObject;
+            if (self.selectedFaces.count > 0) {
+                for (NSIndexPath *itemIndexPath in self.selectedFaces) {
+                    Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
+                    selectedFaceItem.personOwner = selectedPerson;
+                }
+            }
+        }
+        
         [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
         [self manageSelectedItemsWithTargetDataSection:targetSection];
         
@@ -556,6 +590,45 @@ typedef enum {
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
     return YES;
+}
+
+#pragma mark - Handle keyboard show and dismiss
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications
+{
+    NSLog(@"register for keyboard notification.");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSLog(@"Keyboard show");
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSLog(@"Keyboard hidden.");
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.collectionView.contentInset = contentInsets;
+    self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

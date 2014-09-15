@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSString * tag;
 @property (nonatomic) BOOL isMyStar;
 @property (nonatomic) NSString *assetURLNSString;
+@property (nonatomic) NSString *name;
 @property (nonatomic, retain) Person *personOwner;
 @property (nonatomic, retain) Photo *photoOwner;
 

@@ -10,7 +10,7 @@
 #import "Face.h"
 #import "Person.h"
 #import "Store.h"
-#import "AvatorCell.h"
+#import "SDEAvatorCell.h"
 #import "SDEPersonProfileHeaderView.h"
 
 static NSString * const cellIdentifier = @"avatorCell";
@@ -382,7 +382,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    AvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    SDEAvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     cell.clipsToBounds = YES;
     Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];

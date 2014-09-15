@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 seedante. All rights reserved.
 //
 
-#import "AvatorCell.h"
+#import "SDEAvatorCell.h"
 
-@implementation AvatorCell
+@implementation SDEAvatorCell
 
 - (instancetype)initWithFrame:(CGRect)frameRect {
     self = [super initWithFrame:frameRect];

@@ -63,6 +63,8 @@ typedef enum: NSUInteger{
     self.pageVCArray = [NSMutableArray new];
     self.currentLayoutType = PortraitLayout;
     
+    self.nameTitle.text = @"";
+    self.infoTitle.text = @"";
     /*
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.view addGestureRecognizer:self.pinchGestureRecognizer];
@@ -70,6 +72,7 @@ typedef enum: NSUInteger{
     [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
     [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
      */
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -554,7 +557,7 @@ typedef enum: NSUInteger{
             edgeInsets = UIEdgeInsetsMake(200, 50, 200, 50);
             break;
         case HorizontalGridLayout:
-            edgeInsets = UIEdgeInsetsMake(10, 60, 20, 60);
+            edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
             break;
         case DetailLineLayout:
             edgeInsets = UIEdgeInsetsMake(50, 162, 50, 162);
@@ -610,7 +613,7 @@ typedef enum: NSUInteger{
             space = 50.0f;
             break;
         case HorizontalGridLayout:
-            space = 10.0f;
+            space = 5.0f;
             break;
         case DetailLineLayout:
             space = 324.0f;
@@ -624,9 +627,11 @@ typedef enum: NSUInteger{
 
 - (IBAction)callActionCenter:(id)sender
 {
+    NSLog(@"Swith Back.");
     self.currentLayoutType = PortraitLayout;
     [self dismissAvatorView];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

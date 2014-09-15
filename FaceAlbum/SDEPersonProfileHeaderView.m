@@ -28,4 +28,9 @@
 }
 */
 
+- (IBAction)userEndInput:(id)sender
+{
+    UITextField *textField = (UITextField *)sender;
+    [textField resignFirstResponder];
+}
 @end

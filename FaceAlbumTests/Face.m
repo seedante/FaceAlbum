@@ -22,6 +22,7 @@
 @dynamic tag;
 @dynamic isMyStar;
 @dynamic assetURLNSString;
+@dynamic name;
 @dynamic personOwner;
 @dynamic photoOwner;
 
