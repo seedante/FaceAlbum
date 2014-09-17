@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SDEReorderableCollectionViewFlowLayout.h"
 
-@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate>
+
 
 @end

@@ -12,7 +12,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="0YA-ok-D2X">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="fVy-v7-jZt">
                             <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="50" height="50"/>
@@ -51,23 +51,39 @@
                             <rect key="frame" x="0.0" y="64" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
                                     <rect key="frame" x="50" y="10" width="200" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="200" id="VND-uH-bah"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="namePhonePad" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     <connections>
-                                        <action selector="userEndInput:" destination="18c-uM-ajg" eventType="editingDidEndOnExit" id="XRA-qu-klF"/>
+                                        <action selector="userEndInput:" destination="18c-uM-ajg" eventType="editingDidEndOnExit" id="jJ5-wN-AqD"/>
+                                        <outlet property="delegate" destination="3O8-fZ-xdw" id="tXY-z8-hof"/>
                                     </connections>
                                 </textField>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="8 Avators" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRr-Ru-fZl">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 Avators" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRr-Ru-fZl">
                                     <rect key="frame" x="50" y="33" width="80" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="80" id="Z0n-SU-iqc"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="rDV-Xj-e5B" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="10" id="A2b-OY-XIy"/>
+                                <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="iRr-Ru-fZl" secondAttribute="leading" id="Fkj-vX-0Tt"/>
+                                <constraint firstItem="rDV-Xj-e5B" firstAttribute="centerY" secondItem="18c-uM-ajg" secondAttribute="centerY" id="Qa1-Ep-IZH"/>
+                                <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="18c-uM-ajg" secondAttribute="leading" constant="50" id="gMg-Jj-f3H"/>
+                                <constraint firstAttribute="bottom" secondItem="iRr-Ru-fZl" secondAttribute="bottom" id="gb0-Ke-mns"/>
+                                <constraint firstItem="iRr-Ru-fZl" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="33" id="uNI-DH-q2S"/>
+                            </constraints>
                             <connections>
+                                <outlet property="collectionView" destination="0YA-ok-D2X" id="NuW-ew-kF3"/>
                                 <outlet property="nameTextField" destination="rDV-Xj-e5B" id="DPf-SU-blt"/>
                                 <outlet property="numberLabel" destination="iRr-Ru-fZl" id="keR-yR-Ygj"/>
                             </connections>

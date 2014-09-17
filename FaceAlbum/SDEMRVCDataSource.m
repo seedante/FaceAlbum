@@ -376,7 +376,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"cell number: %lu in section: %d", (unsigned long)[sectionInfo numberOfObjects], section+1);
+    //NSLog(@"cell number: %lu in section: %d", (unsigned long)[sectionInfo numberOfObjects], section+1);
     return [sectionInfo numberOfObjects];
 }
 
@@ -395,10 +395,11 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"HeaderView Indexpath: %@", indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%d avators", number];
-    
+    //personProfileHeaderView.GoBackButton.hidden = YES;
     return personProfileHeaderView;
 }
 

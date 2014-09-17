@@ -12,6 +12,8 @@
 
 @property (nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic) IBOutlet UILabel *numberLabel;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+
 
 - (IBAction)userEndInput:(id)sender;
 @end

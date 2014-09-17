@@ -8,6 +8,7 @@
 
 #import "SDEMontageRoomViewController.h"
 #import "SDEMRVCDataSource.h"
+#import "SDEPersonProfileHeaderView.h"
 #import "PhotoScanManager.h"
 #import "Store.h"
 #import "Person.h"
@@ -40,6 +41,9 @@ typedef enum {
 
 @property (nonatomic) UICollectionView  *candidateView;
 
+@property (nonatomic) UITextField *activedField;
+@property (nonatomic) UIButton *goBackUpButton;
+
 @end
 
 @implementation SDEMontageRoomViewController
@@ -48,8 +52,16 @@ typedef enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.goBackUpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.view addSubview:self.goBackUpButton];
+    [self.goBackUpButton setTitle:@"UP" forState:UIControlStateNormal];
+    [self.goBackUpButton sizeToFit];
+    self.goBackUpButton.center = CGPointMake(-100, 50);
+    [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
     [self.navigationItem setRightBarButtonItem:self.showGalleryBarButton];
+    [self registerForKeyboardNotifications];
     
     self.selectedFaces = [[NSMutableSet alloc] init];
     self.includedSections = [[NSMutableSet alloc] init];
@@ -70,15 +82,20 @@ typedef enum {
         NSLog(@"Face Fetch Fail: %@", error);
     }
     
-    [self registerForKeyboardNotifications];
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
+}
+
+-(void)goBackToTop
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    self.goBackUpButton.center = CGPointMake(-100, 100);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
 }
-
 
 - (void)saveEdit
 {
@@ -414,7 +431,7 @@ typedef enum {
     [self unenableLeftBarButtonItems];
     
     [self.collectionView setContentInset:UIEdgeInsetsMake(164.0f, 0.0f, 0.0f, 0.0f)];
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+    //[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 
 - (UICollectionView *)candidateView
@@ -535,6 +552,9 @@ typedef enum {
             if (self.selectedFaces.count > 0) {
                 for (NSIndexPath *itemIndexPath in self.selectedFaces) {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
+                    if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
+                        NSLog(@"JUST FOR TEST");
+                    }
                     selectedFaceItem.personOwner = selectedPerson;
                 }
             }
@@ -546,9 +566,12 @@ typedef enum {
         [self unenableLeftBarButtonItems];
         [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:targetSection] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        
+        self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
     }
 }
+
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -592,6 +615,20 @@ typedef enum {
     return YES;
 }
 
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    self.activedField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+    self.activedField = nil;
+}
+
+
 #pragma mark - Handle keyboard show and dismiss
 // Call this method somewhere in your view controller setup code.
 - (void)registerForKeyboardNotifications
@@ -613,22 +650,38 @@ typedef enum {
     NSLog(@"Keyboard show");
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    //CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    //NSLog(@"Keyboard Frame: %f, %f", kbRect.origin.x, kbRect.origin.y);
+    NSLog(@"Keyboard Size: %fx%f", kbSize.height, kbSize.width);
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    UIEdgeInsets edgeInsets = self.collectionView.contentInset;
+    //NSLog(@"EdgeInsets: %f, %f, %f, %f", edgeInsets.top, edgeInsets.left, edgeInsets.bottom, edgeInsets.right);
+    //CGRect textFiledRect = [self.collectionView convertRect:self.activedField.frame fromView:self.activedField.superview];
+    //NSLog(@"Active TextField Frame: %f %f", textFiledRect.origin.x, textFiledRect.origin.y);
+    edgeInsets.bottom = kbSize.width + 140;
+    UIEdgeInsets contentInsets = edgeInsets;
     self.collectionView.contentInset = contentInsets;
-    self.collectionView.scrollIndicatorInsets = contentInsets;
+    //self.collectionView.scrollIndicatorInsets = contentInsets;
     
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your app might not need or want this behavior.
+    //I found the follow code effect nothing.
+    //CGRect aRect = self.collectionView.frame;
+    //aRect.size.height -= kbSize.width;
+    //if (!CGRectContainsPoint(aRect, textFiledRect.origin) ) {
+    //    NSLog(@"I am hidden.");
+    //    [self.collectionView scrollRectToVisible:textFiledRect animated:YES];
+    //}
+    
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     NSLog(@"Keyboard hidden.");
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
     self.collectionView.contentInset = contentInsets;
-    self.collectionView.scrollIndicatorInsets = contentInsets;
+    //self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
