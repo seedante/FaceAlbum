@@ -26,6 +26,11 @@ typedef enum: NSUInteger{
     DetailLineLayout
 } LayoutType;
 
+typedef enum: NSUInteger{
+    kFaceType,
+    kPhotoType,
+} GridCellType;
+
 @interface SDEPageStyleGalleryViewController ()
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -37,6 +42,7 @@ typedef enum: NSUInteger{
 @property (nonatomic) NSInteger currentPortraitIndex;
 @property (nonatomic) NSInteger currentPageIndex;
 @property (nonatomic) LayoutType currentLayoutType;
+@property (nonatomic) GridCellType currentGridCellType;
 
 @property (nonatomic) UICollectionViewController *singlePageCollectionViewController;
 @property (nonatomic) UICollectionView *singlePageCollectionView;
@@ -62,6 +68,10 @@ typedef enum: NSUInteger{
     self.currentPortraitIndex = 0;
     self.pageVCArray = [NSMutableArray new];
     self.currentLayoutType = PortraitLayout;
+    self.currentGridCellType = kFaceType;
+    self.styleSwitch.delegate = self;
+    UITabBarItem *item = [self.styleSwitch.items objectAtIndex:self.currentGridCellType];
+    [self.styleSwitch setSelectedItem:item];
     
     self.nameTitle.text = @"";
     self.infoTitle.text = @"";
@@ -72,7 +82,7 @@ typedef enum: NSUInteger{
     [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
     [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
      */
-    //[self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -317,14 +327,26 @@ typedef enum: NSUInteger{
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-            [cell setShowContent:firstFaceInSection.posterImage];
+            [cell setShowContent:[UIImage imageWithContentsOfFile:firstFaceInSection.pathForBackup]];
             break;
         }
         case HorizontalGridLayout:{
             NSInteger itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
             NSIndexPath *faceIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:faceIndexPath];
-            [cell setShowContent:faceItem.avatorImage];
+            switch (self.currentGridCellType) {
+                case kFaceType:
+                    [cell setShowContent:[UIImage imageWithContentsOfFile:faceItem.pathForBackup]];
+                    break;
+                case kPhotoType:{
+                    NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
+                    [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
+                        UIImage *photoImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
+                        [cell setShowContent:photoImage];
+                    }failureBlock:nil];
+                    break;
+                }
+            }
             break;
         }
         case DetailLineLayout:{
@@ -335,7 +357,6 @@ typedef enum: NSUInteger{
                 UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
                 [cell setShowContent:photoImage];
             }failureBlock:nil];
-            
             break;
         }
         default:
@@ -344,6 +365,22 @@ typedef enum: NSUInteger{
     
     return cell;
 }
+
+#pragma mark - UITabBarDelegate Method
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    NSUInteger tabIndex = [tabBar.items indexOfObject:item];
+    if (self.currentGridCellType != tabIndex) {
+        self.currentGridCellType = tabIndex;
+        if ([self countForPageViewController] == 1) {
+            [self.singlePageCollectionView reloadData];
+        }else{
+            UICollectionViewController *currentVC = (UICollectionViewController *)[self.pageViewController.viewControllers firstObject];
+            [currentVC.collectionView reloadData];
+        }
+    }
+}
+
 
 #pragma mark - Gesture Method
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
@@ -466,7 +503,7 @@ typedef enum: NSUInteger{
                 
                 [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
                 
-                //[self addChildViewController:self.pageViewController];
+                [self addChildViewController:self.pageViewController];
                 self.pageViewController.view.hidden = NO;
                 [self.view addSubview:self.pageViewController.view];
                 
@@ -475,7 +512,7 @@ typedef enum: NSUInteger{
                 self.galleryView.hidden = YES;
                 self.styleSwitch.hidden = NO;
                 
-                //[self.pageViewController didMoveToParentViewController:self];
+                [self.pageViewController didMoveToParentViewController:self];
                 //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
             }
             
@@ -557,7 +594,15 @@ typedef enum: NSUInteger{
             edgeInsets = UIEdgeInsetsMake(200, 50, 200, 50);
             break;
         case HorizontalGridLayout:
-            edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
+            switch (self.currentGridCellType) {
+                case kFaceType:
+                    edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
+                    break;
+                default:
+                    edgeInsets = UIEdgeInsetsMake(0, 60, 0, 60);
+                    break;
+            }
+            
             break;
         case DetailLineLayout:
             edgeInsets = UIEdgeInsetsMake(50, 162, 50, 162);
@@ -574,9 +619,17 @@ typedef enum: NSUInteger{
         case PortraitLayout:
             cellSize = CGSizeMake(200, 200);
             break;
-        case HorizontalGridLayout:
-            cellSize = CGSizeMake(144, 144);
+        case HorizontalGridLayout:{
+            switch (self.currentGridCellType) {
+                case kFaceType:
+                    cellSize = CGSizeMake(144, 144);
+                    break;
+                default:
+                    cellSize = CGSizeMake(144, 144);
+                    break;
+            }
             break;
+        }
         case DetailLineLayout:{
             cellSize = CGSizeMake(700, 500);
             break;
@@ -594,7 +647,14 @@ typedef enum: NSUInteger{
             space = 50.0f;
             break;
         case HorizontalGridLayout:
-            space = 20.0f;
+            switch (self.currentGridCellType) {
+                case kFaceType:
+                    space = 20.0f;
+                    break;
+                case kPhotoType:
+                    space = 15.0f;
+                    break;
+            }
             break;
         case DetailLineLayout:
             space = 10.0f;
@@ -628,8 +688,8 @@ typedef enum: NSUInteger{
 - (IBAction)callActionCenter:(id)sender
 {
     NSLog(@"Swith Back.");
-    self.currentLayoutType = PortraitLayout;
-    [self dismissAvatorView];
+    //self.currentLayoutType = PortraitLayout;
+    //[self dismissAvatorView];
     //[self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }

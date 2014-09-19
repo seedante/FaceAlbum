@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameTitle;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitle;

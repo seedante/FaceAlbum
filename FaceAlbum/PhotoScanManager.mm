@@ -14,8 +14,9 @@
 #import "Face.h"
 #import "AlbumGroup.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Foundation/Foundation.h>
 
-#define avatorSize 150.0
+#define avatorSize 300.0
 
 CGImageRef (^flipCGImage)(CGImageRef sourceCGImage) = ^CGImageRef(CGImageRef sourceCGImage){
     CGSize size = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
@@ -65,6 +66,26 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     return headBound;
 };
 
+CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
+    CGRect headBound;
+    float x = faceBound.origin.x - faceBound.size.width;
+    float y = faceBound.origin.y - faceBound.size.height;
+    headBound.origin.x = x > 0.0?x:0.0;
+    headBound.origin.y = y > 0.0?y:0.0;
+    
+    float width = faceBound.size.width * 3.0;
+    float height = faceBound.size.height * 3.0;
+    if (width + x > imageSize.width) {
+        width = imageSize.width - x;
+    }
+    headBound.size.width = width;
+    if (height + y > imageSize.height) {
+        height = imageSize.height - y;
+    }
+    headBound.size.height = height;
+    
+    return headBound;
+};
 
 @interface PhotoScanManager ()
 {
@@ -76,6 +97,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
 @property (nonatomic) CIDetector *appleImageDetector;
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
 @property (nonatomic) NSMutableArray *facesInAPhoto;
+@property (nonatomic) NSString *cachePath;
 
 @end
 
@@ -151,6 +173,15 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     if (self.facesInAPhoto.count > 0) {
         [self.facesInAPhoto removeAllObjects];
     }
+}
+
+- (NSString *)cachePath
+{
+    if (!_cachePath) {
+        _cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    }
+
+    return _cachePath;
 }
 
 - (void)filterAssets
@@ -244,7 +275,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     
     @autoreleasepool {
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-        CGImageRef sourceCGImage = [assetRepresentation fullResolutionImage];
+        CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
         UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
         
         Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
@@ -263,28 +294,43 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
                 CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
                 CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
                 UIImage *headUIImage = CGImageToUIImage(headCGImage);
+                
+                //CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
+                //CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
+                //UIImage *portraitUIImage = CGImageToUIImage(portraitCGImage);
+                //CGImageRelease(portraitCGImage);
+                
                 UIImage *avatorUIImage = nil;
-                avatorUIImage = headUIImage;
-                /*
+                //avatorUIImage = headUIImage;
                 if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
                     avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
                 }else
                     avatorUIImage = headUIImage;
-                 */
                 CGImageRelease(headCGImage);
+                
+                NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
+                NSString *randomName = [[[NSUUID alloc] init] UUIDString];
+                NSString *saveName = [randomName stringByAppendingPathExtension:@".jpg"];
+                NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
+                BOOL success = [imageData writeToFile:savePath atomically:YES];
+                if (!success) {
+                    NSLog(@"Wrong!Wrong!Wrong!");
+                }
+                
                 [self.facesInAPhoto addObject:avatorUIImage];
                 
                 currentItemNumberInFirstSection += 1;
                 //NSLog(@"Find New Face.");
                 Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
-                newFace.avatorImage = avatorUIImage;
-                newFace.posterImage = headUIImage;
+                //newFace.avatorImage = avatorUIImage;
+                //newFace.posterImage = portraitUIImage;
                 newFace.whetherToDisplay = YES;
                 newFace.isMyStar = NO;
                 newFace.order = currentItemNumberInFirstSection;
                 newFace.section = 0;
                 newFace.photoOwner = newPhoto;
                 newFace.assetURLNSString = newPhoto.uniqueURLString;
+                newFace.pathForBackup = savePath;
             }
             newPhoto.faceCount = detectResult.faces.count;
             newPhoto.whetherToDisplay = YES;

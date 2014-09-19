@@ -23,7 +23,7 @@
 {
     CGSize avatorSize = self.frame.size;
     CGFloat diameter = MAX(avatorSize.height, avatorSize.width);
-    return diameter/2.0;
+    return diameter/5.0;
 }
 
 

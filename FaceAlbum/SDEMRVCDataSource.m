@@ -386,9 +386,22 @@ static NSString * const cellIdentifier = @"avatorCell";
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     cell.clipsToBounds = YES;
     Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-    UIImage *headImage = face.avatorImage;
-    [cell.avatorView setImage:headImage];
+    UIImage *headImage = [UIImage imageWithContentsOfFile:face.pathForBackup];
+    
+    cell.avatorView.image = headImage;
     cell.order.hidden = YES;
+    
+    /*
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        UIImage *headImage = face.avatorImage;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.avatorView setImage:headImage];
+            [cell setNeedsDisplay];
+        });
+    });
+     */
+
     //cell.order.text = [NSString stringWithFormat:@"%.2f", face.order];
     return cell;
 }

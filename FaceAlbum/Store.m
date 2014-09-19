@@ -81,6 +81,21 @@
     return _personFetchedResultsController;
 }
 
-
+- (NSFetchedResultsController *)photoFetchedResultsController
+{
+    if (!_photoFetchedResultsController) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
+        [fetchRequest setFetchBatchSize:10];
+        
+        NSSortDescriptor *orderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+        [fetchRequest setSortDescriptors:@[orderDescriptor]];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
+        [fetchRequest setPredicate:predicate];
+        _personFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:@"myLife"];
+    }
+    
+    return _photoFetchedResultsController;
+}
 
 @end

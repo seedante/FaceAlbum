@@ -588,13 +588,13 @@ typedef enum {
         [self enableLeftBarButtonItems];
         cell.layer.borderColor = [[UIColor greenColor] CGColor];
         cell.layer.borderWidth = 3.0f;
-        cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        //cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
     }
     
     if ([type isEqual:@"Deselect"]) {
         NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         cell.layer.borderWidth = 0.0f;
-        cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        //cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
         //use KVO
         [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
         
