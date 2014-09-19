@@ -684,9 +684,10 @@ typedef enum {
     //self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
-- (IBAction)unwindToMontageRoom:(id)sender
+- (IBAction)unwindToMontageRoom:(UIStoryboardSegue *)segue
 {
-    
+    NSArray *vcs = self.navigationController.viewControllers;
+    NSLog(@"VC count: %d", vcs.count);
 }
 
 @end
