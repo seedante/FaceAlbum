@@ -37,7 +37,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.faceCollectionView.dataSource = self.faceDataSource;
     self.faceCollectionView.delegate = self.faceDataSource;
     self.faceDataSource.collectionView = self.faceCollectionView;
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:@"photoCell"];
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     
