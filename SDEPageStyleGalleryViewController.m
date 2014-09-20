@@ -123,6 +123,7 @@ typedef enum: NSUInteger{
     }
     
     _personFetchedResultsController = [[Store sharedStore] personFetchedResultsController];
+    [_personFetchedResultsController performFetch:nil];
     return _personFetchedResultsController;
 }
 

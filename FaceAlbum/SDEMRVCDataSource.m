@@ -68,7 +68,6 @@ static NSString * const cellIdentifier = @"avatorCell";
     return _faceFetchedResultsController;
 }
 
-
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -412,7 +411,13 @@ static NSString * const cellIdentifier = @"avatorCell";
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%d avators", number];
-    //personProfileHeaderView.GoBackButton.hidden = YES;
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    if (faceItem.section == 0) {
+        personProfileHeaderView.nameTextField.text = @"FacelessMan";
+        personProfileHeaderView.nameTextField.enabled = NO;
+    }else
+        personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
+    
     return personProfileHeaderView;
 }
 

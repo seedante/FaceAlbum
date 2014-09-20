@@ -7,6 +7,12 @@
 //
 
 #import "SDEAvatorCell.h"
+#import "SDEAvatorOverlayView.h"
+
+@interface SDEAvatorCell ()
+@property (nonatomic) SDEAvatorOverlayView *overlayView;
+
+@end
 
 @implementation SDEAvatorCell
 
@@ -14,9 +20,22 @@
     self = [super initWithFrame:frameRect];
     if (self) {
         // Initialization code
-
+        NSLog(@"ITSHOULDBE");
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.showOverlayViewWhenSelected = YES;
+    
+    // Create a image view
+    self.overlayView = [[SDEAvatorOverlayView alloc] initWithFrame:self.contentView.bounds];
+    self.overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.contentView addSubview:self.overlayView];
+    self.overlayView.alpha = 0.f;
 }
 
 - (CGFloat)avatorCornerRadius
@@ -26,7 +45,27 @@
     return diameter/5.0;
 }
 
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    
+    // Show/hide overlay view
+    if (selected && self.showOverlayViewWhenSelected) {
+        [self showOverlayView];
+    } else {
+        [self hideOverlayView];
+    }
+}
 
+- (void)showOverlayView
+{
+    self.overlayView.alpha = 1.f;
+}
+
+- (void)hideOverlayView
+{
+    self.overlayView.alpha = 0.f;
+}
 - (void)setCellCornerRadius:(CGSize)imageSize
 {
     

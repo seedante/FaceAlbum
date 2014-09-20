@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatorView;
 @property (weak, nonatomic) IBOutlet UILabel *order;
+@property (nonatomic, assign) BOOL showOverlayViewWhenSelected;
 
 - (CGFloat)avatorCornerRadius;
 - (void)setCellCornerRadius:(CGSize)imageSize;

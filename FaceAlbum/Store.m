@@ -76,7 +76,7 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
     [fetchRequest setPredicate:predicate];
-    _personFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:@"myLife"];
+    _personFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"order" cacheName:@"allPersons"];
     
     return _personFetchedResultsController;
 }

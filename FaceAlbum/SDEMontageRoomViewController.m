@@ -43,6 +43,7 @@ typedef enum {
 
 @property (nonatomic) UITextField *activedField;
 @property (nonatomic) UIButton *goBackUpButton;
+@property (nonatomic) NSString *oldContent;
 
 @end
 
@@ -81,8 +82,8 @@ typedef enum {
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
     }
-    
-    NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
+
+    //NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
 -(void)goBackToTop
@@ -359,6 +360,7 @@ typedef enum {
         return _hiddenBarButton;
     }
     _hiddenBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(hiddenSelectedFaces)];
+    //_hiddenBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"remove_user-32.png"] style:UIBarButtonItemStylePlain target:self action:@selector(hiddenSelectedFaces)];
     _hiddenBarButton.enabled = NO;
     return _hiddenBarButton;
 }
@@ -380,7 +382,8 @@ typedef enum {
     if (_addBarButton) {
         return _addBarButton;
     }
-    _addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewPerson)];
+    //_addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewPerson)];
+    _addBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_user-32.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addNewPerson)];
     _addBarButton.enabled = NO;
     return _addBarButton;
 }
@@ -508,7 +511,7 @@ typedef enum {
 - (void)jumpToGalleryScene
 {
     //[self performSegueWithIdentifier:@"enterGallery" sender:self];
-    [self performSegueWithIdentifier:@"PageGallery" sender:self];
+    [self performSegueWithIdentifier:@"enterPageGallery" sender:self];
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source
@@ -526,7 +529,7 @@ typedef enum {
     if (firstItemInSection.section == 0) {
         [cell setCellImage:[UIImage imageNamed:@"Smartisan.png"]];
     }else
-        [cell setCellImage:firstItemInSection.avatorImage];
+        [cell setCellImage:[UIImage imageWithContentsOfFile:firstItemInSection.pathForBackup]];
     return cell;
 }
 
@@ -554,8 +557,8 @@ typedef enum {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
                     if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
                         NSLog(@"JUST FOR TEST");
+                        selectedFaceItem.personOwner = selectedPerson;
                     }
-                    selectedFaceItem.personOwner = selectedPerson;
                 }
             }
         }
@@ -586,14 +589,14 @@ typedef enum {
         [self addSelectedFaces:[NSSet setWithObject:indexPath]];
         
         [self enableLeftBarButtonItems];
-        cell.layer.borderColor = [[UIColor greenColor] CGColor];
-        cell.layer.borderWidth = 3.0f;
+        //cell.layer.borderColor = [[UIColor greenColor] CGColor];
+        //cell.layer.borderWidth = 3.0f;
         //cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
     }
     
     if ([type isEqual:@"Deselect"]) {
         NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
-        cell.layer.borderWidth = 0.0f;
+        //cell.layer.borderWidth = 0.0f;
         //cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
         //use KVO
         [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
@@ -618,13 +621,32 @@ typedef enum {
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
     self.activedField = textField;
+    self.oldContent = textField.text;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
+    if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
+        NSLog(@"Change Name");
+        NSUInteger section = [[self.faceFetchedResultsController sections] count];
+        CGRect rectInCollectionView = [textField convertRect:textField.frame toView:self.collectionView];
+        //NSLog(@"Text Field Frame: %f, %f, %f, %f", rectInCollectionView.origin.x, rectInCollectionView.origin.y, textField.frame.size.width, textField.frame.size.height);
+        for (int i = 0; i<section; i++) {
+            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:0 inSection:i];
+            CGRect frame = [[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:currentIndexPath] frame];
+            //NSLog(@"HeadView Frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            if (CGRectIntersectsRect(frame, rectInCollectionView)) {
+                //NSLog(@"Match at IndexPath: %@", currentIndexPath);
+                Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
+                personItem.name = self.activedField.text;
+                [self saveEdit];
+                break;
+            }
+        }
+    }
     self.activedField = nil;
 }
 
@@ -688,6 +710,9 @@ typedef enum {
 {
     NSArray *vcs = self.navigationController.viewControllers;
     NSLog(@"VC count: %d", vcs.count);
+    NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);
+    //[self.navigationController popViewControllerAnimated:YES];
+    //NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);
 }
 
 @end
