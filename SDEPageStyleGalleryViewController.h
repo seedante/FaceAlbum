@@ -7,13 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SDECenterMenu.h"
+#import "SDEPopupPanel.h"
 
-@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate>
+@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate, SDECenterMenuDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameTitle;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitle;
 @property (weak, nonatomic) IBOutlet UITabBar *styleSwitch;
 @property (weak, nonatomic) IBOutlet UICollectionView *galleryView;
-- (IBAction)callActionCenter:(id)sender;
+@property (weak, nonatomic) IBOutlet SDEPopupPanel *buttonPanel;
+@property (weak, nonatomic) IBOutlet UIButton *scanRoomButton;
+@property (weak, nonatomic) IBOutlet UIButton *searchButton;
+@property (weak, nonatomic) IBOutlet UIButton *MontageRoomButton;
 
+
+- (IBAction)scanPhotoLibrary:(id)sender;
+- (IBAction)searchPerson:(id)sender;
+- (IBAction)editAlbum:(id)sender;
+
+- (IBAction)popMenu:(id)sender;
 @end

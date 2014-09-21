@@ -7,12 +7,14 @@
 //
 
 #import "SDEPageStyleGalleryViewController.h"
+
 #import "Store.h"
 #import "Face.h"
 #import "Photo.h"
 #import "SDEGalleryCell.h"
 #import "SDEGalleryModel.h"
 #import "LineLayout.h"
+//#import "SDECenterMenu.h"
 @import AssetsLibrary;
 
 static NSString *CellIdentifier = @"GalleryCell";
@@ -83,6 +85,21 @@ typedef enum: NSUInteger{
     [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
      */
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    /*
+    UIImage *startImage = [UIImage imageNamed:@"user_male2-50.png"];
+    UIImage *firstMenuImage = [UIImage imageNamed:@"edit_user-50.png"];
+    UIImage *secondMenyImage = [UIImage imageNamed:@"find_user-50.png"];
+    SDECenterMenu *centerMenu = [[SDECenterMenu alloc] initWithStartPoint:CGPointMake(950, 50) startImage:startImage submenuImages:@[firstMenuImage, secondMenyImage]];
+    centerMenu.delegate = self;
+    [self.view addSubview:centerMenu];
+    [self.view bringSubviewToFront:centerMenu];
+     */
+}
+
+- (void)menuDidSelected:(int)index
+{
+    NSLog(@"Menu TEST!!!!!!!!!!!!!!!");
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -693,6 +710,43 @@ typedef enum: NSUInteger{
     //[self dismissAvatorView];
     //[self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (IBAction)scanPhotoLibrary:(id)sender
+{
+    NSLog(@"Scan Library");
+    if (self.navigationController.childViewControllers.count == 3) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
+        [self.navigationController setViewControllers:@[newRootVC] animated:YES];
+    }
+}
+
+- (IBAction)searchPerson:(id)sender
+{
+    NSLog(@"Search as you like.");
+}
+
+- (IBAction)editAlbum:(id)sender
+{
+    NSLog(@"Need a little change.");
+    if (self.navigationController.childViewControllers.count > 1 && [self.navigationController.topViewController isEqual:self]) {
+        NSLog(@"Pop self");
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        NSLog(@"Segue Jump");
+        [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
+    }
+}
+
+- (IBAction)popMenu:(id)sender
+{
+    if (self.buttonPanel.isPopup) {
+        [self.buttonPanel hide];
+    }else
+        [self.buttonPanel popup];
 }
 
 @end

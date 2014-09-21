@@ -27,6 +27,7 @@
 
 - (void)awakeFromNib
 {
+    //NSLog(@"ITSHOULDBE");
     [super awakeFromNib];
     self.showOverlayViewWhenSelected = YES;
     

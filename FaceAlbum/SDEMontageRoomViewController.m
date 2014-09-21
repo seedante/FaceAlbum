@@ -583,7 +583,7 @@ typedef enum {
 
 - (void)processCellAtIndexPath:(NSIndexPath *)indexPath type:(NSString *)type
 {
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    //UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([type isEqual:@"Select"]) {
         NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         [self addSelectedFaces:[NSSet setWithObject:indexPath]];

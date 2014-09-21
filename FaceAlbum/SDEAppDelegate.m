@@ -23,7 +23,7 @@
     NSString *startSceneName = [self startScene];
     NSLog(@"Start Scene: %@", startSceneName);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:startSceneName];
+    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:@"PersonGalleryNV"];
     self.window.rootViewController = initialViewController;
     Store *dataStore = [Store sharedStore];
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];
@@ -45,19 +45,19 @@
     
     BOOL isGalleryOpened = [defaultConfig boolForKey:@"isGalleryOpened"];
     if (isGalleryOpened) {
-        startScene = @"PersonGallery";
+        startScene = @"PersonGalleryNV";
         return startScene;
     }
     
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
     if (isFirstScan) {
-        startScene = @"ScanRoom";
+        startScene = @"ScanRoomNV";
         return startScene;
     }
 
     BOOL shouldBeMontageRoom = [defaultConfig boolForKey:@"shouldBeMontageRoom"];
     if (shouldBeMontageRoom) {
-        startScene = @"MontageRoom";
+        startScene = @"MontageRoomNV";
     }
     return startScene;
 }
