@@ -51,7 +51,6 @@
     NSPropertyDescription *URLStringDescription = [[photoEntity propertiesByName] objectForKey:@"uniqueURLString"];
     [photoFetchRequest setPropertiesToFetch:@[URLStringDescription]];
     NSArray *kURLStringResults = [self.managedObjectContext executeFetchRequest:photoFetchRequest error:nil];
-    NSLog(@"What Happen?");
     for (NSDictionary *result in kURLStringResults) {
         [scanedAssets addObject:result[@"uniqueURLString"]];
     }
@@ -80,6 +79,7 @@
     [scanedAssets minusSet:allAssetsCopy];
     if (scanedAssets.count > 0) {
         self.deletedAssetsURLString = [scanedAssets copy];
+        NSLog(@"There are %d photo is deleted from local device.", scanedAssets.count);
     }else
         self.deletedAssetsURLString = nil;
 }
@@ -102,7 +102,7 @@
     [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
         if (group && *stop != YES) {
             //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
-            NSLog(@"YYYGroup: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+            //NSLog(@"YYYGroup: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                 if (asset && *shouldStop != YES) {
                     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
@@ -110,7 +110,7 @@
                 }
             }];
         }else{
-            NSLog(@"All Assets Count: %d", self.allAssetsURLString.count);
+            //NSLog(@"All Assets Count: %d", self.allAssetsURLString.count);
             [self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
         }
     } failureBlock:nil];

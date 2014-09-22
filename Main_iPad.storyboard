@@ -21,13 +21,13 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="134" width="100" height="100"/>
+                                <rect key="frame" x="50" y="70" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Smartisan.png" translatesAutoresizingMaskIntoConstraints="NO" id="5QB-14-26b">
+                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Smartisan.png" translatesAutoresizingMaskIntoConstraints="NO" id="5QB-14-26b">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -337,7 +337,7 @@
                                         <rect key="frame" x="508" y="17" width="202" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrR-ve-wZq">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrR-ve-wZq">
                                                 <rect key="frame" x="138" y="2" width="44" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="edit_user-50.png">
@@ -347,8 +347,8 @@
                                                     <action selector="editAlbum:" destination="UMT-jw-iR7" eventType="touchUpInside" id="fwI-77-6kL"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJh-Df-MDh">
-                                                <rect key="frame" x="74" y="5" width="44" height="44"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJh-Df-MDh">
+                                                <rect key="frame" x="74" y="4" width="44" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="I87-jr-ecf"/>
@@ -361,7 +361,7 @@
                                                     <action selector="searchPerson:" destination="UMT-jw-iR7" eventType="touchUpInside" id="Dla-Zk-7hI"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-Vb-wt3">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-Vb-wt3">
                                                 <rect key="frame" x="10" y="0.0" width="44" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
@@ -378,7 +378,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="4rN-8l-Vp8"/>
-                                            <constraint firstItem="qJh-Df-MDh" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="5" id="FY0-CP-3ts"/>
+                                            <constraint firstItem="qJh-Df-MDh" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="4" id="FY0-CP-3ts"/>
                                             <constraint firstItem="hyZ-Vb-wt3" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" id="Hjf-ln-yCQ"/>
                                             <constraint firstAttribute="trailing" secondItem="hrR-ve-wZq" secondAttribute="trailing" constant="20" id="NgW-sf-yf8"/>
                                             <constraint firstItem="hrR-ve-wZq" firstAttribute="leading" secondItem="qJh-Df-MDh" secondAttribute="trailing" constant="20" id="WYj-kL-94O"/>
@@ -712,6 +712,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="mY8-Cd-IyR"/>
-        <segue reference="Tkb-Pv-zIQ"/>
+        <segue reference="fYU-IF-XFj"/>
     </inferredMetricsTieBreakers>
 </document>

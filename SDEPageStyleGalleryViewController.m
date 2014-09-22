@@ -98,8 +98,8 @@ typedef enum: NSUInteger{
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"WWWWWWWWWW");
     [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
+    
 }
 - (SDENewPhotoDetector *)newPhotoDetector
 {
@@ -366,8 +366,13 @@ typedef enum: NSUInteger{
                 case kPhotoType:{
                     NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
                     [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
-                        UIImage *photoImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
-                        [cell setShowContent:photoImage];
+                        if (asset) {
+                            UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                            [cell setShowContent:photoImage];
+                        }else{
+                            UIImage *photoImage = [UIImage imageNamed:@"Smartisan.png"];
+                            [cell setShowContent:photoImage];
+                        }
                     }failureBlock:nil];
                     break;
                 }
@@ -379,8 +384,14 @@ typedef enum: NSUInteger{
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedPersonIndexPath];
             NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
             [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
-                UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-                [cell setShowContent:photoImage];
+                if (asset) {
+                    UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                    [cell setShowContent:photoImage];
+                }else{
+                    UIImage *photoImage = [UIImage imageNamed:@"Smartisan.png"];
+                    [cell setShowContent:photoImage];
+                }
+
             }failureBlock:nil];
             break;
         }
@@ -712,17 +723,16 @@ typedef enum: NSUInteger{
 - (IBAction)scanPhotoLibrary:(id)sender
 {
     NSLog(@"Scan Library");
-    if (self.navigationController.childViewControllers.count == 3) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }else{
-        if ([self.newPhotoDetector shouldScanPhotoLibrary]) {
-            //[[[UIAlertView alloc] initWithTitle:@"GoodNEW!" message:@"New Photo." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK.", nil] show];
+    if ([self.newPhotoDetector shouldScanPhotoLibrary]) {
+        if (self.navigationController.childViewControllers.count == 3) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
             UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
             [self.navigationController setViewControllers:@[newRootVC] animated:YES];
-        }else
-            NSLog(@"Do Nothing.");
+        }
+    }else
+        NSLog(@"Nothing to Do.");
 
-    }
 }
 
 - (IBAction)searchPerson:(id)sender
@@ -733,6 +743,8 @@ typedef enum: NSUInteger{
 - (IBAction)editAlbum:(id)sender
 {
     NSLog(@"Need a little change.");
+    NSLog(@"Check for deleted photos");
+    [self handleDeletedPhotos];
     if (self.navigationController.childViewControllers.count > 1 && [self.navigationController.topViewController isEqual:self]) {
         NSLog(@"Pop self");
         [self.navigationController popViewControllerAnimated:YES];
@@ -742,8 +754,31 @@ typedef enum: NSUInteger{
     }
 }
 
+- (void)handleDeletedPhotos
+{
+    NSArray *deletedAssetsURLString = [self.newPhotoDetector notexistedAssetsURLString];
+    if (deletedAssetsURLString.count > 0) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
+        for (NSString *URLString in deletedAssetsURLString) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == YES) AND (uniqueURLString like %@)", URLString];
+            [fetchRequest setPredicate:predicate];
+            NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+            if (result.count == 1) {
+                Photo *deletedPhoto = (Photo *)result.firstObject;
+                deletedPhoto.isExisted = NO;
+            }else
+                NSLog(@"Some Thing Wrong");
+        }
+        [self.managedObjectContext save:nil];
+    }
+}
+
 - (IBAction)popMenu:(id)sender
 {
+    if (![self.newPhotoDetector shouldScanPhotoLibrary]) {
+        self.scanRoomButton.hidden = YES;
+    }else
+        self.scanRoomButton.hidden = NO;
     if (self.buttonPanel.isPopup) {
         [self.buttonPanel hide];
     }else

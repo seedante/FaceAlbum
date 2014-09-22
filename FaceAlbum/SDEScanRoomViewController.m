@@ -93,7 +93,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     }else{
         SDENewPhotoDetector *photoDetector = [SDENewPhotoDetector sharedPhotoDetector];
         if ([photoDetector shouldScanPhotoLibrary]) {
-            NSLog(@"WORKAAAAAAAAAAAAA");
             NSArray *newAssets = [photoDetector assetsNeedToScan];
             if (newAssets.count > 0) {
                 for (ALAsset *asset in newAssets) {

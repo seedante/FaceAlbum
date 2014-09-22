@@ -8,6 +8,7 @@
 
 #import "SDEMRVCDataSource.h"
 #import "Face.h"
+#import "Photo.h"
 #import "Person.h"
 #import "Store.h"
 #import "SDEAvatorCell.h"
@@ -385,6 +386,10 @@ static NSString * const cellIdentifier = @"avatorCell";
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     cell.clipsToBounds = YES;
     Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    if(!face.photoOwner.isExisted){
+        cell.backgroundColor = [UIColor redColor];
+        cell.avatorView.alpha = 0.5;
+    }
     UIImage *headImage = [UIImage imageWithContentsOfFile:face.pathForBackup];
     
     cell.avatorView.image = headImage;
