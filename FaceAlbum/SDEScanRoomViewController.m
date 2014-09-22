@@ -10,6 +10,7 @@
 #import "PhotoCell.h"
 #import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
+#import "SDENewPhotoDetector.h"
 @import AssetsLibrary;
 
 static NSString *cellIdentifier = @"photoCell";
@@ -49,22 +50,52 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     pipelineWorkIndex = 0;
     self.allAssets = [[NSMutableArray alloc] init];
     self.showAssets = [[NSMutableArray alloc] init];
-    NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
-    [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
-        if (group && *stop != YES) {
-            //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
-            NSLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
-            [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
-                if (asset && *stop != YES) {
+    
+    
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
+    if (isFirstScan) {
+        NSLog(@"This is the firct scan");
+        NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
+        [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
+            if (group && *stop != YES) {
+                //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
+                NSLog(@"XXXGroup: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+                [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
+                    if (asset && *stop != YES) {
+                        if (self.showAssets.count < 3) {
+                            [self.showAssets addObject:asset];
+                        }else
+                            [self.allAssets addObject:asset];
+                    }
+                }];
+            }else{
+                NSLog(@".......");
+                [self.assetCollectionView reloadData];
+            }
+        } failureBlock:nil];
+    }else{
+        SDENewPhotoDetector *photoDetector = [SDENewPhotoDetector sharedPhotoDetector];
+        if ([photoDetector shouldScanPhotoLibrary]) {
+            NSLog(@"WORKAAAAAAAAAAAAA");
+            NSArray *newAssets = [photoDetector assetsNeedToScan];
+            if (newAssets.count > 0) {
+                for (ALAsset *asset in newAssets) {
                     if (self.showAssets.count < 3) {
                         [self.showAssets addObject:asset];
                     }else
                         [self.allAssets addObject:asset];
                 }
-            }];
+                NSLog(@"What happen again?");
+                [self.assetCollectionView reloadData];
+                NSLog(@"Asset need to scan: %d", self.allAssets.count);
+                NSLog(@"Asset count: %d", self.showAssets.count);
+                [photoDetector cleanData];
+            }
         }else
-            [self.assetCollectionView reloadData];
-    } failureBlock:nil];
+            NSLog(@"There is NO new photo");
+    }
+    
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -76,10 +107,10 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     return _photoLibrary;
 }
 
-- (void)configFirstScene:(BOOL)isFinished
+- (void)configFirstScene:(BOOL)antiFinished
 {
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    [defaultConfig setBool:isFinished forKey:@"isFirstScan"];
+    [defaultConfig setBool:antiFinished forKey:@"isFirstScan"];
     [defaultConfig synchronize];
 }
 

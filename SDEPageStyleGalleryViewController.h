@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SDECenterMenu.h"
+//#import "SDECenterMenu.h"
 #import "SDEPopupPanel.h"
 
-@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate, SDECenterMenuDelegate>
+@interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameTitle;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitle;

@@ -69,7 +69,7 @@ typedef enum {
     self.triggeredDeletedSections = [NSMutableSet new];
     self.guardObjectIDs = [NSMutableSet new];
     
-    [self registerAsObserver];
+    
     self.collectionView.allowsSelection = NO;
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
@@ -95,7 +95,13 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self registerAsObserver];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self cancelObserver];
 }
 
 - (void)saveEdit
@@ -124,6 +130,11 @@ typedef enum {
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"selectedFaces" options:0 context:NULL];
+}
+
+- (void)cancelObserver
+{
+    [self removeObserver:self forKeyPath:@"selectedFaces"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

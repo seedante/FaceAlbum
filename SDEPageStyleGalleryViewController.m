@@ -7,7 +7,7 @@
 //
 
 #import "SDEPageStyleGalleryViewController.h"
-
+#import "SDENewPhotoDetector.h"
 #import "Store.h"
 #import "Face.h"
 #import "Photo.h"
@@ -55,11 +55,10 @@ typedef enum: NSUInteger{
 @property (nonatomic) NSMutableArray *pageVCArray;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
 
+@property (nonatomic) SDENewPhotoDetector *newPhotoDetector;
 @end
 
 @implementation SDEPageStyleGalleryViewController
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -97,9 +96,18 @@ typedef enum: NSUInteger{
      */
 }
 
-- (void)menuDidSelected:(int)index
+- (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"Menu TEST!!!!!!!!!!!!!!!");
+    [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    //});
+}
+- (SDENewPhotoDetector *)newPhotoDetector
+{
+    if (!_newPhotoDetector) {
+        _newPhotoDetector = [SDENewPhotoDetector sharedPhotoDetector];
+    }
+    return _newPhotoDetector;
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -702,25 +710,18 @@ typedef enum: NSUInteger{
     return space;
 }
 
-
-- (IBAction)callActionCenter:(id)sender
-{
-    NSLog(@"Swith Back.");
-    //self.currentLayoutType = PortraitLayout;
-    //[self dismissAvatorView];
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 - (IBAction)scanPhotoLibrary:(id)sender
 {
     NSLog(@"Scan Library");
     if (self.navigationController.childViewControllers.count == 3) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
-        UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
-        [self.navigationController setViewControllers:@[newRootVC] animated:YES];
+        if ([self.newPhotoDetector shouldScanPhotoLibrary]) {
+            //[[[UIAlertView alloc] initWithTitle:@"GoodNEW!" message:@"New Photo." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK.", nil] show];
+            UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
+            [self.navigationController setViewControllers:@[newRootVC] animated:YES];
+        }
+
     }
 }
 

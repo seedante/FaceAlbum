@@ -11,7 +11,9 @@
 @interface SDENewPhotoDetector : NSObject
 
 + (SDENewPhotoDetector *)sharedPhotoDetector;
-- (void)startDetect;
-- (NSArray *)newAssetsNeedToScan;
-
+- (void)comparePhotoDataBetweenLocalAndDataBase;
+- (BOOL)shouldScanPhotoLibrary;
+- (void)cleanData;
+- (NSArray *)assetsNeedToScan; //include asset, not url string
+- (NSArray *)notexistedAssetsURLString;
 @end
