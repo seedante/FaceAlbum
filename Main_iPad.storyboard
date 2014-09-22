@@ -131,7 +131,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="showAllPhotos:" destination="tMj-7K-Ytg" eventType="touchUpInside" id="cu3-Ne-jkL"/>
+                                            <action selector="scanPhotos:" destination="tMj-7K-Ytg" eventType="touchUpInside" id="ayy-c9-QRc"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -299,13 +299,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="65"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYX-9r-NlP">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYX-9r-NlP">
                                         <rect key="frame" x="710" y="17" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="p8z-QG-HGH"/>
                                         </constraints>
-                                        <state key="normal" image="user_male2-50.png"/>
+                                        <size key="titleShadowOffset" width="2" height="2"/>
+                                        <state key="normal" image="user_male2-50.png">
+                                            <color key="titleShadowColor" red="0.58897633230000002" green="1" blue="0.075229649039999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="popMenu:" destination="UMT-jw-iR7" eventType="touchUpInside" id="WU8-of-E1c"/>
                                         </connections>
@@ -708,7 +711,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="mY8-Cd-IyR"/>
         <segue reference="Tkb-Pv-zIQ"/>
-        <segue reference="cXo-XD-Ik9"/>
     </inferredMetricsTieBreakers>
 </document>

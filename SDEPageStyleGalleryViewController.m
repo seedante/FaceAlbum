@@ -98,9 +98,8 @@ typedef enum: NSUInteger{
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"WWWWWWWWWW");
     [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    //});
 }
 - (SDENewPhotoDetector *)newPhotoDetector
 {
@@ -720,7 +719,8 @@ typedef enum: NSUInteger{
             //[[[UIAlertView alloc] initWithTitle:@"GoodNEW!" message:@"New Photo." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK.", nil] show];
             UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
             [self.navigationController setViewControllers:@[newRootVC] animated:YES];
-        }
+        }else
+            NSLog(@"Do Nothing.");
 
     }
 }

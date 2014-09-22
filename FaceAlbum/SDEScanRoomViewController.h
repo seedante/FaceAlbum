@@ -14,6 +14,6 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *faceCollectionView;
 @property (nonatomic) NSMutableArray *showAssets;
 
-- (IBAction)showAllPhotos:(id)sender;
+- (IBAction)scanPhotos:(id)sender;
 
 @end

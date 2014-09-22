@@ -88,9 +88,6 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
 };
 
 @interface PhotoScanManager ()
-{
-    __block long currentItemNumberInFirstSection;
-}
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) FaceppLocalDetector *localFaceppDetector;
@@ -113,6 +110,15 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     });
     
     return sharedInstance;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _numberOfItemsInFirstSection = 0;
+        _faceCountInThisScan = 0;
+    }
+    return self;
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -157,8 +163,9 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
 
 - (void)saveAfterScan
 {
+    NSLog(@"Save Data.");
     NSError *error;
-    if (![self.managedObjectContext save:&error]) {
+    if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
         NSLog(@"Scan Finish and Save Error: %@", error);
     }
 }
@@ -272,7 +279,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     if (self.facesInAPhoto.count > 0) {
         [self.facesInAPhoto removeAllObjects];
     }
-    
+    NSLog(@"Current Avator count for facelessman: %d", self.numberOfItemsInFirstSection);
     @autoreleasepool {
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
         CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
@@ -287,7 +294,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
         if (detectResult.faces.count > 0) {
             includeFace = YES;
             NSLog(@"Detect %lu faces in the Photo", (unsigned long)detectResult.faces.count);
-            _faceTotalCount += detectResult.faces.count;
+            self.faceCountInThisScan += detectResult.faces.count;
             //NSLog(@"Face Count: %lu For Now.", (unsigned long)_faceTotalCount);
             for (FaceppLocalFace *detectedFace in detectResult.faces) {
                 CGSize imageSize = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
@@ -319,14 +326,13 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                 
                 [self.facesInAPhoto addObject:avatorUIImage];
                 
-                currentItemNumberInFirstSection += 1;
-                //NSLog(@"Find New Face.");
+                self.numberOfItemsInFirstSection += 1;
                 Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
                 //newFace.avatorImage = avatorUIImage;
                 //newFace.posterImage = portraitUIImage;
                 newFace.whetherToDisplay = YES;
                 newFace.isMyStar = NO;
-                newFace.order = currentItemNumberInFirstSection;
+                newFace.order = self.numberOfItemsInFirstSection;
                 newFace.section = 0;
                 newFace.photoOwner = newPhoto;
                 newFace.assetURLNSString = newPhoto.uniqueURLString;

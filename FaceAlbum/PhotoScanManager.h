@@ -17,8 +17,8 @@ typedef enum : NSUInteger {
 
 @interface PhotoScanManager : NSObject
 
-@property (nonatomic, assign) long numberOfItemsInFirstSection;
-@property (nonatomic) NSUInteger faceTotalCount;
+@property (nonatomic) NSUInteger numberOfItemsInFirstSection;
+@property (nonatomic) NSUInteger faceCountInThisScan;
 
 + (PhotoScanManager *)sharedPhotoScanManager;
 - (BOOL)scanAsset:(ALAsset *)asset withDetector: (FaceDetectorType)detectorType;

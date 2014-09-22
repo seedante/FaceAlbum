@@ -51,6 +51,7 @@
     NSPropertyDescription *URLStringDescription = [[photoEntity propertiesByName] objectForKey:@"uniqueURLString"];
     [photoFetchRequest setPropertiesToFetch:@[URLStringDescription]];
     NSArray *kURLStringResults = [self.managedObjectContext executeFetchRequest:photoFetchRequest error:nil];
+    NSLog(@"What Happen?");
     for (NSDictionary *result in kURLStringResults) {
         [scanedAssets addObject:result[@"uniqueURLString"]];
     }
@@ -104,13 +105,13 @@
             NSLog(@"YYYGroup: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                 if (asset && *shouldStop != YES) {
-                    NSLog(@"do some thing");
                     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
                     [self.allAssetsURLString addObject:[assetURL absoluteString]];
                 }
             }];
         }else{
-            [self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.0];
+            NSLog(@"All Assets Count: %d", self.allAssetsURLString.count);
+            [self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
         }
     } failureBlock:nil];
     

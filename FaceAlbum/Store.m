@@ -51,7 +51,7 @@
     [fetchRequest setFetchBatchSize:100];
     
     NSSortDescriptor *SectionOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
-    NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+    NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:NO];
     [fetchRequest setSortDescriptors:@[SectionOrderDescriptor, ItemOrderDescriptor]];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];

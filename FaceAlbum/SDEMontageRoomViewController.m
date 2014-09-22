@@ -83,7 +83,7 @@ typedef enum {
         NSLog(@"Face Fetch Fail: %@", error);
     }
 
-    //NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
+    NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
 -(void)goBackToTop

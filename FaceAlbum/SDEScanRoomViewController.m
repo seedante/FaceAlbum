@@ -11,6 +11,7 @@
 #import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
 #import "SDENewPhotoDetector.h"
+#import "Store.h"
 @import AssetsLibrary;
 
 static NSString *cellIdentifier = @"photoCell";
@@ -39,10 +40,24 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.faceCollectionView.delegate = self.faceDataSource;
     self.faceDataSource.collectionView = self.faceCollectionView;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    //[self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:@"photoCell"];
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     
     [self piplineInitialize];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.photoScanManager.faceCountInThisScan = 0;
+    NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
+    NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *faceEntity = [NSEntityDescription entityForName:@"Face" inManagedObjectContext:moc];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
+    [faceFetchRequest setEntity:faceEntity];
+    [faceFetchRequest setPredicate:predicate];
+    
+    NSArray *unknownFaces = [moc executeFetchRequest:faceFetchRequest error:nil];
+    self.photoScanManager.numberOfItemsInFirstSection = unknownFaces.count;
+    NSLog(@"Unknown face count: %d", unknownFaces.count);
 }
 
 - (void)piplineInitialize
@@ -56,6 +71,8 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
     if (isFirstScan) {
         NSLog(@"This is the firct scan");
+        self.photoScanManager.numberOfItemsInFirstSection = 0;
+        
         NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
         [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
             if (group && *stop != YES) {
@@ -70,7 +87,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                     }
                 }];
             }else{
-                NSLog(@".......");
                 [self.assetCollectionView reloadData];
             }
         } failureBlock:nil];
@@ -86,10 +102,8 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                     }else
                         [self.allAssets addObject:asset];
                 }
-                NSLog(@"What happen again?");
                 [self.assetCollectionView reloadData];
-                NSLog(@"Asset need to scan: %d", self.allAssets.count);
-                NSLog(@"Asset count: %d", self.showAssets.count);
+                NSLog(@"Asset need to scan: %d", self.allAssets.count + self.showAssets.count);
                 [photoDetector cleanData];
             }
         }else
@@ -114,13 +128,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     [defaultConfig synchronize];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    
-}
-
 
 #pragma mark - UICollectionViewDataSource
 
@@ -136,15 +143,13 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     ALAsset *asset = (ALAsset *)[self.showAssets objectAtIndex:indexPath.item];
     photoCell.asset = asset;
     //NSLog(@"Size: %zuX%zu", CGImageGetWidth([asset aspectRatioThumbnail]), CGImageGetHeight([asset aspectRatioThumbnail]));
-    
     return photoCell;
 }
 
-- (IBAction)showAllPhotos:(id)sender
+- (IBAction)scanPhotos:(id)sender
 {
     [self productionlineStart];
 }
-
 
 - (void)productionlineStart
 {
@@ -217,7 +222,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         if (pipelineWorkIndex == self.showAssets.count) {
             currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
             pipelineWorkIndex = 0;
-            NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
+            NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
             [self.photoScanManager saveAfterScan];
             [self configFirstScene:NO];
             [self performSegueWithIdentifier:segueIdentifier sender:self];
@@ -244,7 +249,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         NSLog(@"Remove previous faces");
     }
     if (self.allAssets.count == 0) {
-        NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceTotalCount);
+        NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
         [self.photoScanManager saveAfterScan];
         [self configFirstScene:NO];
         [self performSegueWithIdentifier:segueIdentifier sender:self];
