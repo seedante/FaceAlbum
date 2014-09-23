@@ -49,10 +49,13 @@
     NSFetchRequest *photoFetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
     [photoFetchRequest setResultType:NSDictionaryResultType];
     NSPropertyDescription *URLStringDescription = [[photoEntity propertiesByName] objectForKey:@"uniqueURLString"];
-    [photoFetchRequest setPropertiesToFetch:@[URLStringDescription]];
+    NSPropertyDescription *isExistedDescription = [[photoEntity propertiesByName] objectForKey:@"isExisted"];
+    [photoFetchRequest setPropertiesToFetch:@[URLStringDescription, isExistedDescription]];
     NSArray *kURLStringResults = [self.managedObjectContext executeFetchRequest:photoFetchRequest error:nil];
     for (NSDictionary *result in kURLStringResults) {
-        [scanedAssets addObject:result[@"uniqueURLString"]];
+        if([result[@"isExisted"] boolValue]){
+            [scanedAssets addObject:result[@"uniqueURLString"]];
+        }
     }
     NSLog(@"AllAssets Count: %d", self.allAssetsURLString.count);
     NSLog(@"ScanAssets Count: %d", scanedAssets.count);
@@ -129,7 +132,7 @@
     }
     
     if (self.deletedAssetsURLString) {
-        self.deletedAssetsURLString = nil;
+        self.deletedAssetsURLString = [NSSet new];
     }
     
     if (self.isThereNewPhoto) {

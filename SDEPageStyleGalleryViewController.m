@@ -771,6 +771,7 @@ typedef enum: NSUInteger{
         }
         [self.managedObjectContext save:nil];
     }
+    [self.newPhotoDetector cleanData];
 }
 
 - (IBAction)popMenu:(id)sender
@@ -779,6 +780,11 @@ typedef enum: NSUInteger{
         self.scanRoomButton.hidden = YES;
     }else
         self.scanRoomButton.hidden = NO;
+    if ([[self.newPhotoDetector notexistedAssetsURLString] count] > 0) {
+        self.MontageRoomButton.highlighted = YES;
+    }else
+        self.MontageRoomButton.highlighted = NO;
+    
     if (self.buttonPanel.isPopup) {
         [self.buttonPanel hide];
     }else
