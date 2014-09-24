@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD1164E119A87B7300C1A41F /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E019A87B7300C1A41F /* LineLayout.m */; };
 		FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E719A8808500C1A41F /* SDECandidateCell.m */; };
 		FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */; };
 		FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
@@ -27,7 +26,6 @@
 		FD67D88E197DFCFB00D2CCDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */; };
 		FD67D890197DFCFB00D2CCDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D88F197DFCFB00D2CCDA /* main.m */; };
 		FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */; };
-		FD67D897197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */; };
 		FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
 		FD67D8A0197DFCFB00D2CCDA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D89F197DFCFB00D2CCDA /* XCTest.framework */; };
 		FD67D8A1197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
@@ -724,7 +722,6 @@
 		FD8D0C2419BBFBAB007EF122 /* workers-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098C19BBFBAA007EF122 /* workers-50.png */; };
 		FD8D0C2519BBFBAB007EF122 /* workers-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098D19BBFBAA007EF122 /* workers-512.png */; };
 		FD8D0C2619BBFBAB007EF122 /* workers-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098E19BBFBAA007EF122 /* workers-75.png */; };
-		FD8D0C7019BDDD84007EF122 /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8D0C6F19BDDD84007EF122 /* SDEPageStyleGalleryViewController.m */; };
 		FD8D0C7419BDFC30007EF122 /* SDEGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */; };
 		FD8D0C7919BE9B20007EF122 /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7519BE9B20007EF122 /* bg1.jpg */; };
 		FD8D0C7A19BE9B20007EF122 /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7619BE9B20007EF122 /* bg4.jpg */; };
@@ -735,6 +732,736 @@
 		FDB3602A19CE65CC00AAE34D /* SDECenterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3602919CE65CC00AAE34D /* SDECenterMenu.m */; };
 		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
 		FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */; };
+		FDBF6BF719D1038000352DFA /* FaceppDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BD197DFD4A00D2CCDA /* FaceppDetection.m */; };
+		FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
+		FDBF6BF919D1038000352DFA /* FaceppTrainer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8CB197DFD4A00D2CCDA /* FaceppTrainer.m */; };
+		FDBF6BFB19D1038000352DFA /* SDEGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */; };
+		FDBF6BFC19D1038000352DFA /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8D0197DFD4A00D2CCDA /* FaceppResult.m */; };
+		FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
+		FDBF6BFE19D1038000352DFA /* FaceppPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C7197DFD4A00D2CCDA /* FaceppPerson.m */; };
+		FDBF6BFF19D1038000352DFA /* Face.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9C197E97C7004E8FFD /* Face.m */; };
+		FDBF6C0019D1038000352DFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D88F197DFCFB00D2CCDA /* main.m */; };
+		FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
+		FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F99197E97C7004E8FFD /* AlbumGroup.m */; };
+		FDBF6C0319D1038000352DFA /* SDEGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */; };
+		FDBF6C0419D1038000352DFA /* SDEReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8F9197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m */; };
+		FDBF6C0519D1038000352DFA /* FaceppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C5197DFD4A00D2CCDA /* FaceppInfo.m */; };
+		FDBF6C0619D1038000352DFA /* FaceppError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8CE197DFD4A00D2CCDA /* FaceppError.m */; };
+		FDBF6C0719D1038000352DFA /* SDEPersonProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */; };
+		FDBF6C0819D1038000352DFA /* FaceppFaceset.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BF197DFD4A00D2CCDA /* FaceppFaceset.m */; };
+		FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */; };
+		FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E719A8808500C1A41F /* SDECandidateCell.m */; };
+		FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
+		FDBF6C0C19D1038000352DFA /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
+		FDBF6C0D19D1038000352DFA /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
+		FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
+		FDBF6C0F19D1038000352DFA /* SDECenterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3602919CE65CC00AAE34D /* SDECenterMenu.m */; };
+		FDBF6C1019D1038000352DFA /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
+		FDBF6C1119D1038000352DFA /* SDEPersonGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */; };
+		FDBF6C1219D1038000352DFA /* FaceppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C1197DFD4A00D2CCDA /* FaceppGroup.m */; };
+		FDBF6C1319D1038000352DFA /* FaceppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BB197DFD4A00D2CCDA /* FaceppClient.m */; };
+		FDBF6C1419D1038000352DFA /* FaceppGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C3197DFD4A00D2CCDA /* FaceppGrouping.m */; };
+		FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */; };
+		FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
+		FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */; };
+		FDBF6C1919D1038000352DFA /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
+		FDBF6C1A19D1038000352DFA /* FaceppRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8C9197DFD4A00D2CCDA /* FaceppRecognition.m */; };
+		FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */; };
+		FDBF6C1D19D1038000352DFA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8FC197E048400D2CCDA /* Store.m */; };
+		FDBF6C1E19D1038000352DFA /* FaceppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8B8197DFD4A00D2CCDA /* FaceppAPI.m */; };
+		FDBF6C1F19D1038000352DFA /* SDEPAVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41313D1997541300141578 /* SDEPAVCDataSource.m */; };
+		FDBF6C2019D1038000352DFA /* SDEMontageRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */; };
+		FDBF6C2119D1038000352DFA /* SDEAvatorOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106419CDC44F006A3B4E /* SDEAvatorOverlayView.m */; };
+		FDBF6C2219D1038000352DFA /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9F197E97C7004E8FFD /* Person.m */; };
+		FDBF6C2319D1038000352DFA /* FaceppDetection+LocalResultUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */; };
+		FDBF6C2519D1038000352DFA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7327A6197FA082006C5A2C /* QuartzCore.framework */; };
+		FDBF6C2619D1038000352DFA /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD732781197F5C03006C5A2C /* AssetsLibrary.framework */; };
+		FDBF6C2719D1038000352DFA /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
+		FDBF6C2819D1038000352DFA /* libFaceppLocalDetector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */; };
+		FDBF6C2919D1038000352DFA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
+		FDBF6C2A19D1038000352DFA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
+		FDBF6C2B19D1038000352DFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
+		FDBF6C2C19D1038000352DFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
+		FDBF6C2E19D1038000352DFA /* slr_camera_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082A19BBFBA9007EF122 /* slr_camera_filled-256.png */; };
+		FDBF6C2F19D1038000352DFA /* night_portrait-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079219BBFBA9007EF122 /* night_portrait-32.png */; };
+		FDBF6C3019D1038000352DFA /* integrated_webcam-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074C19BBFBA9007EF122 /* integrated_webcam-512.png */; };
+		FDBF6C3119D1038000352DFA /* landscape-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075919BBFBA9007EF122 /* landscape-128.png */; };
+		FDBF6C3219D1038000352DFA /* large_lens-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076519BBFBA9007EF122 /* large_lens-32.png */; };
+		FDBF6C3319D1038000352DFA /* portrait_mode-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07BD19BBFBA9007EF122 /* portrait_mode-25.png */; };
+		FDBF6C3419D1038000352DFA /* panorama-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AC19BBFBA9007EF122 /* panorama-256.png */; };
+		FDBF6C3519D1038000352DFA /* slr_back_side_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F719BBFBA9007EF122 /* slr_back_side_filled-512.png */; };
+		FDBF6C3619D1038000352DFA /* slr_camera_body_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082419BBFBA9007EF122 /* slr_camera_body_filled-512.png */; };
+		FDBF6C3719D1038000352DFA /* old_time_camera_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A619BBFBA9007EF122 /* old_time_camera_filled-512.png */; };
+		FDBF6C3819D1038000352DFA /* portrait_mode-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C019BBFBA9007EF122 /* portrait_mode-50.png */; };
+		FDBF6C3919D1038000352DFA /* doctor-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D119BBFBAA007EF122 /* doctor-75.png */; };
+		FDBF6C3A19D1038000352DFA /* user_female3-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094F19BBFBAA007EF122 /* user_female3-75.png */; };
+		FDBF6C3B19D1038000352DFA /* add_image-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A519BBFBA8007EF122 /* add_image-128.png */; };
+		FDBF6C3C19D1038000352DFA /* switch_camera_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088F19BBFBAA007EF122 /* switch_camera_filled-50.png */; };
+		FDBF6C3D19D1038000352DFA /* gallery-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073719BBFBA9007EF122 /* gallery-256.png */; };
+		FDBF6C3E19D1038000352DFA /* panorama-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AB19BBFBA9007EF122 /* panorama-25.png */; };
+		FDBF6C3F19D1038000352DFA /* conference-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BD19BBFBAA007EF122 /* conference-50.png */; };
+		FDBF6C4019D1038000352DFA /* night_landscape-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078A19BBFBA9007EF122 /* night_landscape-50.png */; };
+		FDBF6C4119D1038000352DFA /* slr_camera-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FB19BBFBA9007EF122 /* slr_camera-128.png */; };
+		FDBF6C4219D1038000352DFA /* slr_camera_body-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081519BBFBA9007EF122 /* slr_camera_body-100.png */; };
+		FDBF6C4319D1038000352DFA /* switch_camera_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088E19BBFBAA007EF122 /* switch_camera_filled-32.png */; };
+		FDBF6C4419D1038000352DFA /* slr_back_side_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F419BBFBA9007EF122 /* slr_back_side_filled-256.png */; };
+		FDBF6C4519D1038000352DFA /* moderator-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090319BBFBAA007EF122 /* moderator-256.png */; };
+		FDBF6C4619D1038000352DFA /* group-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F919BBFBAA007EF122 /* group-25.png */; };
+		FDBF6C4719D1038000352DFA /* policeman-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091319BBFBAA007EF122 /* policeman-128.png */; };
+		FDBF6C4819D1038000352DFA /* add_image_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B019BBFBA8007EF122 /* add_image_filled-256.png */; };
+		FDBF6C4919D1038000352DFA /* user_female4-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095619BBFBAA007EF122 /* user_female4-50.png */; };
+		FDBF6C4A19D1038000352DFA /* integrated_webcam_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075319BBFBA9007EF122 /* integrated_webcam_filled-32.png */; };
+		FDBF6C4B19D1038000352DFA /* nurse-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091019BBFBAA007EF122 /* nurse-75.png */; };
+		FDBF6C4C19D1038000352DFA /* user_female-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093619BBFBAA007EF122 /* user_female-100.png */; };
+		FDBF6C4D19D1038000352DFA /* slr_large_lens_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083E19BBFBA9007EF122 /* slr_large_lens_filled-50.png */; };
+		FDBF6C4E19D1038000352DFA /* edit_image-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071419BBFBA9007EF122 /* edit_image-32.png */; };
+		FDBF6C4F19D1038000352DFA /* add_image_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B319BBFBA8007EF122 /* add_image_filled-512.png */; };
+		FDBF6C5019D1038000352DFA /* integrated_webcam_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075619BBFBA9007EF122 /* integrated_webcam_filled-75.png */; };
+		FDBF6C5119D1038000352DFA /* checked_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08AF19BBFBAA007EF122 /* checked_user-100.png */; };
+		FDBF6C5219D1038000352DFA /* film_reel_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073119BBFBA9007EF122 /* film_reel_filled-512.png */; };
+		FDBF6C5319D1038000352DFA /* rotate_camera-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07DC19BBFBA9007EF122 /* rotate_camera-512.png */; };
+		FDBF6C5419D1038000352DFA /* photo-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B319BBFBA9007EF122 /* photo-128.png */; };
+		FDBF6C5519D1038000352DFA /* slr_back_side_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F219BBFBA9007EF122 /* slr_back_side_filled-128.png */; };
+		FDBF6C5619D1038000352DFA /* camera_identification-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06FA19BBFBA9007EF122 /* camera_identification-50.png */; };
+		FDBF6C5719D1038000352DFA /* stack_of_photos-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087219BBFBAA007EF122 /* stack_of_photos-256.png */; };
+		FDBF6C5819D1038000352DFA /* student2-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092A19BBFBAA007EF122 /* student2-512.png */; };
+		FDBF6C5919D1038000352DFA /* close_up_mode-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070719BBFBA9007EF122 /* close_up_mode-100.png */; };
+		FDBF6C5A19D1038000352DFA /* camcoder_pro-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D419BBFBA9007EF122 /* camcoder_pro-256.png */; };
+		FDBF6C5B19D1038000352DFA /* slr_large_lens-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083419BBFBA9007EF122 /* slr_large_lens-32.png */; };
+		FDBF6C5C19D1038000352DFA /* integrated_webcam_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074F19BBFBA9007EF122 /* integrated_webcam_filled-100.png */; };
+		FDBF6C5D19D1038000352DFA /* camcoder_pro-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D119BBFBA9007EF122 /* camcoder_pro-100.png */; };
+		FDBF6C5E19D1038000352DFA /* edit_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D619BBFBAA007EF122 /* edit_user-256.png */; };
+		FDBF6C5F19D1038000352DFA /* stack_of_photos_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087D19BBFBAA007EF122 /* stack_of_photos_filled-50.png */; };
+		FDBF6C6019D1038000352DFA /* slr_camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FF19BBFBA9007EF122 /* slr_camera-50.png */; };
+		FDBF6C6119D1038000352DFA /* cook-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C119BBFBAA007EF122 /* cook-100.png */; };
+		FDBF6C6219D1038000352DFA /* find_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E919BBFBAA007EF122 /* find_user-32.png */; };
+		FDBF6C6319D1038000352DFA /* slr_camera_body-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081719BBFBA9007EF122 /* slr_camera_body-25.png */; };
+		FDBF6C6419D1038000352DFA /* night_portrait-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078F19BBFBA9007EF122 /* night_portrait-128.png */; };
+		FDBF6C6519D1038000352DFA /* integrated_webcam_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075219BBFBA9007EF122 /* integrated_webcam_filled-256.png */; };
+		FDBF6C6619D1038000352DFA /* fireman-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F319BBFBAA007EF122 /* fireman-50.png */; };
+		FDBF6C6719D1038000352DFA /* close_up_mode-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070B19BBFBA9007EF122 /* close_up_mode-32.png */; };
+		FDBF6C6819D1038000352DFA /* film_reel-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072219BBFBA9007EF122 /* film_reel-100.png */; };
+		FDBF6C6919D1038000352DFA /* old_time_camera-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079E19BBFBA9007EF122 /* old_time_camera-75.png */; };
+		FDBF6C6A19D1038000352DFA /* user_female2-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094319BBFBAA007EF122 /* user_female2-32.png */; };
+		FDBF6C6B19D1038000352DFA /* clipperboard-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070119BBFBA9007EF122 /* clipperboard-256.png */; };
+		FDBF6C6C19D1038000352DFA /* slr_camera2_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081019BBFBA9007EF122 /* slr_camera2_filled-32.png */; };
+		FDBF6C6D19D1038000352DFA /* slr_camera_body-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081819BBFBA9007EF122 /* slr_camera_body-256.png */; };
+		FDBF6C6E19D1038000352DFA /* small_lens-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085819BBFBAA007EF122 /* small_lens-32.png */; };
+		FDBF6C6F19D1038000352DFA /* edit_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D819BBFBAA007EF122 /* edit_user-50.png */; };
+		FDBF6C7019D1038000352DFA /* slr_small_lens_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085019BBFBA9007EF122 /* slr_small_lens_filled-50.png */; };
+		FDBF6C7119D1038000352DFA /* user_male2-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096519BBFBAA007EF122 /* user_male2-25.png */; };
+		FDBF6C7219D1038000352DFA /* gallery-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073519BBFBA9007EF122 /* gallery-128.png */; };
+		FDBF6C7319D1038000352DFA /* cable_release-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06BD19BBFBA8007EF122 /* cable_release-75.png */; };
+		FDBF6C7419D1038000352DFA /* administrator-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A319BBFBAA007EF122 /* administrator-512.png */; };
+		FDBF6C7519D1038000352DFA /* camcoder_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CA19BBFBA8007EF122 /* camcoder_filled-25.png */; };
+		FDBF6C7619D1038000352DFA /* remove_image-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07CB19BBFBA9007EF122 /* remove_image-75.png */; };
+		FDBF6C7719D1038000352DFA /* camcoder_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CD19BBFBA9007EF122 /* camcoder_filled-50.png */; };
+		FDBF6C7819D1038000352DFA /* movie-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077A19BBFBA9007EF122 /* movie-75.png */; };
+		FDBF6C7919D1038000352DFA /* user_male2-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096319BBFBAA007EF122 /* user_male2-100.png */; };
+		FDBF6C7A19D1038000352DFA /* user_female3-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094B19BBFBAA007EF122 /* user_female3-256.png */; };
+		FDBF6C7B19D1038000352DFA /* slr_small_lens-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084519BBFBA9007EF122 /* slr_small_lens-256.png */; };
+		FDBF6C7C19D1038000352DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */; };
+		FDBF6C7D19D1038000352DFA /* slr_camera_body-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081B19BBFBA9007EF122 /* slr_camera_body-512.png */; };
+		FDBF6C7E19D1038000352DFA /* old_time_camera-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079719BBFBA9007EF122 /* old_time_camera-100.png */; };
+		FDBF6C7F19D1038000352DFA /* user_male3-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097319BBFBAA007EF122 /* user_male3-75.png */; };
+		FDBF6C8019D1038000352DFA /* camera_identification-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F719BBFBA9007EF122 /* camera_identification-25.png */; };
+		FDBF6C8119D1038000352DFA /* edit_image_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071C19BBFBA9007EF122 /* edit_image_filled-256.png */; };
+		FDBF6C8219D1038000352DFA /* landscape-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075A19BBFBA9007EF122 /* landscape-25.png */; };
+		FDBF6C8319D1038000352DFA /* user_male3-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097219BBFBAA007EF122 /* user_male3-512.png */; };
+		FDBF6C8419D1038000352DFA /* remove_image-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C819BBFBA9007EF122 /* remove_image-32.png */; };
+		FDBF6C8519D1038000352DFA /* cable_release-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06BA19BBFBA8007EF122 /* cable_release-32.png */; };
+		FDBF6C8619D1038000352DFA /* edit_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D319BBFBAA007EF122 /* edit_user-100.png */; };
+		FDBF6C8719D1038000352DFA /* user_male-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096119BBFBAA007EF122 /* user_male-75.png */; };
+		FDBF6C8819D1038000352DFA /* fireman-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F419BBFBAA007EF122 /* fireman-512.png */; };
+		FDBF6C8919D1038000352DFA /* add_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089919BBFBAA007EF122 /* add_user-50.png */; };
+		FDBF6C8A19D1038000352DFA /* slr_camera2_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081319BBFBA9007EF122 /* slr_camera2_filled-75.png */; };
+		FDBF6C8B19D1038000352DFA /* film_reel_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072C19BBFBA9007EF122 /* film_reel_filled-128.png */; };
+		FDBF6C8C19D1038000352DFA /* edit_image-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071619BBFBA9007EF122 /* edit_image-512.png */; };
+		FDBF6C8D19D1038000352DFA /* integrated_webcam-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074619BBFBA9007EF122 /* integrated_webcam-100.png */; };
+		FDBF6C8E19D1038000352DFA /* switch_camera_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089019BBFBAA007EF122 /* switch_camera_filled-512.png */; };
+		FDBF6C8F19D1038000352DFA /* film_reel_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073219BBFBA9007EF122 /* film_reel_filled-75.png */; };
+		FDBF6C9019D1038000352DFA /* integrated_webcam_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075019BBFBA9007EF122 /* integrated_webcam_filled-128.png */; };
+		FDBF6C9119D1038000352DFA /* remove_image_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07CF19BBFBA9007EF122 /* remove_image_filled-25.png */; };
+		FDBF6C9219D1038000352DFA /* student2-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092619BBFBAA007EF122 /* student2-25.png */; };
+		FDBF6C9319D1038000352DFA /* user_female2-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094419BBFBAA007EF122 /* user_female2-50.png */; };
+		FDBF6C9419D1038000352DFA /* small_lens-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085B19BBFBAA007EF122 /* small_lens-75.png */; };
+		FDBF6C9519D1038000352DFA /* edit_image_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071919BBFBA9007EF122 /* edit_image_filled-100.png */; };
+		FDBF6C9619D1038000352DFA /* integrated_webcam-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074719BBFBA9007EF122 /* integrated_webcam-128.png */; };
+		FDBF6C9719D1038000352DFA /* stack_of_photos_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087E19BBFBAA007EF122 /* stack_of_photos_filled-512.png */; };
+		FDBF6C9819D1038000352DFA /* rotate_camera_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E519BBFBA9007EF122 /* rotate_camera_filled-512.png */; };
+		FDBF6C9919D1038000352DFA /* gallery_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074219BBFBA9007EF122 /* gallery_filled-50.png */; };
+		FDBF6C9A19D1038000352DFA /* cook-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C519BBFBAA007EF122 /* cook-32.png */; };
+		FDBF6C9B19D1038000352DFA /* user_male2-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096419BBFBAA007EF122 /* user_male2-128.png */; };
+		FDBF6C9C19D1038000352DFA /* large_lens-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076319BBFBA9007EF122 /* large_lens-25.png */; };
+		FDBF6C9D19D1038000352DFA /* slr_small_lens-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084419BBFBA9007EF122 /* slr_small_lens-25.png */; };
+		FDBF6C9E19D1038000352DFA /* switch_camera_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088A19BBFBAA007EF122 /* switch_camera_filled-100.png */; };
+		FDBF6C9F19D1038000352DFA /* gallery-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073919BBFBA9007EF122 /* gallery-50.png */; };
+		FDBF6CA019D1038000352DFA /* find_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08EA19BBFBAA007EF122 /* find_user-50.png */; };
+		FDBF6CA119D1038000352DFA /* edit_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D519BBFBAA007EF122 /* edit_user-25.png */; };
+		FDBF6CA219D1038000352DFA /* user_male-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095F19BBFBAA007EF122 /* user_male-50.png */; };
+		FDBF6CA319D1038000352DFA /* multiple_cameras-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078319BBFBA9007EF122 /* multiple_cameras-75.png */; };
+		FDBF6CA419D1038000352DFA /* user_female4-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095219BBFBAA007EF122 /* user_female4-128.png */; };
+		FDBF6CA519D1038000352DFA /* farmer-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E219BBFBAA007EF122 /* farmer-512.png */; };
+		FDBF6CA619D1038000352DFA /* camcoder_pro_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DC19BBFBA9007EF122 /* camcoder_pro_filled-25.png */; };
+		FDBF6CA719D1038000352DFA /* farmer-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08DD19BBFBAA007EF122 /* farmer-128.png */; };
+		FDBF6CA819D1038000352DFA /* slr_camera2_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080F19BBFBA9007EF122 /* slr_camera2_filled-256.png */; };
+		FDBF6CA919D1038000352DFA /* change_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A619BBFBAA007EF122 /* change_user-100.png */; };
+		FDBF6CAA19D1038000352DFA /* cook-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C419BBFBAA007EF122 /* cook-256.png */; };
+		FDBF6CAB19D1038000352DFA /* sports_mode-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086B19BBFBAA007EF122 /* sports_mode-50.png */; };
+		FDBF6CAC19D1038000352DFA /* camcoder_pro_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DD19BBFBA9007EF122 /* camcoder_pro_filled-256.png */; };
+		FDBF6CAD19D1038000352DFA /* add_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089A19BBFBAA007EF122 /* add_user-512.png */; };
+		FDBF6CAE19D1038000352DFA /* nurse-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090D19BBFBAA007EF122 /* nurse-32.png */; };
+		FDBF6CAF19D1038000352DFA /* landscape-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075819BBFBA9007EF122 /* landscape-100.png */; };
+		FDBF6CB019D1038000352DFA /* slr_camera2-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080819BBFBA9007EF122 /* slr_camera2-50.png */; };
+		FDBF6CB119D1038000352DFA /* portrait_mode-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07BF19BBFBA9007EF122 /* portrait_mode-32.png */; };
+		FDBF6CB219D1038000352DFA /* stack_of_photos-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087319BBFBAA007EF122 /* stack_of_photos-32.png */; };
+		FDBF6CB319D1038000352DFA /* talk-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093419BBFBAA007EF122 /* talk-75.png */; };
+		FDBF6CB419D1038000352DFA /* night_landscape-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078519BBFBA9007EF122 /* night_landscape-100.png */; };
+		FDBF6CB519D1038000352DFA /* user_male2-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096719BBFBAA007EF122 /* user_male2-32.png */; };
+		FDBF6CB619D1038000352DFA /* talk-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092F19BBFBAA007EF122 /* talk-25.png */; };
+		FDBF6CB719D1038000352DFA /* remove_image_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D419BBFBA9007EF122 /* remove_image_filled-75.png */; };
+		FDBF6CB819D1038000352DFA /* close_up_mode-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070D19BBFBA9007EF122 /* close_up_mode-512.png */; };
+		FDBF6CB919D1038000352DFA /* fireman-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F519BBFBAA007EF122 /* fireman-75.png */; };
+		FDBF6CBA19D1038000352DFA /* landscape-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075F19BBFBA9007EF122 /* landscape-75.png */; };
+		FDBF6CBB19D1038000352DFA /* clipperboard-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070219BBFBA9007EF122 /* clipperboard-32.png */; };
+		FDBF6CBC19D1038000352DFA /* slr_large_lens-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083719BBFBA9007EF122 /* slr_large_lens-75.png */; };
+		FDBF6CBD19D1038000352DFA /* multiple_cameras-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077D19BBFBA9007EF122 /* multiple_cameras-128.png */; };
+		FDBF6CBE19D1038000352DFA /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7619BE9B20007EF122 /* bg4.jpg */; };
+		FDBF6CBF19D1038000352DFA /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7519BE9B20007EF122 /* bg1.jpg */; };
+		FDBF6CC019D1038000352DFA /* close_up_mode-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070919BBFBA9007EF122 /* close_up_mode-25.png */; };
+		FDBF6CC119D1038000352DFA /* photo-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B619BBFBA9007EF122 /* photo-32.png */; };
+		FDBF6CC219D1038000352DFA /* slr_large_lens_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084019BBFBA9007EF122 /* slr_large_lens_filled-75.png */; };
+		FDBF6CC319D1038000352DFA /* small_lens-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085919BBFBAA007EF122 /* small_lens-50.png */; };
+		FDBF6CC419D1038000352DFA /* camera_addon-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E919BBFBA9007EF122 /* camera_addon-512.png */; };
+		FDBF6CC519D1038000352DFA /* slr_camera_body_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082219BBFBA9007EF122 /* slr_camera_body_filled-32.png */; };
+		FDBF6CC619D1038000352DFA /* workers-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098A19BBFBAA007EF122 /* workers-256.png */; };
+		FDBF6CC719D1038000352DFA /* multiple_cameras-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077C19BBFBA9007EF122 /* multiple_cameras-100.png */; };
+		FDBF6CC819D1038000352DFA /* close_up_mode-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070A19BBFBA9007EF122 /* close_up_mode-256.png */; };
+		FDBF6CC919D1038000352DFA /* workers-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098C19BBFBAA007EF122 /* workers-50.png */; };
+		FDBF6CCA19D1038000352DFA /* policeman-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091619BBFBAA007EF122 /* policeman-32.png */; };
+		FDBF6CCB19D1038000352DFA /* rotate_camera_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E619BBFBA9007EF122 /* rotate_camera_filled-75.png */; };
+		FDBF6CCC19D1038000352DFA /* rotate_camera-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D819BBFBA9007EF122 /* rotate_camera-25.png */; };
+		FDBF6CCD19D1038000352DFA /* slr_small_lens_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084E19BBFBA9007EF122 /* slr_small_lens_filled-256.png */; };
+		FDBF6CCE19D1038000352DFA /* integrated_webcam-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074D19BBFBA9007EF122 /* integrated_webcam-75.png */; };
+		FDBF6CCF19D1038000352DFA /* add_image-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06AA19BBFBA8007EF122 /* add_image-512.png */; };
+		FDBF6CD019D1038000352DFA /* film_reel-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072319BBFBA9007EF122 /* film_reel-128.png */; };
+		FDBF6CD119D1038000352DFA /* movie-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077419BBFBA9007EF122 /* movie-128.png */; };
+		FDBF6CD219D1038000352DFA /* old_time_camera_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A519BBFBA9007EF122 /* old_time_camera_filled-50.png */; };
+		FDBF6CD319D1038000352DFA /* user_female-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093C19BBFBAA007EF122 /* user_female-512.png */; };
+		FDBF6CD419D1038000352DFA /* conference-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BF19BBFBAA007EF122 /* conference-75.png */; };
+		FDBF6CD519D1038000352DFA /* add_image_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06AD19BBFBA8007EF122 /* add_image_filled-100.png */; };
+		FDBF6CD619D1038000352DFA /* group-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08FE19BBFBAA007EF122 /* group-75.png */; };
+		FDBF6CD719D1038000352DFA /* switch_camera_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088C19BBFBAA007EF122 /* switch_camera_filled-25.png */; };
+		FDBF6CD819D1038000352DFA /* user_female-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093D19BBFBAA007EF122 /* user_female-75.png */; };
+		FDBF6CD919D1038000352DFA /* policeman-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091519BBFBAA007EF122 /* policeman-256.png */; };
+		FDBF6CDA19D1038000352DFA /* camera_addon-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E619BBFBA9007EF122 /* camera_addon-256.png */; };
+		FDBF6CDB19D1038000352DFA /* rotate_camera_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E419BBFBA9007EF122 /* rotate_camera_filled-50.png */; };
+		FDBF6CDC19D1038000352DFA /* stack_of_photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087419BBFBAA007EF122 /* stack_of_photos-50.png */; };
+		FDBF6CDD19D1038000352DFA /* remove_image-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C919BBFBA9007EF122 /* remove_image-50.png */; };
+		FDBF6CDE19D1038000352DFA /* camera_addon_identification-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06EE19BBFBA9007EF122 /* camera_addon_identification-25.png */; };
+		FDBF6CDF19D1038000352DFA /* small_lens_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086419BBFBAA007EF122 /* small_lens_filled-75.png */; };
+		FDBF6CE019D1038000352DFA /* stack_of_photos_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087819BBFBAA007EF122 /* stack_of_photos_filled-100.png */; };
+		FDBF6CE119D1038000352DFA /* night_portrait-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079019BBFBA9007EF122 /* night_portrait-25.png */; };
+		FDBF6CE219D1038000352DFA /* student2-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092719BBFBAA007EF122 /* student2-256.png */; };
+		FDBF6CE319D1038000352DFA /* slr_camera_body-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081619BBFBA9007EF122 /* slr_camera_body-128.png */; };
+		FDBF6CE419D1038000352DFA /* slr_large_lens_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083C19BBFBA9007EF122 /* slr_large_lens_filled-256.png */; };
+		FDBF6CE519D1038000352DFA /* user_male4-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097619BBFBAA007EF122 /* user_male4-128.png */; };
+		FDBF6CE619D1038000352DFA /* fireman-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08EE19BBFBAA007EF122 /* fireman-100.png */; };
+		FDBF6CE719D1038000352DFA /* rotate_camera_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E119BBFBA9007EF122 /* rotate_camera_filled-25.png */; };
+		FDBF6CE819D1038000352DFA /* camcoder_pro_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DB19BBFBA9007EF122 /* camcoder_pro_filled-128.png */; };
+		FDBF6CE919D1038000352DFA /* nurse-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090919BBFBAA007EF122 /* nurse-100.png */; };
+		FDBF6CEA19D1038000352DFA /* user_female2-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094019BBFBAA007EF122 /* user_female2-128.png */; };
+		FDBF6CEB19D1038000352DFA /* worker-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097E19BBFBAA007EF122 /* worker-100.png */; };
+		FDBF6CEC19D1038000352DFA /* user_female3-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094D19BBFBAA007EF122 /* user_female3-50.png */; };
+		FDBF6CED19D1038000352DFA /* rotate_camera_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07DF19BBFBA9007EF122 /* rotate_camera_filled-100.png */; };
+		FDBF6CEE19D1038000352DFA /* slr_camera-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080019BBFBA9007EF122 /* slr_camera-512.png */; };
+		FDBF6CEF19D1038000352DFA /* camcoder-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C119BBFBA8007EF122 /* camcoder-25.png */; };
+		FDBF6CF019D1038000352DFA /* user_male4-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097B19BBFBAA007EF122 /* user_male4-512.png */; };
+		FDBF6CF119D1038000352DFA /* group-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F719BBFBAA007EF122 /* group-100.png */; };
+		FDBF6CF219D1038000352DFA /* camera_identification-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06FB19BBFBA9007EF122 /* camera_identification-512.png */; };
+		FDBF6CF319D1038000352DFA /* switch_camera_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088D19BBFBAA007EF122 /* switch_camera_filled-256.png */; };
+		FDBF6CF419D1038000352DFA /* clipperboard-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06FF19BBFBA9007EF122 /* clipperboard-128.png */; };
+		FDBF6CF519D1038000352DFA /* user_male4-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097719BBFBAA007EF122 /* user_male4-25.png */; };
+		FDBF6CF619D1038000352DFA /* slr_camera_body_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082519BBFBA9007EF122 /* slr_camera_body_filled-75.png */; };
+		FDBF6CF719D1038000352DFA /* slr_camera-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FC19BBFBA9007EF122 /* slr_camera-25.png */; };
+		FDBF6CF819D1038000352DFA /* night_landscape-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078619BBFBA9007EF122 /* night_landscape-128.png */; };
+		FDBF6CF919D1038000352DFA /* remove_image_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07CE19BBFBA9007EF122 /* remove_image_filled-128.png */; };
+		FDBF6CFA19D1038000352DFA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
+		FDBF6CFB19D1038000352DFA /* user_male-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095D19BBFBAA007EF122 /* user_male-256.png */; };
+		FDBF6CFC19D1038000352DFA /* film_reel-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072719BBFBA9007EF122 /* film_reel-50.png */; };
+		FDBF6CFD19D1038000352DFA /* camcoder-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C219BBFBA8007EF122 /* camcoder-256.png */; };
+		FDBF6CFE19D1038000352DFA /* conference-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B919BBFBAA007EF122 /* conference-128.png */; };
+		FDBF6CFF19D1038000352DFA /* camera_addon_identification-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06ED19BBFBA9007EF122 /* camera_addon_identification-128.png */; };
+		FDBF6D0019D1038000352DFA /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7719BE9B20007EF122 /* bg3.jpg */; };
+		FDBF6D0119D1038000352DFA /* slr_camera-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FA19BBFBA9007EF122 /* slr_camera-100.png */; };
+		FDBF6D0219D1038000352DFA /* administrator-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A019BBFBAA007EF122 /* administrator-256.png */; };
+		FDBF6D0319D1038000352DFA /* rotate_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D919BBFBA9007EF122 /* rotate_camera-256.png */; };
+		FDBF6D0419D1038000352DFA /* slr_back_side-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07EB19BBFBA9007EF122 /* slr_back_side-256.png */; };
+		FDBF6D0519D1038000352DFA /* camera_addon_identification-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F019BBFBA9007EF122 /* camera_addon_identification-32.png */; };
+		FDBF6D0619D1038000352DFA /* workers-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098819BBFBAA007EF122 /* workers-128.png */; };
+		FDBF6D0719D1038000352DFA /* camcoder_pro_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E019BBFBA9007EF122 /* camcoder_pro_filled-512.png */; };
+		FDBF6D0819D1038000352DFA /* administrator-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A419BBFBAA007EF122 /* administrator-75.png */; };
+		FDBF6D0919D1038000352DFA /* moderator-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090519BBFBAA007EF122 /* moderator-50.png */; };
+		FDBF6D0A19D1038000352DFA /* camera_addon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E319BBFBA9007EF122 /* camera_addon-100.png */; };
+		FDBF6D0B19D1038000352DFA /* remove_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092219BBFBAA007EF122 /* remove_user-75.png */; };
+		FDBF6D0C19D1038000352DFA /* stack_of_photos_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087A19BBFBAA007EF122 /* stack_of_photos_filled-25.png */; };
+		FDBF6D0D19D1038000352DFA /* switch_camera-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088119BBFBAA007EF122 /* switch_camera-100.png */; };
+		FDBF6D0E19D1038000352DFA /* rotate_camera-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D619BBFBA9007EF122 /* rotate_camera-100.png */; };
+		FDBF6D0F19D1038000352DFA /* sports_mode-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086919BBFBAA007EF122 /* sports_mode-256.png */; };
+		FDBF6D1019D1038000352DFA /* sports_mode-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086A19BBFBAA007EF122 /* sports_mode-32.png */; };
+		FDBF6D1119D1038000352DFA /* remove_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091D19BBFBAA007EF122 /* remove_user-25.png */; };
+		FDBF6D1219D1038000352DFA /* rotate_camera_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E019BBFBA9007EF122 /* rotate_camera_filled-128.png */; };
+		FDBF6D1319D1038000352DFA /* clipperboard-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06FE19BBFBA9007EF122 /* clipperboard-100.png */; };
+		FDBF6D1419D1038000352DFA /* slr_camera2-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080619BBFBA9007EF122 /* slr_camera2-256.png */; };
+		FDBF6D1519D1038000352DFA /* gallery_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074319BBFBA9007EF122 /* gallery_filled-512.png */; };
+		FDBF6D1619D1038000352DFA /* camcoder-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C419BBFBA8007EF122 /* camcoder-50.png */; };
+		FDBF6D1719D1038000352DFA /* large_lens_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076E19BBFBA9007EF122 /* large_lens_filled-32.png */; };
+		FDBF6D1819D1038000352DFA /* old_time_camera_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A119BBFBA9007EF122 /* old_time_camera_filled-128.png */; };
+		FDBF6D1919D1038000352DFA /* change_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08AA19BBFBAA007EF122 /* change_user-32.png */; };
+		FDBF6D1A19D1038000352DFA /* cable_release-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06BC19BBFBA8007EF122 /* cable_release-512.png */; };
+		FDBF6D1B19D1038000352DFA /* camcoder-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C019BBFBA8007EF122 /* camcoder-128.png */; };
+		FDBF6D1C19D1038000352DFA /* multiple_cameras-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078019BBFBA9007EF122 /* multiple_cameras-32.png */; };
+		FDBF6D1D19D1038000352DFA /* slr_camera2_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081219BBFBA9007EF122 /* slr_camera2_filled-512.png */; };
+		FDBF6D1E19D1038000352DFA /* slr_back_side-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07ED19BBFBA9007EF122 /* slr_back_side-50.png */; };
+		FDBF6D1F19D1038000352DFA /* cook-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C819BBFBAA007EF122 /* cook-75.png */; };
+		FDBF6D2019D1038000352DFA /* administrator-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089F19BBFBAA007EF122 /* administrator-25.png */; };
+		FDBF6D2119D1038000352DFA /* policeman-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091719BBFBAA007EF122 /* policeman-50.png */; };
+		FDBF6D2219D1038000352DFA /* camcoder-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C519BBFBA8007EF122 /* camcoder-512.png */; };
+		FDBF6D2319D1038000352DFA /* farmer-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08DC19BBFBAA007EF122 /* farmer-100.png */; };
+		FDBF6D2419D1038000352DFA /* add_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089619BBFBAA007EF122 /* add_user-25.png */; };
+		FDBF6D2519D1038000352DFA /* large_lens_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076D19BBFBA9007EF122 /* large_lens_filled-256.png */; };
+		FDBF6D2619D1038000352DFA /* user_female4-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095319BBFBAA007EF122 /* user_female4-25.png */; };
+		FDBF6D2719D1038000352DFA /* small_lens_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086119BBFBAA007EF122 /* small_lens_filled-32.png */; };
+		FDBF6D2819D1038000352DFA /* slr_back_side_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F619BBFBA9007EF122 /* slr_back_side_filled-50.png */; };
+		FDBF6D2919D1038000352DFA /* change_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08AB19BBFBAA007EF122 /* change_user-50.png */; };
+		FDBF6D2A19D1038000352DFA /* worker-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098419BBFBAA007EF122 /* worker-512.png */; };
+		FDBF6D2B19D1038000352DFA /* workers-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098E19BBFBAA007EF122 /* workers-75.png */; };
+		FDBF6D2C19D1038000352DFA /* slr_large_lens-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083019BBFBA9007EF122 /* slr_large_lens-100.png */; };
+		FDBF6D2D19D1038000352DFA /* remove_image-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C519BBFBA9007EF122 /* remove_image-128.png */; };
+		FDBF6D2E19D1038000352DFA /* user_male3-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097019BBFBAA007EF122 /* user_male3-32.png */; };
+		FDBF6D2F19D1038000352DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
+		FDBF6D3019D1038000352DFA /* add_image_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B419BBFBA8007EF122 /* add_image_filled-75.png */; };
+		FDBF6D3119D1038000352DFA /* nurse-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090E19BBFBAA007EF122 /* nurse-50.png */; };
+		FDBF6D3219D1038000352DFA /* moderator-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090419BBFBAA007EF122 /* moderator-32.png */; };
+		FDBF6D3319D1038000352DFA /* landscape-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075E19BBFBA9007EF122 /* landscape-512.png */; };
+		FDBF6D3419D1038000352DFA /* user_male2-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096A19BBFBAA007EF122 /* user_male2-75.png */; };
+		FDBF6D3519D1038000352DFA /* add_image-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A719BBFBA8007EF122 /* add_image-256.png */; };
+		FDBF6D3619D1038000352DFA /* camera_identification-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F519BBFBA9007EF122 /* camera_identification-100.png */; };
+		FDBF6D3719D1038000352DFA /* camcoder_pro-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D619BBFBA9007EF122 /* camcoder_pro-50.png */; };
+		FDBF6D3819D1038000352DFA /* add_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089719BBFBAA007EF122 /* add_user-256.png */; };
+		FDBF6D3919D1038000352DFA /* remove_image_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07CD19BBFBA9007EF122 /* remove_image_filled-100.png */; };
+		FDBF6D3A19D1038000352DFA /* old_time_camera_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A419BBFBA9007EF122 /* old_time_camera_filled-32.png */; };
+		FDBF6D3B19D1038000352DFA /* administrator-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A119BBFBAA007EF122 /* administrator-32.png */; };
+		FDBF6D3C19D1038000352DFA /* worker-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098519BBFBAA007EF122 /* worker-75.png */; };
+		FDBF6D3D19D1038000352DFA /* sports_mode-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086619BBFBAA007EF122 /* sports_mode-100.png */; };
+		FDBF6D3E19D1038000352DFA /* student2-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092919BBFBAA007EF122 /* student2-50.png */; };
+		FDBF6D3F19D1038000352DFA /* edit_image_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071F19BBFBA9007EF122 /* edit_image_filled-512.png */; };
+		FDBF6D4019D1038000352DFA /* find_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08EB19BBFBAA007EF122 /* find_user-512.png */; };
+		FDBF6D4119D1038000352DFA /* add_image-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A619BBFBA8007EF122 /* add_image-25.png */; };
+		FDBF6D4219D1038000352DFA /* add_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089B19BBFBAA007EF122 /* add_user-75.png */; };
+		FDBF6D4319D1038000352DFA /* slr_back_side_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F519BBFBA9007EF122 /* slr_back_side_filled-32.png */; };
+		FDBF6D4419D1038000352DFA /* policeman-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091419BBFBAA007EF122 /* policeman-25.png */; };
+		FDBF6D4519D1038000352DFA /* user_male-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095A19BBFBAA007EF122 /* user_male-100.png */; };
+		FDBF6D4619D1038000352DFA /* farmer-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E319BBFBAA007EF122 /* farmer-75.png */; };
+		FDBF6D4719D1038000352DFA /* worker-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098119BBFBAA007EF122 /* worker-256.png */; };
+		FDBF6D4819D1038000352DFA /* add_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089519BBFBAA007EF122 /* add_user-128.png */; };
+		FDBF6D4919D1038000352DFA /* slr_small_lens_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085219BBFBA9007EF122 /* slr_small_lens_filled-75.png */; };
+		FDBF6D4A19D1038000352DFA /* film_reel-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072419BBFBA9007EF122 /* film_reel-25.png */; };
+		FDBF6D4B19D1038000352DFA /* checked_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B019BBFBAA007EF122 /* checked_user-128.png */; };
+		FDBF6D4C19D1038000352DFA /* night_landscape-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078B19BBFBA9007EF122 /* night_landscape-512.png */; };
+		FDBF6D4D19D1038000352DFA /* camera_addon_identification-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06EF19BBFBA9007EF122 /* camera_addon_identification-256.png */; };
+		FDBF6D4E19D1038000352DFA /* slr_camera2-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080419BBFBA9007EF122 /* slr_camera2-128.png */; };
+		FDBF6D4F19D1038000352DFA /* user_male3-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096E19BBFBAA007EF122 /* user_male3-25.png */; };
+		FDBF6D5019D1038000352DFA /* landscape-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075D19BBFBA9007EF122 /* landscape-50.png */; };
+		FDBF6D5119D1038000352DFA /* fireman-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08EF19BBFBAA007EF122 /* fireman-128.png */; };
+		FDBF6D5219D1038000352DFA /* old_time_camera_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A019BBFBA9007EF122 /* old_time_camera_filled-100.png */; };
+		FDBF6D5319D1038000352DFA /* worker-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098319BBFBAA007EF122 /* worker-50.png */; };
+		FDBF6D5419D1038000352DFA /* find_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E819BBFBAA007EF122 /* find_user-256.png */; };
+		FDBF6D5519D1038000352DFA /* fireman-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F119BBFBAA007EF122 /* fireman-256.png */; };
+		FDBF6D5619D1038000352DFA /* user_female-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093B19BBFBAA007EF122 /* user_female-50.png */; };
+		FDBF6D5719D1038000352DFA /* slr_small_lens_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084F19BBFBA9007EF122 /* slr_small_lens_filled-32.png */; };
+		FDBF6D5819D1038000352DFA /* photo-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B519BBFBA9007EF122 /* photo-256.png */; };
+		FDBF6D5919D1038000352DFA /* checked_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B319BBFBAA007EF122 /* checked_user-32.png */; };
+		FDBF6D5A19D1038000352DFA /* group-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08FB19BBFBAA007EF122 /* group-32.png */; };
+		FDBF6D5B19D1038000352DFA /* doctor-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CE19BBFBAA007EF122 /* doctor-32.png */; };
+		FDBF6D5C19D1038000352DFA /* camera_addon-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E719BBFBA9007EF122 /* camera_addon-32.png */; };
+		FDBF6D5D19D1038000352DFA /* remove_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091C19BBFBAA007EF122 /* remove_user-128.png */; };
+		FDBF6D5E19D1038000352DFA /* user_female-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093919BBFBAA007EF122 /* user_female-256.png */; };
+		FDBF6D5F19D1038000352DFA /* slr_camera2-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080319BBFBA9007EF122 /* slr_camera2-100.png */; };
+		FDBF6D6019D1038000352DFA /* old_time_camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079C19BBFBA9007EF122 /* old_time_camera-50.png */; };
+		FDBF6D6119D1038000352DFA /* camera_addon_identification-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F219BBFBA9007EF122 /* camera_addon_identification-512.png */; };
+		FDBF6D6219D1038000352DFA /* edit_image-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071219BBFBA9007EF122 /* edit_image-25.png */; };
+		FDBF6D6319D1038000352DFA /* workers-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098B19BBFBAA007EF122 /* workers-32.png */; };
+		FDBF6D6419D1038000352DFA /* integrated_webcam-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074A19BBFBA9007EF122 /* integrated_webcam-32.png */; };
+		FDBF6D6519D1038000352DFA /* edit_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D919BBFBAA007EF122 /* edit_user-512.png */; };
+		FDBF6D6619D1038000352DFA /* switch_camera-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088719BBFBAA007EF122 /* switch_camera-512.png */; };
+		FDBF6D6719D1038000352DFA /* slr_camera_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082E19BBFBA9007EF122 /* slr_camera_filled-75.png */; };
+		FDBF6D6819D1038000352DFA /* change_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A919BBFBAA007EF122 /* change_user-256.png */; };
+		FDBF6D6919D1038000352DFA /* night_landscape-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078819BBFBA9007EF122 /* night_landscape-256.png */; };
+		FDBF6D6A19D1038000352DFA /* student2-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092819BBFBAA007EF122 /* student2-32.png */; };
+		FDBF6D6B19D1038000352DFA /* add_image_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06AF19BBFBA8007EF122 /* add_image_filled-25.png */; };
+		FDBF6D6C19D1038000352DFA /* cook-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C219BBFBAA007EF122 /* cook-128.png */; };
+		FDBF6D6D19D1038000352DFA /* user_female2-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094119BBFBAA007EF122 /* user_female2-25.png */; };
+		FDBF6D6E19D1038000352DFA /* slr_camera_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082919BBFBA9007EF122 /* slr_camera_filled-25.png */; };
+		FDBF6D6F19D1038000352DFA /* switch_camera_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088B19BBFBAA007EF122 /* switch_camera_filled-128.png */; };
+		FDBF6D7019D1038000352DFA /* small_lens_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086219BBFBAA007EF122 /* small_lens_filled-50.png */; };
+		FDBF6D7119D1038000352DFA /* integrated_webcam_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075519BBFBA9007EF122 /* integrated_webcam_filled-512.png */; };
+		FDBF6D7219D1038000352DFA /* panorama-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B019BBFBA9007EF122 /* panorama-75.png */; };
+		FDBF6D7319D1038000352DFA /* talk-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092E19BBFBAA007EF122 /* talk-128.png */; };
+		FDBF6D7419D1038000352DFA /* user_female2-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093F19BBFBAA007EF122 /* user_female2-100.png */; };
+		FDBF6D7519D1038000352DFA /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
+		FDBF6D7619D1038000352DFA /* nurse-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090B19BBFBAA007EF122 /* nurse-25.png */; };
+		FDBF6D7719D1038000352DFA /* film_reel_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072E19BBFBA9007EF122 /* film_reel_filled-256.png */; };
+		FDBF6D7819D1038000352DFA /* farmer-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08DF19BBFBAA007EF122 /* farmer-256.png */; };
+		FDBF6D7919D1038000352DFA /* camcoder_pro-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D719BBFBA9007EF122 /* camcoder_pro-512.png */; };
+		FDBF6D7A19D1038000352DFA /* movie-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077619BBFBA9007EF122 /* movie-256.png */; };
+		FDBF6D7B19D1038000352DFA /* change_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08AC19BBFBAA007EF122 /* change_user-512.png */; };
+		FDBF6D7C19D1038000352DFA /* remove_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092019BBFBAA007EF122 /* remove_user-50.png */; };
+		FDBF6D7D19D1038000352DFA /* remove_image-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C419BBFBA9007EF122 /* remove_image-100.png */; };
+		FDBF6D7E19D1038000352DFA /* slr_camera_body-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081A19BBFBA9007EF122 /* slr_camera_body-50.png */; };
+		FDBF6D7F19D1038000352DFA /* film_reel_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073019BBFBA9007EF122 /* film_reel_filled-50.png */; };
+		FDBF6D8019D1038000352DFA /* slr_camera_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082819BBFBA9007EF122 /* slr_camera_filled-128.png */; };
+		FDBF6D8119D1038000352DFA /* night_landscape-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078719BBFBA9007EF122 /* night_landscape-25.png */; };
+		FDBF6D8219D1038000352DFA /* user_male-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095C19BBFBAA007EF122 /* user_male-25.png */; };
+		FDBF6D8319D1038000352DFA /* movie-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077319BBFBA9007EF122 /* movie-100.png */; };
+		FDBF6D8419D1038000352DFA /* remove_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091E19BBFBAA007EF122 /* remove_user-256.png */; };
+		FDBF6D8519D1038000352DFA /* checked_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B619BBFBAA007EF122 /* checked_user-75.png */; };
+		FDBF6D8619D1038000352DFA /* user_male3-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097119BBFBAA007EF122 /* user_male3-50.png */; };
+		FDBF6D8719D1038000352DFA /* slr_small_lens-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084919BBFBA9007EF122 /* slr_small_lens-75.png */; };
+		FDBF6D8819D1038000352DFA /* find_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E619BBFBAA007EF122 /* find_user-128.png */; };
+		FDBF6D8919D1038000352DFA /* user_male4-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097A19BBFBAA007EF122 /* user_male4-50.png */; };
+		FDBF6D8A19D1038000352DFA /* slr_small_lens-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084819BBFBA9007EF122 /* slr_small_lens-512.png */; };
+		FDBF6D8B19D1038000352DFA /* cable_release-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B919BBFBA8007EF122 /* cable_release-256.png */; };
+		FDBF6D8C19D1038000352DFA /* small_lens_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085E19BBFBAA007EF122 /* small_lens_filled-128.png */; };
+		FDBF6D8D19D1038000352DFA /* conference-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BE19BBFBAA007EF122 /* conference-512.png */; };
+		FDBF6D8E19D1038000352DFA /* multiple_cameras-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077E19BBFBA9007EF122 /* multiple_cameras-25.png */; };
+		FDBF6D8F19D1038000352DFA /* small_lens-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085719BBFBAA007EF122 /* small_lens-256.png */; };
+		FDBF6D9019D1038000352DFA /* farmer-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E119BBFBAA007EF122 /* farmer-50.png */; };
+		FDBF6D9119D1038000352DFA /* user_male-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095B19BBFBAA007EF122 /* user_male-128.png */; };
+		FDBF6D9219D1038000352DFA /* landscape-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075C19BBFBA9007EF122 /* landscape-32.png */; };
+		FDBF6D9319D1038000352DFA /* multiple_cameras-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078119BBFBA9007EF122 /* multiple_cameras-50.png */; };
+		FDBF6D9419D1038000352DFA /* talk-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093119BBFBAA007EF122 /* talk-32.png */; };
+		FDBF6D9519D1038000352DFA /* user_female3-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094819BBFBAA007EF122 /* user_female3-100.png */; };
+		FDBF6D9619D1038000352DFA /* fireman-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F019BBFBAA007EF122 /* fireman-25.png */; };
+		FDBF6D9719D1038000352DFA /* user_male3-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096D19BBFBAA007EF122 /* user_male3-128.png */; };
+		FDBF6D9819D1038000352DFA /* group-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08FA19BBFBAA007EF122 /* group-256.png */; };
+		FDBF6D9919D1038000352DFA /* administrator-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089E19BBFBAA007EF122 /* administrator-128.png */; };
+		FDBF6D9A19D1038000352DFA /* policeman-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091819BBFBAA007EF122 /* policeman-512.png */; };
+		FDBF6D9B19D1038000352DFA /* slr_small_lens-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084619BBFBA9007EF122 /* slr_small_lens-32.png */; };
+		FDBF6D9C19D1038000352DFA /* edit_image_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071A19BBFBA9007EF122 /* edit_image_filled-128.png */; };
+		FDBF6D9D19D1038000352DFA /* clipperboard-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070419BBFBA9007EF122 /* clipperboard-512.png */; };
+		FDBF6D9E19D1038000352DFA /* clipperboard-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070019BBFBA9007EF122 /* clipperboard-25.png */; };
+		FDBF6D9F19D1038000352DFA /* conference-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B819BBFBAA007EF122 /* conference-100.png */; };
+		FDBF6DA019D1038000352DFA /* large_lens-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076619BBFBA9007EF122 /* large_lens-50.png */; };
+		FDBF6DA119D1038000352DFA /* slr_back_side-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E919BBFBA9007EF122 /* slr_back_side-128.png */; };
+		FDBF6DA219D1038000352DFA /* large_lens_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077019BBFBA9007EF122 /* large_lens_filled-512.png */; };
+		FDBF6DA319D1038000352DFA /* stack_of_photos_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087F19BBFBAA007EF122 /* stack_of_photos_filled-75.png */; };
+		FDBF6DA419D1038000352DFA /* gallery_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073F19BBFBA9007EF122 /* gallery_filled-25.png */; };
+		FDBF6DA519D1038000352DFA /* user_female2-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094519BBFBAA007EF122 /* user_female2-512.png */; };
+		FDBF6DA619D1038000352DFA /* slr_small_lens-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084319BBFBA9007EF122 /* slr_small_lens-128.png */; };
+		FDBF6DA719D1038000352DFA /* rotate_camera_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E319BBFBA9007EF122 /* rotate_camera_filled-32.png */; };
+		FDBF6DA819D1038000352DFA /* slr_camera2_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081119BBFBA9007EF122 /* slr_camera2_filled-50.png */; };
+		FDBF6DA919D1038000352DFA /* camcoder_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CE19BBFBA9007EF122 /* camcoder_filled-512.png */; };
+		FDBF6DAA19D1038000352DFA /* edit_image_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072019BBFBA9007EF122 /* edit_image_filled-75.png */; };
+		FDBF6DAB19D1038000352DFA /* stack_of_photos_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087B19BBFBAA007EF122 /* stack_of_photos_filled-256.png */; };
+		FDBF6DAC19D1038000352DFA /* administrator-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A219BBFBAA007EF122 /* administrator-50.png */; };
+		FDBF6DAD19D1038000352DFA /* user_male2-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096619BBFBAA007EF122 /* user_male2-256.png */; };
+		FDBF6DAE19D1038000352DFA /* stack_of_photos-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087619BBFBAA007EF122 /* stack_of_photos-75.png */; };
+		FDBF6DAF19D1038000352DFA /* clipperboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070519BBFBA9007EF122 /* clipperboard-75.png */; };
+		FDBF6DB019D1038000352DFA /* slr_back_side-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07EE19BBFBA9007EF122 /* slr_back_side-512.png */; };
+		FDBF6DB119D1038000352DFA /* policeman-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091219BBFBAA007EF122 /* policeman-100.png */; };
+		FDBF6DB219D1038000352DFA /* rotate_camera-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07DD19BBFBA9007EF122 /* rotate_camera-75.png */; };
+		FDBF6DB319D1038000352DFA /* camcoder_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CF19BBFBA9007EF122 /* camcoder_filled-75.png */; };
+		FDBF6DB419D1038000352DFA /* worker-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098019BBFBAA007EF122 /* worker-25.png */; };
+		FDBF6DB519D1038000352DFA /* worker-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098219BBFBAA007EF122 /* worker-32.png */; };
+		FDBF6DB619D1038000352DFA /* panorama-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AD19BBFBA9007EF122 /* panorama-32.png */; };
+		FDBF6DB719D1038000352DFA /* movie-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077719BBFBA9007EF122 /* movie-32.png */; };
+		FDBF6DB819D1038000352DFA /* film_reel_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072B19BBFBA9007EF122 /* film_reel_filled-100.png */; };
+		FDBF6DB919D1038000352DFA /* movie-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077819BBFBA9007EF122 /* movie-50.png */; };
+		FDBF6DBA19D1038000352DFA /* camera_identification-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F619BBFBA9007EF122 /* camera_identification-128.png */; };
+		FDBF6DBB19D1038000352DFA /* group-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08FD19BBFBAA007EF122 /* group-512.png */; };
+		FDBF6DBC19D1038000352DFA /* photo-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B719BBFBA9007EF122 /* photo-50.png */; };
+		FDBF6DBD19D1038000352DFA /* slr_large_lens-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083519BBFBA9007EF122 /* slr_large_lens-50.png */; };
+		FDBF6DBE19D1038000352DFA /* user_female-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093A19BBFBAA007EF122 /* user_female-32.png */; };
+		FDBF6DBF19D1038000352DFA /* cable_release-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B619BBFBA8007EF122 /* cable_release-100.png */; };
+		FDBF6DC019D1038000352DFA /* integrated_webcam_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075419BBFBA9007EF122 /* integrated_webcam_filled-50.png */; };
+		FDBF6DC119D1038000352DFA /* doctor-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CC19BBFBAA007EF122 /* doctor-25.png */; };
+		FDBF6DC219D1038000352DFA /* switch_camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088519BBFBAA007EF122 /* switch_camera-32.png */; };
+		FDBF6DC319D1038000352DFA /* stack_of_photos_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087C19BBFBAA007EF122 /* stack_of_photos_filled-32.png */; };
+		FDBF6DC419D1038000352DFA /* gallery_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074019BBFBA9007EF122 /* gallery_filled-256.png */; };
+		FDBF6DC519D1038000352DFA /* stack_of_photos-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087019BBFBAA007EF122 /* stack_of_photos-128.png */; };
+		FDBF6DC619D1038000352DFA /* camcoder_pro-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D319BBFBA9007EF122 /* camcoder_pro-25.png */; };
+		FDBF6DC719D1038000352DFA /* stack_of_photos-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086F19BBFBAA007EF122 /* stack_of_photos-100.png */; };
+		FDBF6DC819D1038000352DFA /* slr_large_lens-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083619BBFBA9007EF122 /* slr_large_lens-512.png */; };
+		FDBF6DC919D1038000352DFA /* switch_camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088619BBFBAA007EF122 /* switch_camera-50.png */; };
+		FDBF6DCA19D1038000352DFA /* gallery-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073419BBFBA9007EF122 /* gallery-100.png */; };
+		FDBF6DCB19D1038000352DFA /* camcoder_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CC19BBFBA9007EF122 /* camcoder_filled-32.png */; };
+		FDBF6DCC19D1038000352DFA /* old_time_camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079B19BBFBA9007EF122 /* old_time_camera-32.png */; };
+		FDBF6DCD19D1038000352DFA /* user_male2-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096919BBFBAA007EF122 /* user_male2-512.png */; };
+		FDBF6DCE19D1038000352DFA /* nurse-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090C19BBFBAA007EF122 /* nurse-256.png */; };
+		FDBF6DCF19D1038000352DFA /* switch_camera-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088819BBFBAA007EF122 /* switch_camera-75.png */; };
+		FDBF6DD019D1038000352DFA /* portrait_mode-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07BE19BBFBA9007EF122 /* portrait_mode-256.png */; };
+		FDBF6DD119D1038000352DFA /* rotate_camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07DA19BBFBA9007EF122 /* rotate_camera-32.png */; };
+		FDBF6DD219D1038000352DFA /* slr_camera2-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080919BBFBA9007EF122 /* slr_camera2-512.png */; };
+		FDBF6DD319D1038000352DFA /* workers-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098719BBFBAA007EF122 /* workers-100.png */; };
+		FDBF6DD419D1038000352DFA /* conference-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BC19BBFBAA007EF122 /* conference-32.png */; };
+		FDBF6DD519D1038000352DFA /* camcoder_pro_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DA19BBFBA9007EF122 /* camcoder_pro_filled-100.png */; };
+		FDBF6DD619D1038000352DFA /* talk-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093019BBFBAA007EF122 /* talk-256.png */; };
+		FDBF6DD719D1038000352DFA /* slr_back_side-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E819BBFBA9007EF122 /* slr_back_side-100.png */; };
+		FDBF6DD819D1038000352DFA /* student2-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092B19BBFBAA007EF122 /* student2-75.png */; };
+		FDBF6DD919D1038000352DFA /* large_lens-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076219BBFBA9007EF122 /* large_lens-128.png */; };
+		FDBF6DDA19D1038000352DFA /* multiple_cameras-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077F19BBFBA9007EF122 /* multiple_cameras-256.png */; };
+		FDBF6DDB19D1038000352DFA /* group-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F819BBFBAA007EF122 /* group-128.png */; };
+		FDBF6DDC19D1038000352DFA /* large_lens-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076819BBFBA9007EF122 /* large_lens-75.png */; };
+		FDBF6DDD19D1038000352DFA /* gallery_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073D19BBFBA9007EF122 /* gallery_filled-100.png */; };
+		FDBF6DDE19D1038000352DFA /* camcoder_pro-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D819BBFBA9007EF122 /* camcoder_pro-75.png */; };
+		FDBF6DDF19D1038000352DFA /* film_reel-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072619BBFBA9007EF122 /* film_reel-32.png */; };
+		FDBF6DE019D1038000352DFA /* large_lens_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076A19BBFBA9007EF122 /* large_lens_filled-100.png */; };
+		FDBF6DE119D1038000352DFA /* camera_addon-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E519BBFBA9007EF122 /* camera_addon-25.png */; };
+		FDBF6DE219D1038000352DFA /* slr_back_side-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07EC19BBFBA9007EF122 /* slr_back_side-32.png */; };
+		FDBF6DE319D1038000352DFA /* checked_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B119BBFBAA007EF122 /* checked_user-25.png */; };
+		FDBF6DE419D1038000352DFA /* night_portrait-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079319BBFBA9007EF122 /* night_portrait-50.png */; };
+		FDBF6DE519D1038000352DFA /* close_up_mode-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070E19BBFBA9007EF122 /* close_up_mode-75.png */; };
+		FDBF6DE619D1038000352DFA /* slr_large_lens_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083919BBFBA9007EF122 /* slr_large_lens_filled-100.png */; };
+		FDBF6DE719D1038000352DFA /* doctor-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CF19BBFBAA007EF122 /* doctor-50.png */; };
+		FDBF6DE819D1038000352DFA /* integrated_webcam_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075119BBFBA9007EF122 /* integrated_webcam_filled-25.png */; };
+		FDBF6DE919D1038000352DFA /* slr_camera2-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080519BBFBA9007EF122 /* slr_camera2-25.png */; };
+		FDBF6DEA19D1038000352DFA /* edit_image-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071019BBFBA9007EF122 /* edit_image-100.png */; };
+		FDBF6DEB19D1038000352DFA /* edit_image-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071719BBFBA9007EF122 /* edit_image-75.png */; };
+		FDBF6DEC19D1038000352DFA /* slr_small_lens_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084B19BBFBA9007EF122 /* slr_small_lens_filled-100.png */; };
+		FDBF6DED19D1038000352DFA /* student2-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092419BBFBAA007EF122 /* student2-100.png */; };
+		FDBF6DEE19D1038000352DFA /* sports_mode-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086719BBFBAA007EF122 /* sports_mode-128.png */; };
+		FDBF6DEF19D1038000352DFA /* slr_large_lens_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083A19BBFBA9007EF122 /* slr_large_lens_filled-128.png */; };
+		FDBF6DF019D1038000352DFA /* edit_image_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071B19BBFBA9007EF122 /* edit_image_filled-25.png */; };
+		FDBF6DF119D1038000352DFA /* doctor-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D019BBFBAA007EF122 /* doctor-512.png */; };
+		FDBF6DF219D1038000352DFA /* photo-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B819BBFBA9007EF122 /* photo-512.png */; };
+		FDBF6DF319D1038000352DFA /* talk-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093319BBFBAA007EF122 /* talk-512.png */; };
+		FDBF6DF419D1038000352DFA /* camera_addon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E819BBFBA9007EF122 /* camera_addon-50.png */; };
+		FDBF6DF519D1038000352DFA /* rotate_camera_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07E219BBFBA9007EF122 /* rotate_camera_filled-256.png */; };
+		FDBF6DF619D1038000352DFA /* switch_camera-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088219BBFBAA007EF122 /* switch_camera-128.png */; };
+		FDBF6DF719D1038000352DFA /* slr_camera_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082D19BBFBA9007EF122 /* slr_camera_filled-512.png */; };
+		FDBF6DF819D1038000352DFA /* panorama-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AF19BBFBA9007EF122 /* panorama-512.png */; };
+		FDBF6DF919D1038000352DFA /* panorama-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A919BBFBA9007EF122 /* panorama-100.png */; };
+		FDBF6DFA19D1038000352DFA /* film_reel-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072819BBFBA9007EF122 /* film_reel-512.png */; };
+		FDBF6DFB19D1038000352DFA /* add_image_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06AE19BBFBA8007EF122 /* add_image_filled-128.png */; };
+		FDBF6DFC19D1038000352DFA /* slr_back_side-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07EA19BBFBA9007EF122 /* slr_back_side-25.png */; };
+		FDBF6DFD19D1038000352DFA /* large_lens_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077119BBFBA9007EF122 /* large_lens_filled-75.png */; };
+		FDBF6DFE19D1038000352DFA /* close_up_mode-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070819BBFBA9007EF122 /* close_up_mode-128.png */; };
+		FDBF6DFF19D1038000352DFA /* stack_of_photos_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087919BBFBAA007EF122 /* stack_of_photos_filled-128.png */; };
+		FDBF6E0019D1038000352DFA /* night_landscape-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078C19BBFBA9007EF122 /* night_landscape-75.png */; };
+		FDBF6E0119D1038000352DFA /* slr_camera_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082C19BBFBA9007EF122 /* slr_camera_filled-50.png */; };
+		FDBF6E0219D1038000352DFA /* moderator-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090219BBFBAA007EF122 /* moderator-25.png */; };
+		FDBF6E0319D1038000352DFA /* landscape-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D075B19BBFBA9007EF122 /* landscape-256.png */; };
+		FDBF6E0419D1038000352DFA /* edit_image-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071119BBFBA9007EF122 /* edit_image-128.png */; };
+		FDBF6E0519D1038000352DFA /* night_landscape-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078919BBFBA9007EF122 /* night_landscape-32.png */; };
+		FDBF6E0619D1038000352DFA /* nurse-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090A19BBFBAA007EF122 /* nurse-128.png */; };
+		FDBF6E0719D1038000352DFA /* sports_mode-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086819BBFBAA007EF122 /* sports_mode-25.png */; };
+		FDBF6E0819D1038000352DFA /* cable_release-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06BB19BBFBA8007EF122 /* cable_release-50.png */; };
+		FDBF6E0919D1038000352DFA /* large_lens_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076B19BBFBA9007EF122 /* large_lens_filled-128.png */; };
+		FDBF6E0A19D1038000352DFA /* slr_camera2-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080719BBFBA9007EF122 /* slr_camera2-32.png */; };
+		FDBF6E0B19D1038000352DFA /* user_female3-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094E19BBFBAA007EF122 /* user_female3-512.png */; };
+		FDBF6E0C19D1038000352DFA /* workers-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098919BBFBAA007EF122 /* workers-25.png */; };
+		FDBF6E0D19D1038000352DFA /* user_female4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095419BBFBAA007EF122 /* user_female4-256.png */; };
+		FDBF6E0E19D1038000352DFA /* old_time_camera-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079819BBFBA9007EF122 /* old_time_camera-128.png */; };
+		FDBF6E0F19D1038000352DFA /* user_male-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095E19BBFBAA007EF122 /* user_male-32.png */; };
+		FDBF6E1019D1038000352DFA /* old_time_camera_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A319BBFBA9007EF122 /* old_time_camera_filled-256.png */; };
+		FDBF6E1119D1038000352DFA /* camcoder_pro-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D219BBFBA9007EF122 /* camcoder_pro-128.png */; };
+		FDBF6E1219D1038000352DFA /* cable_release-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B819BBFBA8007EF122 /* cable_release-25.png */; };
+		FDBF6E1319D1038000352DFA /* moderator-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090119BBFBAA007EF122 /* moderator-128.png */; };
+		FDBF6E1419D1038000352DFA /* group-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08FC19BBFBAA007EF122 /* group-50.png */; };
+		FDBF6E1519D1038000352DFA /* small_lens-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085619BBFBAA007EF122 /* small_lens-25.png */; };
+		FDBF6E1619D1038000352DFA /* switch_camera-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088319BBFBAA007EF122 /* switch_camera-25.png */; };
+		FDBF6E1719D1038000352DFA /* add_image-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A819BBFBA8007EF122 /* add_image-32.png */; };
+		FDBF6E1819D1038000352DFA /* camera_addon_identification-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06EC19BBFBA9007EF122 /* camera_addon_identification-100.png */; };
+		FDBF6E1919D1038000352DFA /* edit_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D719BBFBAA007EF122 /* edit_user-32.png */; };
+		FDBF6E1A19D1038000352DFA /* remove_image_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D019BBFBA9007EF122 /* remove_image_filled-256.png */; };
+		FDBF6E1B19D1038000352DFA /* slr_camera2_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080E19BBFBA9007EF122 /* slr_camera2_filled-25.png */; };
+		FDBF6E1C19D1038000352DFA /* night_portrait-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079419BBFBA9007EF122 /* night_portrait-512.png */; };
+		FDBF6E1D19D1038000352DFA /* student2-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092519BBFBAA007EF122 /* student2-128.png */; };
+		FDBF6E1E19D1038000352DFA /* photo-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B219BBFBA9007EF122 /* photo-100.png */; };
+		FDBF6E1F19D1038000352DFA /* slr_small_lens-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084219BBFBA9007EF122 /* slr_small_lens-100.png */; };
+		FDBF6E2019D1038000352DFA /* moderator-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090019BBFBAA007EF122 /* moderator-100.png */; };
+		FDBF6E2119D1038000352DFA /* slr_small_lens_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084C19BBFBA9007EF122 /* slr_small_lens_filled-128.png */; };
+		FDBF6E2219D1038000352DFA /* cook-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C319BBFBAA007EF122 /* cook-25.png */; };
+		FDBF6E2319D1038000352DFA /* camera_identification-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06FC19BBFBA9007EF122 /* camera_identification-75.png */; };
+		FDBF6E2419D1038000352DFA /* slr_camera_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082B19BBFBA9007EF122 /* slr_camera_filled-32.png */; };
+		FDBF6E2519D1038000352DFA /* rotate_camera-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D719BBFBA9007EF122 /* rotate_camera-128.png */; };
+		FDBF6E2619D1038000352DFA /* portrait_mode-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07BB19BBFBA9007EF122 /* portrait_mode-100.png */; };
+		FDBF6E2719D1038000352DFA /* remove_image-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C619BBFBA9007EF122 /* remove_image-25.png */; };
+		FDBF6E2819D1038000352DFA /* clipperboard-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070319BBFBA9007EF122 /* clipperboard-50.png */; };
+		FDBF6E2919D1038000352DFA /* old_time_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079A19BBFBA9007EF122 /* old_time_camera-256.png */; };
+		FDBF6E2A19D1038000352DFA /* checked_user-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B419BBFBAA007EF122 /* checked_user-50.png */; };
+		FDBF6E2B19D1038000352DFA /* user_male4-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097C19BBFBAA007EF122 /* user_male4-75.png */; };
+		FDBF6E2C19D1038000352DFA /* add_image_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B119BBFBA8007EF122 /* add_image_filled-32.png */; };
+		FDBF6E2D19D1038000352DFA /* slr_back_side-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07EF19BBFBA9007EF122 /* slr_back_side-75.png */; };
+		FDBF6E2E19D1038000352DFA /* slr_large_lens_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083D19BBFBA9007EF122 /* slr_large_lens_filled-32.png */; };
+		FDBF6E2F19D1038000352DFA /* worker-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097F19BBFBAA007EF122 /* worker-128.png */; };
+		FDBF6E3019D1038000352DFA /* night_portrait-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078E19BBFBA9007EF122 /* night_portrait-100.png */; };
+		FDBF6E3119D1038000352DFA /* add_image-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A419BBFBA8007EF122 /* add_image-100.png */; };
+		FDBF6E3219D1038000352DFA /* doctor-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CB19BBFBAA007EF122 /* doctor-128.png */; };
+		FDBF6E3319D1038000352DFA /* slr_camera_body_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081F19BBFBA9007EF122 /* slr_camera_body_filled-128.png */; };
+		FDBF6E3419D1038000352DFA /* old_time_camera_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A219BBFBA9007EF122 /* old_time_camera_filled-25.png */; };
+		FDBF6E3519D1038000352DFA /* slr_small_lens_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084D19BBFBA9007EF122 /* slr_small_lens_filled-25.png */; };
+		FDBF6E3619D1038000352DFA /* slr_large_lens-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083119BBFBA9007EF122 /* slr_large_lens-128.png */; };
+		FDBF6E3719D1038000352DFA /* large_lens_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076F19BBFBA9007EF122 /* large_lens_filled-50.png */; };
+		FDBF6E3819D1038000352DFA /* camera_addon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E419BBFBA9007EF122 /* camera_addon-128.png */; };
+		FDBF6E3919D1038000352DFA /* camera_identification-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F919BBFBA9007EF122 /* camera_identification-32.png */; };
+		FDBF6E3A19D1038000352DFA /* checked_user-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B219BBFBAA007EF122 /* checked_user-256.png */; };
+		FDBF6E3B19D1038000352DFA /* slr_back_side_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F819BBFBA9007EF122 /* slr_back_side_filled-75.png */; };
+		FDBF6E3C19D1038000352DFA /* slr_large_lens_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083B19BBFBA9007EF122 /* slr_large_lens_filled-25.png */; };
+		FDBF6E3D19D1038000352DFA /* film_reel-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072919BBFBA9007EF122 /* film_reel-75.png */; };
+		FDBF6E3E19D1038000352DFA /* slr_camera_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082719BBFBA9007EF122 /* slr_camera_filled-100.png */; };
+		FDBF6E3F19D1038000352DFA /* find_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08EC19BBFBAA007EF122 /* find_user-75.png */; };
+		FDBF6E4019D1038000352DFA /* integrated_webcam-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074819BBFBA9007EF122 /* integrated_webcam-25.png */; };
+		FDBF6E4119D1038000352DFA /* edit_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08D419BBFBAA007EF122 /* edit_user-128.png */; };
+		FDBF6E4219D1038000352DFA /* slr_camera_body-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081C19BBFBA9007EF122 /* slr_camera_body-75.png */; };
+		FDBF6E4319D1038000352DFA /* slr_camera_body-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081919BBFBA9007EF122 /* slr_camera_body-32.png */; };
+		FDBF6E4419D1038000352DFA /* fireman-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08F219BBFBAA007EF122 /* fireman-32.png */; };
+		FDBF6E4519D1038000352DFA /* slr_camera-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080119BBFBA9007EF122 /* slr_camera-75.png */; };
+		FDBF6E4619D1038000352DFA /* nurse-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090F19BBFBAA007EF122 /* nurse-512.png */; };
+		FDBF6E4719D1038000352DFA /* camcoder_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06CB19BBFBA9007EF122 /* camcoder_filled-256.png */; };
+		FDBF6E4819D1038000352DFA /* add_image-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06A919BBFBA8007EF122 /* add_image-50.png */; };
+		FDBF6E4919D1038000352DFA /* stack_of_photos-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087519BBFBAA007EF122 /* stack_of_photos-512.png */; };
+		FDBF6E4A19D1038000352DFA /* edit_image-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071319BBFBA9007EF122 /* edit_image-256.png */; };
+		FDBF6E4B19D1038000352DFA /* camcoder_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C919BBFBA8007EF122 /* camcoder_filled-128.png */; };
+		FDBF6E4C19D1038000352DFA /* camcoder_pro_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DF19BBFBA9007EF122 /* camcoder_pro_filled-50.png */; };
+		FDBF6E4D19D1038000352DFA /* Smartisan.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* Smartisan.png */; };
+		FDBF6E4E19D1038000352DFA /* old_time_camera_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07A719BBFBA9007EF122 /* old_time_camera_filled-75.png */; };
+		FDBF6E4F19D1038000352DFA /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097819BBFBAA007EF122 /* user_male4-256.png */; };
+		FDBF6E5019D1038000352DFA /* film_reel_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072F19BBFBA9007EF122 /* film_reel_filled-32.png */; };
+		FDBF6E5119D1038000352DFA /* large_lens_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076C19BBFBA9007EF122 /* large_lens_filled-25.png */; };
+		FDBF6E5219D1038000352DFA /* small_lens-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085519BBFBAA007EF122 /* small_lens-128.png */; };
+		FDBF6E5319D1038000352DFA /* user_female4-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095719BBFBAA007EF122 /* user_female4-512.png */; };
+		FDBF6E5419D1038000352DFA /* slr_camera2_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080C19BBFBA9007EF122 /* slr_camera2_filled-100.png */; };
+		FDBF6E5519D1038000352DFA /* user_male4-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097919BBFBAA007EF122 /* user_male4-32.png */; };
+		FDBF6E5619D1038000352DFA /* night_portrait-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079519BBFBA9007EF122 /* night_portrait-75.png */; };
+		FDBF6E5719D1038000352DFA /* talk-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092D19BBFBAA007EF122 /* talk-100.png */; };
+		FDBF6E5819D1038000352DFA /* camcoder-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C319BBFBA8007EF122 /* camcoder-32.png */; };
+		FDBF6E5919D1038000352DFA /* add_image_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B219BBFBA8007EF122 /* add_image_filled-50.png */; };
+		FDBF6E5A19D1038000352DFA /* panorama-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AA19BBFBA9007EF122 /* panorama-128.png */; };
+		FDBF6E5B19D1038000352DFA /* doctor-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CD19BBFBAA007EF122 /* doctor-256.png */; };
+		FDBF6E5C19D1038000352DFA /* change_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08AD19BBFBAA007EF122 /* change_user-75.png */; };
+		FDBF6E5D19D1038000352DFA /* slr_camera_body_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082019BBFBA9007EF122 /* slr_camera_body_filled-25.png */; };
+		FDBF6E5E19D1038000352DFA /* user_female3-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094A19BBFBAA007EF122 /* user_female3-25.png */; };
+		FDBF6E5F19D1038000352DFA /* user_female2-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094219BBFBAA007EF122 /* user_female2-256.png */; };
+		FDBF6E6019D1038000352DFA /* camera_identification-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F819BBFBA9007EF122 /* camera_identification-256.png */; };
+		FDBF6E6119D1038000352DFA /* remove_image-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07CA19BBFBA9007EF122 /* remove_image-512.png */; };
+		FDBF6E6219D1038000352DFA /* user_female2-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094619BBFBAA007EF122 /* user_female2-75.png */; };
+		FDBF6E6319D1038000352DFA /* sports_mode-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086C19BBFBAA007EF122 /* sports_mode-512.png */; };
+		FDBF6E6419D1038000352DFA /* user_female4-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095519BBFBAA007EF122 /* user_female4-32.png */; };
+		FDBF6E6519D1038000352DFA /* checked_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B519BBFBAA007EF122 /* checked_user-512.png */; };
+		FDBF6E6619D1038000352DFA /* portrait_mode-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C219BBFBA9007EF122 /* portrait_mode-75.png */; };
+		FDBF6E6719D1038000352DFA /* workers-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098D19BBFBAA007EF122 /* workers-512.png */; };
+		FDBF6E6819D1038000352DFA /* slr_small_lens_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085119BBFBA9007EF122 /* slr_small_lens_filled-512.png */; };
+		FDBF6E6919D1038000352DFA /* camcoder_pro_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06DE19BBFBA9007EF122 /* camcoder_pro_filled-32.png */; };
+		FDBF6E6A19D1038000352DFA /* user_female4-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095119BBFBAA007EF122 /* user_female4-100.png */; };
+		FDBF6E6B19D1038000352DFA /* user_male4-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097519BBFBAA007EF122 /* user_male4-100.png */; };
+		FDBF6E6C19D1038000352DFA /* switch_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D088419BBFBAA007EF122 /* switch_camera-256.png */; };
+		FDBF6E6D19D1038000352DFA /* small_lens_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085D19BBFBAA007EF122 /* small_lens_filled-100.png */; };
+		FDBF6E6E19D1038000352DFA /* photo-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B419BBFBA9007EF122 /* photo-25.png */; };
+		FDBF6E6F19D1038000352DFA /* backupCode in Resources */ = {isa = PBXBuildFile; fileRef = FD41313F199764BB00141578 /* backupCode */; };
+		FDBF6E7019D1038000352DFA /* moderator-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090619BBFBAA007EF122 /* moderator-512.png */; };
+		FDBF6E7119D1038000352DFA /* small_lens-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085A19BBFBAA007EF122 /* small_lens-512.png */; };
+		FDBF6E7219D1038000352DFA /* movie-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077519BBFBA9007EF122 /* movie-25.png */; };
+		FDBF6E7319D1038000352DFA /* gallery_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073E19BBFBA9007EF122 /* gallery_filled-128.png */; };
+		FDBF6E7419D1038000352DFA /* rotate_camera-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07DB19BBFBA9007EF122 /* rotate_camera-50.png */; };
+		FDBF6E7519D1038000352DFA /* change_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A819BBFBAA007EF122 /* change_user-25.png */; };
+		FDBF6E7619D1038000352DFA /* slr_back_side_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F319BBFBA9007EF122 /* slr_back_side_filled-25.png */; };
+		FDBF6E7719D1038000352DFA /* user_female-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093819BBFBAA007EF122 /* user_female-25.png */; };
+		FDBF6E7819D1038000352DFA /* conference-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BA19BBFBAA007EF122 /* conference-25.png */; };
+		FDBF6E7919D1038000352DFA /* slr_camera2_filled-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080D19BBFBA9007EF122 /* slr_camera2_filled-128.png */; };
+		FDBF6E7A19D1038000352DFA /* integrated_webcam-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074B19BBFBA9007EF122 /* integrated_webcam-50.png */; };
+		FDBF6E7B19D1038000352DFA /* film_reel_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072D19BBFBA9007EF122 /* film_reel_filled-25.png */; };
+		FDBF6E7C19D1038000352DFA /* slr_camera-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FE19BBFBA9007EF122 /* slr_camera-32.png */; };
+		FDBF6E7D19D1038000352DFA /* remove_user-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D092119BBFBAA007EF122 /* remove_user-512.png */; };
+		FDBF6E7E19D1038000352DFA /* add_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089419BBFBAA007EF122 /* add_user-100.png */; };
+		FDBF6E7F19D1038000352DFA /* cook-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C619BBFBAA007EF122 /* cook-50.png */; };
+		FDBF6E8019D1038000352DFA /* switch_camera_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089119BBFBAA007EF122 /* switch_camera_filled-75.png */; };
+		FDBF6E8119D1038000352DFA /* user_male3-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096C19BBFBAA007EF122 /* user_male3-100.png */; };
+		FDBF6E8219D1038000352DFA /* portrait_mode-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07BC19BBFBA9007EF122 /* portrait_mode-128.png */; };
+		FDBF6E8319D1038000352DFA /* user_female-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093719BBFBAA007EF122 /* user_female-128.png */; };
+		FDBF6E8419D1038000352DFA /* camera_addon-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06EA19BBFBA9007EF122 /* camera_addon-75.png */; };
+		FDBF6E8519D1038000352DFA /* user_male3-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096F19BBFBAA007EF122 /* user_male3-256.png */; };
+		FDBF6E8619D1038000352DFA /* slr_camera_body_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082119BBFBA9007EF122 /* slr_camera_body_filled-256.png */; };
+		FDBF6E8719D1038000352DFA /* large_lens-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076719BBFBA9007EF122 /* large_lens-512.png */; };
+		FDBF6E8819D1038000352DFA /* slr_small_lens-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084719BBFBA9007EF122 /* slr_small_lens-50.png */; };
+		FDBF6E8919D1038000352DFA /* farmer-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08DE19BBFBAA007EF122 /* farmer-25.png */; };
+		FDBF6E8A19D1038000352DFA /* multiple_cameras-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D078219BBFBA9007EF122 /* multiple_cameras-512.png */; };
+		FDBF6E8B19D1038000352DFA /* gallery-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073A19BBFBA9007EF122 /* gallery-512.png */; };
+		FDBF6E8C19D1038000352DFA /* edit_image_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071E19BBFBA9007EF122 /* edit_image_filled-50.png */; };
+		FDBF6E8D19D1038000352DFA /* remove_image_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D119BBFBA9007EF122 /* remove_image_filled-32.png */; };
+		FDBF6E8E19D1038000352DFA /* edit_image_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071D19BBFBA9007EF122 /* edit_image_filled-32.png */; };
+		FDBF6E8F19D1038000352DFA /* slr_back_side_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07F119BBFBA9007EF122 /* slr_back_side_filled-100.png */; };
+		FDBF6E9019D1038000352DFA /* camcoder_pro-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06D519BBFBA9007EF122 /* camcoder_pro-32.png */; };
+		FDBF6E9119D1038000352DFA /* portrait_mode-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C119BBFBA9007EF122 /* portrait_mode-512.png */; };
+		FDBF6E9219D1038000352DFA /* policeman-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091919BBFBAA007EF122 /* policeman-75.png */; };
+		FDBF6E9319D1038000352DFA /* sports_mode-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086D19BBFBAA007EF122 /* sports_mode-75.png */; };
+		FDBF6E9419D1038000352DFA /* gallery-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073819BBFBA9007EF122 /* gallery-32.png */; };
+		FDBF6E9519D1038000352DFA /* edit_user-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08DA19BBFBAA007EF122 /* edit_user-75.png */; };
+		FDBF6E9619D1038000352DFA /* change_user-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A719BBFBAA007EF122 /* change_user-128.png */; };
+		FDBF6E9719D1038000352DFA /* small_lens-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085419BBFBAA007EF122 /* small_lens-100.png */; };
+		FDBF6E9819D1038000352DFA /* cable_release-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06B719BBFBA8007EF122 /* cable_release-128.png */; };
+		FDBF6E9919D1038000352DFA /* remove_image_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D319BBFBA9007EF122 /* remove_image_filled-512.png */; };
+		FDBF6E9A19D1038000352DFA /* slr_camera_body_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D081E19BBFBA9007EF122 /* slr_camera_body_filled-100.png */; };
+		FDBF6E9B19D1038000352DFA /* camcoder-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C619BBFBA8007EF122 /* camcoder-75.png */; };
+		FDBF6E9C19D1038000352DFA /* slr_large_lens-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083319BBFBA9007EF122 /* slr_large_lens-256.png */; };
+		FDBF6E9D19D1038000352DFA /* night_portrait-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079119BBFBA9007EF122 /* night_portrait-256.png */; };
+		FDBF6E9E19D1038000352DFA /* camcoder_filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C819BBFBA8007EF122 /* camcoder_filled-100.png */; };
+		FDBF6E9F19D1038000352DFA /* administrator-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089D19BBFBAA007EF122 /* administrator-100.png */; };
+		FDBF6EA019D1038000352DFA /* large_lens-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076419BBFBA9007EF122 /* large_lens-256.png */; };
+		FDBF6EA119D1038000352DFA /* gallery_filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074119BBFBA9007EF122 /* gallery_filled-32.png */; };
+		FDBF6EA219D1038000352DFA /* user_female4-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D095819BBFBAA007EF122 /* user_female4-75.png */; };
+		FDBF6EA319D1038000352DFA /* remove_image-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07C719BBFBA9007EF122 /* remove_image-256.png */; };
+		FDBF6EA419D1038000352DFA /* slr_camera2-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D080A19BBFBA9007EF122 /* slr_camera2-75.png */; };
+		FDBF6EA519D1038000352DFA /* conference-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08BB19BBFBAA007EF122 /* conference-256.png */; };
+		FDBF6EA619D1038000352DFA /* camcoder_pro_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06E119BBFBA9007EF122 /* camcoder_pro_filled-75.png */; };
+		FDBF6EA719D1038000352DFA /* find_user-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E719BBFBAA007EF122 /* find_user-25.png */; };
+		FDBF6EA819D1038000352DFA /* integrated_webcam-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074919BBFBA9007EF122 /* integrated_webcam-256.png */; };
+		FDBF6EA919D1038000352DFA /* close_up_mode-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070C19BBFBA9007EF122 /* close_up_mode-50.png */; };
+		FDBF6EAA19D1038000352DFA /* gallery-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073619BBFBA9007EF122 /* gallery-25.png */; };
+		FDBF6EAB19D1038000352DFA /* camera_addon_identification-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F119BBFBA9007EF122 /* camera_addon_identification-50.png */; };
+		FDBF6EAC19D1038000352DFA /* slr_large_lens_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083F19BBFBA9007EF122 /* slr_large_lens_filled-512.png */; };
+		FDBF6EAD19D1038000352DFA /* panorama-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07AE19BBFBA9007EF122 /* panorama-50.png */; };
+		FDBF6EAE19D1038000352DFA /* edit_image-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D071519BBFBA9007EF122 /* edit_image-50.png */; };
+		FDBF6EAF19D1038000352DFA /* stack_of_photos-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D087119BBFBAA007EF122 /* stack_of_photos-25.png */; };
+		FDBF6EB019D1038000352DFA /* add_image-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06AB19BBFBA8007EF122 /* add_image-75.png */; };
+		FDBF6EB119D1038000352DFA /* gallery_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D074419BBFBA9007EF122 /* gallery_filled-75.png */; };
+		FDBF6EB219D1038000352DFA /* small_lens_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086319BBFBAA007EF122 /* small_lens_filled-512.png */; };
+		FDBF6EB319D1038000352DFA /* film_reel-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072519BBFBA9007EF122 /* film_reel-256.png */; };
+		FDBF6EB419D1038000352DFA /* remove_image_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D219BBFBA9007EF122 /* remove_image_filled-50.png */; };
+		FDBF6EB519D1038000352DFA /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7819BE9B20007EF122 /* bg2.jpg */; };
+		FDBF6EB619D1038000352DFA /* slr_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FD19BBFBA9007EF122 /* slr_camera-256.png */; };
+		FDBF6EB719D1038000352DFA /* user_male-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096019BBFBAA007EF122 /* user_male-512.png */; };
+		FDBF6EB819D1038000352DFA /* slr_large_lens-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083219BBFBA9007EF122 /* slr_large_lens-25.png */; };
+		FDBF6EB919D1038000352DFA /* movie-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077919BBFBA9007EF122 /* movie-512.png */; };
+		FDBF6EBA19D1038000352DFA /* moderator-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D090719BBFBAA007EF122 /* moderator-75.png */; };
+		FDBF6EBB19D1038000352DFA /* remove_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091F19BBFBAA007EF122 /* remove_user-32.png */; };
+		FDBF6EBC19D1038000352DFA /* small_lens_filled-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086019BBFBAA007EF122 /* small_lens_filled-256.png */; };
+		FDBF6EBD19D1038000352DFA /* photo-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B919BBFBA9007EF122 /* photo-75.png */; };
+		FDBF6EBE19D1038000352DFA /* small_lens_filled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D085F19BBFBAA007EF122 /* small_lens_filled-25.png */; };
+		FDBF6EBF19D1038000352DFA /* slr_camera_body_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D082319BBFBA9007EF122 /* slr_camera_body_filled-50.png */; };
+		FDBF6EC019D1038000352DFA /* cook-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08C719BBFBAA007EF122 /* cook-512.png */; };
+		FDBF6EC119D1038000352DFA /* farmer-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E019BBFBAA007EF122 /* farmer-32.png */; };
+		FDBF6EC219D1038000352DFA /* camcoder-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06BF19BBFBA8007EF122 /* camcoder-100.png */; };
+		FDBF6EC319D1038000352DFA /* old_time_camera-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079919BBFBA9007EF122 /* old_time_camera-25.png */; };
+		FDBF6EC419D1038000352DFA /* user_male2-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096819BBFBAA007EF122 /* user_male2-50.png */; };
+		FDBF6EC519D1038000352DFA /* remove_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D091B19BBFBAA007EF122 /* remove_user-100.png */; };
+		FDBF6EC619D1038000352DFA /* find_user-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08E519BBFBAA007EF122 /* find_user-100.png */; };
+		FDBF6EC719D1038000352DFA /* user_female3-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094C19BBFBAA007EF122 /* user_female3-32.png */; };
+		FDBF6EC819D1038000352DFA /* user_female3-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D094919BBFBAA007EF122 /* user_female3-128.png */; };
+		FDBF6EC919D1038000352DFA /* doctor-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08CA19BBFBAA007EF122 /* doctor-100.png */; };
+		FDBF6ECA19D1038000352DFA /* talk-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D093219BBFBAA007EF122 /* talk-50.png */; };
+		FDBF6ECB19D1038000352DFA /* old_time_camera-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D079D19BBFBA9007EF122 /* old_time_camera-512.png */; };
+		FDBF6ECC19D1038000352DFA /* gallery-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D073B19BBFBA9007EF122 /* gallery-75.png */; };
+		FDBF6ECD19D1038000352DFA /* camera_addon_identification-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06F319BBFBA9007EF122 /* camera_addon_identification-75.png */; };
+		FDBF6ECE19D1038000352DFA /* large_lens-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D076119BBFBA9007EF122 /* large_lens-100.png */; };
+		FDBF6ECF19D1038000352DFA /* add_user-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D089819BBFBAA007EF122 /* add_user-32.png */; };
+		FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */; };
+		FDBF6EDF19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */; };
+		FDBF6EE219D1385900352DFA /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EE119D1385900352DFA /* LineLayout.m */; };
+		FDBF6EE319D1385900352DFA /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EE119D1385900352DFA /* LineLayout.m */; };
+		FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
+		FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
 		FDC2609D19B42D980010FF57 /* SDEGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */; };
 		FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
 		FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
@@ -753,14 +1480,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FD1164DF19A87B7300C1A41F /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
-		FD1164E019A87B7300C1A41F /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		FD1164E619A8808500C1A41F /* SDECandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDECandidateCell.h; sourceTree = "<group>"; };
 		FD1164E719A8808500C1A41F /* SDECandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDECandidateCell.m; sourceTree = "<group>"; };
 		FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeaderView.h; sourceTree = "<group>"; };
 		FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonProfileHeaderView.m; sourceTree = "<group>"; };
-		FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
-		FD290B2A19C5FD13003A26DC /* FaceAlbum 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 5.xcdatamodel"; sourceTree = "<group>"; };
 		FD3802B51981040100AE51DF /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Main_iPad.storyboard; sourceTree = "<group>"; };
 		FD3A106019CDC3C9006A3B4E /* SDEAvatorCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEAvatorCheckmarkView.h; sourceTree = "<group>"; };
 		FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEAvatorCheckmarkView.m; sourceTree = "<group>"; };
@@ -776,22 +1499,20 @@
 		FD4131331997486B00141578 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
 		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
-		FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
 		FD41313C1997541300141578 /* SDEPAVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPAVCDataSource.h; sourceTree = "<group>"; };
 		FD41313D1997541300141578 /* SDEPAVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPAVCDataSource.m; sourceTree = "<group>"; };
 		FD41313F199764BB00141578 /* backupCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backupCode; sourceTree = "<group>"; };
-		FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbumDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FD67D885197DFCFB00D2CCDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FD67D887197DFCFB00D2CCDA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		FD67D88B197DFCFB00D2CCDA /* FaceAlbum-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FaceAlbum-Info.plist"; sourceTree = "<group>"; };
+		FD67D88B197DFCFB00D2CCDA /* FaceAlbumDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FaceAlbumDev-Info.plist"; sourceTree = "<group>"; };
 		FD67D88D197DFCFB00D2CCDA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD67D88F197DFCFB00D2CCDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FD67D891197DFCFB00D2CCDA /* FaceAlbum-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceAlbum-Prefix.pch"; sourceTree = "<group>"; };
 		FD67D892197DFCFB00D2CCDA /* SDEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDEAppDelegate.h; sourceTree = "<group>"; };
 		FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDEAppDelegate.m; sourceTree = "<group>"; };
-		FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
 		FD67D898197DFCFB00D2CCDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD67D89E197DFCFB00D2CCDA /* FaceAlbumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceAlbumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D89F197DFCFB00D2CCDA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -1510,15 +2231,12 @@
 		FD8D098C19BBFBAA007EF122 /* workers-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "workers-50.png"; sourceTree = "<group>"; };
 		FD8D098D19BBFBAA007EF122 /* workers-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "workers-512.png"; sourceTree = "<group>"; };
 		FD8D098E19BBFBAA007EF122 /* workers-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "workers-75.png"; sourceTree = "<group>"; };
-		FD8D0C6E19BDDD84007EF122 /* SDEPageStyleGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDEPageStyleGalleryViewController.h; path = ../SDEPageStyleGalleryViewController.h; sourceTree = "<group>"; };
-		FD8D0C6F19BDDD84007EF122 /* SDEPageStyleGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDEPageStyleGalleryViewController.m; path = ../SDEPageStyleGalleryViewController.m; sourceTree = "<group>"; };
 		FD8D0C7219BDFC30007EF122 /* SDEGalleryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryModel.h; sourceTree = "<group>"; };
 		FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryModel.m; sourceTree = "<group>"; };
 		FD8D0C7519BE9B20007EF122 /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
 		FD8D0C7619BE9B20007EF122 /* bg4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg4.jpg; sourceTree = "<group>"; };
 		FD8D0C7719BE9B20007EF122 /* bg3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg3.jpg; sourceTree = "<group>"; };
 		FD8D0C7819BE9B20007EF122 /* bg2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg2.jpg; sourceTree = "<group>"; };
-		FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 2.xcdatamodel"; sourceTree = "<group>"; };
 		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
 		FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonGalleryViewController.h; sourceTree = "<group>"; };
 		FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonGalleryViewController.m; sourceTree = "<group>"; };
@@ -1528,6 +2246,13 @@
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
 		FDB3608019CF1EE800AAE34D /* SDENewPhotoDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDENewPhotoDetector.h; sourceTree = "<group>"; };
 		FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDENewPhotoDetector.m; sourceTree = "<group>"; };
+		FDBF6ED319D1038000352DFA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FaceAlbumRelease-Info.plist"; path = "/Users/seedante/Development Library/FaceAlbum/FaceAlbumRelease-Info.plist"; sourceTree = "<absolute>"; };
+		FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPageStyleGalleryViewController.m; sourceTree = "<group>"; };
+		FDBF6EDD19D1376900352DFA /* SDEPageStyleGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPageStyleGalleryViewController.h; sourceTree = "<group>"; };
+		FDBF6EE019D1385900352DFA /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = FaceAlbum/LineLayout.h; sourceTree = "<group>"; };
+		FDBF6EE119D1385900352DFA /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineLayout.m; path = FaceAlbum/LineLayout.m; sourceTree = "<group>"; };
+		FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
 		FDC2609B19B42D980010FF57 /* SDEGalleryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryCell.h; sourceTree = "<group>"; };
 		FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryCell.m; sourceTree = "<group>"; };
 		FDC2609E19B433F80010FF57 /* SDEPortraitLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPortraitLayout.h; sourceTree = "<group>"; };
@@ -1566,14 +2291,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDBF6C2419D1038000352DFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDBF6C2519D1038000352DFA /* QuartzCore.framework in Frameworks */,
+				FDBF6C2619D1038000352DFA /* AssetsLibrary.framework in Frameworks */,
+				FDBF6C2719D1038000352DFA /* CoreImage.framework in Frameworks */,
+				FDBF6C2819D1038000352DFA /* libFaceppLocalDetector.a in Frameworks */,
+				FDBF6C2919D1038000352DFA /* CoreGraphics.framework in Frameworks */,
+				FDBF6C2A19D1038000352DFA /* CoreData.framework in Frameworks */,
+				FDBF6C2B19D1038000352DFA /* UIKit.framework in Frameworks */,
+				FDBF6C2C19D1038000352DFA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		FD1164E219A87B7A00C1A41F /* LineLayout */ = {
 			isa = PBXGroup;
 			children = (
-				FD1164DF19A87B7300C1A41F /* LineLayout.h */,
-				FD1164E019A87B7300C1A41F /* LineLayout.m */,
+				FDBF6EE019D1385900352DFA /* LineLayout.h */,
+				FDBF6EE119D1385900352DFA /* LineLayout.m */,
 			);
 			name = LineLayout;
 			sourceTree = "<group>";
@@ -1644,14 +2384,16 @@
 				FD67D8A6197DFCFB00D2CCDA /* FaceAlbumTests */,
 				FD67D880197DFCFB00D2CCDA /* Frameworks */,
 				FD67D87F197DFCFB00D2CCDA /* Products */,
+				FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		FD67D87F197DFCFB00D2CCDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */,
+				FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */,
 				FD67D89E197DFCFB00D2CCDA /* FaceAlbumTests.xctest */,
+				FDBF6ED319D1038000352DFA /* FaceAlbum.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1691,7 +2433,7 @@
 			isa = PBXGroup;
 			children = (
 				FD67D898197DFCFB00D2CCDA /* Images.xcassets */,
-				FD67D88B197DFCFB00D2CCDA /* FaceAlbum-Info.plist */,
+				FD67D88B197DFCFB00D2CCDA /* FaceAlbumDev-Info.plist */,
 				FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */,
 				FD67D88F197DFCFB00D2CCDA /* main.m */,
 				FD67D891197DFCFB00D2CCDA /* FaceAlbum-Prefix.pch */,
@@ -1779,6 +2521,7 @@
 		FD67D8F6197DFD8900D2CCDA /* ThirdPackage */ = {
 			isa = PBXGroup;
 			children = (
+				FDBF6EEC19D1388B00352DFA /* CoverFlowLayout */,
 				FD1164E219A87B7A00C1A41F /* LineLayout */,
 				FD67D8B6197DFD4A00D2CCDA /* FaceppSDK */,
 				FD67D8DD197DFD6100D2CCDA /* FaceppLocalDetector */,
@@ -1799,7 +2542,7 @@
 		FD7D2F97197E8C90004E8FFD /* ManagedObjectSubclass */ = {
 			isa = PBXGroup;
 			children = (
-				FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */,
+				FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */,
 				FD7D2FA1197E97C7004E8FFD /* Photo.h */,
 				FD7D2FA2197E97C7004E8FFD /* Photo.m */,
 				FD7D2F9E197E97C7004E8FFD /* Person.h */,
@@ -3158,8 +3901,8 @@
 		FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */ = {
 			isa = PBXGroup;
 			children = (
-				FD8D0C6E19BDDD84007EF122 /* SDEPageStyleGalleryViewController.h */,
-				FD8D0C6F19BDDD84007EF122 /* SDEPageStyleGalleryViewController.m */,
+				FDBF6EDD19D1376900352DFA /* SDEPageStyleGalleryViewController.h */,
+				FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */,
 				FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */,
 				FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */,
 				FDB3602819CE65CC00AAE34D /* SDECenterMenu.h */,
@@ -3189,12 +3932,19 @@
 			path = FaceAlbum;
 			sourceTree = "<group>";
 		};
+		FDBF6EEC19D1388B00352DFA /* CoverFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CoverFlowLayout;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FD67D87D197DFCFB00D2CCDA /* FaceAlbum */ = {
+		FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbum" */;
+			buildConfigurationList = FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumDev" */;
 			buildPhases = (
 				FD67D87A197DFCFB00D2CCDA /* Sources */,
 				FD67D87B197DFCFB00D2CCDA /* Frameworks */,
@@ -3204,9 +3954,9 @@
 			);
 			dependencies = (
 			);
-			name = FaceAlbum;
+			name = FaceAlbumDev;
 			productName = FaceAlbum;
-			productReference = FD67D87E197DFCFB00D2CCDA /* FaceAlbum.app */;
+			productReference = FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FD67D89D197DFCFB00D2CCDA /* FaceAlbumTests */ = {
@@ -3227,6 +3977,23 @@
 			productReference = FD67D89E197DFCFB00D2CCDA /* FaceAlbumTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FDBF6BF519D1038000352DFA /* FaceAlbumRelease */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDBF6ED019D1038000352DFA /* Build configuration list for PBXNativeTarget "FaceAlbumRelease" */;
+			buildPhases = (
+				FDBF6BF619D1038000352DFA /* Sources */,
+				FDBF6C2419D1038000352DFA /* Frameworks */,
+				FDBF6C2D19D1038000352DFA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FaceAlbumRelease;
+			productName = FaceAlbum;
+			productReference = FDBF6ED319D1038000352DFA /* FaceAlbum.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -3243,6 +4010,9 @@
 					FD67D89D197DFCFB00D2CCDA = {
 						TestTargetID = FD67D87D197DFCFB00D2CCDA;
 					};
+					FDBF6BF519D1038000352DFA = {
+						DevelopmentTeam = 6Z8XUV9H6J;
+					};
 				};
 			};
 			buildConfigurationList = FD67D879197DFCFB00D2CCDA /* Build configuration list for PBXProject "FaceAlbum" */;
@@ -3257,8 +4027,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FD67D87D197DFCFB00D2CCDA /* FaceAlbum */,
+				FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */,
 				FD67D89D197DFCFB00D2CCDA /* FaceAlbumTests */,
+				FDBF6BF519D1038000352DFA /* FaceAlbumRelease */,
 			);
 		};
 /* End PBXProject section */
@@ -3953,6 +4724,687 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDBF6C2D19D1038000352DFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDBF6C2E19D1038000352DFA /* slr_camera_filled-256.png in Resources */,
+				FDBF6C2F19D1038000352DFA /* night_portrait-32.png in Resources */,
+				FDBF6C3019D1038000352DFA /* integrated_webcam-512.png in Resources */,
+				FDBF6C3119D1038000352DFA /* landscape-128.png in Resources */,
+				FDBF6C3219D1038000352DFA /* large_lens-32.png in Resources */,
+				FDBF6C3319D1038000352DFA /* portrait_mode-25.png in Resources */,
+				FDBF6C3419D1038000352DFA /* panorama-256.png in Resources */,
+				FDBF6C3519D1038000352DFA /* slr_back_side_filled-512.png in Resources */,
+				FDBF6C3619D1038000352DFA /* slr_camera_body_filled-512.png in Resources */,
+				FDBF6C3719D1038000352DFA /* old_time_camera_filled-512.png in Resources */,
+				FDBF6C3819D1038000352DFA /* portrait_mode-50.png in Resources */,
+				FDBF6C3919D1038000352DFA /* doctor-75.png in Resources */,
+				FDBF6C3A19D1038000352DFA /* user_female3-75.png in Resources */,
+				FDBF6C3B19D1038000352DFA /* add_image-128.png in Resources */,
+				FDBF6C3C19D1038000352DFA /* switch_camera_filled-50.png in Resources */,
+				FDBF6C3D19D1038000352DFA /* gallery-256.png in Resources */,
+				FDBF6C3E19D1038000352DFA /* panorama-25.png in Resources */,
+				FDBF6C3F19D1038000352DFA /* conference-50.png in Resources */,
+				FDBF6C4019D1038000352DFA /* night_landscape-50.png in Resources */,
+				FDBF6C4119D1038000352DFA /* slr_camera-128.png in Resources */,
+				FDBF6C4219D1038000352DFA /* slr_camera_body-100.png in Resources */,
+				FDBF6C4319D1038000352DFA /* switch_camera_filled-32.png in Resources */,
+				FDBF6C4419D1038000352DFA /* slr_back_side_filled-256.png in Resources */,
+				FDBF6C4519D1038000352DFA /* moderator-256.png in Resources */,
+				FDBF6C4619D1038000352DFA /* group-25.png in Resources */,
+				FDBF6C4719D1038000352DFA /* policeman-128.png in Resources */,
+				FDBF6C4819D1038000352DFA /* add_image_filled-256.png in Resources */,
+				FDBF6C4919D1038000352DFA /* user_female4-50.png in Resources */,
+				FDBF6C4A19D1038000352DFA /* integrated_webcam_filled-32.png in Resources */,
+				FDBF6C4B19D1038000352DFA /* nurse-75.png in Resources */,
+				FDBF6C4C19D1038000352DFA /* user_female-100.png in Resources */,
+				FDBF6C4D19D1038000352DFA /* slr_large_lens_filled-50.png in Resources */,
+				FDBF6C4E19D1038000352DFA /* edit_image-32.png in Resources */,
+				FDBF6C4F19D1038000352DFA /* add_image_filled-512.png in Resources */,
+				FDBF6C5019D1038000352DFA /* integrated_webcam_filled-75.png in Resources */,
+				FDBF6C5119D1038000352DFA /* checked_user-100.png in Resources */,
+				FDBF6C5219D1038000352DFA /* film_reel_filled-512.png in Resources */,
+				FDBF6C5319D1038000352DFA /* rotate_camera-512.png in Resources */,
+				FDBF6C5419D1038000352DFA /* photo-128.png in Resources */,
+				FDBF6C5519D1038000352DFA /* slr_back_side_filled-128.png in Resources */,
+				FDBF6C5619D1038000352DFA /* camera_identification-50.png in Resources */,
+				FDBF6C5719D1038000352DFA /* stack_of_photos-256.png in Resources */,
+				FDBF6C5819D1038000352DFA /* student2-512.png in Resources */,
+				FDBF6C5919D1038000352DFA /* close_up_mode-100.png in Resources */,
+				FDBF6C5A19D1038000352DFA /* camcoder_pro-256.png in Resources */,
+				FDBF6C5B19D1038000352DFA /* slr_large_lens-32.png in Resources */,
+				FDBF6C5C19D1038000352DFA /* integrated_webcam_filled-100.png in Resources */,
+				FDBF6C5D19D1038000352DFA /* camcoder_pro-100.png in Resources */,
+				FDBF6C5E19D1038000352DFA /* edit_user-256.png in Resources */,
+				FDBF6C5F19D1038000352DFA /* stack_of_photos_filled-50.png in Resources */,
+				FDBF6C6019D1038000352DFA /* slr_camera-50.png in Resources */,
+				FDBF6C6119D1038000352DFA /* cook-100.png in Resources */,
+				FDBF6C6219D1038000352DFA /* find_user-32.png in Resources */,
+				FDBF6C6319D1038000352DFA /* slr_camera_body-25.png in Resources */,
+				FDBF6C6419D1038000352DFA /* night_portrait-128.png in Resources */,
+				FDBF6C6519D1038000352DFA /* integrated_webcam_filled-256.png in Resources */,
+				FDBF6C6619D1038000352DFA /* fireman-50.png in Resources */,
+				FDBF6C6719D1038000352DFA /* close_up_mode-32.png in Resources */,
+				FDBF6C6819D1038000352DFA /* film_reel-100.png in Resources */,
+				FDBF6C6919D1038000352DFA /* old_time_camera-75.png in Resources */,
+				FDBF6C6A19D1038000352DFA /* user_female2-32.png in Resources */,
+				FDBF6C6B19D1038000352DFA /* clipperboard-256.png in Resources */,
+				FDBF6C6C19D1038000352DFA /* slr_camera2_filled-32.png in Resources */,
+				FDBF6C6D19D1038000352DFA /* slr_camera_body-256.png in Resources */,
+				FDBF6C6E19D1038000352DFA /* small_lens-32.png in Resources */,
+				FDBF6C6F19D1038000352DFA /* edit_user-50.png in Resources */,
+				FDBF6C7019D1038000352DFA /* slr_small_lens_filled-50.png in Resources */,
+				FDBF6C7119D1038000352DFA /* user_male2-25.png in Resources */,
+				FDBF6C7219D1038000352DFA /* gallery-128.png in Resources */,
+				FDBF6C7319D1038000352DFA /* cable_release-75.png in Resources */,
+				FDBF6C7419D1038000352DFA /* administrator-512.png in Resources */,
+				FDBF6C7519D1038000352DFA /* camcoder_filled-25.png in Resources */,
+				FDBF6C7619D1038000352DFA /* remove_image-75.png in Resources */,
+				FDBF6C7719D1038000352DFA /* camcoder_filled-50.png in Resources */,
+				FDBF6C7819D1038000352DFA /* movie-75.png in Resources */,
+				FDBF6C7919D1038000352DFA /* user_male2-100.png in Resources */,
+				FDBF6C7A19D1038000352DFA /* user_female3-256.png in Resources */,
+				FDBF6C7B19D1038000352DFA /* slr_small_lens-256.png in Resources */,
+				FDBF6C7C19D1038000352DFA /* InfoPlist.strings in Resources */,
+				FDBF6C7D19D1038000352DFA /* slr_camera_body-512.png in Resources */,
+				FDBF6C7E19D1038000352DFA /* old_time_camera-100.png in Resources */,
+				FDBF6C7F19D1038000352DFA /* user_male3-75.png in Resources */,
+				FDBF6C8019D1038000352DFA /* camera_identification-25.png in Resources */,
+				FDBF6C8119D1038000352DFA /* edit_image_filled-256.png in Resources */,
+				FDBF6C8219D1038000352DFA /* landscape-25.png in Resources */,
+				FDBF6C8319D1038000352DFA /* user_male3-512.png in Resources */,
+				FDBF6C8419D1038000352DFA /* remove_image-32.png in Resources */,
+				FDBF6C8519D1038000352DFA /* cable_release-32.png in Resources */,
+				FDBF6C8619D1038000352DFA /* edit_user-100.png in Resources */,
+				FDBF6C8719D1038000352DFA /* user_male-75.png in Resources */,
+				FDBF6C8819D1038000352DFA /* fireman-512.png in Resources */,
+				FDBF6C8919D1038000352DFA /* add_user-50.png in Resources */,
+				FDBF6C8A19D1038000352DFA /* slr_camera2_filled-75.png in Resources */,
+				FDBF6C8B19D1038000352DFA /* film_reel_filled-128.png in Resources */,
+				FDBF6C8C19D1038000352DFA /* edit_image-512.png in Resources */,
+				FDBF6C8D19D1038000352DFA /* integrated_webcam-100.png in Resources */,
+				FDBF6C8E19D1038000352DFA /* switch_camera_filled-512.png in Resources */,
+				FDBF6C8F19D1038000352DFA /* film_reel_filled-75.png in Resources */,
+				FDBF6C9019D1038000352DFA /* integrated_webcam_filled-128.png in Resources */,
+				FDBF6C9119D1038000352DFA /* remove_image_filled-25.png in Resources */,
+				FDBF6C9219D1038000352DFA /* student2-25.png in Resources */,
+				FDBF6C9319D1038000352DFA /* user_female2-50.png in Resources */,
+				FDBF6C9419D1038000352DFA /* small_lens-75.png in Resources */,
+				FDBF6C9519D1038000352DFA /* edit_image_filled-100.png in Resources */,
+				FDBF6C9619D1038000352DFA /* integrated_webcam-128.png in Resources */,
+				FDBF6C9719D1038000352DFA /* stack_of_photos_filled-512.png in Resources */,
+				FDBF6C9819D1038000352DFA /* rotate_camera_filled-512.png in Resources */,
+				FDBF6C9919D1038000352DFA /* gallery_filled-50.png in Resources */,
+				FDBF6C9A19D1038000352DFA /* cook-32.png in Resources */,
+				FDBF6C9B19D1038000352DFA /* user_male2-128.png in Resources */,
+				FDBF6C9C19D1038000352DFA /* large_lens-25.png in Resources */,
+				FDBF6C9D19D1038000352DFA /* slr_small_lens-25.png in Resources */,
+				FDBF6C9E19D1038000352DFA /* switch_camera_filled-100.png in Resources */,
+				FDBF6C9F19D1038000352DFA /* gallery-50.png in Resources */,
+				FDBF6CA019D1038000352DFA /* find_user-50.png in Resources */,
+				FDBF6CA119D1038000352DFA /* edit_user-25.png in Resources */,
+				FDBF6CA219D1038000352DFA /* user_male-50.png in Resources */,
+				FDBF6CA319D1038000352DFA /* multiple_cameras-75.png in Resources */,
+				FDBF6CA419D1038000352DFA /* user_female4-128.png in Resources */,
+				FDBF6CA519D1038000352DFA /* farmer-512.png in Resources */,
+				FDBF6CA619D1038000352DFA /* camcoder_pro_filled-25.png in Resources */,
+				FDBF6CA719D1038000352DFA /* farmer-128.png in Resources */,
+				FDBF6CA819D1038000352DFA /* slr_camera2_filled-256.png in Resources */,
+				FDBF6CA919D1038000352DFA /* change_user-100.png in Resources */,
+				FDBF6CAA19D1038000352DFA /* cook-256.png in Resources */,
+				FDBF6CAB19D1038000352DFA /* sports_mode-50.png in Resources */,
+				FDBF6CAC19D1038000352DFA /* camcoder_pro_filled-256.png in Resources */,
+				FDBF6CAD19D1038000352DFA /* add_user-512.png in Resources */,
+				FDBF6CAE19D1038000352DFA /* nurse-32.png in Resources */,
+				FDBF6CAF19D1038000352DFA /* landscape-100.png in Resources */,
+				FDBF6CB019D1038000352DFA /* slr_camera2-50.png in Resources */,
+				FDBF6CB119D1038000352DFA /* portrait_mode-32.png in Resources */,
+				FDBF6CB219D1038000352DFA /* stack_of_photos-32.png in Resources */,
+				FDBF6CB319D1038000352DFA /* talk-75.png in Resources */,
+				FDBF6CB419D1038000352DFA /* night_landscape-100.png in Resources */,
+				FDBF6CB519D1038000352DFA /* user_male2-32.png in Resources */,
+				FDBF6CB619D1038000352DFA /* talk-25.png in Resources */,
+				FDBF6CB719D1038000352DFA /* remove_image_filled-75.png in Resources */,
+				FDBF6CB819D1038000352DFA /* close_up_mode-512.png in Resources */,
+				FDBF6CB919D1038000352DFA /* fireman-75.png in Resources */,
+				FDBF6CBA19D1038000352DFA /* landscape-75.png in Resources */,
+				FDBF6CBB19D1038000352DFA /* clipperboard-32.png in Resources */,
+				FDBF6CBC19D1038000352DFA /* slr_large_lens-75.png in Resources */,
+				FDBF6CBD19D1038000352DFA /* multiple_cameras-128.png in Resources */,
+				FDBF6CBE19D1038000352DFA /* bg4.jpg in Resources */,
+				FDBF6CBF19D1038000352DFA /* bg1.jpg in Resources */,
+				FDBF6CC019D1038000352DFA /* close_up_mode-25.png in Resources */,
+				FDBF6CC119D1038000352DFA /* photo-32.png in Resources */,
+				FDBF6CC219D1038000352DFA /* slr_large_lens_filled-75.png in Resources */,
+				FDBF6CC319D1038000352DFA /* small_lens-50.png in Resources */,
+				FDBF6CC419D1038000352DFA /* camera_addon-512.png in Resources */,
+				FDBF6CC519D1038000352DFA /* slr_camera_body_filled-32.png in Resources */,
+				FDBF6CC619D1038000352DFA /* workers-256.png in Resources */,
+				FDBF6CC719D1038000352DFA /* multiple_cameras-100.png in Resources */,
+				FDBF6CC819D1038000352DFA /* close_up_mode-256.png in Resources */,
+				FDBF6CC919D1038000352DFA /* workers-50.png in Resources */,
+				FDBF6CCA19D1038000352DFA /* policeman-32.png in Resources */,
+				FDBF6CCB19D1038000352DFA /* rotate_camera_filled-75.png in Resources */,
+				FDBF6CCC19D1038000352DFA /* rotate_camera-25.png in Resources */,
+				FDBF6CCD19D1038000352DFA /* slr_small_lens_filled-256.png in Resources */,
+				FDBF6CCE19D1038000352DFA /* integrated_webcam-75.png in Resources */,
+				FDBF6CCF19D1038000352DFA /* add_image-512.png in Resources */,
+				FDBF6CD019D1038000352DFA /* film_reel-128.png in Resources */,
+				FDBF6CD119D1038000352DFA /* movie-128.png in Resources */,
+				FDBF6CD219D1038000352DFA /* old_time_camera_filled-50.png in Resources */,
+				FDBF6CD319D1038000352DFA /* user_female-512.png in Resources */,
+				FDBF6CD419D1038000352DFA /* conference-75.png in Resources */,
+				FDBF6CD519D1038000352DFA /* add_image_filled-100.png in Resources */,
+				FDBF6CD619D1038000352DFA /* group-75.png in Resources */,
+				FDBF6CD719D1038000352DFA /* switch_camera_filled-25.png in Resources */,
+				FDBF6CD819D1038000352DFA /* user_female-75.png in Resources */,
+				FDBF6CD919D1038000352DFA /* policeman-256.png in Resources */,
+				FDBF6CDA19D1038000352DFA /* camera_addon-256.png in Resources */,
+				FDBF6CDB19D1038000352DFA /* rotate_camera_filled-50.png in Resources */,
+				FDBF6CDC19D1038000352DFA /* stack_of_photos-50.png in Resources */,
+				FDBF6CDD19D1038000352DFA /* remove_image-50.png in Resources */,
+				FDBF6CDE19D1038000352DFA /* camera_addon_identification-25.png in Resources */,
+				FDBF6CDF19D1038000352DFA /* small_lens_filled-75.png in Resources */,
+				FDBF6CE019D1038000352DFA /* stack_of_photos_filled-100.png in Resources */,
+				FDBF6CE119D1038000352DFA /* night_portrait-25.png in Resources */,
+				FDBF6CE219D1038000352DFA /* student2-256.png in Resources */,
+				FDBF6CE319D1038000352DFA /* slr_camera_body-128.png in Resources */,
+				FDBF6CE419D1038000352DFA /* slr_large_lens_filled-256.png in Resources */,
+				FDBF6CE519D1038000352DFA /* user_male4-128.png in Resources */,
+				FDBF6CE619D1038000352DFA /* fireman-100.png in Resources */,
+				FDBF6CE719D1038000352DFA /* rotate_camera_filled-25.png in Resources */,
+				FDBF6CE819D1038000352DFA /* camcoder_pro_filled-128.png in Resources */,
+				FDBF6CE919D1038000352DFA /* nurse-100.png in Resources */,
+				FDBF6CEA19D1038000352DFA /* user_female2-128.png in Resources */,
+				FDBF6CEB19D1038000352DFA /* worker-100.png in Resources */,
+				FDBF6CEC19D1038000352DFA /* user_female3-50.png in Resources */,
+				FDBF6CED19D1038000352DFA /* rotate_camera_filled-100.png in Resources */,
+				FDBF6CEE19D1038000352DFA /* slr_camera-512.png in Resources */,
+				FDBF6CEF19D1038000352DFA /* camcoder-25.png in Resources */,
+				FDBF6CF019D1038000352DFA /* user_male4-512.png in Resources */,
+				FDBF6CF119D1038000352DFA /* group-100.png in Resources */,
+				FDBF6CF219D1038000352DFA /* camera_identification-512.png in Resources */,
+				FDBF6CF319D1038000352DFA /* switch_camera_filled-256.png in Resources */,
+				FDBF6CF419D1038000352DFA /* clipperboard-128.png in Resources */,
+				FDBF6CF519D1038000352DFA /* user_male4-25.png in Resources */,
+				FDBF6CF619D1038000352DFA /* slr_camera_body_filled-75.png in Resources */,
+				FDBF6CF719D1038000352DFA /* slr_camera-25.png in Resources */,
+				FDBF6CF819D1038000352DFA /* night_landscape-128.png in Resources */,
+				FDBF6CF919D1038000352DFA /* remove_image_filled-128.png in Resources */,
+				FDBF6CFA19D1038000352DFA /* Main_iPad.storyboard in Resources */,
+				FDBF6CFB19D1038000352DFA /* user_male-256.png in Resources */,
+				FDBF6CFC19D1038000352DFA /* film_reel-50.png in Resources */,
+				FDBF6CFD19D1038000352DFA /* camcoder-256.png in Resources */,
+				FDBF6CFE19D1038000352DFA /* conference-128.png in Resources */,
+				FDBF6CFF19D1038000352DFA /* camera_addon_identification-128.png in Resources */,
+				FDBF6D0019D1038000352DFA /* bg3.jpg in Resources */,
+				FDBF6D0119D1038000352DFA /* slr_camera-100.png in Resources */,
+				FDBF6D0219D1038000352DFA /* administrator-256.png in Resources */,
+				FDBF6D0319D1038000352DFA /* rotate_camera-256.png in Resources */,
+				FDBF6D0419D1038000352DFA /* slr_back_side-256.png in Resources */,
+				FDBF6D0519D1038000352DFA /* camera_addon_identification-32.png in Resources */,
+				FDBF6D0619D1038000352DFA /* workers-128.png in Resources */,
+				FDBF6D0719D1038000352DFA /* camcoder_pro_filled-512.png in Resources */,
+				FDBF6D0819D1038000352DFA /* administrator-75.png in Resources */,
+				FDBF6D0919D1038000352DFA /* moderator-50.png in Resources */,
+				FDBF6D0A19D1038000352DFA /* camera_addon-100.png in Resources */,
+				FDBF6D0B19D1038000352DFA /* remove_user-75.png in Resources */,
+				FDBF6D0C19D1038000352DFA /* stack_of_photos_filled-25.png in Resources */,
+				FDBF6D0D19D1038000352DFA /* switch_camera-100.png in Resources */,
+				FDBF6D0E19D1038000352DFA /* rotate_camera-100.png in Resources */,
+				FDBF6D0F19D1038000352DFA /* sports_mode-256.png in Resources */,
+				FDBF6D1019D1038000352DFA /* sports_mode-32.png in Resources */,
+				FDBF6D1119D1038000352DFA /* remove_user-25.png in Resources */,
+				FDBF6D1219D1038000352DFA /* rotate_camera_filled-128.png in Resources */,
+				FDBF6D1319D1038000352DFA /* clipperboard-100.png in Resources */,
+				FDBF6D1419D1038000352DFA /* slr_camera2-256.png in Resources */,
+				FDBF6D1519D1038000352DFA /* gallery_filled-512.png in Resources */,
+				FDBF6D1619D1038000352DFA /* camcoder-50.png in Resources */,
+				FDBF6D1719D1038000352DFA /* large_lens_filled-32.png in Resources */,
+				FDBF6D1819D1038000352DFA /* old_time_camera_filled-128.png in Resources */,
+				FDBF6D1919D1038000352DFA /* change_user-32.png in Resources */,
+				FDBF6D1A19D1038000352DFA /* cable_release-512.png in Resources */,
+				FDBF6D1B19D1038000352DFA /* camcoder-128.png in Resources */,
+				FDBF6D1C19D1038000352DFA /* multiple_cameras-32.png in Resources */,
+				FDBF6D1D19D1038000352DFA /* slr_camera2_filled-512.png in Resources */,
+				FDBF6D1E19D1038000352DFA /* slr_back_side-50.png in Resources */,
+				FDBF6D1F19D1038000352DFA /* cook-75.png in Resources */,
+				FDBF6D2019D1038000352DFA /* administrator-25.png in Resources */,
+				FDBF6D2119D1038000352DFA /* policeman-50.png in Resources */,
+				FDBF6D2219D1038000352DFA /* camcoder-512.png in Resources */,
+				FDBF6D2319D1038000352DFA /* farmer-100.png in Resources */,
+				FDBF6D2419D1038000352DFA /* add_user-25.png in Resources */,
+				FDBF6D2519D1038000352DFA /* large_lens_filled-256.png in Resources */,
+				FDBF6D2619D1038000352DFA /* user_female4-25.png in Resources */,
+				FDBF6D2719D1038000352DFA /* small_lens_filled-32.png in Resources */,
+				FDBF6D2819D1038000352DFA /* slr_back_side_filled-50.png in Resources */,
+				FDBF6D2919D1038000352DFA /* change_user-50.png in Resources */,
+				FDBF6D2A19D1038000352DFA /* worker-512.png in Resources */,
+				FDBF6D2B19D1038000352DFA /* workers-75.png in Resources */,
+				FDBF6D2C19D1038000352DFA /* slr_large_lens-100.png in Resources */,
+				FDBF6D2D19D1038000352DFA /* remove_image-128.png in Resources */,
+				FDBF6D2E19D1038000352DFA /* user_male3-32.png in Resources */,
+				FDBF6D2F19D1038000352DFA /* Images.xcassets in Resources */,
+				FDBF6D3019D1038000352DFA /* add_image_filled-75.png in Resources */,
+				FDBF6D3119D1038000352DFA /* nurse-50.png in Resources */,
+				FDBF6D3219D1038000352DFA /* moderator-32.png in Resources */,
+				FDBF6D3319D1038000352DFA /* landscape-512.png in Resources */,
+				FDBF6D3419D1038000352DFA /* user_male2-75.png in Resources */,
+				FDBF6D3519D1038000352DFA /* add_image-256.png in Resources */,
+				FDBF6D3619D1038000352DFA /* camera_identification-100.png in Resources */,
+				FDBF6D3719D1038000352DFA /* camcoder_pro-50.png in Resources */,
+				FDBF6D3819D1038000352DFA /* add_user-256.png in Resources */,
+				FDBF6D3919D1038000352DFA /* remove_image_filled-100.png in Resources */,
+				FDBF6D3A19D1038000352DFA /* old_time_camera_filled-32.png in Resources */,
+				FDBF6D3B19D1038000352DFA /* administrator-32.png in Resources */,
+				FDBF6D3C19D1038000352DFA /* worker-75.png in Resources */,
+				FDBF6D3D19D1038000352DFA /* sports_mode-100.png in Resources */,
+				FDBF6D3E19D1038000352DFA /* student2-50.png in Resources */,
+				FDBF6D3F19D1038000352DFA /* edit_image_filled-512.png in Resources */,
+				FDBF6D4019D1038000352DFA /* find_user-512.png in Resources */,
+				FDBF6D4119D1038000352DFA /* add_image-25.png in Resources */,
+				FDBF6D4219D1038000352DFA /* add_user-75.png in Resources */,
+				FDBF6D4319D1038000352DFA /* slr_back_side_filled-32.png in Resources */,
+				FDBF6D4419D1038000352DFA /* policeman-25.png in Resources */,
+				FDBF6D4519D1038000352DFA /* user_male-100.png in Resources */,
+				FDBF6D4619D1038000352DFA /* farmer-75.png in Resources */,
+				FDBF6D4719D1038000352DFA /* worker-256.png in Resources */,
+				FDBF6D4819D1038000352DFA /* add_user-128.png in Resources */,
+				FDBF6D4919D1038000352DFA /* slr_small_lens_filled-75.png in Resources */,
+				FDBF6D4A19D1038000352DFA /* film_reel-25.png in Resources */,
+				FDBF6D4B19D1038000352DFA /* checked_user-128.png in Resources */,
+				FDBF6D4C19D1038000352DFA /* night_landscape-512.png in Resources */,
+				FDBF6D4D19D1038000352DFA /* camera_addon_identification-256.png in Resources */,
+				FDBF6D4E19D1038000352DFA /* slr_camera2-128.png in Resources */,
+				FDBF6D4F19D1038000352DFA /* user_male3-25.png in Resources */,
+				FDBF6D5019D1038000352DFA /* landscape-50.png in Resources */,
+				FDBF6D5119D1038000352DFA /* fireman-128.png in Resources */,
+				FDBF6D5219D1038000352DFA /* old_time_camera_filled-100.png in Resources */,
+				FDBF6D5319D1038000352DFA /* worker-50.png in Resources */,
+				FDBF6D5419D1038000352DFA /* find_user-256.png in Resources */,
+				FDBF6D5519D1038000352DFA /* fireman-256.png in Resources */,
+				FDBF6D5619D1038000352DFA /* user_female-50.png in Resources */,
+				FDBF6D5719D1038000352DFA /* slr_small_lens_filled-32.png in Resources */,
+				FDBF6D5819D1038000352DFA /* photo-256.png in Resources */,
+				FDBF6D5919D1038000352DFA /* checked_user-32.png in Resources */,
+				FDBF6D5A19D1038000352DFA /* group-32.png in Resources */,
+				FDBF6D5B19D1038000352DFA /* doctor-32.png in Resources */,
+				FDBF6D5C19D1038000352DFA /* camera_addon-32.png in Resources */,
+				FDBF6D5D19D1038000352DFA /* remove_user-128.png in Resources */,
+				FDBF6D5E19D1038000352DFA /* user_female-256.png in Resources */,
+				FDBF6D5F19D1038000352DFA /* slr_camera2-100.png in Resources */,
+				FDBF6D6019D1038000352DFA /* old_time_camera-50.png in Resources */,
+				FDBF6D6119D1038000352DFA /* camera_addon_identification-512.png in Resources */,
+				FDBF6D6219D1038000352DFA /* edit_image-25.png in Resources */,
+				FDBF6D6319D1038000352DFA /* workers-32.png in Resources */,
+				FDBF6D6419D1038000352DFA /* integrated_webcam-32.png in Resources */,
+				FDBF6D6519D1038000352DFA /* edit_user-512.png in Resources */,
+				FDBF6D6619D1038000352DFA /* switch_camera-512.png in Resources */,
+				FDBF6D6719D1038000352DFA /* slr_camera_filled-75.png in Resources */,
+				FDBF6D6819D1038000352DFA /* change_user-256.png in Resources */,
+				FDBF6D6919D1038000352DFA /* night_landscape-256.png in Resources */,
+				FDBF6D6A19D1038000352DFA /* student2-32.png in Resources */,
+				FDBF6D6B19D1038000352DFA /* add_image_filled-25.png in Resources */,
+				FDBF6D6C19D1038000352DFA /* cook-128.png in Resources */,
+				FDBF6D6D19D1038000352DFA /* user_female2-25.png in Resources */,
+				FDBF6D6E19D1038000352DFA /* slr_camera_filled-25.png in Resources */,
+				FDBF6D6F19D1038000352DFA /* switch_camera_filled-128.png in Resources */,
+				FDBF6D7019D1038000352DFA /* small_lens_filled-50.png in Resources */,
+				FDBF6D7119D1038000352DFA /* integrated_webcam_filled-512.png in Resources */,
+				FDBF6D7219D1038000352DFA /* panorama-75.png in Resources */,
+				FDBF6D7319D1038000352DFA /* talk-128.png in Resources */,
+				FDBF6D7419D1038000352DFA /* user_female2-100.png in Resources */,
+				FDBF6D7519D1038000352DFA /* avator@weibo.jpg in Resources */,
+				FDBF6D7619D1038000352DFA /* nurse-25.png in Resources */,
+				FDBF6D7719D1038000352DFA /* film_reel_filled-256.png in Resources */,
+				FDBF6D7819D1038000352DFA /* farmer-256.png in Resources */,
+				FDBF6D7919D1038000352DFA /* camcoder_pro-512.png in Resources */,
+				FDBF6D7A19D1038000352DFA /* movie-256.png in Resources */,
+				FDBF6D7B19D1038000352DFA /* change_user-512.png in Resources */,
+				FDBF6D7C19D1038000352DFA /* remove_user-50.png in Resources */,
+				FDBF6D7D19D1038000352DFA /* remove_image-100.png in Resources */,
+				FDBF6D7E19D1038000352DFA /* slr_camera_body-50.png in Resources */,
+				FDBF6D7F19D1038000352DFA /* film_reel_filled-50.png in Resources */,
+				FDBF6D8019D1038000352DFA /* slr_camera_filled-128.png in Resources */,
+				FDBF6D8119D1038000352DFA /* night_landscape-25.png in Resources */,
+				FDBF6D8219D1038000352DFA /* user_male-25.png in Resources */,
+				FDBF6D8319D1038000352DFA /* movie-100.png in Resources */,
+				FDBF6D8419D1038000352DFA /* remove_user-256.png in Resources */,
+				FDBF6D8519D1038000352DFA /* checked_user-75.png in Resources */,
+				FDBF6D8619D1038000352DFA /* user_male3-50.png in Resources */,
+				FDBF6D8719D1038000352DFA /* slr_small_lens-75.png in Resources */,
+				FDBF6D8819D1038000352DFA /* find_user-128.png in Resources */,
+				FDBF6D8919D1038000352DFA /* user_male4-50.png in Resources */,
+				FDBF6D8A19D1038000352DFA /* slr_small_lens-512.png in Resources */,
+				FDBF6D8B19D1038000352DFA /* cable_release-256.png in Resources */,
+				FDBF6D8C19D1038000352DFA /* small_lens_filled-128.png in Resources */,
+				FDBF6D8D19D1038000352DFA /* conference-512.png in Resources */,
+				FDBF6D8E19D1038000352DFA /* multiple_cameras-25.png in Resources */,
+				FDBF6D8F19D1038000352DFA /* small_lens-256.png in Resources */,
+				FDBF6D9019D1038000352DFA /* farmer-50.png in Resources */,
+				FDBF6D9119D1038000352DFA /* user_male-128.png in Resources */,
+				FDBF6D9219D1038000352DFA /* landscape-32.png in Resources */,
+				FDBF6D9319D1038000352DFA /* multiple_cameras-50.png in Resources */,
+				FDBF6D9419D1038000352DFA /* talk-32.png in Resources */,
+				FDBF6D9519D1038000352DFA /* user_female3-100.png in Resources */,
+				FDBF6D9619D1038000352DFA /* fireman-25.png in Resources */,
+				FDBF6D9719D1038000352DFA /* user_male3-128.png in Resources */,
+				FDBF6D9819D1038000352DFA /* group-256.png in Resources */,
+				FDBF6D9919D1038000352DFA /* administrator-128.png in Resources */,
+				FDBF6D9A19D1038000352DFA /* policeman-512.png in Resources */,
+				FDBF6D9B19D1038000352DFA /* slr_small_lens-32.png in Resources */,
+				FDBF6D9C19D1038000352DFA /* edit_image_filled-128.png in Resources */,
+				FDBF6D9D19D1038000352DFA /* clipperboard-512.png in Resources */,
+				FDBF6D9E19D1038000352DFA /* clipperboard-25.png in Resources */,
+				FDBF6D9F19D1038000352DFA /* conference-100.png in Resources */,
+				FDBF6DA019D1038000352DFA /* large_lens-50.png in Resources */,
+				FDBF6DA119D1038000352DFA /* slr_back_side-128.png in Resources */,
+				FDBF6DA219D1038000352DFA /* large_lens_filled-512.png in Resources */,
+				FDBF6DA319D1038000352DFA /* stack_of_photos_filled-75.png in Resources */,
+				FDBF6DA419D1038000352DFA /* gallery_filled-25.png in Resources */,
+				FDBF6DA519D1038000352DFA /* user_female2-512.png in Resources */,
+				FDBF6DA619D1038000352DFA /* slr_small_lens-128.png in Resources */,
+				FDBF6DA719D1038000352DFA /* rotate_camera_filled-32.png in Resources */,
+				FDBF6DA819D1038000352DFA /* slr_camera2_filled-50.png in Resources */,
+				FDBF6DA919D1038000352DFA /* camcoder_filled-512.png in Resources */,
+				FDBF6DAA19D1038000352DFA /* edit_image_filled-75.png in Resources */,
+				FDBF6DAB19D1038000352DFA /* stack_of_photos_filled-256.png in Resources */,
+				FDBF6DAC19D1038000352DFA /* administrator-50.png in Resources */,
+				FDBF6DAD19D1038000352DFA /* user_male2-256.png in Resources */,
+				FDBF6DAE19D1038000352DFA /* stack_of_photos-75.png in Resources */,
+				FDBF6DAF19D1038000352DFA /* clipperboard-75.png in Resources */,
+				FDBF6DB019D1038000352DFA /* slr_back_side-512.png in Resources */,
+				FDBF6DB119D1038000352DFA /* policeman-100.png in Resources */,
+				FDBF6DB219D1038000352DFA /* rotate_camera-75.png in Resources */,
+				FDBF6DB319D1038000352DFA /* camcoder_filled-75.png in Resources */,
+				FDBF6DB419D1038000352DFA /* worker-25.png in Resources */,
+				FDBF6DB519D1038000352DFA /* worker-32.png in Resources */,
+				FDBF6DB619D1038000352DFA /* panorama-32.png in Resources */,
+				FDBF6DB719D1038000352DFA /* movie-32.png in Resources */,
+				FDBF6DB819D1038000352DFA /* film_reel_filled-100.png in Resources */,
+				FDBF6DB919D1038000352DFA /* movie-50.png in Resources */,
+				FDBF6DBA19D1038000352DFA /* camera_identification-128.png in Resources */,
+				FDBF6DBB19D1038000352DFA /* group-512.png in Resources */,
+				FDBF6DBC19D1038000352DFA /* photo-50.png in Resources */,
+				FDBF6DBD19D1038000352DFA /* slr_large_lens-50.png in Resources */,
+				FDBF6DBE19D1038000352DFA /* user_female-32.png in Resources */,
+				FDBF6DBF19D1038000352DFA /* cable_release-100.png in Resources */,
+				FDBF6DC019D1038000352DFA /* integrated_webcam_filled-50.png in Resources */,
+				FDBF6DC119D1038000352DFA /* doctor-25.png in Resources */,
+				FDBF6DC219D1038000352DFA /* switch_camera-32.png in Resources */,
+				FDBF6DC319D1038000352DFA /* stack_of_photos_filled-32.png in Resources */,
+				FDBF6DC419D1038000352DFA /* gallery_filled-256.png in Resources */,
+				FDBF6DC519D1038000352DFA /* stack_of_photos-128.png in Resources */,
+				FDBF6DC619D1038000352DFA /* camcoder_pro-25.png in Resources */,
+				FDBF6DC719D1038000352DFA /* stack_of_photos-100.png in Resources */,
+				FDBF6DC819D1038000352DFA /* slr_large_lens-512.png in Resources */,
+				FDBF6DC919D1038000352DFA /* switch_camera-50.png in Resources */,
+				FDBF6DCA19D1038000352DFA /* gallery-100.png in Resources */,
+				FDBF6DCB19D1038000352DFA /* camcoder_filled-32.png in Resources */,
+				FDBF6DCC19D1038000352DFA /* old_time_camera-32.png in Resources */,
+				FDBF6DCD19D1038000352DFA /* user_male2-512.png in Resources */,
+				FDBF6DCE19D1038000352DFA /* nurse-256.png in Resources */,
+				FDBF6DCF19D1038000352DFA /* switch_camera-75.png in Resources */,
+				FDBF6DD019D1038000352DFA /* portrait_mode-256.png in Resources */,
+				FDBF6DD119D1038000352DFA /* rotate_camera-32.png in Resources */,
+				FDBF6DD219D1038000352DFA /* slr_camera2-512.png in Resources */,
+				FDBF6DD319D1038000352DFA /* workers-100.png in Resources */,
+				FDBF6DD419D1038000352DFA /* conference-32.png in Resources */,
+				FDBF6DD519D1038000352DFA /* camcoder_pro_filled-100.png in Resources */,
+				FDBF6DD619D1038000352DFA /* talk-256.png in Resources */,
+				FDBF6DD719D1038000352DFA /* slr_back_side-100.png in Resources */,
+				FDBF6DD819D1038000352DFA /* student2-75.png in Resources */,
+				FDBF6DD919D1038000352DFA /* large_lens-128.png in Resources */,
+				FDBF6DDA19D1038000352DFA /* multiple_cameras-256.png in Resources */,
+				FDBF6DDB19D1038000352DFA /* group-128.png in Resources */,
+				FDBF6DDC19D1038000352DFA /* large_lens-75.png in Resources */,
+				FDBF6DDD19D1038000352DFA /* gallery_filled-100.png in Resources */,
+				FDBF6DDE19D1038000352DFA /* camcoder_pro-75.png in Resources */,
+				FDBF6DDF19D1038000352DFA /* film_reel-32.png in Resources */,
+				FDBF6DE019D1038000352DFA /* large_lens_filled-100.png in Resources */,
+				FDBF6DE119D1038000352DFA /* camera_addon-25.png in Resources */,
+				FDBF6DE219D1038000352DFA /* slr_back_side-32.png in Resources */,
+				FDBF6DE319D1038000352DFA /* checked_user-25.png in Resources */,
+				FDBF6DE419D1038000352DFA /* night_portrait-50.png in Resources */,
+				FDBF6DE519D1038000352DFA /* close_up_mode-75.png in Resources */,
+				FDBF6DE619D1038000352DFA /* slr_large_lens_filled-100.png in Resources */,
+				FDBF6DE719D1038000352DFA /* doctor-50.png in Resources */,
+				FDBF6DE819D1038000352DFA /* integrated_webcam_filled-25.png in Resources */,
+				FDBF6DE919D1038000352DFA /* slr_camera2-25.png in Resources */,
+				FDBF6DEA19D1038000352DFA /* edit_image-100.png in Resources */,
+				FDBF6DEB19D1038000352DFA /* edit_image-75.png in Resources */,
+				FDBF6DEC19D1038000352DFA /* slr_small_lens_filled-100.png in Resources */,
+				FDBF6DED19D1038000352DFA /* student2-100.png in Resources */,
+				FDBF6DEE19D1038000352DFA /* sports_mode-128.png in Resources */,
+				FDBF6DEF19D1038000352DFA /* slr_large_lens_filled-128.png in Resources */,
+				FDBF6DF019D1038000352DFA /* edit_image_filled-25.png in Resources */,
+				FDBF6DF119D1038000352DFA /* doctor-512.png in Resources */,
+				FDBF6DF219D1038000352DFA /* photo-512.png in Resources */,
+				FDBF6DF319D1038000352DFA /* talk-512.png in Resources */,
+				FDBF6DF419D1038000352DFA /* camera_addon-50.png in Resources */,
+				FDBF6DF519D1038000352DFA /* rotate_camera_filled-256.png in Resources */,
+				FDBF6DF619D1038000352DFA /* switch_camera-128.png in Resources */,
+				FDBF6DF719D1038000352DFA /* slr_camera_filled-512.png in Resources */,
+				FDBF6DF819D1038000352DFA /* panorama-512.png in Resources */,
+				FDBF6DF919D1038000352DFA /* panorama-100.png in Resources */,
+				FDBF6DFA19D1038000352DFA /* film_reel-512.png in Resources */,
+				FDBF6DFB19D1038000352DFA /* add_image_filled-128.png in Resources */,
+				FDBF6DFC19D1038000352DFA /* slr_back_side-25.png in Resources */,
+				FDBF6DFD19D1038000352DFA /* large_lens_filled-75.png in Resources */,
+				FDBF6DFE19D1038000352DFA /* close_up_mode-128.png in Resources */,
+				FDBF6DFF19D1038000352DFA /* stack_of_photos_filled-128.png in Resources */,
+				FDBF6E0019D1038000352DFA /* night_landscape-75.png in Resources */,
+				FDBF6E0119D1038000352DFA /* slr_camera_filled-50.png in Resources */,
+				FDBF6E0219D1038000352DFA /* moderator-25.png in Resources */,
+				FDBF6E0319D1038000352DFA /* landscape-256.png in Resources */,
+				FDBF6E0419D1038000352DFA /* edit_image-128.png in Resources */,
+				FDBF6E0519D1038000352DFA /* night_landscape-32.png in Resources */,
+				FDBF6E0619D1038000352DFA /* nurse-128.png in Resources */,
+				FDBF6E0719D1038000352DFA /* sports_mode-25.png in Resources */,
+				FDBF6E0819D1038000352DFA /* cable_release-50.png in Resources */,
+				FDBF6E0919D1038000352DFA /* large_lens_filled-128.png in Resources */,
+				FDBF6E0A19D1038000352DFA /* slr_camera2-32.png in Resources */,
+				FDBF6E0B19D1038000352DFA /* user_female3-512.png in Resources */,
+				FDBF6E0C19D1038000352DFA /* workers-25.png in Resources */,
+				FDBF6E0D19D1038000352DFA /* user_female4-256.png in Resources */,
+				FDBF6E0E19D1038000352DFA /* old_time_camera-128.png in Resources */,
+				FDBF6E0F19D1038000352DFA /* user_male-32.png in Resources */,
+				FDBF6E1019D1038000352DFA /* old_time_camera_filled-256.png in Resources */,
+				FDBF6E1119D1038000352DFA /* camcoder_pro-128.png in Resources */,
+				FDBF6E1219D1038000352DFA /* cable_release-25.png in Resources */,
+				FDBF6E1319D1038000352DFA /* moderator-128.png in Resources */,
+				FDBF6E1419D1038000352DFA /* group-50.png in Resources */,
+				FDBF6E1519D1038000352DFA /* small_lens-25.png in Resources */,
+				FDBF6E1619D1038000352DFA /* switch_camera-25.png in Resources */,
+				FDBF6E1719D1038000352DFA /* add_image-32.png in Resources */,
+				FDBF6E1819D1038000352DFA /* camera_addon_identification-100.png in Resources */,
+				FDBF6E1919D1038000352DFA /* edit_user-32.png in Resources */,
+				FDBF6E1A19D1038000352DFA /* remove_image_filled-256.png in Resources */,
+				FDBF6E1B19D1038000352DFA /* slr_camera2_filled-25.png in Resources */,
+				FDBF6E1C19D1038000352DFA /* night_portrait-512.png in Resources */,
+				FDBF6E1D19D1038000352DFA /* student2-128.png in Resources */,
+				FDBF6E1E19D1038000352DFA /* photo-100.png in Resources */,
+				FDBF6E1F19D1038000352DFA /* slr_small_lens-100.png in Resources */,
+				FDBF6E2019D1038000352DFA /* moderator-100.png in Resources */,
+				FDBF6E2119D1038000352DFA /* slr_small_lens_filled-128.png in Resources */,
+				FDBF6E2219D1038000352DFA /* cook-25.png in Resources */,
+				FDBF6E2319D1038000352DFA /* camera_identification-75.png in Resources */,
+				FDBF6E2419D1038000352DFA /* slr_camera_filled-32.png in Resources */,
+				FDBF6E2519D1038000352DFA /* rotate_camera-128.png in Resources */,
+				FDBF6E2619D1038000352DFA /* portrait_mode-100.png in Resources */,
+				FDBF6E2719D1038000352DFA /* remove_image-25.png in Resources */,
+				FDBF6E2819D1038000352DFA /* clipperboard-50.png in Resources */,
+				FDBF6E2919D1038000352DFA /* old_time_camera-256.png in Resources */,
+				FDBF6E2A19D1038000352DFA /* checked_user-50.png in Resources */,
+				FDBF6E2B19D1038000352DFA /* user_male4-75.png in Resources */,
+				FDBF6E2C19D1038000352DFA /* add_image_filled-32.png in Resources */,
+				FDBF6E2D19D1038000352DFA /* slr_back_side-75.png in Resources */,
+				FDBF6E2E19D1038000352DFA /* slr_large_lens_filled-32.png in Resources */,
+				FDBF6E2F19D1038000352DFA /* worker-128.png in Resources */,
+				FDBF6E3019D1038000352DFA /* night_portrait-100.png in Resources */,
+				FDBF6E3119D1038000352DFA /* add_image-100.png in Resources */,
+				FDBF6E3219D1038000352DFA /* doctor-128.png in Resources */,
+				FDBF6E3319D1038000352DFA /* slr_camera_body_filled-128.png in Resources */,
+				FDBF6E3419D1038000352DFA /* old_time_camera_filled-25.png in Resources */,
+				FDBF6E3519D1038000352DFA /* slr_small_lens_filled-25.png in Resources */,
+				FDBF6E3619D1038000352DFA /* slr_large_lens-128.png in Resources */,
+				FDBF6E3719D1038000352DFA /* large_lens_filled-50.png in Resources */,
+				FDBF6E3819D1038000352DFA /* camera_addon-128.png in Resources */,
+				FDBF6E3919D1038000352DFA /* camera_identification-32.png in Resources */,
+				FDBF6E3A19D1038000352DFA /* checked_user-256.png in Resources */,
+				FDBF6E3B19D1038000352DFA /* slr_back_side_filled-75.png in Resources */,
+				FDBF6E3C19D1038000352DFA /* slr_large_lens_filled-25.png in Resources */,
+				FDBF6E3D19D1038000352DFA /* film_reel-75.png in Resources */,
+				FDBF6E3E19D1038000352DFA /* slr_camera_filled-100.png in Resources */,
+				FDBF6E3F19D1038000352DFA /* find_user-75.png in Resources */,
+				FDBF6E4019D1038000352DFA /* integrated_webcam-25.png in Resources */,
+				FDBF6E4119D1038000352DFA /* edit_user-128.png in Resources */,
+				FDBF6E4219D1038000352DFA /* slr_camera_body-75.png in Resources */,
+				FDBF6E4319D1038000352DFA /* slr_camera_body-32.png in Resources */,
+				FDBF6E4419D1038000352DFA /* fireman-32.png in Resources */,
+				FDBF6E4519D1038000352DFA /* slr_camera-75.png in Resources */,
+				FDBF6E4619D1038000352DFA /* nurse-512.png in Resources */,
+				FDBF6E4719D1038000352DFA /* camcoder_filled-256.png in Resources */,
+				FDBF6E4819D1038000352DFA /* add_image-50.png in Resources */,
+				FDBF6E4919D1038000352DFA /* stack_of_photos-512.png in Resources */,
+				FDBF6E4A19D1038000352DFA /* edit_image-256.png in Resources */,
+				FDBF6E4B19D1038000352DFA /* camcoder_filled-128.png in Resources */,
+				FDBF6E4C19D1038000352DFA /* camcoder_pro_filled-50.png in Resources */,
+				FDBF6E4D19D1038000352DFA /* Smartisan.png in Resources */,
+				FDBF6E4E19D1038000352DFA /* old_time_camera_filled-75.png in Resources */,
+				FDBF6E4F19D1038000352DFA /* user_male4-256.png in Resources */,
+				FDBF6E5019D1038000352DFA /* film_reel_filled-32.png in Resources */,
+				FDBF6E5119D1038000352DFA /* large_lens_filled-25.png in Resources */,
+				FDBF6E5219D1038000352DFA /* small_lens-128.png in Resources */,
+				FDBF6E5319D1038000352DFA /* user_female4-512.png in Resources */,
+				FDBF6E5419D1038000352DFA /* slr_camera2_filled-100.png in Resources */,
+				FDBF6E5519D1038000352DFA /* user_male4-32.png in Resources */,
+				FDBF6E5619D1038000352DFA /* night_portrait-75.png in Resources */,
+				FDBF6E5719D1038000352DFA /* talk-100.png in Resources */,
+				FDBF6E5819D1038000352DFA /* camcoder-32.png in Resources */,
+				FDBF6E5919D1038000352DFA /* add_image_filled-50.png in Resources */,
+				FDBF6E5A19D1038000352DFA /* panorama-128.png in Resources */,
+				FDBF6E5B19D1038000352DFA /* doctor-256.png in Resources */,
+				FDBF6E5C19D1038000352DFA /* change_user-75.png in Resources */,
+				FDBF6E5D19D1038000352DFA /* slr_camera_body_filled-25.png in Resources */,
+				FDBF6E5E19D1038000352DFA /* user_female3-25.png in Resources */,
+				FDBF6E5F19D1038000352DFA /* user_female2-256.png in Resources */,
+				FDBF6E6019D1038000352DFA /* camera_identification-256.png in Resources */,
+				FDBF6E6119D1038000352DFA /* remove_image-512.png in Resources */,
+				FDBF6E6219D1038000352DFA /* user_female2-75.png in Resources */,
+				FDBF6E6319D1038000352DFA /* sports_mode-512.png in Resources */,
+				FDBF6E6419D1038000352DFA /* user_female4-32.png in Resources */,
+				FDBF6E6519D1038000352DFA /* checked_user-512.png in Resources */,
+				FDBF6E6619D1038000352DFA /* portrait_mode-75.png in Resources */,
+				FDBF6E6719D1038000352DFA /* workers-512.png in Resources */,
+				FDBF6E6819D1038000352DFA /* slr_small_lens_filled-512.png in Resources */,
+				FDBF6E6919D1038000352DFA /* camcoder_pro_filled-32.png in Resources */,
+				FDBF6E6A19D1038000352DFA /* user_female4-100.png in Resources */,
+				FDBF6E6B19D1038000352DFA /* user_male4-100.png in Resources */,
+				FDBF6E6C19D1038000352DFA /* switch_camera-256.png in Resources */,
+				FDBF6E6D19D1038000352DFA /* small_lens_filled-100.png in Resources */,
+				FDBF6E6E19D1038000352DFA /* photo-25.png in Resources */,
+				FDBF6E6F19D1038000352DFA /* backupCode in Resources */,
+				FDBF6E7019D1038000352DFA /* moderator-512.png in Resources */,
+				FDBF6E7119D1038000352DFA /* small_lens-512.png in Resources */,
+				FDBF6E7219D1038000352DFA /* movie-25.png in Resources */,
+				FDBF6E7319D1038000352DFA /* gallery_filled-128.png in Resources */,
+				FDBF6E7419D1038000352DFA /* rotate_camera-50.png in Resources */,
+				FDBF6E7519D1038000352DFA /* change_user-25.png in Resources */,
+				FDBF6E7619D1038000352DFA /* slr_back_side_filled-25.png in Resources */,
+				FDBF6E7719D1038000352DFA /* user_female-25.png in Resources */,
+				FDBF6E7819D1038000352DFA /* conference-25.png in Resources */,
+				FDBF6E7919D1038000352DFA /* slr_camera2_filled-128.png in Resources */,
+				FDBF6E7A19D1038000352DFA /* integrated_webcam-50.png in Resources */,
+				FDBF6E7B19D1038000352DFA /* film_reel_filled-25.png in Resources */,
+				FDBF6E7C19D1038000352DFA /* slr_camera-32.png in Resources */,
+				FDBF6E7D19D1038000352DFA /* remove_user-512.png in Resources */,
+				FDBF6E7E19D1038000352DFA /* add_user-100.png in Resources */,
+				FDBF6E7F19D1038000352DFA /* cook-50.png in Resources */,
+				FDBF6E8019D1038000352DFA /* switch_camera_filled-75.png in Resources */,
+				FDBF6E8119D1038000352DFA /* user_male3-100.png in Resources */,
+				FDBF6E8219D1038000352DFA /* portrait_mode-128.png in Resources */,
+				FDBF6E8319D1038000352DFA /* user_female-128.png in Resources */,
+				FDBF6E8419D1038000352DFA /* camera_addon-75.png in Resources */,
+				FDBF6E8519D1038000352DFA /* user_male3-256.png in Resources */,
+				FDBF6E8619D1038000352DFA /* slr_camera_body_filled-256.png in Resources */,
+				FDBF6E8719D1038000352DFA /* large_lens-512.png in Resources */,
+				FDBF6E8819D1038000352DFA /* slr_small_lens-50.png in Resources */,
+				FDBF6E8919D1038000352DFA /* farmer-25.png in Resources */,
+				FDBF6E8A19D1038000352DFA /* multiple_cameras-512.png in Resources */,
+				FDBF6E8B19D1038000352DFA /* gallery-512.png in Resources */,
+				FDBF6E8C19D1038000352DFA /* edit_image_filled-50.png in Resources */,
+				FDBF6E8D19D1038000352DFA /* remove_image_filled-32.png in Resources */,
+				FDBF6E8E19D1038000352DFA /* edit_image_filled-32.png in Resources */,
+				FDBF6E8F19D1038000352DFA /* slr_back_side_filled-100.png in Resources */,
+				FDBF6E9019D1038000352DFA /* camcoder_pro-32.png in Resources */,
+				FDBF6E9119D1038000352DFA /* portrait_mode-512.png in Resources */,
+				FDBF6E9219D1038000352DFA /* policeman-75.png in Resources */,
+				FDBF6E9319D1038000352DFA /* sports_mode-75.png in Resources */,
+				FDBF6E9419D1038000352DFA /* gallery-32.png in Resources */,
+				FDBF6E9519D1038000352DFA /* edit_user-75.png in Resources */,
+				FDBF6E9619D1038000352DFA /* change_user-128.png in Resources */,
+				FDBF6E9719D1038000352DFA /* small_lens-100.png in Resources */,
+				FDBF6E9819D1038000352DFA /* cable_release-128.png in Resources */,
+				FDBF6E9919D1038000352DFA /* remove_image_filled-512.png in Resources */,
+				FDBF6E9A19D1038000352DFA /* slr_camera_body_filled-100.png in Resources */,
+				FDBF6E9B19D1038000352DFA /* camcoder-75.png in Resources */,
+				FDBF6E9C19D1038000352DFA /* slr_large_lens-256.png in Resources */,
+				FDBF6E9D19D1038000352DFA /* night_portrait-256.png in Resources */,
+				FDBF6E9E19D1038000352DFA /* camcoder_filled-100.png in Resources */,
+				FDBF6E9F19D1038000352DFA /* administrator-100.png in Resources */,
+				FDBF6EA019D1038000352DFA /* large_lens-256.png in Resources */,
+				FDBF6EA119D1038000352DFA /* gallery_filled-32.png in Resources */,
+				FDBF6EA219D1038000352DFA /* user_female4-75.png in Resources */,
+				FDBF6EA319D1038000352DFA /* remove_image-256.png in Resources */,
+				FDBF6EA419D1038000352DFA /* slr_camera2-75.png in Resources */,
+				FDBF6EA519D1038000352DFA /* conference-256.png in Resources */,
+				FDBF6EA619D1038000352DFA /* camcoder_pro_filled-75.png in Resources */,
+				FDBF6EA719D1038000352DFA /* find_user-25.png in Resources */,
+				FDBF6EA819D1038000352DFA /* integrated_webcam-256.png in Resources */,
+				FDBF6EA919D1038000352DFA /* close_up_mode-50.png in Resources */,
+				FDBF6EAA19D1038000352DFA /* gallery-25.png in Resources */,
+				FDBF6EAB19D1038000352DFA /* camera_addon_identification-50.png in Resources */,
+				FDBF6EAC19D1038000352DFA /* slr_large_lens_filled-512.png in Resources */,
+				FDBF6EAD19D1038000352DFA /* panorama-50.png in Resources */,
+				FDBF6EAE19D1038000352DFA /* edit_image-50.png in Resources */,
+				FDBF6EAF19D1038000352DFA /* stack_of_photos-25.png in Resources */,
+				FDBF6EB019D1038000352DFA /* add_image-75.png in Resources */,
+				FDBF6EB119D1038000352DFA /* gallery_filled-75.png in Resources */,
+				FDBF6EB219D1038000352DFA /* small_lens_filled-512.png in Resources */,
+				FDBF6EB319D1038000352DFA /* film_reel-256.png in Resources */,
+				FDBF6EB419D1038000352DFA /* remove_image_filled-50.png in Resources */,
+				FDBF6EB519D1038000352DFA /* bg2.jpg in Resources */,
+				FDBF6EB619D1038000352DFA /* slr_camera-256.png in Resources */,
+				FDBF6EB719D1038000352DFA /* user_male-512.png in Resources */,
+				FDBF6EB819D1038000352DFA /* slr_large_lens-25.png in Resources */,
+				FDBF6EB919D1038000352DFA /* movie-512.png in Resources */,
+				FDBF6EBA19D1038000352DFA /* moderator-75.png in Resources */,
+				FDBF6EBB19D1038000352DFA /* remove_user-32.png in Resources */,
+				FDBF6EBC19D1038000352DFA /* small_lens_filled-256.png in Resources */,
+				FDBF6EBD19D1038000352DFA /* photo-75.png in Resources */,
+				FDBF6EBE19D1038000352DFA /* small_lens_filled-25.png in Resources */,
+				FDBF6EBF19D1038000352DFA /* slr_camera_body_filled-50.png in Resources */,
+				FDBF6EC019D1038000352DFA /* cook-512.png in Resources */,
+				FDBF6EC119D1038000352DFA /* farmer-32.png in Resources */,
+				FDBF6EC219D1038000352DFA /* camcoder-100.png in Resources */,
+				FDBF6EC319D1038000352DFA /* old_time_camera-25.png in Resources */,
+				FDBF6EC419D1038000352DFA /* user_male2-50.png in Resources */,
+				FDBF6EC519D1038000352DFA /* remove_user-100.png in Resources */,
+				FDBF6EC619D1038000352DFA /* find_user-100.png in Resources */,
+				FDBF6EC719D1038000352DFA /* user_female3-32.png in Resources */,
+				FDBF6EC819D1038000352DFA /* user_female3-128.png in Resources */,
+				FDBF6EC919D1038000352DFA /* doctor-100.png in Resources */,
+				FDBF6ECA19D1038000352DFA /* talk-50.png in Resources */,
+				FDBF6ECB19D1038000352DFA /* old_time_camera-512.png in Resources */,
+				FDBF6ECC19D1038000352DFA /* gallery-75.png in Resources */,
+				FDBF6ECD19D1038000352DFA /* camera_addon_identification-75.png in Resources */,
+				FDBF6ECE19D1038000352DFA /* large_lens-100.png in Resources */,
+				FDBF6ECF19D1038000352DFA /* add_user-32.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3963,7 +5415,6 @@
 				FD67D8D3197DFD4A00D2CCDA /* FaceppDetection.m in Sources */,
 				FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */,
 				FD67D8DA197DFD4A00D2CCDA /* FaceppTrainer.m in Sources */,
-				FD8D0C7019BDDD84007EF122 /* SDEPageStyleGalleryViewController.m in Sources */,
 				FD8D0C7419BDFC30007EF122 /* SDEGalleryModel.m in Sources */,
 				FD67D8DC197DFD4A00D2CCDA /* FaceppResult.m in Sources */,
 				FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */,
@@ -3978,6 +5429,7 @@
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
 				FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */,
 				FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */,
+				FDBF6EE219D1385900352DFA /* LineLayout.m in Sources */,
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
@@ -3991,14 +5443,14 @@
 				FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */,
 				FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */,
 				FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */,
-				FD67D897197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld in Sources */,
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
+				FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
 				FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */,
 				FD4131361997486B00141578 /* FaceCell.m in Sources */,
 				FD67D8D9197DFD4A00D2CCDA /* FaceppRecognition.m in Sources */,
 				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
-				FD1164E119A87B7300C1A41F /* LineLayout.m in Sources */,
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
+				FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
 				FD67D8D1197DFD4A00D2CCDA /* FaceppAPI.m in Sources */,
 				FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */,
 				FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */,
@@ -4016,12 +5468,64 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDBF6BF619D1038000352DFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDBF6BF719D1038000352DFA /* FaceppDetection.m in Sources */,
+				FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */,
+				FDBF6BF919D1038000352DFA /* FaceppTrainer.m in Sources */,
+				FDBF6BFB19D1038000352DFA /* SDEGalleryModel.m in Sources */,
+				FDBF6BFC19D1038000352DFA /* FaceppResult.m in Sources */,
+				FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */,
+				FDBF6BFE19D1038000352DFA /* FaceppPerson.m in Sources */,
+				FDBF6BFF19D1038000352DFA /* Face.m in Sources */,
+				FDBF6C0019D1038000352DFA /* main.m in Sources */,
+				FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */,
+				FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */,
+				FDBF6C0319D1038000352DFA /* SDEGalleryCell.m in Sources */,
+				FDBF6C0419D1038000352DFA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
+				FDBF6C0519D1038000352DFA /* FaceppInfo.m in Sources */,
+				FDBF6C0619D1038000352DFA /* FaceppError.m in Sources */,
+				FDBF6C0719D1038000352DFA /* SDEPersonProfileHeaderView.m in Sources */,
+				FDBF6C0819D1038000352DFA /* FaceppFaceset.m in Sources */,
+				FDBF6EE319D1385900352DFA /* LineLayout.m in Sources */,
+				FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */,
+				FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */,
+				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
+				FDBF6C0C19D1038000352DFA /* SDEPortraitLayout.m in Sources */,
+				FDBF6C0D19D1038000352DFA /* SDEHorizontalGridLayout.m in Sources */,
+				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
+				FDBF6C0F19D1038000352DFA /* SDECenterMenu.m in Sources */,
+				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
+				FDBF6C1119D1038000352DFA /* SDEPersonGalleryViewController.m in Sources */,
+				FDBF6C1219D1038000352DFA /* FaceppGroup.m in Sources */,
+				FDBF6C1319D1038000352DFA /* FaceppClient.m in Sources */,
+				FDBF6C1419D1038000352DFA /* FaceppGrouping.m in Sources */,
+				FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */,
+				FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */,
+				FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */,
+				FDBF6C1919D1038000352DFA /* FaceCell.m in Sources */,
+				FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
+				FDBF6C1A19D1038000352DFA /* FaceppRecognition.m in Sources */,
+				FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */,
+				FDBF6C1D19D1038000352DFA /* Store.m in Sources */,
+				FDBF6EDF19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
+				FDBF6C1E19D1038000352DFA /* FaceppAPI.m in Sources */,
+				FDBF6C1F19D1038000352DFA /* SDEPAVCDataSource.m in Sources */,
+				FDBF6C2019D1038000352DFA /* SDEMontageRoomViewController.m in Sources */,
+				FDBF6C2119D1038000352DFA /* SDEAvatorOverlayView.m in Sources */,
+				FDBF6C2219D1038000352DFA /* Person.m in Sources */,
+				FDBF6C2319D1038000352DFA /* FaceppDetection+LocalResultUploader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		FD67D8A5197DFCFB00D2CCDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FD67D87D197DFCFB00D2CCDA /* FaceAlbum */;
+			target = FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */;
 			targetProxy = FD67D8A4197DFCFB00D2CCDA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4129,6 +5633,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4136,7 +5641,7 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbum/FaceAlbumDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4146,6 +5651,7 @@
 				OTHER_CFLAGS = "-Wno-gnu";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WARNING_CFLAGS = (
 					"-Wshadow",
@@ -4165,13 +5671,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "FaceAlbum/FaceAlbum-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbum/FaceAlbumDev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4181,6 +5688,7 @@
 				OTHER_CFLAGS = "-Wno-gnu";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WARNING_CFLAGS = (
 					"-Wshadow",
 					"-Wfloat-equal",
@@ -4229,6 +5737,76 @@
 			};
 			name = Release;
 		};
+		FDBF6ED119D1038000352DFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbumRelease-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FaceppLocalDetector",
+				);
+				OTHER_CFLAGS = "-Wno-gnu";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = FaceAlbum;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WARNING_CFLAGS = (
+					"-Wshadow",
+					"-Wfloat-equal",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FDBF6ED219D1038000352DFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbumRelease-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FaceppLocalDetector",
+				);
+				OTHER_CFLAGS = "-Wno-gnu";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = FaceAlbum;
+				WARNING_CFLAGS = (
+					"-Wshadow",
+					"-Wfloat-equal",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4241,7 +5819,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbum" */ = {
+		FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumDev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FD67D8B1197DFCFB00D2CCDA /* Debug */,
@@ -4259,19 +5837,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		FDBF6ED019D1038000352DFA /* Build configuration list for PBXNativeTarget "FaceAlbumRelease" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDBF6ED119D1038000352DFA /* Debug */,
+				FDBF6ED219D1038000352DFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FD67D895197DFCFB00D2CCDA /* FaceAlbum.xcdatamodeld */ = {
+		FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FD290B2A19C5FD13003A26DC /* FaceAlbum 5.xcdatamodel */,
-				FD290B2919C5BFCC003A26DC /* FaceAlbum 4.xcdatamodel */,
-				FD41313B19974C7C00141578 /* FaceAlbum 3.xcdatamodel */,
-				FD95903E198526F6001C2345 /* FaceAlbum 2.xcdatamodel */,
-				FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */,
+				FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */,
 			);
-			currentVersion = FD67D896197DFCFB00D2CCDA /* FaceAlbum.xcdatamodel */;
+			currentVersion = FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */;
 			name = FaceAlbum.xcdatamodeld;
 			path = ../FaceAlbum/FaceAlbum.xcdatamodeld;
 			sourceTree = "<group>";

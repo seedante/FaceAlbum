@@ -23,7 +23,7 @@
     NSString *startSceneName = [self startScene];
     NSLog(@"Start Scene: %@", startSceneName);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:@"PersonGalleryNV"];
+    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:startSceneName];
     self.window.rootViewController = initialViewController;
     Store *dataStore = [Store sharedStore];
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];

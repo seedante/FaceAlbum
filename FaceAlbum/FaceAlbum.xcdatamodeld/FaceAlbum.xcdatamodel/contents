@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AlbumGroup" representedClassName="AlbumGroup" syncable="YES">
         <attribute name="isExisted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="persistentID" optional="YES" attributeType="String" syncable="YES"/>
@@ -7,10 +7,10 @@
         <attribute name="uniqueURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="whetherToDisplay" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="whetherToScan" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="photoes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="albumOwner" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="albumOwner" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <entity name="Face" representedClassName="Face" syncable="YES">
-        <attribute name="assetURLNSString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assetURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avatorImage" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="detectedFaceImage" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="detectedFaceRect" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -42,13 +42,13 @@
         <attribute name="offlineTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="uniqueURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="whetherToDisplay" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="albumOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AlbumGroup" inverseName="photoes" inverseEntity="AlbumGroup" syncable="YES"/>
+        <relationship name="albumOwner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AlbumGroup" inverseName="photos" inverseEntity="AlbumGroup" syncable="YES"/>
         <relationship name="faceset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="photoOwner" inverseEntity="Face" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AlbumGroup" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Face" positionX="0" positionY="0" width="128" height="270"/>
-        <element name="Person" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="Photo" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="AlbumGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Face" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Person" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Photo" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -4,10 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>FaceAlbum.xcscheme</key>
+		<key>FaceAlbumDev.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>FaceAlbumRelease.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>FD67D89D197DFCFB00D2CCDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDBF6BF519D1038000352DFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

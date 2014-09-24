@@ -22,6 +22,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @property (nonatomic)PhotoScanManager *photoScanManager;
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 @property (nonatomic)NSMutableArray *allAssets;
+@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
 
 @end
 
@@ -45,6 +46,12 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     [self piplineInitialize];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    NSLog(@"TOO BIG");
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     self.photoScanManager.faceCountInThisScan = 0;
@@ -57,7 +64,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     
     NSArray *unknownFaces = [moc executeFetchRequest:faceFetchRequest error:nil];
     self.photoScanManager.numberOfItemsInFirstSection = unknownFaces.count;
-    NSLog(@"Unknown face count: %d", unknownFaces.count);
+    NSLog(@"Unknown face count: %lu", (unsigned long)unknownFaces.count);
 }
 
 - (void)piplineInitialize
@@ -77,7 +84,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
             if (group && *stop != YES) {
                 //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
-                NSLog(@"XXXGroup: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+                NSLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
                 [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                     if (asset && *stop != YES) {
                         if (self.showAssets.count < 3) {
@@ -102,13 +109,14 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                         [self.allAssets addObject:asset];
                 }
                 [self.assetCollectionView reloadData];
-                NSLog(@"Asset need to scan: %d", self.allAssets.count + self.showAssets.count);
+                NSLog(@"Asset need to scan: %d", (int)(self.allAssets.count + self.showAssets.count));
                 [photoDetector cleanData];
             }
+            int count = (int)newAssets.count;
+            self.processIndicator.text = [NSString stringWithFormat:@"%d/%d", count, count];
         }else
             NSLog(@"There is NO new photo");
     }
-    
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -200,6 +208,8 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     
     dispatch_sync(backgroundQueue, ^{
         BOOL includeFace = [self.photoScanManager scanAsset:self.showAssets[pipelineWorkIndex] withDetector:FaceppFaceDetector];
+        int count = (int)(self.allAssets.count + self.showAssets.count - pipelineWorkIndex);
+        self.processIndicator.text = [NSString stringWithFormat:@"%d", count];
         pipelineWorkIndex += 1;
         if (includeFace) {
             [self.faceDataSource addFaces:[self.photoScanManager allFacesInPhoto]];
@@ -224,7 +234,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
             [self.photoScanManager saveAfterScan];
             [self configFirstScene:NO];
-            [self performSegueWithIdentifier:segueIdentifier sender:self];
+            UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+            [self.navigationController setViewControllers:@[newRootVC]];
+            //[self performSegueWithIdentifier:segueIdentifier sender:self];
             return;
         }else
             [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.5];
@@ -251,7 +263,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
         [self.photoScanManager saveAfterScan];
         [self configFirstScene:NO];
-        [self performSegueWithIdentifier:segueIdentifier sender:self];
+        UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+        [self.navigationController setViewControllers:@[newRootVC]];
+        //[self performSegueWithIdentifier:segueIdentifier sender:self];
         return;
     }else if (self.allAssets.count >= 3){
         [self.showAssets removeAllObjects];

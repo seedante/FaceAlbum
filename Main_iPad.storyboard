@@ -21,13 +21,13 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="70" width="100" height="100"/>
+                                <rect key="frame" x="50" y="134" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Smartisan.png" translatesAutoresizingMaskIntoConstraints="NO" id="5QB-14-26b">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Smartisan.png" translatesAutoresizingMaskIntoConstraints="NO" id="5QB-14-26b">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -122,7 +122,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIS-kh-nXO">
-                                        <rect key="frame" x="361" y="7" width="46" height="30"/>
+                                        <rect key="frame" x="702" y="7" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="68K-UE-jJU"/>
@@ -134,12 +134,25 @@
                                             <action selector="scanPhotos:" destination="tMj-7K-Ytg" eventType="touchUpInside" id="ayy-c9-QRc"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-gG-bkg">
+                                        <rect key="frame" x="334" y="11" width="100" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="3gr-72-KMN"/>
+                                            <constraint firstAttribute="height" constant="21" id="pJY-q6-GVh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="uIS-kh-nXO" firstAttribute="centerY" secondItem="03a-Iv-hPP" secondAttribute="centerY" id="L9s-sn-dYW"/>
-                                    <constraint firstAttribute="centerX" secondItem="uIS-kh-nXO" secondAttribute="centerX" id="gmd-2a-za3"/>
+                                    <constraint firstAttribute="trailing" secondItem="uIS-kh-nXO" secondAttribute="trailing" constant="20" id="WU7-jT-6zQ"/>
                                     <constraint firstAttribute="height" constant="44" id="hbo-ah-A7Z"/>
+                                    <constraint firstAttribute="centerX" secondItem="9hU-gG-bkg" secondAttribute="centerX" id="wIm-gD-tG2"/>
+                                    <constraint firstItem="uIS-kh-nXO" firstAttribute="centerY" secondItem="9hU-gG-bkg" secondAttribute="centerY" constant="0.5" id="yc8-L6-mp6"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pvi-kF-v33">
@@ -229,8 +242,8 @@
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="width" secondItem="FB4-hq-aad" secondAttribute="width" id="Hod-NB-Bbo"/>
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="top" secondItem="Pvi-kF-v33" secondAttribute="bottom" id="I2M-wk-Egz"/>
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="leading" secondItem="FB4-hq-aad" secondAttribute="leading" id="IEI-c1-OFh"/>
-                            <constraint firstItem="Pvi-kF-v33" firstAttribute="centerX" secondItem="uIS-kh-nXO" secondAttribute="centerX" id="Nuw-cc-plU"/>
                             <constraint firstAttribute="trailing" secondItem="03a-Iv-hPP" secondAttribute="trailing" id="PPa-7b-4Cv"/>
+                            <constraint firstItem="Pvi-kF-v33" firstAttribute="leading" secondItem="03a-Iv-hPP" secondAttribute="leading" id="Rdg-g7-4sA"/>
                             <constraint firstAttribute="trailing" secondItem="9Va-1O-m5e" secondAttribute="trailing" id="SpK-yU-Cxs"/>
                             <constraint firstItem="03a-Iv-hPP" firstAttribute="leading" secondItem="FB4-hq-aad" secondAttribute="leading" id="XSa-4p-BnM"/>
                             <constraint firstItem="Pvi-kF-v33" firstAttribute="width" secondItem="FB4-hq-aad" secondAttribute="width" id="Yit-HE-Ygk"/>
@@ -246,6 +259,7 @@
                     <connections>
                         <outlet property="assetCollectionView" destination="9Va-1O-m5e" id="JLN-wW-wDs"/>
                         <outlet property="faceCollectionView" destination="Pvi-kF-v33" id="w0Q-yH-Rxi"/>
+                        <outlet property="processIndicator" destination="9hU-gG-bkg" id="ewg-rK-W63"/>
                         <segue destination="3O8-fZ-xdw" kind="push" identifier="enterMontageRoom" id="cXo-XD-Ik9"/>
                     </connections>
                 </viewController>
@@ -711,7 +725,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mY8-Cd-IyR"/>
+        <segue reference="cXo-XD-Ik9"/>
         <segue reference="fYU-IF-XFj"/>
     </inferredMetricsTieBreakers>
 </document>

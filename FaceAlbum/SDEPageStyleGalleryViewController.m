@@ -229,7 +229,7 @@ typedef enum: NSUInteger{
         return nil;
     }
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
-    NSLog(@"Current Page Index: %d", self.currentPageIndex);
+    NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
     NSLog(@"Current VC: %@", viewController);
     NSLog(@"Array: %@", self.pageVCArray);
     if (self.currentPageIndex == 0 || self.currentPageIndex == NSNotFound) {
@@ -253,13 +253,13 @@ typedef enum: NSUInteger{
     NSInteger countOfPage = [self countForPageViewController];
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
     if (self.currentPageIndex >= countOfPage - 1 || self.currentPageIndex == NSNotFound) {
-        NSLog(@"C: %d", self.currentPageIndex);
+        NSLog(@"C: %ld", (long)self.currentPageIndex);
         self.currentPageIndex++;
         NSLog(@"!!!");
         return nil;
     }
     
-    NSLog(@"Current Page Index: %d", self.currentPageIndex);
+    NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
     NSLog(@"Current VC: %@", viewController);
     UICollectionViewController *vc;
     if (self.pageVCArray.count < countOfPage) {
@@ -267,7 +267,7 @@ typedef enum: NSUInteger{
         vc.collectionView.dataSource = self;
         vc.collectionView.delegate = self;
         [self.pageVCArray addObject:vc];
-        NSLog(@"Count of PageVCArray: %d", self.pageVCArray.count);
+        NSLog(@"Count of PageVCArray: %lu", (unsigned long)self.pageVCArray.count);
     }
         
     self.currentPageIndex++;
@@ -298,7 +298,7 @@ typedef enum: NSUInteger{
     UIViewController *firstViewController = self.pageViewController.viewControllers.firstObject;
     NSInteger index = [self.pageVCArray indexOfObjectIdenticalTo:firstViewController];
     self.currentPageIndex = index;
-    NSLog(@"Current Page Index: %d", index);
+    NSLog(@"Current Page Index: %ld", (long)index);
     return index;
     //return self.currentPageIndex;
 }
@@ -316,7 +316,7 @@ typedef enum: NSUInteger{
     NSInteger numberOfItems;
     switch (self.currentLayoutType) {
         case PortraitLayout:{
-            NSLog(@"There are %d person", [[self.faceFetchedResultsController sections] count]);
+            NSLog(@"There are %lu person", (unsigned long)[[self.faceFetchedResultsController sections] count]);
             numberOfItems = [[self.faceFetchedResultsController sections] count];
             break;
         }
@@ -327,7 +327,7 @@ typedef enum: NSUInteger{
                 numberOfItems = NumberOfAvatorPerPage;
             }else
                 numberOfItems = numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage;
-            NSLog(@"Avator Number: %d in Page: %d", numberOfItems, self.currentPageIndex);
+            NSLog(@"Avator Number: %ld in Page: %ld", (long)numberOfItems, (long)self.currentPageIndex);
             break;
         }
         case DetailLineLayout:{
@@ -364,10 +364,10 @@ typedef enum: NSUInteger{
                     [cell setShowContent:[UIImage imageWithContentsOfFile:faceItem.pathForBackup]];
                     break;
                 case kPhotoType:{
-                    NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
+                    NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLString];
                     [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
                         if (asset) {
-                            UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                            UIImage *photoImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
                             [cell setShowContent:photoImage];
                         }else{
                             UIImage *photoImage = [UIImage imageNamed:@"Smartisan.png"];
@@ -382,7 +382,7 @@ typedef enum: NSUInteger{
         case DetailLineLayout:{
             NSIndexPath *selectedPersonIndexPath = [NSIndexPath indexPathForItem:indexPath.item inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedPersonIndexPath];
-            NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLNSString];
+            NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLString];
             [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
                 if (asset) {
                     UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
@@ -507,7 +507,7 @@ typedef enum: NSUInteger{
 #pragma mark - UICollectionView Delegate Method
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Select Item: %d", indexPath.item);
+    NSLog(@"Select Item: %ld", (long)indexPath.item);
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             NSLog(@"Switch to Horizontal Grid Mode.");
@@ -518,7 +518,7 @@ typedef enum: NSUInteger{
             
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
             NSUInteger numberOfAvators = [sectionInfo numberOfObjects];
-            self.infoTitle.text = [NSString stringWithFormat:@"%d avators", numberOfAvators];
+            self.infoTitle.text = [NSString stringWithFormat:@"%lu avators", (unsigned long)numberOfAvators];
             
             if (self.pageVCArray.count > 0) {
                 [self.pageVCArray removeAllObjects];
@@ -756,6 +756,7 @@ typedef enum: NSUInteger{
 
 - (void)handleDeletedPhotos
 {
+    NSLog(@"Handle for Delete");
     NSArray *deletedAssetsURLString = [self.newPhotoDetector notexistedAssetsURLString];
     if (deletedAssetsURLString.count > 0) {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
@@ -771,6 +772,23 @@ typedef enum: NSUInteger{
         }
         [self.managedObjectContext save:nil];
     }
+    
+    NSArray *gobackAssetsURLString = [self.newPhotoDetector againStoredAssetsURLString];
+    if (gobackAssetsURLString.count > 0) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
+        for (NSString *URLString in gobackAssetsURLString) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == NO) AND (uniqueURLString like %@)", URLString];
+            [fetchRequest setPredicate:predicate];
+            NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+            if (result.count == 1) {
+                Photo *gobackPhoto = (Photo *)result.firstObject;
+                gobackPhoto.isExisted = YES;
+            }else
+                NSLog(@"Some Wrong here");
+        }
+        [self.managedObjectContext save:nil];
+    }
+    
     [self.newPhotoDetector cleanData];
 }
 

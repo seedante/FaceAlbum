@@ -16,4 +16,5 @@
 - (void)cleanData;
 - (NSArray *)assetsNeedToScan; //include asset, not url string
 - (NSArray *)notexistedAssetsURLString;
+- (NSArray *)againStoredAssetsURLString;
 @end

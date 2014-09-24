@@ -279,21 +279,23 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     if (self.facesInAPhoto.count > 0) {
         [self.facesInAPhoto removeAllObjects];
     }
-    NSLog(@"Current Avator count for facelessman: %d", self.numberOfItemsInFirstSection);
+    NSLog(@"Current Avator count for facelessman: %lu", (unsigned long)self.numberOfItemsInFirstSection);
     @autoreleasepool {
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
         CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
+        //CGImageRef sourceCGImage = asset.aspectRatioThumbnail;
+        NSLog(@"Image Size: %lux%lu", CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
         UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
         
         Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
         newPhoto.uniqueURLString = [(NSURL *)[asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
         newPhoto.isExisted = YES;
         
-        NSLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
+        //NSLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
         FaceppLocalResult *detectResult = [self.localFaceppDetector detectWithImage:imageForDetect];
         if (detectResult.faces.count > 0) {
             includeFace = YES;
-            NSLog(@"Detect %lu faces in the Photo", (unsigned long)detectResult.faces.count);
+            NSLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
             self.faceCountInThisScan += detectResult.faces.count;
             //NSLog(@"Face Count: %lu For Now.", (unsigned long)_faceTotalCount);
             for (FaceppLocalFace *detectedFace in detectResult.faces) {
@@ -315,15 +317,17 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                     avatorUIImage = headUIImage;
                 CGImageRelease(headCGImage);
                 
-                NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
                 NSString *randomName = [[[NSUUID alloc] init] UUIDString];
                 NSString *saveName = [randomName stringByAppendingPathExtension:@".jpg"];
                 NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
-                BOOL success = [imageData writeToFile:savePath atomically:YES];
-                if (!success) {
-                    NSLog(@"Wrong!Wrong!Wrong!");
+                @autoreleasepool {
+                    NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
+                    BOOL success = [imageData writeToFile:savePath atomically:YES];
+                    if (!success) {
+                        NSLog(@"Wrong!Wrong!Wrong!");
+                    }
                 }
-                
+
                 [self.facesInAPhoto addObject:avatorUIImage];
                 
                 self.numberOfItemsInFirstSection += 1;
@@ -335,10 +339,10 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                 newFace.order = self.numberOfItemsInFirstSection;
                 newFace.section = 0;
                 newFace.photoOwner = newPhoto;
-                newFace.assetURLNSString = newPhoto.uniqueURLString;
+                newFace.assetURLString = newPhoto.uniqueURLString;
                 newFace.pathForBackup = savePath;
             }
-            newPhoto.faceCount = detectResult.faces.count;
+            newPhoto.faceCount = (int32_t)detectResult.faces.count;
             newPhoto.whetherToDisplay = YES;
         }else{
             newPhoto.faceCount = 0;

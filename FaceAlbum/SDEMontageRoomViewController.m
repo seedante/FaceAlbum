@@ -150,7 +150,7 @@ typedef enum {
     if (self.selectedFaces.count > 1) {
         newTitle = [NSString stringWithFormat:@"select %lu faces", (unsigned long)self.selectedFaces.count];
     }else
-        newTitle = [NSString stringWithFormat:@"select %d face", self.selectedFaces.count];
+        newTitle = [NSString stringWithFormat:@"select %lu face", (unsigned long)self.selectedFaces.count];
     
     self.navigationItem.title = newTitle;
 }
@@ -238,7 +238,7 @@ typedef enum {
             NSInteger section = [sectionNumber integerValue];
             NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
             if (itemCount == matchedItems.count) {
-                NSLog(@"All items at section: %d are choiced. This will trigger detele section.", section+1);
+                NSLog(@"All items at section: %d are choiced. This will trigger detele section.", (int)section+1);
                 [self.triggeredDeletedSections addObject:sectionNumber];
                 [self.selectedFaces removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
             }
@@ -257,7 +257,7 @@ typedef enum {
                 NSLog(@"It's impossible!!!");
             }else{
                 Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-                copyFaceItem.section = targetDataSection;
+                copyFaceItem.section = (int)targetDataSection;
                 copyFaceItem.whetherToDisplay = YES;
             }
         }
@@ -271,7 +271,7 @@ typedef enum {
                 //[self filterSelectedItemsInSection:targetDataSection];
             }else{
                 Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
-                singleCopyFaceItem.section = targetDataSection;
+                singleCopyFaceItem.section = (int)targetDataSection;
                 singleCopyFaceItem.whetherToDisplay = YES;
             }
             [self.selectedFaces removeObject:anyIndexPath];
@@ -315,8 +315,8 @@ typedef enum {
         NSInteger targetSection = [targetSectionNumber integerValue];
         for (NSIndexPath *indexPath in self.selectedFaces) {
             Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-            if (selectedFace.section != targetSection) {
-                selectedFace.section = targetSection;
+            if (selectedFace.section != (int)targetSection) {
+                selectedFace.section = (int)targetSection;
             }
         }
         [self.selectedFaces removeAllObjects];
@@ -420,10 +420,12 @@ typedef enum {
     [self manageSelectedItemsWithTargetDataSection:newSection];
     
     if (newPerson) {
-        newPerson.order = newSection;
+        newPerson.order = (int)newSection;
     }
     [self saveEdit];
     
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:newSection] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
 
@@ -493,7 +495,7 @@ typedef enum {
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     }
-
+    
     self.navigationItem.title = @"Montage Room";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
@@ -521,6 +523,39 @@ typedef enum {
 
 - (void)jumpToGalleryScene
 {
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    BOOL ThreeScene = [defaultConfig boolForKey:@"isGalleryOpened"];
+    NSUInteger count = [[self.faceFetchedResultsController sections] count];
+    if (!ThreeScene){
+        NSLog(@"No Three.");
+        if (count > 1) {
+            [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
+            [defaultConfig synchronize];
+            NSLog(@"Open Three");
+        }else if (count == 1){
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+            if (faceItem.section != 0) {
+                [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
+                [defaultConfig synchronize];
+                NSLog(@"Open Three.");
+            }
+        }
+    }else{
+        NSLog(@"Yeah, Three");
+        if (count == 1) {
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+            if (faceItem.section == 0) {
+                [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
+                [defaultConfig synchronize];
+                NSLog(@"Close Three.");
+            }
+        }else if (count == 0){
+            [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
+            [defaultConfig synchronize];
+            NSLog(@"Close Three.");
+        }
+    }
+
     //[self performSegueWithIdentifier:@"enterGallery" sender:self];
     [self performSegueWithIdentifier:@"enterPageGallery" sender:self];
 }
@@ -720,7 +755,7 @@ typedef enum {
 - (IBAction)unwindToMontageRoom:(UIStoryboardSegue *)segue
 {
     NSArray *vcs = self.navigationController.viewControllers;
-    NSLog(@"VC count: %d", vcs.count);
+    NSLog(@"VC count: %lu", (unsigned long)vcs.count);
     NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);
     //[self.navigationController popViewControllerAnimated:YES];
     //NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);

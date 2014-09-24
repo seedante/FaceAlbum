@@ -118,7 +118,7 @@ typedef enum: NSUInteger{
         }else
             itemNumber = avatorCount - section * ItemCountPerPageAtHorizontalMode;
         //itemNumber = [sectionInfo numberOfObjects];
-        NSLog(@"Person No.%d has %d avators.", self.currentPortraitIndex, itemNumber);
+        NSLog(@"Person No.%ld has %ld avators.", (long)self.currentPortraitIndex, (long)itemNumber);
     }
 
     return itemNumber;
