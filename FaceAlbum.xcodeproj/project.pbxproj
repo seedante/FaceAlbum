@@ -723,10 +723,6 @@
 		FD8D0C2519BBFBAB007EF122 /* workers-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098D19BBFBAA007EF122 /* workers-512.png */; };
 		FD8D0C2619BBFBAB007EF122 /* workers-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D098E19BBFBAA007EF122 /* workers-75.png */; };
 		FD8D0C7419BDFC30007EF122 /* SDEGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */; };
-		FD8D0C7919BE9B20007EF122 /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7519BE9B20007EF122 /* bg1.jpg */; };
-		FD8D0C7A19BE9B20007EF122 /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7619BE9B20007EF122 /* bg4.jpg */; };
-		FD8D0C7B19BE9B20007EF122 /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7719BE9B20007EF122 /* bg3.jpg */; };
-		FD8D0C7C19BE9B20007EF122 /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7819BE9B20007EF122 /* bg2.jpg */; };
 		FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
 		FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */; };
 		FDB3602A19CE65CC00AAE34D /* SDECenterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3602919CE65CC00AAE34D /* SDECenterMenu.m */; };
@@ -926,8 +922,6 @@
 		FDBF6CBB19D1038000352DFA /* clipperboard-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070219BBFBA9007EF122 /* clipperboard-32.png */; };
 		FDBF6CBC19D1038000352DFA /* slr_large_lens-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083719BBFBA9007EF122 /* slr_large_lens-75.png */; };
 		FDBF6CBD19D1038000352DFA /* multiple_cameras-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D077D19BBFBA9007EF122 /* multiple_cameras-128.png */; };
-		FDBF6CBE19D1038000352DFA /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7619BE9B20007EF122 /* bg4.jpg */; };
-		FDBF6CBF19D1038000352DFA /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7519BE9B20007EF122 /* bg1.jpg */; };
 		FDBF6CC019D1038000352DFA /* close_up_mode-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D070919BBFBA9007EF122 /* close_up_mode-25.png */; };
 		FDBF6CC119D1038000352DFA /* photo-32.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07B619BBFBA9007EF122 /* photo-32.png */; };
 		FDBF6CC219D1038000352DFA /* slr_large_lens_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D084019BBFBA9007EF122 /* slr_large_lens_filled-75.png */; };
@@ -992,7 +986,6 @@
 		FDBF6CFD19D1038000352DFA /* camcoder-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06C219BBFBA8007EF122 /* camcoder-256.png */; };
 		FDBF6CFE19D1038000352DFA /* conference-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08B919BBFBAA007EF122 /* conference-128.png */; };
 		FDBF6CFF19D1038000352DFA /* camera_addon_identification-128.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D06ED19BBFBA9007EF122 /* camera_addon_identification-128.png */; };
-		FDBF6D0019D1038000352DFA /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7719BE9B20007EF122 /* bg3.jpg */; };
 		FDBF6D0119D1038000352DFA /* slr_camera-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FA19BBFBA9007EF122 /* slr_camera-100.png */; };
 		FDBF6D0219D1038000352DFA /* administrator-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D08A019BBFBAA007EF122 /* administrator-256.png */; };
 		FDBF6D0319D1038000352DFA /* rotate_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D919BBFBA9007EF122 /* rotate_camera-256.png */; };
@@ -1429,7 +1422,6 @@
 		FDBF6EB219D1038000352DFA /* small_lens_filled-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D086319BBFBAA007EF122 /* small_lens_filled-512.png */; };
 		FDBF6EB319D1038000352DFA /* film_reel-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D072519BBFBA9007EF122 /* film_reel-256.png */; };
 		FDBF6EB419D1038000352DFA /* remove_image_filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07D219BBFBA9007EF122 /* remove_image_filled-50.png */; };
-		FDBF6EB519D1038000352DFA /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD8D0C7819BE9B20007EF122 /* bg2.jpg */; };
 		FDBF6EB619D1038000352DFA /* slr_camera-256.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D07FD19BBFBA9007EF122 /* slr_camera-256.png */; };
 		FDBF6EB719D1038000352DFA /* user_male-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D096019BBFBAA007EF122 /* user_male-512.png */; };
 		FDBF6EB819D1038000352DFA /* slr_large_lens-25.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D083219BBFBA9007EF122 /* slr_large_lens-25.png */; };
@@ -1462,6 +1454,36 @@
 		FDBF6EE319D1385900352DFA /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EE119D1385900352DFA /* LineLayout.m */; };
 		FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
 		FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
+		FDBF6F2F19D2B50A00352DFA /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2519D2B50A00352DFA /* GridLayout.m */; };
+		FDBF6F3019D2B50A00352DFA /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2519D2B50A00352DFA /* GridLayout.m */; };
+		FDBF6F3119D2B50A00352DFA /* StacksLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2619D2B50A00352DFA /* StacksLayout.m */; };
+		FDBF6F3219D2B50A00352DFA /* StacksLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2619D2B50A00352DFA /* StacksLayout.m */; };
+		FDBF6F3319D2B50A00352DFA /* CoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2719D2B50A00352DFA /* CoverFlowLayout.m */; };
+		FDBF6F3419D2B50A00352DFA /* CoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2719D2B50A00352DFA /* CoverFlowLayout.m */; };
+		FDBF6F3519D2B50A00352DFA /* SpiralLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2819D2B50A00352DFA /* SpiralLayout.m */; };
+		FDBF6F3619D2B50A00352DFA /* SpiralLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2819D2B50A00352DFA /* SpiralLayout.m */; };
+		FDBF6F3719D2B50A00352DFA /* AlbumLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2919D2B50A00352DFA /* AlbumLayoutAttributes.m */; };
+		FDBF6F3819D2B50A00352DFA /* AlbumLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6F2919D2B50A00352DFA /* AlbumLayoutAttributes.m */; };
+		FDBF6F4419D2D8E700352DFA /* Aged-Paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */; };
+		FDBF6F4519D2D8E700352DFA /* Aged-Paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */; };
+		FDBF6F4619D2D8E700352DFA /* Aged-Paper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3B19D2D8E700352DFA /* Aged-Paper@2x.png */; };
+		FDBF6F4719D2D8E700352DFA /* Aged-Paper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3B19D2D8E700352DFA /* Aged-Paper@2x.png */; };
+		FDBF6F4819D2D8E700352DFA /* Apple-Wood.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3C19D2D8E700352DFA /* Apple-Wood.png */; };
+		FDBF6F4919D2D8E700352DFA /* Apple-Wood.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3C19D2D8E700352DFA /* Apple-Wood.png */; };
+		FDBF6F4A19D2D8E700352DFA /* Apple-Wood@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3D19D2D8E700352DFA /* Apple-Wood@2x.png */; };
+		FDBF6F4B19D2D8E700352DFA /* Apple-Wood@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3D19D2D8E700352DFA /* Apple-Wood@2x.png */; };
+		FDBF6F4C19D2D8E700352DFA /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3E19D2D8E700352DFA /* bg1.jpg */; };
+		FDBF6F4D19D2D8E700352DFA /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3E19D2D8E700352DFA /* bg1.jpg */; };
+		FDBF6F4E19D2D8E700352DFA /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3F19D2D8E700352DFA /* bg2.jpg */; };
+		FDBF6F4F19D2D8E700352DFA /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3F19D2D8E700352DFA /* bg2.jpg */; };
+		FDBF6F5019D2D8E700352DFA /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4019D2D8E700352DFA /* bg3.jpg */; };
+		FDBF6F5119D2D8E700352DFA /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4019D2D8E700352DFA /* bg3.jpg */; };
+		FDBF6F5219D2D8E700352DFA /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4119D2D8E700352DFA /* bg4.jpg */; };
+		FDBF6F5319D2D8E700352DFA /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4119D2D8E700352DFA /* bg4.jpg */; };
+		FDBF6F5419D2D8E700352DFA /* Wood-Planks.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4219D2D8E700352DFA /* Wood-Planks.png */; };
+		FDBF6F5519D2D8E700352DFA /* Wood-Planks.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4219D2D8E700352DFA /* Wood-Planks.png */; };
+		FDBF6F5619D2D8E700352DFA /* Wood-Planks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4319D2D8E700352DFA /* Wood-Planks@2x.png */; };
+		FDBF6F5719D2D8E700352DFA /* Wood-Planks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F4319D2D8E700352DFA /* Wood-Planks@2x.png */; };
 		FDC2609D19B42D980010FF57 /* SDEGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */; };
 		FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
 		FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
@@ -2233,10 +2255,6 @@
 		FD8D098E19BBFBAA007EF122 /* workers-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "workers-75.png"; sourceTree = "<group>"; };
 		FD8D0C7219BDFC30007EF122 /* SDEGalleryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryModel.h; sourceTree = "<group>"; };
 		FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryModel.m; sourceTree = "<group>"; };
-		FD8D0C7519BE9B20007EF122 /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
-		FD8D0C7619BE9B20007EF122 /* bg4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg4.jpg; sourceTree = "<group>"; };
-		FD8D0C7719BE9B20007EF122 /* bg3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg3.jpg; sourceTree = "<group>"; };
-		FD8D0C7819BE9B20007EF122 /* bg2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg2.jpg; sourceTree = "<group>"; };
 		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
 		FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonGalleryViewController.h; sourceTree = "<group>"; };
 		FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonGalleryViewController.m; sourceTree = "<group>"; };
@@ -2253,6 +2271,26 @@
 		FDBF6EE019D1385900352DFA /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = FaceAlbum/LineLayout.h; sourceTree = "<group>"; };
 		FDBF6EE119D1385900352DFA /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineLayout.m; path = FaceAlbum/LineLayout.m; sourceTree = "<group>"; };
 		FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
+		FDBF6F2519D2B50A00352DFA /* GridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridLayout.m; path = Layout/GridLayout.m; sourceTree = "<group>"; };
+		FDBF6F2619D2B50A00352DFA /* StacksLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StacksLayout.m; path = Layout/StacksLayout.m; sourceTree = "<group>"; };
+		FDBF6F2719D2B50A00352DFA /* CoverFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoverFlowLayout.m; path = Layout/CoverFlowLayout.m; sourceTree = "<group>"; };
+		FDBF6F2819D2B50A00352DFA /* SpiralLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpiralLayout.m; path = Layout/SpiralLayout.m; sourceTree = "<group>"; };
+		FDBF6F2919D2B50A00352DFA /* AlbumLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumLayoutAttributes.m; path = Layout/AlbumLayoutAttributes.m; sourceTree = "<group>"; };
+		FDBF6F2A19D2B50A00352DFA /* AlbumLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumLayoutAttributes.h; path = Layout/AlbumLayoutAttributes.h; sourceTree = "<group>"; };
+		FDBF6F2B19D2B50A00352DFA /* CoverFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoverFlowLayout.h; path = Layout/CoverFlowLayout.h; sourceTree = "<group>"; };
+		FDBF6F2C19D2B50A00352DFA /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridLayout.h; path = Layout/GridLayout.h; sourceTree = "<group>"; };
+		FDBF6F2D19D2B50A00352DFA /* SpiralLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpiralLayout.h; path = Layout/SpiralLayout.h; sourceTree = "<group>"; };
+		FDBF6F2E19D2B50A00352DFA /* StacksLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StacksLayout.h; path = Layout/StacksLayout.h; sourceTree = "<group>"; };
+		FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Aged-Paper.png"; sourceTree = "<group>"; };
+		FDBF6F3B19D2D8E700352DFA /* Aged-Paper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Aged-Paper@2x.png"; sourceTree = "<group>"; };
+		FDBF6F3C19D2D8E700352DFA /* Apple-Wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple-Wood.png"; sourceTree = "<group>"; };
+		FDBF6F3D19D2D8E700352DFA /* Apple-Wood@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple-Wood@2x.png"; sourceTree = "<group>"; };
+		FDBF6F3E19D2D8E700352DFA /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
+		FDBF6F3F19D2D8E700352DFA /* bg2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg2.jpg; sourceTree = "<group>"; };
+		FDBF6F4019D2D8E700352DFA /* bg3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg3.jpg; sourceTree = "<group>"; };
+		FDBF6F4119D2D8E700352DFA /* bg4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg4.jpg; sourceTree = "<group>"; };
+		FDBF6F4219D2D8E700352DFA /* Wood-Planks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wood-Planks.png"; sourceTree = "<group>"; };
+		FDBF6F4319D2D8E700352DFA /* Wood-Planks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wood-Planks@2x.png"; sourceTree = "<group>"; };
 		FDC2609B19B42D980010FF57 /* SDEGalleryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryCell.h; sourceTree = "<group>"; };
 		FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryCell.m; sourceTree = "<group>"; };
 		FDC2609E19B433F80010FF57 /* SDEPortraitLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPortraitLayout.h; sourceTree = "<group>"; };
@@ -2309,13 +2347,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FD1164E219A87B7A00C1A41F /* LineLayout */ = {
+		FD1164E219A87B7A00C1A41F /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				FDBF6F2A19D2B50A00352DFA /* AlbumLayoutAttributes.h */,
+				FDBF6F2919D2B50A00352DFA /* AlbumLayoutAttributes.m */,
+				FDBF6F2C19D2B50A00352DFA /* GridLayout.h */,
+				FDBF6F2519D2B50A00352DFA /* GridLayout.m */,
+				FDBF6F2E19D2B50A00352DFA /* StacksLayout.h */,
+				FDBF6F2619D2B50A00352DFA /* StacksLayout.m */,
+				FDBF6F2B19D2B50A00352DFA /* CoverFlowLayout.h */,
+				FDBF6F2719D2B50A00352DFA /* CoverFlowLayout.m */,
+				FDBF6F2D19D2B50A00352DFA /* SpiralLayout.h */,
+				FDBF6F2819D2B50A00352DFA /* SpiralLayout.m */,
 				FDBF6EE019D1385900352DFA /* LineLayout.h */,
 				FDBF6EE119D1385900352DFA /* LineLayout.m */,
 			);
-			name = LineLayout;
+			name = Layout;
 			sourceTree = "<group>";
 		};
 		FD4131281997050A00141578 /* ScanRoom */ = {
@@ -2521,8 +2569,7 @@
 		FD67D8F6197DFD8900D2CCDA /* ThirdPackage */ = {
 			isa = PBXGroup;
 			children = (
-				FDBF6EEC19D1388B00352DFA /* CoverFlowLayout */,
-				FD1164E219A87B7A00C1A41F /* LineLayout */,
+				FD1164E219A87B7A00C1A41F /* Layout */,
 				FD67D8B6197DFD4A00D2CCDA /* FaceppSDK */,
 				FD67D8DD197DFD6100D2CCDA /* FaceppLocalDetector */,
 				FD67D8F7197E03EE00D2CCDA /* LXReorderableCollectionViewFlowLayout */,
@@ -3918,10 +3965,7 @@
 		FD9590411985FA76001C2345 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FD8D0C7519BE9B20007EF122 /* bg1.jpg */,
-				FD8D0C7619BE9B20007EF122 /* bg4.jpg */,
-				FD8D0C7719BE9B20007EF122 /* bg3.jpg */,
-				FD8D0C7819BE9B20007EF122 /* bg2.jpg */,
+				FDBF6F3919D2D8E700352DFA /* Background */,
 				FD8D06A219BBFBA8007EF122 /* Photo_Video */,
 				FD8D089219BBFBAA007EF122 /* Users */,
 				FD3802B51981040100AE51DF /* Main_iPad.storyboard */,
@@ -3932,11 +3976,21 @@
 			path = FaceAlbum;
 			sourceTree = "<group>";
 		};
-		FDBF6EEC19D1388B00352DFA /* CoverFlowLayout */ = {
+		FDBF6F3919D2D8E700352DFA /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */,
+				FDBF6F3B19D2D8E700352DFA /* Aged-Paper@2x.png */,
+				FDBF6F3C19D2D8E700352DFA /* Apple-Wood.png */,
+				FDBF6F3D19D2D8E700352DFA /* Apple-Wood@2x.png */,
+				FDBF6F3E19D2D8E700352DFA /* bg1.jpg */,
+				FDBF6F3F19D2D8E700352DFA /* bg2.jpg */,
+				FDBF6F4019D2D8E700352DFA /* bg3.jpg */,
+				FDBF6F4119D2D8E700352DFA /* bg4.jpg */,
+				FDBF6F4219D2D8E700352DFA /* Wood-Planks.png */,
+				FDBF6F4319D2D8E700352DFA /* Wood-Planks@2x.png */,
 			);
-			name = CoverFlowLayout;
+			path = Background;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -4072,6 +4126,7 @@
 				FD8D0BD719BBFBAB007EF122 /* user_female-100.png in Resources */,
 				FD8D0AFC19BBFBAB007EF122 /* slr_large_lens_filled-50.png in Resources */,
 				FD8D09F319BBFBAA007EF122 /* edit_image-32.png in Resources */,
+				FDBF6F5219D2D8E700352DFA /* bg4.jpg in Resources */,
 				FD8D099D19BBFBAA007EF122 /* add_image_filled-512.png in Resources */,
 				FD8D0A2E19BBFBAA007EF122 /* integrated_webcam_filled-75.png in Resources */,
 				FD8D0B5F19BBFBAB007EF122 /* checked_user-100.png in Resources */,
@@ -4106,6 +4161,7 @@
 				FD8D0B1319BBFBAB007EF122 /* small_lens-32.png in Resources */,
 				FD8D0B8419BBFBAB007EF122 /* edit_user-50.png in Resources */,
 				FD8D0B0C19BBFBAB007EF122 /* slr_small_lens_filled-50.png in Resources */,
+				FDBF6F4419D2D8E700352DFA /* Aged-Paper.png in Resources */,
 				FD8D0C0119BBFBAB007EF122 /* user_male2-25.png in Resources */,
 				FD8D0A1019BBFBAA007EF122 /* gallery-128.png in Resources */,
 				FD8D09A619BBFBAA007EF122 /* cable_release-75.png in Resources */,
@@ -4147,6 +4203,7 @@
 				FD8D0B3519BBFBAB007EF122 /* stack_of_photos_filled-512.png in Resources */,
 				FD8D0AAD19BBFBAB007EF122 /* rotate_camera_filled-512.png in Resources */,
 				FD8D0A1C19BBFBAA007EF122 /* gallery_filled-50.png in Resources */,
+				FDBF6F5619D2D8E700352DFA /* Wood-Planks@2x.png in Resources */,
 				FD8D0B7319BBFBAB007EF122 /* cook-32.png in Resources */,
 				FD8D0C0019BBFBAB007EF122 /* user_male2-128.png in Resources */,
 				FD8D0A3919BBFBAA007EF122 /* large_lens-25.png in Resources */,
@@ -4158,6 +4215,7 @@
 				FD8D0BFC19BBFBAB007EF122 /* user_male-50.png in Resources */,
 				FD8D0A5619BBFBAA007EF122 /* multiple_cameras-75.png in Resources */,
 				FD8D0BF019BBFBAB007EF122 /* user_female4-128.png in Resources */,
+				FDBF6F5419D2D8E700352DFA /* Wood-Planks.png in Resources */,
 				FD8D0B8D19BBFBAB007EF122 /* farmer-512.png in Resources */,
 				FD8D09C119BBFBAA007EF122 /* camcoder_pro_filled-25.png in Resources */,
 				FD8D0B8819BBFBAB007EF122 /* farmer-128.png in Resources */,
@@ -4183,8 +4241,6 @@
 				FD8D09E319BBFBAA007EF122 /* clipperboard-32.png in Resources */,
 				FD8D0AF619BBFBAB007EF122 /* slr_large_lens-75.png in Resources */,
 				FD8D0A5019BBFBAA007EF122 /* multiple_cameras-128.png in Resources */,
-				FD8D0C7A19BE9B20007EF122 /* bg4.jpg in Resources */,
-				FD8D0C7919BE9B20007EF122 /* bg1.jpg in Resources */,
 				FD8D09E919BBFBAA007EF122 /* close_up_mode-25.png in Resources */,
 				FD8D0A8319BBFBAB007EF122 /* photo-32.png in Resources */,
 				FD8D0AFE19BBFBAB007EF122 /* slr_large_lens_filled-75.png in Resources */,
@@ -4249,7 +4305,6 @@
 				FD8D09AA19BBFBAA007EF122 /* camcoder-256.png in Resources */,
 				FD8D0B6819BBFBAB007EF122 /* conference-128.png in Resources */,
 				FD8D09D019BBFBAA007EF122 /* camera_addon_identification-128.png in Resources */,
-				FD8D0C7B19BE9B20007EF122 /* bg3.jpg in Resources */,
 				FD8D0ABF19BBFBAB007EF122 /* slr_camera-100.png in Resources */,
 				FD8D0B5219BBFBAB007EF122 /* administrator-256.png in Resources */,
 				FD8D0AA219BBFBAB007EF122 /* rotate_camera-256.png in Resources */,
@@ -4335,6 +4390,7 @@
 				FD8D0C1C19BBFBAB007EF122 /* worker-50.png in Resources */,
 				FD8D0B9219BBFBAB007EF122 /* find_user-256.png in Resources */,
 				FD8D0B9A19BBFBAB007EF122 /* fireman-256.png in Resources */,
+				FDBF6F4C19D2D8E700352DFA /* bg1.jpg in Resources */,
 				FD8D0BDC19BBFBAB007EF122 /* user_female-50.png in Resources */,
 				FD8D0B0B19BBFBAB007EF122 /* slr_small_lens_filled-32.png in Resources */,
 				FD8D0A8219BBFBAB007EF122 /* photo-256.png in Resources */,
@@ -4372,6 +4428,7 @@
 				FD8D0B8A19BBFBAB007EF122 /* farmer-256.png in Resources */,
 				FD8D09BD19BBFBAA007EF122 /* camcoder_pro-512.png in Resources */,
 				FD8D0A4A19BBFBAA007EF122 /* movie-256.png in Resources */,
+				FDBF6F4819D2D8E700352DFA /* Apple-Wood.png in Resources */,
 				FD8D0B5D19BBFBAB007EF122 /* change_user-512.png in Resources */,
 				FD8D0BC419BBFBAB007EF122 /* remove_user-50.png in Resources */,
 				FD8D0A8F19BBFBAB007EF122 /* remove_image-100.png in Resources */,
@@ -4404,6 +4461,7 @@
 				FD8D0BA219BBFBAB007EF122 /* group-256.png in Resources */,
 				FD8D0B5019BBFBAB007EF122 /* administrator-128.png in Resources */,
 				FD8D0BBD19BBFBAB007EF122 /* policeman-512.png in Resources */,
+				FDBF6F4E19D2D8E700352DFA /* bg2.jpg in Resources */,
 				FD8D0B0319BBFBAB007EF122 /* slr_small_lens-32.png in Resources */,
 				FD8D09F819BBFBAA007EF122 /* edit_image_filled-128.png in Resources */,
 				FD8D09E519BBFBAA007EF122 /* clipperboard-512.png in Resources */,
@@ -4562,6 +4620,7 @@
 				FD8D0AF019BBFBAB007EF122 /* slr_large_lens-128.png in Resources */,
 				FD8D0A4419BBFBAA007EF122 /* large_lens_filled-50.png in Resources */,
 				FD8D09C819BBFBAA007EF122 /* camera_addon-128.png in Resources */,
+				FDBF6F4A19D2D8E700352DFA /* Apple-Wood@2x.png in Resources */,
 				FD8D09DB19BBFBAA007EF122 /* camera_identification-32.png in Resources */,
 				FD8D0B6219BBFBAB007EF122 /* checked_user-256.png in Resources */,
 				FD8D0ABE19BBFBAB007EF122 /* slr_back_side_filled-75.png in Resources */,
@@ -4633,6 +4692,7 @@
 				FD8D0BC519BBFBAB007EF122 /* remove_user-512.png in Resources */,
 				FD8D0B4719BBFBAB007EF122 /* add_user-100.png in Resources */,
 				FD8D0B7419BBFBAB007EF122 /* cook-50.png in Resources */,
+				FDBF6F5019D2D8E700352DFA /* bg3.jpg in Resources */,
 				FD8D0B4619BBFBAB007EF122 /* switch_camera_filled-75.png in Resources */,
 				FD8D0C0719BBFBAB007EF122 /* user_male3-100.png in Resources */,
 				FD8D0A8819BBFBAB007EF122 /* portrait_mode-128.png in Resources */,
@@ -4653,6 +4713,7 @@
 				FD8D0A8D19BBFBAB007EF122 /* portrait_mode-512.png in Resources */,
 				FD8D0BBE19BBFBAB007EF122 /* policeman-75.png in Resources */,
 				FD8D0B2619BBFBAB007EF122 /* sports_mode-75.png in Resources */,
+				FDBF6F4619D2D8E700352DFA /* Aged-Paper@2x.png in Resources */,
 				FD8D0A1319BBFBAA007EF122 /* gallery-32.png in Resources */,
 				FD8D0B8619BBFBAB007EF122 /* edit_user-75.png in Resources */,
 				FD8D0B5819BBFBAB007EF122 /* change_user-128.png in Resources */,
@@ -4686,7 +4747,6 @@
 				FD8D0B1D19BBFBAB007EF122 /* small_lens_filled-512.png in Resources */,
 				FD8D0A0219BBFBAA007EF122 /* film_reel-256.png in Resources */,
 				FD8D0A9C19BBFBAB007EF122 /* remove_image_filled-50.png in Resources */,
-				FD8D0C7C19BE9B20007EF122 /* bg2.jpg in Resources */,
 				FD8D0AC219BBFBAB007EF122 /* slr_camera-256.png in Resources */,
 				FD8D0BFD19BBFBAB007EF122 /* user_male-512.png in Resources */,
 				FD8D0AF119BBFBAB007EF122 /* slr_large_lens-25.png in Resources */,
@@ -4761,6 +4821,7 @@
 				FDBF6C4C19D1038000352DFA /* user_female-100.png in Resources */,
 				FDBF6C4D19D1038000352DFA /* slr_large_lens_filled-50.png in Resources */,
 				FDBF6C4E19D1038000352DFA /* edit_image-32.png in Resources */,
+				FDBF6F5319D2D8E700352DFA /* bg4.jpg in Resources */,
 				FDBF6C4F19D1038000352DFA /* add_image_filled-512.png in Resources */,
 				FDBF6C5019D1038000352DFA /* integrated_webcam_filled-75.png in Resources */,
 				FDBF6C5119D1038000352DFA /* checked_user-100.png in Resources */,
@@ -4795,6 +4856,7 @@
 				FDBF6C6E19D1038000352DFA /* small_lens-32.png in Resources */,
 				FDBF6C6F19D1038000352DFA /* edit_user-50.png in Resources */,
 				FDBF6C7019D1038000352DFA /* slr_small_lens_filled-50.png in Resources */,
+				FDBF6F4519D2D8E700352DFA /* Aged-Paper.png in Resources */,
 				FDBF6C7119D1038000352DFA /* user_male2-25.png in Resources */,
 				FDBF6C7219D1038000352DFA /* gallery-128.png in Resources */,
 				FDBF6C7319D1038000352DFA /* cable_release-75.png in Resources */,
@@ -4836,6 +4898,7 @@
 				FDBF6C9719D1038000352DFA /* stack_of_photos_filled-512.png in Resources */,
 				FDBF6C9819D1038000352DFA /* rotate_camera_filled-512.png in Resources */,
 				FDBF6C9919D1038000352DFA /* gallery_filled-50.png in Resources */,
+				FDBF6F5719D2D8E700352DFA /* Wood-Planks@2x.png in Resources */,
 				FDBF6C9A19D1038000352DFA /* cook-32.png in Resources */,
 				FDBF6C9B19D1038000352DFA /* user_male2-128.png in Resources */,
 				FDBF6C9C19D1038000352DFA /* large_lens-25.png in Resources */,
@@ -4847,6 +4910,7 @@
 				FDBF6CA219D1038000352DFA /* user_male-50.png in Resources */,
 				FDBF6CA319D1038000352DFA /* multiple_cameras-75.png in Resources */,
 				FDBF6CA419D1038000352DFA /* user_female4-128.png in Resources */,
+				FDBF6F5519D2D8E700352DFA /* Wood-Planks.png in Resources */,
 				FDBF6CA519D1038000352DFA /* farmer-512.png in Resources */,
 				FDBF6CA619D1038000352DFA /* camcoder_pro_filled-25.png in Resources */,
 				FDBF6CA719D1038000352DFA /* farmer-128.png in Resources */,
@@ -4872,8 +4936,6 @@
 				FDBF6CBB19D1038000352DFA /* clipperboard-32.png in Resources */,
 				FDBF6CBC19D1038000352DFA /* slr_large_lens-75.png in Resources */,
 				FDBF6CBD19D1038000352DFA /* multiple_cameras-128.png in Resources */,
-				FDBF6CBE19D1038000352DFA /* bg4.jpg in Resources */,
-				FDBF6CBF19D1038000352DFA /* bg1.jpg in Resources */,
 				FDBF6CC019D1038000352DFA /* close_up_mode-25.png in Resources */,
 				FDBF6CC119D1038000352DFA /* photo-32.png in Resources */,
 				FDBF6CC219D1038000352DFA /* slr_large_lens_filled-75.png in Resources */,
@@ -4938,7 +5000,6 @@
 				FDBF6CFD19D1038000352DFA /* camcoder-256.png in Resources */,
 				FDBF6CFE19D1038000352DFA /* conference-128.png in Resources */,
 				FDBF6CFF19D1038000352DFA /* camera_addon_identification-128.png in Resources */,
-				FDBF6D0019D1038000352DFA /* bg3.jpg in Resources */,
 				FDBF6D0119D1038000352DFA /* slr_camera-100.png in Resources */,
 				FDBF6D0219D1038000352DFA /* administrator-256.png in Resources */,
 				FDBF6D0319D1038000352DFA /* rotate_camera-256.png in Resources */,
@@ -5024,6 +5085,7 @@
 				FDBF6D5319D1038000352DFA /* worker-50.png in Resources */,
 				FDBF6D5419D1038000352DFA /* find_user-256.png in Resources */,
 				FDBF6D5519D1038000352DFA /* fireman-256.png in Resources */,
+				FDBF6F4D19D2D8E700352DFA /* bg1.jpg in Resources */,
 				FDBF6D5619D1038000352DFA /* user_female-50.png in Resources */,
 				FDBF6D5719D1038000352DFA /* slr_small_lens_filled-32.png in Resources */,
 				FDBF6D5819D1038000352DFA /* photo-256.png in Resources */,
@@ -5061,6 +5123,7 @@
 				FDBF6D7819D1038000352DFA /* farmer-256.png in Resources */,
 				FDBF6D7919D1038000352DFA /* camcoder_pro-512.png in Resources */,
 				FDBF6D7A19D1038000352DFA /* movie-256.png in Resources */,
+				FDBF6F4919D2D8E700352DFA /* Apple-Wood.png in Resources */,
 				FDBF6D7B19D1038000352DFA /* change_user-512.png in Resources */,
 				FDBF6D7C19D1038000352DFA /* remove_user-50.png in Resources */,
 				FDBF6D7D19D1038000352DFA /* remove_image-100.png in Resources */,
@@ -5093,6 +5156,7 @@
 				FDBF6D9819D1038000352DFA /* group-256.png in Resources */,
 				FDBF6D9919D1038000352DFA /* administrator-128.png in Resources */,
 				FDBF6D9A19D1038000352DFA /* policeman-512.png in Resources */,
+				FDBF6F4F19D2D8E700352DFA /* bg2.jpg in Resources */,
 				FDBF6D9B19D1038000352DFA /* slr_small_lens-32.png in Resources */,
 				FDBF6D9C19D1038000352DFA /* edit_image_filled-128.png in Resources */,
 				FDBF6D9D19D1038000352DFA /* clipperboard-512.png in Resources */,
@@ -5251,6 +5315,7 @@
 				FDBF6E3619D1038000352DFA /* slr_large_lens-128.png in Resources */,
 				FDBF6E3719D1038000352DFA /* large_lens_filled-50.png in Resources */,
 				FDBF6E3819D1038000352DFA /* camera_addon-128.png in Resources */,
+				FDBF6F4B19D2D8E700352DFA /* Apple-Wood@2x.png in Resources */,
 				FDBF6E3919D1038000352DFA /* camera_identification-32.png in Resources */,
 				FDBF6E3A19D1038000352DFA /* checked_user-256.png in Resources */,
 				FDBF6E3B19D1038000352DFA /* slr_back_side_filled-75.png in Resources */,
@@ -5322,6 +5387,7 @@
 				FDBF6E7D19D1038000352DFA /* remove_user-512.png in Resources */,
 				FDBF6E7E19D1038000352DFA /* add_user-100.png in Resources */,
 				FDBF6E7F19D1038000352DFA /* cook-50.png in Resources */,
+				FDBF6F5119D2D8E700352DFA /* bg3.jpg in Resources */,
 				FDBF6E8019D1038000352DFA /* switch_camera_filled-75.png in Resources */,
 				FDBF6E8119D1038000352DFA /* user_male3-100.png in Resources */,
 				FDBF6E8219D1038000352DFA /* portrait_mode-128.png in Resources */,
@@ -5342,6 +5408,7 @@
 				FDBF6E9119D1038000352DFA /* portrait_mode-512.png in Resources */,
 				FDBF6E9219D1038000352DFA /* policeman-75.png in Resources */,
 				FDBF6E9319D1038000352DFA /* sports_mode-75.png in Resources */,
+				FDBF6F4719D2D8E700352DFA /* Aged-Paper@2x.png in Resources */,
 				FDBF6E9419D1038000352DFA /* gallery-32.png in Resources */,
 				FDBF6E9519D1038000352DFA /* edit_user-75.png in Resources */,
 				FDBF6E9619D1038000352DFA /* change_user-128.png in Resources */,
@@ -5375,7 +5442,6 @@
 				FDBF6EB219D1038000352DFA /* small_lens_filled-512.png in Resources */,
 				FDBF6EB319D1038000352DFA /* film_reel-256.png in Resources */,
 				FDBF6EB419D1038000352DFA /* remove_image_filled-50.png in Resources */,
-				FDBF6EB519D1038000352DFA /* bg2.jpg in Resources */,
 				FDBF6EB619D1038000352DFA /* slr_camera-256.png in Resources */,
 				FDBF6EB719D1038000352DFA /* user_male-512.png in Resources */,
 				FDBF6EB819D1038000352DFA /* slr_large_lens-25.png in Resources */,
@@ -5415,6 +5481,7 @@
 				FD67D8D3197DFD4A00D2CCDA /* FaceppDetection.m in Sources */,
 				FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */,
 				FD67D8DA197DFD4A00D2CCDA /* FaceppTrainer.m in Sources */,
+				FDBF6F3119D2B50A00352DFA /* StacksLayout.m in Sources */,
 				FD8D0C7419BDFC30007EF122 /* SDEGalleryModel.m in Sources */,
 				FD67D8DC197DFD4A00D2CCDA /* FaceppResult.m in Sources */,
 				FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */,
@@ -5424,10 +5491,12 @@
 				FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */,
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
 				FDC2609D19B42D980010FF57 /* SDEGalleryCell.m in Sources */,
+				FDBF6F3519D2B50A00352DFA /* SpiralLayout.m in Sources */,
 				FD67D8FA197E03EE00D2CCDA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
 				FD67D8D7197DFD4A00D2CCDA /* FaceppInfo.m in Sources */,
 				FD67D8DB197DFD4A00D2CCDA /* FaceppError.m in Sources */,
 				FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */,
+				FDBF6F3319D2B50A00352DFA /* CoverFlowLayout.m in Sources */,
 				FD67D8D4197DFD4A00D2CCDA /* FaceppFaceset.m in Sources */,
 				FDBF6EE219D1385900352DFA /* LineLayout.m in Sources */,
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
@@ -5441,6 +5510,7 @@
 				FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */,
 				FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */,
 				FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */,
+				FDBF6F2F19D2B50A00352DFA /* GridLayout.m in Sources */,
 				FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */,
 				FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */,
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
@@ -5452,6 +5522,7 @@
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
 				FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
 				FD67D8D1197DFD4A00D2CCDA /* FaceppAPI.m in Sources */,
+				FDBF6F3719D2B50A00352DFA /* AlbumLayoutAttributes.m in Sources */,
 				FD41313E1997541300141578 /* SDEPAVCDataSource.m in Sources */,
 				FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */,
 				FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */,
@@ -5475,6 +5546,7 @@
 				FDBF6BF719D1038000352DFA /* FaceppDetection.m in Sources */,
 				FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */,
 				FDBF6BF919D1038000352DFA /* FaceppTrainer.m in Sources */,
+				FDBF6F3219D2B50A00352DFA /* StacksLayout.m in Sources */,
 				FDBF6BFB19D1038000352DFA /* SDEGalleryModel.m in Sources */,
 				FDBF6BFC19D1038000352DFA /* FaceppResult.m in Sources */,
 				FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */,
@@ -5484,10 +5556,12 @@
 				FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */,
 				FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */,
 				FDBF6C0319D1038000352DFA /* SDEGalleryCell.m in Sources */,
+				FDBF6F3619D2B50A00352DFA /* SpiralLayout.m in Sources */,
 				FDBF6C0419D1038000352DFA /* SDEReorderableCollectionViewFlowLayout.m in Sources */,
 				FDBF6C0519D1038000352DFA /* FaceppInfo.m in Sources */,
 				FDBF6C0619D1038000352DFA /* FaceppError.m in Sources */,
 				FDBF6C0719D1038000352DFA /* SDEPersonProfileHeaderView.m in Sources */,
+				FDBF6F3419D2B50A00352DFA /* CoverFlowLayout.m in Sources */,
 				FDBF6C0819D1038000352DFA /* FaceppFaceset.m in Sources */,
 				FDBF6EE319D1385900352DFA /* LineLayout.m in Sources */,
 				FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */,
@@ -5501,6 +5575,7 @@
 				FDBF6C1119D1038000352DFA /* SDEPersonGalleryViewController.m in Sources */,
 				FDBF6C1219D1038000352DFA /* FaceppGroup.m in Sources */,
 				FDBF6C1319D1038000352DFA /* FaceppClient.m in Sources */,
+				FDBF6F3019D2B50A00352DFA /* GridLayout.m in Sources */,
 				FDBF6C1419D1038000352DFA /* FaceppGrouping.m in Sources */,
 				FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */,
 				FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */,
@@ -5512,6 +5587,7 @@
 				FDBF6C1D19D1038000352DFA /* Store.m in Sources */,
 				FDBF6EDF19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
 				FDBF6C1E19D1038000352DFA /* FaceppAPI.m in Sources */,
+				FDBF6F3819D2B50A00352DFA /* AlbumLayoutAttributes.m in Sources */,
 				FDBF6C1F19D1038000352DFA /* SDEPAVCDataSource.m in Sources */,
 				FDBF6C2019D1038000352DFA /* SDEMontageRoomViewController.m in Sources */,
 				FDBF6C2119D1038000352DFA /* SDEAvatorOverlayView.m in Sources */,

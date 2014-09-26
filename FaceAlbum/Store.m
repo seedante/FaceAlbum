@@ -7,11 +7,12 @@
 //
 
 #import "Store.h"
+#import "Person.h"
 
 @interface Store ()
 
 @property (nonatomic, readwrite) NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic, readwrite) Person *FacelessMan;
 @end
 
 @implementation Store
@@ -39,6 +40,25 @@
     if(error)
         NSLog(@"error: %@", error);
     self.managedObjectContext.persistentStoreCoordinator = psc;
+    
+    //check if exist FacelessMan, if not, create it.
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    [defaultConfig registerDefaults:@{@"FacelessMan": @NO}];
+    [defaultConfig synchronize];
+    
+    BOOL isFacelessManExisted = [defaultConfig boolForKey:@"FacelessMan"];
+    if (!isFacelessManExisted) {
+        Person *FacelessMan = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
+        FacelessMan.order = 0;
+        FacelessMan.name = @"UnKnown";
+        FacelessMan.personID = @"FacelessMan";
+        FacelessMan.whetherToDisplay = YES;
+        FacelessMan.faceCount = 0;
+        FacelessMan.photoCount = 0;
+        [self.managedObjectContext save:nil];
+        [defaultConfig setBool:YES forKey:@"FacelessMan"];
+        [defaultConfig synchronize];
+    }
 }
 
 - (NSFetchedResultsController *)faceFetchedResultsController

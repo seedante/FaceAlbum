@@ -47,13 +47,13 @@ UIImage *(^resizeToCGSize)(CGImageRef sourceCGImage, CGSize targetSize) = ^UIIma
 
 CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
     CGRect headBound;
-    float x = faceBound.origin.x - faceBound.size.width*0.5;
-    float y = faceBound.origin.y - faceBound.size.height*0.7;
+    float x = faceBound.origin.x - faceBound.size.width;
+    float y = faceBound.origin.y - faceBound.size.height;
     headBound.origin.x = x > 0.0?x:0.0;
     headBound.origin.y = y > 0.0?y:0.0;
     
-    float width = faceBound.size.width * 2.0;
-    float height = faceBound.size.height * 2.0;
+    float width = faceBound.size.width * 3.0;
+    float height = faceBound.size.height * 3.0;
     if (width + x > imageSize.width) {
         width = imageSize.width - x;
     }
@@ -74,7 +74,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     headBound.origin.y = y > 0.0?y:0.0;
     
     float width = faceBound.size.width * 3.0;
-    float height = faceBound.size.height * 3.0;
+    float height = faceBound.size.height * 4.0;
     if (width + x > imageSize.width) {
         width = imageSize.width - x;
     }
@@ -341,6 +341,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                 newFace.photoOwner = newPhoto;
                 newFace.assetURLString = newPhoto.uniqueURLString;
                 newFace.pathForBackup = savePath;
+                newFace.name = @"Unknown";
             }
             newPhoto.faceCount = (int32_t)detectResult.faces.count;
             newPhoto.whetherToDisplay = YES;

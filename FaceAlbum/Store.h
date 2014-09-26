@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Person;
 
 @interface Store : NSObject
 
@@ -14,6 +15,7 @@
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 @property (nonatomic) NSFetchedResultsController *personFetchedResultsController;
 @property (nonatomic) NSFetchedResultsController *photoFetchedResultsController;
+@property (nonatomic, readonly) Person *FacelessMan;
 
 + (Store *)sharedStore;
 - (void)setupStoreWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;

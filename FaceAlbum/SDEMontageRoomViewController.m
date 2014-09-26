@@ -447,7 +447,6 @@ typedef enum {
     [self unenableLeftBarButtonItems];
     
     [self.collectionView setContentInset:UIEdgeInsetsMake(164.0f, 0.0f, 0.0f, 0.0f)];
-    //[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 
 - (UICollectionView *)candidateView
@@ -604,6 +603,9 @@ typedef enum {
                     if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
                         NSLog(@"JUST FOR TEST");
                         selectedFaceItem.personOwner = selectedPerson;
+                        if (selectedPerson.name.length > 0) {
+                            selectedFaceItem.name = selectedPerson.name;
+                        }
                     }
                 }
             }
@@ -687,7 +689,13 @@ typedef enum {
             if (CGRectIntersectsRect(frame, rectInCollectionView)) {
                 //NSLog(@"Match at IndexPath: %@", currentIndexPath);
                 Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
+                if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
+                    personItem.name = self.activedField.text;
+                }
                 personItem.name = self.activedField.text;
+                for (Face *faceItem in personItem.ownedFaces) {
+                    faceItem.name = personItem.name;
+                }
                 [self saveEdit];
                 break;
             }

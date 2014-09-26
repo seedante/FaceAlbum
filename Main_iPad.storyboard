@@ -21,7 +21,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="134" width="100" height="100"/>
+                                <rect key="frame" x="50" y="70" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -725,7 +725,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cXo-XD-Ik9"/>
         <segue reference="fYU-IF-XFj"/>
+        <segue reference="mY8-Cd-IyR"/>
     </inferredMetricsTieBreakers>
 </document>
