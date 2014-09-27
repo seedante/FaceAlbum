@@ -61,6 +61,21 @@
     }
 }
 
+- (Person *)FacelessMan
+{
+    if (!_FacelessMan) {
+        NSFetchRequest *personFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order == 0"];
+        [personFetchRequest setPredicate:predicate];
+        NSArray *Persons = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];;
+        if (Persons && Persons.count == 1) {
+            _FacelessMan = (Person *)Persons.firstObject;
+        }else
+            NSLog(@"FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!");
+    }
+    return _FacelessMan;
+}
+
 - (NSFetchedResultsController *)faceFetchedResultsController
 {
     if (_faceFetchedResultsController != nil) {

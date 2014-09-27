@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *scanRoomButton;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 @property (weak, nonatomic) IBOutlet UIButton *MontageRoomButton;
+@property (weak, nonatomic) IBOutlet UIButton *actionCenterButton;
 
 
 - (IBAction)scanPhotoLibrary:(id)sender;

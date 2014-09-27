@@ -40,7 +40,6 @@ typedef enum: NSUInteger{
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 @property (nonatomic) NSFetchedResultsController *personFetchedResultsController;
 @property (nonatomic) UIPageViewController *pageViewController;
-@property (nonatomic) SDEGalleryModel *galleryModel;
 
 @property (nonatomic) NSInteger currentPortraitIndex;
 @property (nonatomic) NSInteger currentPageIndex;
@@ -197,8 +196,10 @@ typedef enum: NSUInteger{
         [self addChildViewController:_detailContentViewController];
         [_detailContentViewController didMoveToParentViewController:self];
         
-        CGRect contentRect = self.galleryView.frame;
-        NSLog(@"Gallery Height: %f", contentRect.size.height);
+        CGRect contentRect = self.view.frame;
+        contentRect.origin.y = self.galleryView.frame.origin.y;
+        contentRect.size.height = self.view.frame.size.height - self.galleryView.frame.origin.y;
+        NSLog(@"Detail Height: %f", contentRect.size.height);
         _detailContentViewController.collectionView.frame = contentRect;
         _detailContentViewController.collectionView.dataSource = self;
         _detailContentViewController.collectionView.delegate = self;
@@ -215,15 +216,6 @@ typedef enum: NSUInteger{
     }
     
     return _detailContentCollectionView;
-}
-
-- (SDEGalleryModel *)galleryModel
-{
-    if (!_galleryModel) {
-        _galleryModel = [[SDEGalleryModel alloc] init];
-    }
-    
-    return _galleryModel;
 }
 
 
@@ -330,7 +322,10 @@ typedef enum: NSUInteger{
                         self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
                     break;
                 case kPhotoType:
-                    self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
+                    if ([personItem.name isEqualToString:@"UnKnown"]) {
+                        self.nameTitle.text = @"UnKnown";
+                    }else
+                        self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
                     if (faceCount == 1){
                         self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
                     }else
@@ -482,7 +477,7 @@ typedef enum: NSUInteger{
             UICollectionViewController *currentVC = (UICollectionViewController *)[self.pageViewController.viewControllers firstObject];
             [currentVC.collectionView reloadData];
         }
-        //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
+        
         Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
         [self updateHeaderView:faceItem];
     }
@@ -625,6 +620,12 @@ typedef enum: NSUInteger{
                 //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
             }
             [self updateHeaderView:faceItem];
+            
+            [self.actionCenterButton setImage:[UIImage imageWithContentsOfFile:faceItem.pathForBackup] forState:UIControlStateNormal];
+            self.actionCenterButton.imageView.layer.cornerRadius = 22.0f;
+            self.actionCenterButton.imageView.clipsToBounds = YES;
+
+            self.buttonPanel.hidden = YES;
 
             break;
         }
@@ -632,11 +633,17 @@ typedef enum: NSUInteger{
             NSLog(@"Switch to Detail  Mode");
             self.currentLayoutType = DetailLineLayout;
             self.styleSwitch.hidden = YES;
+            self.actionCenterButton.hidden = YES;
+            if (!self.buttonPanel.hidden) {
+                self.buttonPanel.hidden = YES;
+                [self.buttonPanel hide];
+            }
             
             if ([self countForPageViewController] == 1) {
                 self.singlePageCollectionView.hidden = YES;
             }else
                 self.pageViewController.view.hidden = YES;
+            
             
             [self.view addSubview:self.detailContentCollectionView];
             [self.detailContentCollectionView reloadData];
@@ -694,10 +701,11 @@ typedef enum: NSUInteger{
         self.pageViewController.view.hidden = NO;
         [self.pageViewController.view removeFromSuperview];
     }
-
+    self.actionCenterButton.hidden = NO;
     self.galleryView.hidden = NO;
     self.styleSwitch.hidden = YES;
     self.currentPageIndex = 0;
+    
     if (self.pageViewController) {
         for (UIGestureRecognizer *gr in self.pageViewController.gestureRecognizers) {
             [self.view removeGestureRecognizer:gr];
@@ -730,7 +738,7 @@ typedef enum: NSUInteger{
             
             break;
         case DetailLineLayout:
-            edgeInsets = UIEdgeInsetsMake(20, 112, 20, 112);
+            edgeInsets = UIEdgeInsetsMake(0, 12, 0, 12);
             break;
     }
 
@@ -756,7 +764,7 @@ typedef enum: NSUInteger{
             break;
         }
         case DetailLineLayout:{
-            cellSize = CGSizeMake(800, 600);
+            cellSize = CGSizeMake(1000, 700);
             break;
         }
     }
@@ -801,7 +809,7 @@ typedef enum: NSUInteger{
             space = 5.0f;
             break;
         case DetailLineLayout:
-            space = 224.0f;
+            space = 24.0f;
             break;
         default:
             break;
@@ -891,6 +899,11 @@ typedef enum: NSUInteger{
         self.MontageRoomButton.highlighted = YES;
     }else
         self.MontageRoomButton.highlighted = NO;
+    
+    if (self.buttonPanel.hidden) {
+        self.buttonPanel.hidden = NO;
+        [self.buttonPanel hide];
+    }
     
     if (self.buttonPanel.isPopup) {
         [self.buttonPanel hide];

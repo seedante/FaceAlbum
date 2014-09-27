@@ -342,6 +342,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                 newFace.assetURLString = newPhoto.uniqueURLString;
                 newFace.pathForBackup = savePath;
                 newFace.name = @"Unknown";
+                newFace.personOwner = [[Store sharedStore] FacelessMan];
             }
             newPhoto.faceCount = (int32_t)detectResult.faces.count;
             newPhoto.whetherToDisplay = YES;

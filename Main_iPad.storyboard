@@ -21,7 +21,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="70" width="100" height="100"/>
+                                <rect key="frame" x="50" y="134" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -474,7 +474,7 @@
                                 </items>
                             </tabBar>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aLg-GC-xtf" firstAttribute="top" secondItem="rnY-7o-f2v" secondAttribute="top" id="07i-IA-bj4"/>
                             <constraint firstItem="1v0-U0-cER" firstAttribute="bottom" secondItem="X1P-qy-mgQ" secondAttribute="bottom" id="3ba-Ic-C4d"/>
@@ -496,6 +496,7 @@
                     <navigationItem key="navigationItem" id="KZ8-MX-rtE"/>
                     <connections>
                         <outlet property="MontageRoomButton" destination="hrR-ve-wZq" id="LaX-Lb-3J3"/>
+                        <outlet property="actionCenterButton" destination="WYX-9r-NlP" id="dqx-fJ-Gbh"/>
                         <outlet property="buttonPanel" destination="v3p-Pe-9PQ" id="m7J-a3-SvC"/>
                         <outlet property="galleryView" destination="4DC-Df-qHV" id="oDC-PA-ML5"/>
                         <outlet property="infoTitle" destination="Yhf-uc-2mr" id="dB6-n9-0GB"/>
@@ -532,7 +533,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zSX-2W-DG8">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CIMG0222.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="zSX-2W-DG8">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -708,6 +709,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CIMG0222.JPG" width="2816" height="1872"/>
         <image name="Smartisan.png" width="180" height="180"/>
         <image name="add_image-128.png" width="128" height="128"/>
         <image name="avator@weibo.jpg" width="180" height="180"/>
@@ -725,7 +727,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fYU-IF-XFj"/>
+        <segue reference="Tkb-Pv-zIQ"/>
         <segue reference="mY8-Cd-IyR"/>
     </inferredMetricsTieBreakers>
 </document>
