@@ -176,6 +176,7 @@ typedef enum: NSUInteger{
         _singlePageCollectionViewController.collectionView.frame = contentRect;
         _singlePageCollectionViewController.collectionView.dataSource = self;
         _singlePageCollectionViewController.collectionView.delegate = self;
+        [self.view addSubview:_singlePageCollectionViewController.collectionView];
         
     }
     return _singlePageCollectionViewController;
@@ -203,6 +204,7 @@ typedef enum: NSUInteger{
         _detailContentViewController.collectionView.frame = contentRect;
         _detailContentViewController.collectionView.dataSource = self;
         _detailContentViewController.collectionView.delegate = self;
+        [self.view addSubview:_detailContentViewController.collectionView];
     }
     
     return _detailContentViewController;
@@ -597,7 +599,6 @@ typedef enum: NSUInteger{
                 self.galleryView.hidden = YES;
                 self.styleSwitch.hidden = NO;
                 self.singlePageCollectionView.hidden = NO;
-                [self.view addSubview:self.singlePageCollectionView];
                 [self.singlePageCollectionView reloadData];
             }else{
                 UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
@@ -616,7 +617,7 @@ typedef enum: NSUInteger{
                 self.galleryView.hidden = YES;
                 self.styleSwitch.hidden = NO;
                 
-                [self.pageViewController didMoveToParentViewController:self];
+                //[self.pageViewController didMoveToParentViewController:self];
                 //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
             }
             [self updateHeaderView:faceItem];
@@ -640,9 +641,10 @@ typedef enum: NSUInteger{
             }
             
             if ([self countForPageViewController] == 1) {
-                self.singlePageCollectionView.hidden = YES;
+                //self.singlePageCollectionView.hidden = YES;
             }else
-                self.pageViewController.view.hidden = YES;
+                ;
+                //self.pageViewController.view.hidden = YES;
             
             
             [self.view addSubview:self.detailContentCollectionView];
@@ -682,6 +684,7 @@ typedef enum: NSUInteger{
             [self.detailContentCollectionView removeFromSuperview];
             self.nameTitle.text = @"";
             self.infoTitle.text = @"";
+            [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
             [self dismissAvatorView];
             break;
         }
@@ -695,11 +698,11 @@ typedef enum: NSUInteger{
 - (void)dismissAvatorView
 {
     if ([self countForPageViewController] == 1) {
-        self.singlePageCollectionView.hidden = NO;
-        [self.singlePageCollectionView removeFromSuperview];
+        self.singlePageCollectionView.hidden = YES;
+        //[self.singlePageCollectionView removeFromSuperview];
     }else{
-        self.pageViewController.view.hidden = NO;
-        [self.pageViewController.view removeFromSuperview];
+        self.pageViewController.view.hidden = YES;
+        //[self.pageViewController.view removeFromSuperview];
     }
     self.actionCenterButton.hidden = NO;
     self.galleryView.hidden = NO;
