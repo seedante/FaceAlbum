@@ -33,4 +33,9 @@
     UITextField *textField = (UITextField *)sender;
     [textField resignFirstResponder];
 }
+
+- (IBAction)selectAllAvators:(id)sender
+{
+    
+}
 @end

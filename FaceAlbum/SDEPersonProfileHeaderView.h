@@ -13,7 +13,10 @@
 @property (nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic) IBOutlet UILabel *numberLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *selectAllButton;
 
 
 - (IBAction)userEndInput:(id)sender;
+- (IBAction)selectAllAvators:(id)sender;
+
 @end

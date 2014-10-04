@@ -16,51 +16,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //choice one scene to show on the screen when app start.
-    
-    NSString *startSceneName = [self startScene];
-    NSLog(@"Start Scene: %@", startSceneName);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:startSceneName];
-    self.window.rootViewController = initialViewController;
+    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    //UINavigationController *initialViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"PersonGalleryNV"];
+    //self.window.rootViewController = initialViewController;
     Store *dataStore = [Store sharedStore];
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];
     _managedObjectContext = dataStore.managedObjectContext;
     
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    
+    //self.window.backgroundColor = [UIColor whiteColor];
+    //[self.window makeKeyAndVisible];
     return YES;
 }
 
-- (NSString *)startScene
-{
-    NSString *startScene;
-    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    [defaultConfig registerDefaults:@{@"isFirstScan": @YES}];
-    [defaultConfig registerDefaults:@{@"isGalleryOpened": @NO}];
-    [defaultConfig registerDefaults:@{@"shouldBeMontageRoom": @YES}];
-    [defaultConfig synchronize];
-    
-    BOOL isGalleryOpened = [defaultConfig boolForKey:@"isGalleryOpened"];
-    if (isGalleryOpened) {
-        startScene = @"PersonGalleryNV";
-        return startScene;
-    }
-    
-    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
-    if (isFirstScan) {
-        startScene = @"ScanRoomNV";
-        return startScene;
-    }
-
-    BOOL shouldBeMontageRoom = [defaultConfig boolForKey:@"shouldBeMontageRoom"];
-    if (shouldBeMontageRoom) {
-        startScene = @"MontageRoomNV";
-    }
-    return startScene;
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

@@ -79,6 +79,15 @@ typedef enum: NSUInteger{
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Aged-Paper"]];
     
+    NSString *startSceneName = [self startScene];
+    NSLog(@"Start Scene: %@", startSceneName);
+    if ([startSceneName isEqualToString:@"ScanRoom"]) {
+        UIViewController *scanRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
+        [self.navigationController pushViewController:scanRoomVC animated:NO];
+    }else if ([startSceneName isEqualToString:@"MontageRoom"]){
+        UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+        [self.navigationController pushViewController:montageRoomVC animated:NO];
+    }
     /*
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.view addGestureRecognizer:self.pinchGestureRecognizer];
@@ -86,8 +95,6 @@ typedef enum: NSUInteger{
     [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
     [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
     */
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     /*
     UIImage *startImage = [UIImage imageNamed:@"user_male2-50.png"];
@@ -103,8 +110,45 @@ typedef enum: NSUInteger{
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.buttonPanel.hidden = YES;
+    [self.galleryView reloadData];
     
 }
+
+- (NSString *)startScene
+{
+    NSString *startScene;
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    [defaultConfig registerDefaults:@{@"isFirstScan": @YES}];
+    [defaultConfig registerDefaults:@{@"isGalleryOpened": @NO}];
+    [defaultConfig registerDefaults:@{@"shouldBeMontageRoom": @YES}];
+    [defaultConfig synchronize];
+    
+    BOOL isGalleryOpened = [defaultConfig boolForKey:@"isGalleryOpened"];
+    if (isGalleryOpened) {
+        startScene = @"PersonGallery";
+        return startScene;
+    }
+    
+    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
+    if (isFirstScan) {
+        startScene = @"ScanRoom";
+        return startScene;
+    }
+    
+    BOOL shouldBeMontageRoom = [defaultConfig boolForKey:@"shouldBeMontageRoom"];
+    if (shouldBeMontageRoom) {
+        startScene = @"MontageRoom";
+    }
+    return startScene;
+}
+
+- (void)checkEmpty
+{
+    
+}
+
 - (SDENewPhotoDetector *)newPhotoDetector
 {
     if (!_newPhotoDetector) {
@@ -161,6 +205,8 @@ typedef enum: NSUInteger{
         _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
         _pageViewController.delegate = self;
         _pageViewController.dataSource = self;
+        [self addChildViewController:_pageViewController];
+        [_pageViewController didMoveToParentViewController:self];
     }
     return _pageViewController;
 }
@@ -205,6 +251,7 @@ typedef enum: NSUInteger{
         _detailContentViewController.collectionView.dataSource = self;
         _detailContentViewController.collectionView.delegate = self;
         [self.view addSubview:_detailContentViewController.collectionView];
+        _detailContentViewController.view.hidden = YES;
     }
     
     return _detailContentViewController;
@@ -315,24 +362,29 @@ typedef enum: NSUInteger{
             self.infoTitle.text = @"";
             break;
         case HorizontalGridLayout:{
-            switch (self.currentGridCellType) {
-                case kFaceType:
-                    self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                    if (faceCount == 1) {
-                        self.infoTitle.text = [NSString stringWithFormat:@"1 avator"];
-                    }else
-                        self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
-                    break;
-                case kPhotoType:
-                    if ([personItem.name isEqualToString:@"UnKnown"]) {
-                        self.nameTitle.text = @"UnKnown";
-                    }else
-                        self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
-                    if (faceCount == 1){
-                        self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
-                    }else
-                        self.infoTitle.text = [NSString stringWithFormat:@"%d Photos", faceCount];
-                    break;
+            if (personItem.name.length == 0) {
+                self.nameTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                self.infoTitle.text = @"";
+            }else{
+                switch (self.currentGridCellType) {
+                    case kFaceType:
+                        self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
+                        if (faceCount == 1) {
+                            self.infoTitle.text = [NSString stringWithFormat:@"1 avator"];
+                        }else
+                            self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                        break;
+                    case kPhotoType:
+                        if ([personItem.name isEqualToString:@"UnKnown"]) {
+                            self.nameTitle.text = @"UnKnown";
+                        }else
+                            self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
+                        if (faceCount == 1){
+                            self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
+                        }else
+                            self.infoTitle.text = [NSString stringWithFormat:@"%d Photos", faceCount];
+                        break;
+                }
             }
             break;
         }
@@ -584,20 +636,16 @@ typedef enum: NSUInteger{
             //Note: Must change layoutType before startingViewController, if not, startingViewController will get wrong data source
             self.currentLayoutType = HorizontalGridLayout;
             
-            //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
-            //NSUInteger numberOfAvators = [sectionInfo numberOfObjects];
-            //self.infoTitle.text = [NSString stringWithFormat:@"%lu avators", (unsigned long)numberOfAvators];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
-            //self.nameTitle.text = faceItem.personOwner.name;
             
             if (self.pageVCArray.count > 0) {
                 [self.pageVCArray removeAllObjects];
             }
             
+            self.galleryView.hidden = YES;
+            self.styleSwitch.hidden = NO;
             if ([self countForPageViewController] == 1) {
                 NSLog(@"Single Page Mode");
-                self.galleryView.hidden = YES;
-                self.styleSwitch.hidden = NO;
                 self.singlePageCollectionView.hidden = NO;
                 [self.singlePageCollectionView reloadData];
             }else{
@@ -608,26 +656,16 @@ typedef enum: NSUInteger{
                 
                 [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
                 
-                [self addChildViewController:self.pageViewController];
-                self.pageViewController.view.hidden = NO;
-                [self.view addSubview:self.pageViewController.view];
-                
                 CGRect contentRect = self.galleryView.frame;
                 self.pageViewController.view.frame = contentRect;
-                self.galleryView.hidden = YES;
-                self.styleSwitch.hidden = NO;
-                
-                //[self.pageViewController didMoveToParentViewController:self];
-                //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+                [self.view addSubview:self.pageViewController.view];
             }
             [self updateHeaderView:faceItem];
             
             [self.actionCenterButton setImage:[UIImage imageWithContentsOfFile:faceItem.pathForBackup] forState:UIControlStateNormal];
             self.actionCenterButton.imageView.layer.cornerRadius = 22.0f;
             self.actionCenterButton.imageView.clipsToBounds = YES;
-
             self.buttonPanel.hidden = YES;
-
             break;
         }
         case HorizontalGridLayout:{
@@ -641,14 +679,11 @@ typedef enum: NSUInteger{
             }
             
             if ([self countForPageViewController] == 1) {
-                //self.singlePageCollectionView.hidden = YES;
+                self.singlePageCollectionView.hidden = YES;
             }else
-                ;
-                //self.pageViewController.view.hidden = YES;
+                self.pageViewController.view.hidden = YES;
             
-            
-            [self.view addSubview:self.detailContentCollectionView];
-            [self.detailContentCollectionView reloadData];
+
             
             NSInteger itemIndexBase = 0;
             if ([self countForPageViewController] != 1) {
@@ -658,34 +693,25 @@ typedef enum: NSUInteger{
             
             NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedIndexPath];
-            //Photo *photoItem = selectedFaceItem.photoOwner;
-            //self.infoTitle.text = [NSString stringWithFormat:@"%d persons", photoItem.faceCount];
-            
-            //NSMutableString *nameString = [[NSMutableString alloc] initWithCapacity:photoItem.faceCount];
-            //for (Face *faceItem in photoItem.faceset) {
-            //    if (faceItem.name.length > 0) {
-            //        [nameString appendString:[NSString stringWithFormat:@"%@ ",faceItem.name]];
-            //    }
-            //}
-            //self.nameTitle.text = (NSString *)[nameString copy];
+            [self.detailContentCollectionView reloadData];
             [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+            self.detailContentCollectionView.hidden = NO;
             //[self.view addSubview:self.detailContentCollectionView];
             [self updateHeaderView:selectedFaceItem];
-
             break;
         }
         case DetailLineLayout:{
             NSLog(@"Swith Back to Portrait Mode.");
-            self.currentLayoutType = PortraitLayout;
+            self.currentLayoutType = HorizontalGridLayout;
             if ([self countForPageViewController] == 1) {
                 self.singlePageCollectionView.hidden = NO;
             }else
                 self.pageViewController.view.hidden = NO;
-            [self.detailContentCollectionView removeFromSuperview];
+            self.detailContentCollectionView.hidden = YES;
+            self.actionCenterButton.hidden = NO;
+            self.styleSwitch.hidden = NO;
             self.nameTitle.text = @"";
             self.infoTitle.text = @"";
-            [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
-            [self dismissAvatorView];
             break;
         }
         default:
@@ -697,23 +723,20 @@ typedef enum: NSUInteger{
 
 - (void)dismissAvatorView
 {
+    self.currentLayoutType = PortraitLayout;
     if ([self countForPageViewController] == 1) {
         self.singlePageCollectionView.hidden = YES;
         //[self.singlePageCollectionView removeFromSuperview];
     }else{
-        self.pageViewController.view.hidden = YES;
-        //[self.pageViewController.view removeFromSuperview];
+        //self.pageViewController.view.hidden = YES;
+        [self.pageViewController.view removeFromSuperview];
     }
-    self.actionCenterButton.hidden = NO;
-    self.galleryView.hidden = NO;
+    self.detailContentCollectionView.hidden = YES;
     self.styleSwitch.hidden = YES;
+    self.actionCenterButton.hidden = NO;
+    [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
+    self.galleryView.hidden = NO;
     self.currentPageIndex = 0;
-    
-    if (self.pageViewController) {
-        for (UIGestureRecognizer *gr in self.pageViewController.gestureRecognizers) {
-            [self.view removeGestureRecognizer:gr];
-        }
-    }
     
     if (self.pageVCArray.count > 0) {
         [self.pageVCArray removeAllObjects];
@@ -845,6 +868,7 @@ typedef enum: NSUInteger{
     NSLog(@"Need a little change.");
     NSLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
+    [self dismissAvatorView];
     if (self.navigationController.childViewControllers.count > 1 && [self.navigationController.topViewController isEqual:self]) {
         NSLog(@"Pop self");
         [self.navigationController popViewControllerAnimated:YES];
@@ -852,6 +876,8 @@ typedef enum: NSUInteger{
         NSLog(@"Segue Jump");
         [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
     }
+    
+
 }
 
 - (void)handleDeletedPhotos

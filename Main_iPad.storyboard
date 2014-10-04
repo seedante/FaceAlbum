@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="kIO-dK-4Aj">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -21,7 +21,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="134" width="100" height="100"/>
+                                <rect key="frame" x="50" y="70" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -73,19 +73,35 @@
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-vl-eb2">
+                                    <rect key="frame" x="702" y="11" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="46" id="E5o-Z0-B1u"/>
+                                    </constraints>
+                                    <state key="normal" title="All">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="selectAllAvators:" destination="18c-uM-ajg" eventType="touchUpInside" id="wkR-0m-ZnC"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="10" id="A2b-OY-XIy"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="iRr-Ru-fZl" secondAttribute="leading" id="Fkj-vX-0Tt"/>
+                                <constraint firstItem="KIM-vl-eb2" firstAttribute="baseline" secondItem="rDV-Xj-e5B" secondAttribute="baseline" id="Fsi-7w-Lf7"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="centerY" secondItem="18c-uM-ajg" secondAttribute="centerY" id="Qa1-Ep-IZH"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="18c-uM-ajg" secondAttribute="leading" constant="50" id="gMg-Jj-f3H"/>
                                 <constraint firstAttribute="bottom" secondItem="iRr-Ru-fZl" secondAttribute="bottom" id="gb0-Ke-mns"/>
                                 <constraint firstItem="iRr-Ru-fZl" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="33" id="uNI-DH-q2S"/>
+                                <constraint firstAttribute="trailing" secondItem="KIM-vl-eb2" secondAttribute="trailing" constant="20" id="zgc-MC-NUS"/>
                             </constraints>
                             <connections>
                                 <outlet property="collectionView" destination="0YA-ok-D2X" id="NuW-ew-kF3"/>
                                 <outlet property="nameTextField" destination="rDV-Xj-e5B" id="DPf-SU-blt"/>
                                 <outlet property="numberLabel" destination="iRr-Ru-fZl" id="keR-yR-Ygj"/>
+                                <outlet property="selectAllButton" destination="KIM-vl-eb2" id="NR5-7e-j0j"/>
                             </connections>
                         </collectionReusableView>
                         <connections>
@@ -98,7 +114,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="UMT-jw-iR7" kind="push" identifier="enterPageGallery" id="fYU-IF-XFj"/>
+                        <segue destination="UMT-jw-iR7" kind="push" identifier="enterGallery" id="fYU-IF-XFj"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-D4-GVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -727,7 +743,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Tkb-Pv-zIQ"/>
         <segue reference="mY8-Cd-IyR"/>
+        <segue reference="fYU-IF-XFj"/>
     </inferredMetricsTieBreakers>
 </document>

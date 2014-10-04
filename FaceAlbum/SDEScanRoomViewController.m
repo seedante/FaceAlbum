@@ -234,8 +234,8 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
             [self.photoScanManager saveAfterScan];
             [self configFirstScene:NO];
-            UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
-            [self.navigationController setViewControllers:@[newRootVC]];
+            UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+            [self.navigationController pushViewController:secondVC animated:YES];
             //[self performSegueWithIdentifier:segueIdentifier sender:self];
             return;
         }else
@@ -263,9 +263,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         NSLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
         [self.photoScanManager saveAfterScan];
         [self configFirstScene:NO];
-        UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
-        [self.navigationController setViewControllers:@[newRootVC]];
-        //[self performSegueWithIdentifier:segueIdentifier sender:self];
+        //UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+        //[self.navigationController pushViewController:secondVC animated:YES];
+        [self performSegueWithIdentifier:segueIdentifier sender:self];
         return;
     }else if (self.allAssets.count >= 3){
         [self.showAssets removeAllObjects];

@@ -414,6 +414,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     NSLog(@"HeaderView Indexpath: %@", indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
+    personProfileHeaderView.selectAllButton.hidden = YES;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];

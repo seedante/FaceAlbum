@@ -57,7 +57,7 @@ typedef enum {
     [self.view addSubview:self.goBackUpButton];
     [self.goBackUpButton setTitle:@"UP" forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
-    self.goBackUpButton.center = CGPointMake(-100, 50);
+    self.goBackUpButton.center = CGPointMake(0, -50);
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
     
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
@@ -516,11 +516,11 @@ typedef enum {
     if (_showGalleryBarButton) {
         return _showGalleryBarButton;
     }
-    _showGalleryBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(jumpToGalleryScene)];
+    _showGalleryBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showGalleryScene)];
     return _showGalleryBarButton;
 }
 
-- (void)jumpToGalleryScene
+- (void)showGalleryScene
 {
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     BOOL ThreeScene = [defaultConfig boolForKey:@"isGalleryOpened"];
@@ -555,8 +555,9 @@ typedef enum {
         }
     }
 
-    //[self performSegueWithIdentifier:@"enterGallery" sender:self];
-    [self performSegueWithIdentifier:@"enterPageGallery" sender:self];
+    //NSLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    //NSLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source
