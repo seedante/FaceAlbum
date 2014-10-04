@@ -207,6 +207,7 @@ typedef enum: NSUInteger{
         _pageViewController.dataSource = self;
         [self addChildViewController:_pageViewController];
         [_pageViewController didMoveToParentViewController:self];
+        
     }
     return _pageViewController;
 }
@@ -683,8 +684,6 @@ typedef enum: NSUInteger{
             }else
                 self.pageViewController.view.hidden = YES;
             
-
-            
             NSInteger itemIndexBase = 0;
             if ([self countForPageViewController] != 1) {
                 itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
@@ -696,12 +695,11 @@ typedef enum: NSUInteger{
             [self.detailContentCollectionView reloadData];
             [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
             self.detailContentCollectionView.hidden = NO;
-            //[self.view addSubview:self.detailContentCollectionView];
             [self updateHeaderView:selectedFaceItem];
             break;
         }
         case DetailLineLayout:{
-            NSLog(@"Swith Back to Portrait Mode.");
+            NSLog(@"Swith Back to HorizontalGrid Mode.");
             self.currentLayoutType = HorizontalGridLayout;
             if ([self countForPageViewController] == 1) {
                 self.singlePageCollectionView.hidden = NO;
@@ -721,14 +719,30 @@ typedef enum: NSUInteger{
     
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([collectionView isEqual:self.detailContentCollectionView]) {
+        NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
+        if (pageIndex > self.currentPageIndex) {
+            if (self.pageVCArray.count < [self countForPageViewController]) {
+                UICollectionViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
+                [self.pageVCArray addObject:vc];
+                self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:vc];
+                vc.collectionView.dataSource = self;
+                vc.collectionView.delegate = self;
+                [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+            }
+        }
+    }
+}
+
 - (void)dismissAvatorView
 {
     self.currentLayoutType = PortraitLayout;
     if ([self countForPageViewController] == 1) {
         self.singlePageCollectionView.hidden = YES;
-        //[self.singlePageCollectionView removeFromSuperview];
     }else{
-        //self.pageViewController.view.hidden = YES;
         [self.pageViewController.view removeFromSuperview];
     }
     self.detailContentCollectionView.hidden = YES;
@@ -869,15 +883,7 @@ typedef enum: NSUInteger{
     NSLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
     [self dismissAvatorView];
-    if (self.navigationController.childViewControllers.count > 1 && [self.navigationController.topViewController isEqual:self]) {
-        NSLog(@"Pop self");
-        [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        NSLog(@"Segue Jump");
-        [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
-    }
-    
-
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)handleDeletedPhotos
