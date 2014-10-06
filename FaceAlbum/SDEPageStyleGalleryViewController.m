@@ -15,6 +15,7 @@
 #import "SDEGalleryCell.h"
 #import "SDEGalleryModel.h"
 #import "LineLayout.h"
+#import "SDEPageViewLayout.h"
 //#import "SDECenterMenu.h"
 @import AssetsLibrary;
 
@@ -53,6 +54,7 @@ typedef enum: NSUInteger{
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 
 @property (nonatomic) NSMutableArray *pageVCArray;
+@property (nonatomic, assign) BOOL inPageViewFlag;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @property (nonatomic) SDENewPhotoDetector *newPhotoDetector;
@@ -68,6 +70,7 @@ typedef enum: NSUInteger{
 
     self.currentPortraitIndex = 0;
     self.pageVCArray = [NSMutableArray new];
+    self.inPageViewFlag = NO;
     self.currentLayoutType = PortraitLayout;
     self.currentGridCellType = kFaceType;
     self.styleSwitch.delegate = self;
@@ -317,6 +320,7 @@ typedef enum: NSUInteger{
         NSLog(@"Count of PageVCArray: %lu", (unsigned long)self.pageVCArray.count);
     }
     
+    self.inPageViewFlag = YES;
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
     vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:self.currentPageIndex + 1];
     NSLog(@"Array: %@", self.pageVCArray);
@@ -427,9 +431,12 @@ typedef enum: NSUInteger{
         case HorizontalGridLayout:{
             id <NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
             numberOfItems = [sectionInfo numberOfObjects];
-            if (self.currentPageIndex < [self countForPageViewController]-1) {
-                self.currentPageIndex ++;
+            if (self.inPageViewFlag) {
+                if (self.currentPageIndex < [self countForPageViewController]-1) {
+                    self.currentPageIndex ++;
+                }
             }
+
             if (numberOfItems - self.currentPageIndex * NumberOfAvatorPerPage >= NumberOfAvatorPerPage) {
                 numberOfItems = NumberOfAvatorPerPage;
             }else
@@ -511,6 +518,29 @@ typedef enum: NSUInteger{
                 }
 
             }failureBlock:nil];
+            
+            if ([collectionView isEqual:self.detailContentCollectionView]) {
+                NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
+                NSLog(@"Page Index: %d", pageIndex);
+                NSLog(@"Real Page Index: %d", self.currentPageIndex);
+                if (pageIndex > self.currentPageIndex) {
+                    NSLog(@"Go to Next  page view at behindly.");
+                    if (self.pageVCArray.count < pageIndex + 1) {
+                        NSLog(@"Add new page view.");
+                        UICollectionViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
+                        [self.pageVCArray addObject:vc];
+                        self.currentPageIndex = pageIndex;
+                        //[self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+                    }
+                }else if(pageIndex < self.currentPageIndex){
+                    NSLog(@"Go back to Previous page view.");
+                    UICollectionViewController *vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:pageIndex];
+                    self.currentPageIndex = pageIndex;
+                    [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
+                    //[vc.collectionView reloadData];
+                }
+            }
+
             break;
         }
         default:
@@ -523,6 +553,7 @@ typedef enum: NSUInteger{
 #pragma mark - UITabBarDelegate Method
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
+    self.inPageViewFlag = NO;
     NSUInteger tabIndex = [tabBar.items indexOfObject:item];
     if (self.currentGridCellType != tabIndex) {
         self.currentGridCellType = tabIndex;
@@ -650,16 +681,17 @@ typedef enum: NSUInteger{
                 self.singlePageCollectionView.hidden = NO;
                 [self.singlePageCollectionView reloadData];
             }else{
+                self.inPageViewFlag = NO;
                 UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
                 startingViewController.collectionView.dataSource = self;
                 startingViewController.collectionView.delegate = self;
                 [self.pageVCArray addObject:startingViewController];
-                
-                [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-                
+            
                 CGRect contentRect = self.galleryView.frame;
                 self.pageViewController.view.frame = contentRect;
                 [self.view addSubview:self.pageViewController.view];
+                
+                [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
             }
             [self updateHeaderView:faceItem];
             
@@ -703,8 +735,20 @@ typedef enum: NSUInteger{
             self.currentLayoutType = HorizontalGridLayout;
             if ([self countForPageViewController] == 1) {
                 self.singlePageCollectionView.hidden = NO;
-            }else
+            }else{
+                self.inPageViewFlag = NO;
                 self.pageViewController.view.hidden = NO;
+                self.currentPageIndex = indexPath.item/NumberOfAvatorPerPage;
+                UICollectionViewController *vc;
+                vc = [self.pageVCArray objectAtIndex:self.currentPageIndex];
+                if (vc.collectionView.dataSource != self) {
+                    NSLog(@"Connect to datasource");
+                    vc.collectionView.dataSource = self;
+                    vc.collectionView.delegate = self;
+                }
+                [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
+            }
             self.detailContentCollectionView.hidden = YES;
             self.actionCenterButton.hidden = NO;
             self.styleSwitch.hidden = NO;
@@ -720,42 +764,6 @@ typedef enum: NSUInteger{
 }
 
 
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([collectionView isEqual:self.detailContentCollectionView]) {
-        NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
-        if (pageIndex > self.currentPageIndex) {
-            if (self.pageVCArray.count < [self countForPageViewController]) {
-                UICollectionViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
-                [self.pageVCArray addObject:vc];
-                self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:vc];
-                vc.collectionView.dataSource = self;
-                vc.collectionView.delegate = self;
-                [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-            }
-        }
-    }
-}
-
-- (void)dismissAvatorView
-{
-    self.currentLayoutType = PortraitLayout;
-    if ([self countForPageViewController] == 1) {
-        self.singlePageCollectionView.hidden = YES;
-    }else{
-        [self.pageViewController.view removeFromSuperview];
-    }
-    self.detailContentCollectionView.hidden = YES;
-    self.styleSwitch.hidden = YES;
-    self.actionCenterButton.hidden = NO;
-    [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
-    self.galleryView.hidden = NO;
-    self.currentPageIndex = 0;
-    
-    if (self.pageVCArray.count > 0) {
-        [self.pageVCArray removeAllObjects];
-    }
-}
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -825,7 +833,7 @@ typedef enum: NSUInteger{
                     space = 20.0f;
                     break;
                 case kPhotoType:
-                    space = 15.0f;
+                    space = 20.0f;
                     break;
             }
             break;
@@ -883,7 +891,27 @@ typedef enum: NSUInteger{
     NSLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
     [self dismissAvatorView];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
+}
+
+- (void)dismissAvatorView
+{
+    self.currentLayoutType = PortraitLayout;
+    if ([self countForPageViewController] == 1) {
+        self.singlePageCollectionView.hidden = YES;
+    }else{
+        [self.pageViewController.view removeFromSuperview];
+    }
+    self.detailContentCollectionView.hidden = YES;
+    self.styleSwitch.hidden = YES;
+    self.actionCenterButton.hidden = NO;
+    [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
+    self.galleryView.hidden = NO;
+    self.currentPageIndex = 0;
+    
+    if (self.pageVCArray.count > 0) {
+        [self.pageVCArray removeAllObjects];
+    }
 }
 
 - (void)handleDeletedPhotos

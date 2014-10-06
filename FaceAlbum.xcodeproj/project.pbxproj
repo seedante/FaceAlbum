@@ -283,6 +283,8 @@
 		FD8D0C1519BBFBAB007EF122 /* user_male4-512.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097B19BBFBAA007EF122 /* user_male4-512.png */; };
 		FD8D0C1619BBFBAB007EF122 /* user_male4-75.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8D097C19BBFBAA007EF122 /* user_male4-75.png */; };
 		FD8D0C7419BDFC30007EF122 /* SDEGalleryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */; };
+		FD91FD0D19E1977200A05D27 /* SDEPageViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD91FD0C19E1977200A05D27 /* SDEPageViewLayout.m */; };
+		FD91FD0E19E1977200A05D27 /* SDEPageViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD91FD0C19E1977200A05D27 /* SDEPageViewLayout.m */; };
 		FD9590401985FA4C001C2345 /* avator@weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD95903F1985FA4C001C2345 /* avator@weibo.jpg */; };
 		FD9590481987CD5B001C2345 /* SDEPersonGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */; };
 		FDB3602A19CE65CC00AAE34D /* SDECenterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3602919CE65CC00AAE34D /* SDECenterMenu.m */; };
@@ -935,6 +937,8 @@
 		FD8D097C19BBFBAA007EF122 /* user_male4-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-75.png"; sourceTree = "<group>"; };
 		FD8D0C7219BDFC30007EF122 /* SDEGalleryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryModel.h; sourceTree = "<group>"; };
 		FD8D0C7319BDFC30007EF122 /* SDEGalleryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryModel.m; sourceTree = "<group>"; };
+		FD91FD0B19E1977200A05D27 /* SDEPageViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPageViewLayout.h; sourceTree = "<group>"; };
+		FD91FD0C19E1977200A05D27 /* SDEPageViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPageViewLayout.m; sourceTree = "<group>"; };
 		FD95903F1985FA4C001C2345 /* avator@weibo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "avator@weibo.jpg"; path = "../FaceppLocalDetector/avator@weibo.jpg"; sourceTree = "<group>"; };
 		FD9590461987CD5B001C2345 /* SDEPersonGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonGalleryViewController.h; sourceTree = "<group>"; };
 		FD9590471987CD5B001C2345 /* SDEPersonGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonGalleryViewController.m; sourceTree = "<group>"; };
@@ -1750,6 +1754,8 @@
 			children = (
 				FDBF6EDD19D1376900352DFA /* SDEPageStyleGalleryViewController.h */,
 				FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */,
+				FD91FD0B19E1977200A05D27 /* SDEPageViewLayout.h */,
+				FD91FD0C19E1977200A05D27 /* SDEPageViewLayout.m */,
 				FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */,
 				FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */,
 				FDB3602819CE65CC00AAE34D /* SDECenterMenu.h */,
@@ -2424,6 +2430,7 @@
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
 				FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */,
 				FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */,
+				FD91FD0D19E1977200A05D27 /* SDEPageViewLayout.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FDB3602A19CE65CC00AAE34D /* SDECenterMenu.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
@@ -2489,6 +2496,7 @@
 				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
 				FDBF6C0C19D1038000352DFA /* SDEPortraitLayout.m in Sources */,
 				FDBF6C0D19D1038000352DFA /* SDEHorizontalGridLayout.m in Sources */,
+				FD91FD0E19E1977200A05D27 /* SDEPageViewLayout.m in Sources */,
 				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C0F19D1038000352DFA /* SDECenterMenu.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,

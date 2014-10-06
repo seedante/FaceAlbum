@@ -486,7 +486,7 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <tabBarItem title="Face" image="user_female3-25.png" id="BEF-kh-huq"/>
-                                    <tabBarItem title="Gallery" image="gallery-25.png" id="cpc-96-bBo"/>
+                                    <tabBarItem title="Photo" image="gallery-25.png" id="cpc-96-bBo"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -676,10 +676,6 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="TYt-0I-6LU" id="cX8-mz-9l7"/>
-                            <outlet property="delegate" destination="TYt-0I-6LU" id="cet-Mn-JnS"/>
-                        </connections>
                     </collectionView>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sKI-G4-JPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
