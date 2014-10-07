@@ -91,13 +91,9 @@ typedef enum: NSUInteger{
         UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
         [self.navigationController pushViewController:montageRoomVC animated:NO];
     }
-    /*
+    
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
-    [self.view addGestureRecognizer:self.pinchGestureRecognizer];
-    [self.singlePageCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
-    [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
-    [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
-    */
+    [self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
     
     /*
     UIImage *startImage = [UIImage imageNamed:@"user_male2-50.png"];
@@ -116,6 +112,7 @@ typedef enum: NSUInteger{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.buttonPanel.hidden = YES;
     [self.galleryView reloadData];
+    //[self.styleSwitch setSelectedItem:(UITabBarItem *)self.styleSwitch.items.firstObject];
     
 }
 
@@ -276,18 +273,20 @@ typedef enum: NSUInteger{
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSLog(@"Before");
+
     if ([self countForPageViewController] == 1) {
         return nil;
     }
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
-    NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
-    NSLog(@"Current VC: %@", viewController);
-    NSLog(@"Array: %@", self.pageVCArray);
+    //NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
+    //NSLog(@"Current VC: %@", viewController);
+    //NSLog(@"Array: %@", self.pageVCArray);
     if (self.currentPageIndex == 0 || self.currentPageIndex == NSNotFound) {
         self.currentPageIndex = 0;
         NSLog(@"???");
         return nil;
     }
+    
     
     UIViewController *vc = (UIViewController *)[self.pageVCArray objectAtIndex:self.currentPageIndex - 1];
     NSLog(@"Previous VC: %@", vc);
@@ -308,23 +307,23 @@ typedef enum: NSUInteger{
         return nil;
     }
     
-    NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
-    NSLog(@"Current VC: %@", viewController);
+    //NSLog(@"Current Page Index: %ld", (long)self.currentPageIndex);
+    //NSLog(@"Current VC: %@", viewController);
     UICollectionViewController *vc;
     if (self.pageVCArray.count < countOfPage) {
         vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
         [self.pageVCArray addObject:vc];
-        self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:vc];
+        //self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:vc];
         vc.collectionView.dataSource = self;
         vc.collectionView.delegate = self;
-        NSLog(@"Count of PageVCArray: %lu", (unsigned long)self.pageVCArray.count);
+        //NSLog(@"Count of PageVCArray: %lu", (unsigned long)self.pageVCArray.count);
     }
     
     self.inPageViewFlag = YES;
     self.currentPageIndex = [self.pageVCArray indexOfObjectIdenticalTo:viewController];
     vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:self.currentPageIndex + 1];
-    NSLog(@"Array: %@", self.pageVCArray);
-    NSLog(@"Next VC: %@", vc);
+    //NSLog(@"Array: %@", self.pageVCArray);
+    //NSLog(@"Next VC: %@", vc);
     return vc;
 }
 
@@ -525,17 +524,16 @@ typedef enum: NSUInteger{
                 NSLog(@"Real Page Index: %d", self.currentPageIndex);
                 if (pageIndex > self.currentPageIndex) {
                     NSLog(@"Go to Next  page view at behindly.");
+                    self.currentPageIndex = pageIndex;
                     if (self.pageVCArray.count < pageIndex + 1) {
                         NSLog(@"Add new page view.");
                         UICollectionViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
                         [self.pageVCArray addObject:vc];
-                        self.currentPageIndex = pageIndex;
-                        //[self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
                     }
                 }else if(pageIndex < self.currentPageIndex){
                     NSLog(@"Go back to Previous page view.");
-                    UICollectionViewController *vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:pageIndex];
                     self.currentPageIndex = pageIndex;
+                    UICollectionViewController *vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:pageIndex];
                     [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
                     //[vc.collectionView reloadData];
                 }
@@ -557,104 +555,19 @@ typedef enum: NSUInteger{
     NSUInteger tabIndex = [tabBar.items indexOfObject:item];
     if (self.currentGridCellType != tabIndex) {
         self.currentGridCellType = tabIndex;
-        if ([self countForPageViewController] == 1) {
-            [self.singlePageCollectionView reloadData];
-        }else{
-            UICollectionViewController *currentVC = (UICollectionViewController *)[self.pageViewController.viewControllers firstObject];
-            [currentVC.collectionView reloadData];
-        }
-        
-        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
-        [self updateHeaderView:faceItem];
     }
-}
-
-
-#pragma mark - Gesture Method
-- (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
-{
-    NSLog(@"Pinch Gesture.");
-    NSLog(@"Velocity: %f", gestureRecongnizer.velocity);
-    NSLog(@"Scale: %f", gestureRecongnizer.scale);
-    if (gestureRecongnizer.velocity > 0) {
-        //Pinch Out
-        if (gestureRecongnizer.scale > 1.5f) {
-            switch (self.currentLayoutType) {
-                case PortraitLayout:{
-                    NSLog(@"Switch to Horizontal Grid Mode.");
-                    self.currentPortraitIndex = 2;
-                    self.currentPageIndex = 0;
-                    //Note: Must change layoutType before startingViewController, if not, startingViewController will get wrong data source
-                    self.currentLayoutType = HorizontalGridLayout;
-                    
-                    if (self.pageVCArray.count > 0) {
-                        [self.pageVCArray removeAllObjects];
-                    }
-                    
-                    if ([self countForPageViewController] == 1) {
-                        //CGRect contentRect = self.galleryView.frame;
-                        NSLog(@"Single Page Mode");
-                        self.galleryView.hidden = YES;
-                        self.styleSwitch.hidden = NO;
-                        self.singlePageCollectionView.hidden = NO;
-                        [self.view addSubview:self.singlePageCollectionView];
-                        [self.singlePageCollectionView reloadData];
-                    }else{
-                        UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
-                        startingViewController.collectionView.dataSource = self;
-                        startingViewController.collectionView.delegate = self;
-                        [self.pageVCArray addObject:startingViewController];
-                        
-                        [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-                        
-                        //[self addChildViewController:self.pageViewController];
-                        self.pageViewController.view.hidden = NO;
-                        [self.view addSubview:self.pageViewController.view];
-                        
-                        CGRect contentRect = self.galleryView.frame;
-                        self.pageViewController.view.frame = contentRect;
-                        self.galleryView.hidden = YES;
-                        self.styleSwitch.hidden = NO;
-                        
-                        //[self.pageViewController didMoveToParentViewController:self];
-                        //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-                    }
-                    
-                    break;
-                }
-                case HorizontalGridLayout:{
-                    NSLog(@"Switch to Detail  Mode");
-                    self.currentLayoutType = DetailLineLayout;
-                    self.styleSwitch.hidden = YES;
-                    
-                    if ([self countForPageViewController] == 1) {
-                        self.singlePageCollectionView.hidden = YES;
-                    }else
-                        self.pageViewController.view.hidden = YES;
-                    
-                    [self.detailContentCollectionView reloadData];
-                    
-                    NSInteger itemIndexBase = 0;
-                    if (self.currentPageIndex > 0) {
-                        itemIndexBase = (self.currentPageIndex - 1) * NumberOfAvatorPerPage;
-                    }
-                    
-                    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:itemIndexBase inSection:0];
-                    [self.detailContentCollectionView scrollToItemAtIndexPath:selectedIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-                    [self.view addSubview:self.detailContentCollectionView];
-                    
-                    break;
-                }
-                default:
-                    NSLog(@"Don't pinch out more.");
-                    break;
-            }
-        }
+    
+    if ([self countForPageViewController] == 1) {
+        [self.singlePageCollectionView reloadData];
     }else{
-        //Pinch In
-        
+        UICollectionViewController *currentVC = (UICollectionViewController *)[self.pageViewController.viewControllers firstObject];
+        [currentVC.collectionView reloadData];
     }
+    
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
+    [self updateHeaderView:faceItem];
 }
+
 
 #pragma mark - UICollectionView Delegate Method
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -680,6 +593,7 @@ typedef enum: NSUInteger{
                 NSLog(@"Single Page Mode");
                 self.singlePageCollectionView.hidden = NO;
                 [self.singlePageCollectionView reloadData];
+                [self.singlePageCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
             }else{
                 self.inPageViewFlag = NO;
                 UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
@@ -692,6 +606,8 @@ typedef enum: NSUInteger{
                 [self.view addSubview:self.pageViewController.view];
                 
                 [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+                
+                [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
             }
             [self updateHeaderView:faceItem];
             
@@ -728,9 +644,13 @@ typedef enum: NSUInteger{
             [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
             self.detailContentCollectionView.hidden = NO;
             [self updateHeaderView:selectedFaceItem];
+            
+            [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
             break;
         }
         case DetailLineLayout:{
+            NSLog(@"Now Use Gesturegnizer.");
+            /*
             NSLog(@"Swith Back to HorizontalGrid Mode.");
             self.currentLayoutType = HorizontalGridLayout;
             if ([self countForPageViewController] == 1) {
@@ -752,8 +672,10 @@ typedef enum: NSUInteger{
             self.detailContentCollectionView.hidden = YES;
             self.actionCenterButton.hidden = NO;
             self.styleSwitch.hidden = NO;
-            self.nameTitle.text = @"";
-            self.infoTitle.text = @"";
+            
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
+            [self updateHeaderView:faceItem];
+             */
             break;
         }
         default:
@@ -865,6 +787,7 @@ typedef enum: NSUInteger{
     return space;
 }
 
+#pragma mark - IBAction Method
 - (IBAction)scanPhotoLibrary:(id)sender
 {
     NSLog(@"Scan Library");
@@ -972,6 +895,221 @@ typedef enum: NSUInteger{
         [self.buttonPanel hide];
     }else
         [self.buttonPanel popup];
+}
+
+
+#pragma mark - Gesture Method
+- (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
+{
+    //NSLog(@"Pinch Gesture.");
+    //NSLog(@"Velocity: %f", gestureRecongnizer.velocity);
+    NSLog(@"Scale: %f", gestureRecongnizer.scale);
+    
+    if (gestureRecongnizer.velocity > 0) {
+        //Pinch Out
+        if (gestureRecongnizer.state == UIGestureRecognizerStateChanged) {
+            ;
+        }
+        if (gestureRecongnizer.state == UIGestureRecognizerStateEnded) {
+            if (gestureRecongnizer.scale > 1.0f) {
+                switch (self.currentLayoutType) {
+                    case PortraitLayout:{
+                        CGPoint centroid = [gestureRecongnizer locationInView:self.galleryView];
+                        NSInteger number = [self.galleryView numberOfItemsInSection:0];
+                        for (NSInteger i = 0; i < number; i++) {
+                            UICollectionViewLayoutAttributes *attributes = [self.galleryView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+                            if (attributes) {
+                                if (CGRectContainsPoint(attributes.frame, centroid)) {
+                                    NSLog(@"Centroid at Item: %d", i);
+                                    [self switchToHorizontalGridModeAtPortraitIndex:i orDetailItemIndex:0 fromMode:PortraitLayout];
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    case HorizontalGridLayout:
+                        break;
+                    case DetailLineLayout:
+                        NSLog(@"Scale Cell");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+    }else{
+        //Pinch In
+        if (gestureRecongnizer.state == UIGestureRecognizerStateEnded) {
+            if (gestureRecongnizer.scale < 0.5f) {
+                switch (self.currentLayoutType) {
+                    case PortraitLayout:{
+                        NSLog(@"Do nothing.");
+                        break;
+                    }
+                    case HorizontalGridLayout:{
+                        NSLog(@"Switch back to Portrait Mode");
+                        [self switchToPortraitMode];
+                        break;
+                    }
+                    case DetailLineLayout:
+                        NSLog(@"Switch back to Grid Layout.");
+                        self.currentLayoutType = HorizontalGridLayout;
+                        if ([self countForPageViewController] == 1) {
+                            self.singlePageCollectionView.hidden = NO;
+                            [self.singlePageCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
+                        }else{
+                            self.inPageViewFlag = NO;
+                            self.pageViewController.view.hidden = NO;
+                            UICollectionViewController *vc;
+                            vc = [self.pageVCArray objectAtIndex:self.currentPageIndex];
+                            if (vc.collectionView.dataSource != self) {
+                                NSLog(@"Connect to datasource");
+                                vc.collectionView.dataSource = self;
+                                vc.collectionView.delegate = self;
+                            }
+                            [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+                            [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
+                            
+                        }
+                        self.detailContentCollectionView.hidden = YES;
+                        self.actionCenterButton.hidden = NO;
+                        self.styleSwitch.hidden = NO;
+                        
+                        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
+                        [self updateHeaderView:faceItem];
+                        
+                        [self.detailContentCollectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+                        break;
+                }
+                
+            }
+        }
+    }
+}
+
+- (void)switchToPortraitMode
+{
+    self.currentLayoutType = PortraitLayout;
+    
+    self.galleryView.hidden = NO;
+    [self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
+    self.styleSwitch.hidden = YES;
+    if ([self countForPageViewController] == 1) {
+        [self.singlePageCollectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+        self.singlePageCollectionView.hidden = YES;
+    }else{
+        [self.pageViewController.view removeGestureRecognizer:self.pinchGestureRecognizer];
+        [self.pageViewController.view removeFromSuperview];
+    }
+    
+    [self.actionCenterButton setImage:[UIImage imageNamed:@"user_male2-50.png"] forState:UIControlStateNormal];
+    self.nameTitle.text = @"";
+    self.infoTitle.text = @"";
+}
+
+- (void)switchToHorizontalGridModeAtPortraitIndex:(NSInteger)portraitIndex orDetailItemIndex:(NSInteger)detailItemindex fromMode:(LayoutType)layoutType
+{
+    self.currentLayoutType = HorizontalGridLayout;
+    self.currentPortraitIndex = portraitIndex;
+    
+    if ([self countForPageViewController] == 1) {
+        self.currentPageIndex = 0;
+        self.singlePageCollectionView.hidden = NO;
+        [self.singlePageCollectionView reloadData];
+        [self.singlePageCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
+    }else{
+        switch (layoutType) {
+            case PortraitLayout:{
+                self.currentPageIndex = 0;
+                self.inPageViewFlag = NO;
+                if (self.pageVCArray.count > 0) {
+                    [self.pageVCArray removeAllObjects];
+                }
+                
+                UICollectionViewController *startingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AvatorVC"];
+                startingViewController.collectionView.dataSource = self;
+                startingViewController.collectionView.delegate = self;
+                [self.pageVCArray addObject:startingViewController];
+                
+                CGRect contentRect = self.galleryView.frame;
+                self.pageViewController.view.frame = contentRect;
+                [self.view addSubview:self.pageViewController.view];
+                
+                [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+                [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
+                break;
+            }
+            case DetailLineLayout:{
+                self.inPageViewFlag = NO;
+                UICollectionViewController *vc = (UICollectionViewController *)[self.pageVCArray objectAtIndex:self.currentPageIndex];
+                if (vc.collectionView.dataSource != self) {
+                    NSLog(@"Connect to datasource");
+                    vc.collectionView.dataSource = self;
+                    vc.collectionView.delegate = self;
+                }
+                [self.pageViewController setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+                [self.pageViewController.view addGestureRecognizer:self.pinchGestureRecognizer];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.currentPortraitIndex]];
+    [self updateHeaderView:faceItem];
+    
+    [self.galleryView removeGestureRecognizer:self.pinchGestureRecognizer];
+    [self.detailContentCollectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+    
+    self.galleryView.hidden = YES;
+    self.styleSwitch.hidden = NO;
+    self.detailContentCollectionView.hidden = YES;
+    
+    [self.actionCenterButton setImage:[UIImage imageWithContentsOfFile:faceItem.pathForBackup] forState:UIControlStateNormal];
+    self.actionCenterButton.imageView.layer.cornerRadius = 22.0f;
+    self.actionCenterButton.imageView.clipsToBounds = YES;
+    if (!self.buttonPanel.hidden) {
+        self.buttonPanel.hidden = YES;
+        [self.buttonPanel hide];
+    }
+    
+}
+
+- (void)switchToDetailModeAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.currentLayoutType = DetailLineLayout;
+    self.styleSwitch.hidden = YES;
+    self.actionCenterButton.hidden = YES;
+    if (!self.buttonPanel.hidden) {
+        self.buttonPanel.hidden = YES;
+        [self.buttonPanel hide];
+    }
+    
+    if ([self countForPageViewController] == 1) {
+        self.singlePageCollectionView.hidden = YES;
+        [self.singlePageCollectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+    }else{
+        self.pageViewController.view.hidden = YES;
+        [self.pageViewController.view removeGestureRecognizer:self.pinchGestureRecognizer];
+    }
+    
+    NSInteger itemIndexBase = 0;
+    if ([self countForPageViewController] != 1) {
+        itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
+        NSLog(@"itemIndexBase: %d", itemIndexBase);
+    }
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
+    Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedIndexPath];
+    [self updateHeaderView:selectedFaceItem];
+    
+    [self.detailContentCollectionView reloadData];
+    [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    self.detailContentCollectionView.hidden = NO;
+    [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
 }
 
 @end
