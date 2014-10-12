@@ -609,6 +609,8 @@
 		FDC2609D19B42D980010FF57 /* SDEGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */; };
 		FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */; };
 		FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */; };
+		FDDE0A0419EA781500198317 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDE0A0319EA781500198317 /* Reachability.m */; };
+		FDDE0A0519EA781500198317 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDE0A0319EA781500198317 /* Reachability.m */; };
 		FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */; };
 		FDE09ABC1981025E00CDB283 /* Smartisan.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE09ABB1981025E00CDB283 /* Smartisan.png */; };
 /* End PBXBuildFile section */
@@ -981,6 +983,8 @@
 		FDC2609F19B433F80010FF57 /* SDEPortraitLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPortraitLayout.m; sourceTree = "<group>"; };
 		FDC260A119B434710010FF57 /* SDEHorizontalGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEHorizontalGridLayout.h; sourceTree = "<group>"; };
 		FDC260A219B434710010FF57 /* SDEHorizontalGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEHorizontalGridLayout.m; sourceTree = "<group>"; };
+		FDDE0A0219EA781500198317 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		FDDE0A0319EA781500198317 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		FDE09AB71980A96400CDB283 /* SDEAvatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEAvatorCell.h; sourceTree = "<group>"; };
 		FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEAvatorCell.m; sourceTree = "<group>"; };
 		FDE09ABB1981025E00CDB283 /* Smartisan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Smartisan.png; path = ../../../Downloads/Smartisan.png; sourceTree = "<group>"; };
@@ -1074,6 +1078,8 @@
 			children = (
 				FD7D2F93197E7B55004E8FFD /* SDEMontageRoomViewController.h */,
 				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
+				FDDE0A0219EA781500198317 /* Reachability.h */,
+				FDDE0A0319EA781500198317 /* Reachability.m */,
 				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
 				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
 				FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */,
@@ -2430,6 +2436,7 @@
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
 				FDC260A019B433F80010FF57 /* SDEPortraitLayout.m in Sources */,
 				FDC260A319B434710010FF57 /* SDEHorizontalGridLayout.m in Sources */,
+				FDDE0A0419EA781500198317 /* Reachability.m in Sources */,
 				FD91FD0D19E1977200A05D27 /* SDEPageViewLayout.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FDB3602A19CE65CC00AAE34D /* SDECenterMenu.m in Sources */,
@@ -2496,6 +2503,7 @@
 				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
 				FDBF6C0C19D1038000352DFA /* SDEPortraitLayout.m in Sources */,
 				FDBF6C0D19D1038000352DFA /* SDEHorizontalGridLayout.m in Sources */,
+				FDDE0A0519EA781500198317 /* Reachability.m in Sources */,
 				FD91FD0E19E1977200A05D27 /* SDEPageViewLayout.m in Sources */,
 				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C0F19D1038000352DFA /* SDECenterMenu.m in Sources */,

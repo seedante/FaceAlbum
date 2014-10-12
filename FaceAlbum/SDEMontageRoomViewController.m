@@ -13,6 +13,7 @@
 #import "Store.h"
 #import "Person.h"
 #import "Face.h"
+#import "Reachability.h"
 
 #import "SDECandidateCell.h"
 
@@ -86,17 +87,63 @@ typedef enum {
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
+- (void)autoGroupAvator
+{
+    [[[UIAlertView alloc] initWithTitle:@"AutoGroup" message:@"It's fake" delegate:self cancelButtonTitle:@"Hehe" otherButtonTitles:nil] show];
+}
+
 -(void)goBackToTop
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     self.goBackUpButton.center = CGPointMake(-100, 100);
 }
 
+- (void)checkFacelessMan
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
+    [fetchRequest setPredicate:predicate];
+    
+    
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    if (fetchedObjects && fetchedObjects.count > 0) {
+        UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [groupButton setTitle:@"AutoGroup" forState:UIControlStateNormal];
+        [groupButton setCenter:CGPointMake(500, 22)];
+        [groupButton addTarget:self action:@selector(autoGroupAvator) forControlEvents:UIControlEventTouchUpInside];
+        Reachability *internetReachableCheck = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+        internetReachableCheck.reachableBlock =  ^(Reachability *reach){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Internet is OK.");
+                [groupButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                groupButton.hidden = NO;
+                //[FaceppAPI initWithApiKey:_API_KEY andApiSecret:_API_SECRET andRegion:APIServerRegionCN];
+                NSLog(@"FaceppAPI Initialize");
+                // turn on the debug mode
+                //[FaceppAPI setDebugMode:TRUE];
+            });
+        };
+        
+        internetReachableCheck.unreachableBlock = ^(Reachability *reach){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"No Internet");
+                [groupButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                groupButton.hidden = YES;
+            });
+        };
+        
+        [internetReachableCheck startNotifier];
+        
+        self.navigationItem.titleView = groupButton;
+    }else
+        NSLog(@"FacelessMan is gone.");
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self registerAsObserver];
-    
+    [self checkFacelessMan];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -618,7 +665,7 @@ typedef enum {
         [self unenableLeftBarButtonItems];
         [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:targetSection] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         
         self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
     }
@@ -690,9 +737,6 @@ typedef enum {
             if (CGRectIntersectsRect(frame, rectInCollectionView)) {
                 //NSLog(@"Match at IndexPath: %@", currentIndexPath);
                 Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
-                if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
-                    personItem.name = self.activedField.text;
-                }
                 personItem.name = self.activedField.text;
                 for (Face *faceItem in personItem.ownedFaces) {
                     faceItem.name = personItem.name;

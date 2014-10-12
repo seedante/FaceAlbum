@@ -698,14 +698,9 @@ typedef enum: NSUInteger{
 {
     NSLog(@"Scan Library");
     if ([self.newPhotoDetector shouldScanPhotoLibrary]) {
-        if (self.navigationController.childViewControllers.count == 3) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }else{
-            UIViewController *newRootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
-            [self.navigationController setViewControllers:@[newRootVC] animated:YES];
-        }
-    }else
-        NSLog(@"Nothing to Do.");
+            UIViewController *scanVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
+            [self.navigationController pushViewController:scanVC animated:YES];
+    }
 
 }
 
