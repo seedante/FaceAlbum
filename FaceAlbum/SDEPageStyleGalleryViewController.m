@@ -353,63 +353,6 @@ typedef enum: NSUInteger{
     //return self.currentPageIndex;
 }
 
-#pragma mark - Update headerView Info
-- (void)updateHeaderView:(Face *)faceItem
-{
-    Person *personItem = faceItem.personOwner;
-    Photo *photoItem = faceItem.photoOwner;
-    int faceCount = personItem.ownedFaces.count;
-    int personCount = photoItem.faceCount;
-    switch (self.currentLayoutType) {
-        case PortraitLayout:
-            self.nameTitle.text = @"";
-            self.infoTitle.text = @"";
-            break;
-        case HorizontalGridLayout:{
-            if (personItem.name.length == 0) {
-                self.nameTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
-                self.infoTitle.text = @"";
-            }else{
-                switch (self.currentGridCellType) {
-                    case kFaceType:
-                        self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                        if (faceCount == 1) {
-                            self.infoTitle.text = [NSString stringWithFormat:@"1 avator"];
-                        }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
-                        break;
-                    case kPhotoType:
-                        if ([personItem.name isEqualToString:@"UnKnown"]) {
-                            self.nameTitle.text = @"UnKnown";
-                        }else
-                            self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
-                        if (faceCount == 1){
-                            self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
-                        }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"%d Photos", faceCount];
-                        break;
-                }
-            }
-            break;
-        }
-        case DetailLineLayout:{
-            NSMutableString *nameString = [[NSMutableString alloc] initWithCapacity:photoItem.faceCount];
-            for (Face *faceObject in photoItem.faceset) {
-                if (faceObject.name.length > 0) {
-                    [nameString appendString:[NSString stringWithFormat:@"%@ ",faceObject.name]];
-                }
-            }
-            self.nameTitle.text = (NSString *)[nameString copy];
-            if (personCount == 1) {
-                self.infoTitle.text = @"1 Person";
-            }else
-                self.infoTitle.text = [NSString stringWithFormat:@"%d Persons", personCount];
-            break;
-        }
-        default:
-            break;
-    }
-}
 
 #pragma mark - UICollectionView Data Source
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -1031,6 +974,64 @@ typedef enum: NSUInteger{
     [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     
     [self.detailContentCollectionView addGestureRecognizer:self.pinchGestureRecognizer];
+}
+
+#pragma mark - Update headerView Info
+- (void)updateHeaderView:(Face *)faceItem
+{
+    Person *personItem = faceItem.personOwner;
+    Photo *photoItem = faceItem.photoOwner;
+    int faceCount = personItem.ownedFaces.count;
+    int personCount = photoItem.faceCount;
+    switch (self.currentLayoutType) {
+        case PortraitLayout:
+            self.nameTitle.text = @"";
+            self.infoTitle.text = @"";
+            break;
+        case HorizontalGridLayout:{
+            if (personItem.name.length == 0) {
+                self.nameTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                self.infoTitle.text = @"";
+            }else{
+                switch (self.currentGridCellType) {
+                    case kFaceType:
+                        self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
+                        if (faceCount == 1) {
+                            self.infoTitle.text = [NSString stringWithFormat:@"1 avator"];
+                        }else
+                            self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                        break;
+                    case kPhotoType:
+                        if ([personItem.name isEqualToString:@"UnKnown"]) {
+                            self.nameTitle.text = @"UnKnown";
+                        }else
+                            self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
+                        if (faceCount == 1){
+                            self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
+                        }else
+                            self.infoTitle.text = [NSString stringWithFormat:@"%d Photos", faceCount];
+                        break;
+                }
+            }
+            break;
+        }
+        case DetailLineLayout:{
+            NSMutableString *nameString = [[NSMutableString alloc] initWithCapacity:photoItem.faceCount];
+            for (Face *faceObject in photoItem.faceset) {
+                if (faceObject.name.length > 0) {
+                    [nameString appendString:[NSString stringWithFormat:@"%@ ",faceObject.name]];
+                }
+            }
+            self.nameTitle.text = (NSString *)[nameString copy];
+            if (personCount == 1) {
+                self.infoTitle.text = @"1 Person";
+            }else
+                self.infoTitle.text = [NSString stringWithFormat:@"%d Persons", personCount];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end

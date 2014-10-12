@@ -457,10 +457,12 @@ typedef enum {
     Person *newPerson;
     if (self.selectedFaces.count > 0) {
         newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
+        newPerson.name = @"";
         newPerson.whetherToDisplay = YES;
         for (NSIndexPath *indexPath in self.selectedFaces) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             selectedFaceItem.personOwner = newPerson;
+            selectedFaceItem.name = @"";
         }
     }
     
@@ -471,7 +473,7 @@ typedef enum {
     }
     [self saveEdit];
     
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:newSection] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
     self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
@@ -805,13 +807,5 @@ typedef enum {
     //self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
-- (IBAction)unwindToMontageRoom:(UIStoryboardSegue *)segue
-{
-    NSArray *vcs = self.navigationController.viewControllers;
-    NSLog(@"VC count: %lu", (unsigned long)vcs.count);
-    NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);
-    //[self.navigationController popViewControllerAnimated:YES];
-    //NSLog(@"Top VC: %@", [self.navigationController.topViewController class]);
-}
 
 @end

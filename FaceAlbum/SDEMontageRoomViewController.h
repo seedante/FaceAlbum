@@ -11,5 +11,4 @@
 
 @interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate>
 
-- (IBAction)unwindToMontageRoom:(UIStoryboardSegue *)segue;
 @end
