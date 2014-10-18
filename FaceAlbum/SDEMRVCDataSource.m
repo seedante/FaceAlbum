@@ -414,17 +414,20 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     NSLog(@"HeaderView Indexpath: %@", indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
-    personProfileHeaderView.selectAllButton.hidden = YES;
+    personProfileHeaderView.delegate = (SDEMontageRoomViewController *)collectionView.delegate;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
+        personProfileHeaderView.selectAllButton.hidden = YES;
     }else{
         personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
         personProfileHeaderView.nameTextField.enabled = YES;
+        personProfileHeaderView.selectAllButton.hidden = NO;
     }
+    personProfileHeaderView.personOrder = faceItem.personOwner.order;
     
     return personProfileHeaderView;
 }

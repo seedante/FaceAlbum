@@ -23,6 +23,8 @@
 @dynamic isMyStar;
 @dynamic assetURLString;
 @dynamic name;
+@dynamic uploaded;
+@dynamic accepted;
 @dynamic personOwner;
 @dynamic photoOwner;
 

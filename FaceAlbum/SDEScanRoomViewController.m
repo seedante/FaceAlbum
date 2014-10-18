@@ -23,6 +23,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 @property (nonatomic)NSMutableArray *allAssets;
 @property (weak, nonatomic) IBOutlet UILabel *processIndicator;
+@property (nonatomic, assign) NSUInteger totalCount;
 
 @end
 
@@ -54,6 +55,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.processIndicator.text = @"";
     self.photoScanManager.faceCountInThisScan = 0;
     NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
     NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
@@ -72,7 +74,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     pipelineWorkIndex = 0;
     self.allAssets = [[NSMutableArray alloc] init];
     self.showAssets = [[NSMutableArray alloc] init];
-    
+
     
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
@@ -94,6 +96,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                     }
                 }];
             }else{
+                self.totalCount = self.allAssets.count + self.showAssets.count;
                 [self.assetCollectionView reloadData];
             }
         } failureBlock:nil];
@@ -112,8 +115,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                 NSLog(@"Asset need to scan: %d", (int)(self.allAssets.count + self.showAssets.count));
                 [photoDetector cleanData];
             }
-            int count = (int)newAssets.count;
-            self.processIndicator.text = [NSString stringWithFormat:@"%d/%d", count, count];
+            //int count = (int)newAssets.count;
+            self.totalCount = newAssets.count;
+            self.processIndicator.text = [NSString stringWithFormat:@"%d/%d", self.totalCount, self.totalCount];
         }else
             NSLog(@"There is NO new photo");
     }
@@ -155,6 +159,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (IBAction)scanPhotos:(id)sender
 {
+    self.scanButton.enabled = NO;
     [self productionlineStart];
 }
 
@@ -209,7 +214,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     dispatch_sync(backgroundQueue, ^{
         BOOL includeFace = [self.photoScanManager scanAsset:self.showAssets[pipelineWorkIndex] withDetector:FaceppFaceDetector];
         int count = (int)(self.allAssets.count + self.showAssets.count - pipelineWorkIndex);
-        self.processIndicator.text = [NSString stringWithFormat:@"%d", count];
+        self.processIndicator.text = [NSString stringWithFormat:@"%d/%d", count, self.totalCount];
         pipelineWorkIndex += 1;
         if (includeFace) {
             [self.faceDataSource addFaces:[self.photoScanManager allFacesInPhoto]];

@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *assetCollectionView;
 @property (strong, nonatomic) IBOutlet UICollectionView *faceCollectionView;
 @property (nonatomic) NSMutableArray *showAssets;
+@property (weak, nonatomic) IBOutlet UIButton *scanButton;
 
 - (IBAction)scanPhotos:(id)sender;
 

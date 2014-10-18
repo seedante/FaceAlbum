@@ -11,4 +11,7 @@
 
 @interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate>
 
+
+- (void)trainModelAtSection:(NSInteger)section;
+
 @end

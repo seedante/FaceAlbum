@@ -10,7 +10,6 @@
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="albumOwner" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <entity name="Face" representedClassName="Face" syncable="YES">
-        <attribute name="accepted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="assetURLString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avatorImage" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="detectedFaceImage" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -23,7 +22,6 @@
         <attribute name="posterImage" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="section" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="whetherToDisplay" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="personOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="ownedFaces" inverseEntity="Person" syncable="YES"/>
         <relationship name="photoOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="faceset" inverseEntity="Photo" syncable="YES"/>
@@ -48,9 +46,9 @@
         <relationship name="faceset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="photoOwner" inverseEntity="Face" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AlbumGroup" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Face" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="Person" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="Photo" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="AlbumGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Face" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Person" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Photo" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

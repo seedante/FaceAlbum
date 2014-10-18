@@ -630,6 +630,7 @@
 		FD1164E719A8808500C1A41F /* SDECandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDECandidateCell.m; sourceTree = "<group>"; };
 		FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeaderView.h; sourceTree = "<group>"; };
 		FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonProfileHeaderView.m; sourceTree = "<group>"; };
+		FD339F7019EB28530025E149 /* FaceAlbum 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 2.xcdatamodel"; sourceTree = "<group>"; };
 		FD3802B51981040100AE51DF /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPad.storyboard; path = ../Main_iPad.storyboard; sourceTree = "<group>"; };
 		FD3A106019CDC3C9006A3B4E /* SDEAvatorCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEAvatorCheckmarkView.h; sourceTree = "<group>"; };
 		FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEAvatorCheckmarkView.m; sourceTree = "<group>"; };
@@ -2864,6 +2865,7 @@
 		FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD339F7019EB28530025E149 /* FaceAlbum 2.xcdatamodel */,
 				FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */,
 			);
 			currentVersion = FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */;

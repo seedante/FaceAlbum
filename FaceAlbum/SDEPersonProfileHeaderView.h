@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SDEMontageRoomViewController.h"
 
 @interface SDEPersonProfileHeaderView : UICollectionReusableView
 
@@ -14,9 +15,10 @@
 @property (nonatomic) IBOutlet UILabel *numberLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *selectAllButton;
-
+@property (nonatomic, assign) int32_t personOrder;
+@property (weak, nonatomic) SDEMontageRoomViewController *delegate;
 
 - (IBAction)userEndInput:(id)sender;
-- (IBAction)selectAllAvators:(id)sender;
+- (IBAction)trainAvatorsInSection:(id)sender;
 
 @end

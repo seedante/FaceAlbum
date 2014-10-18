@@ -436,12 +436,12 @@ typedef enum: NSUInteger{
             break;
         }
         case DetailLineLayout:{
-            cell.layer.borderWidth = 5.0f;
-            cell.layer.borderColor = [[UIColor whiteColor] CGColor];
+            //cell.layer.borderWidth = 5.0f;
+            //cell.layer.borderColor = [[UIColor whiteColor] CGColor];
             NSIndexPath *selectedPersonIndexPath = [NSIndexPath indexPathForItem:indexPath.item inSection:self.currentPortraitIndex];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedPersonIndexPath];
             Photo *photoItem = faceItem.photoOwner;
-            self.infoTitle.text = [NSString stringWithFormat:@"%d persons", photoItem.faceCount];
+            self.infoTitle.text = [NSString stringWithFormat:@"%d人", photoItem.faceCount];
             NSMutableString *nameString = [[NSMutableString alloc] initWithCapacity:photoItem.faceCount];
             for (Face *face in photoItem.faceset) {
                 if (face.name.length > 0) {
@@ -669,6 +669,10 @@ typedef enum: NSUInteger{
     }else{
         [self.pageViewController.view removeFromSuperview];
     }
+    
+    self.nameTitle.text = @"";
+    self.infoTitle.text = @"";
+
     self.detailContentCollectionView.hidden = YES;
     self.styleSwitch.hidden = YES;
     self.actionCenterButton.hidden = NO;
@@ -990,26 +994,26 @@ typedef enum: NSUInteger{
             break;
         case HorizontalGridLayout:{
             if (personItem.name.length == 0) {
-                self.nameTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                self.nameTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
                 self.infoTitle.text = @"";
             }else{
                 switch (self.currentGridCellType) {
                     case kFaceType:
                         self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
                         if (faceCount == 1) {
-                            self.infoTitle.text = [NSString stringWithFormat:@"1 avator"];
+                            self.infoTitle.text = [NSString stringWithFormat:@"数量：1"];
                         }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"%d avators", faceCount];
+                            self.infoTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
                         break;
                     case kPhotoType:
                         if ([personItem.name isEqualToString:@"UnKnown"]) {
                             self.nameTitle.text = @"UnKnown";
                         }else
-                            self.nameTitle.text = [NSString stringWithFormat:@"%@ and others", personItem.name];
+                            self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
                         if (faceCount == 1){
-                            self.infoTitle.text = [NSString stringWithFormat:@"1 Photo"];
+                            self.infoTitle.text = [NSString stringWithFormat:@"数量：1"];
                         }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"%d Photos", faceCount];
+                            self.infoTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
                         break;
                 }
             }
@@ -1024,13 +1028,11 @@ typedef enum: NSUInteger{
             }
             self.nameTitle.text = (NSString *)[nameString copy];
             if (personCount == 1) {
-                self.infoTitle.text = @"1 Person";
+                self.infoTitle.text = @"1人";
             }else
-                self.infoTitle.text = [NSString stringWithFormat:@"%d Persons", personCount];
+                self.infoTitle.text = [NSString stringWithFormat:@"%d人", personCount];
             break;
         }
-        default:
-            break;
     }
 }
 

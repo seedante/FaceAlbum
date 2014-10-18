@@ -27,6 +27,8 @@
 @property (nonatomic) BOOL isMyStar;
 @property (nonatomic) NSString *assetURLString;
 @property (nonatomic) NSString *name;
+@property (nonatomic) BOOL uploaded;
+@property (nonatomic) BOOL accepted;
 @property (nonatomic, retain) Person *personOwner;
 @property (nonatomic, retain) Photo *photoOwner;
 

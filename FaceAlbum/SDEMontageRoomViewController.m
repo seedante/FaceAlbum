@@ -14,6 +14,8 @@
 #import "Person.h"
 #import "Face.h"
 #import "Reachability.h"
+#import "FaceppAPI.h"
+#import "APIKey+APISecret.h"
 
 #import "SDECandidateCell.h"
 
@@ -45,6 +47,9 @@ typedef enum {
 @property (nonatomic) UITextField *activedField;
 @property (nonatomic) UIButton *goBackUpButton;
 @property (nonatomic) NSString *oldContent;
+
+@property (nonatomic)FaceppDetection *onlineDetector;
+@property (nonatomic) BOOL onLine;
 
 @end
 
@@ -95,7 +100,7 @@ typedef enum {
 -(void)goBackToTop
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
-    self.goBackUpButton.center = CGPointMake(-100, 100);
+    self.goBackUpButton.center = CGPointMake(-100, -100);
 }
 
 - (void)checkFacelessMan
@@ -117,10 +122,8 @@ typedef enum {
                 NSLog(@"Internet is OK.");
                 [groupButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                 groupButton.hidden = NO;
-                //[FaceppAPI initWithApiKey:_API_KEY andApiSecret:_API_SECRET andRegion:APIServerRegionCN];
-                NSLog(@"FaceppAPI Initialize");
-                // turn on the debug mode
-                //[FaceppAPI setDebugMode:TRUE];
+                self.onlineDetector = [FaceppAPI detection];
+                self.onLine = YES;
             });
         };
         
@@ -129,6 +132,9 @@ typedef enum {
                 NSLog(@"No Internet");
                 [groupButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 groupButton.hidden = YES;
+                self.onlineDetector = nil;
+                self.onLine = NO;
+
             });
         };
         
@@ -195,9 +201,12 @@ typedef enum {
 {
     NSString *newTitle;
     if (self.selectedFaces.count > 1) {
-        newTitle = [NSString stringWithFormat:@"select %lu faces", (unsigned long)self.selectedFaces.count];
-    }else
-        newTitle = [NSString stringWithFormat:@"select %lu face", (unsigned long)self.selectedFaces.count];
+        newTitle = [NSString stringWithFormat:@"已选择%lu个头像", (unsigned long)self.selectedFaces.count];
+        [self.DoneBarButton setTitle:@"确定"];
+    }else{
+        newTitle = [NSString stringWithFormat:@"已选择%lu个头像", (unsigned long)self.selectedFaces.count];
+        [self.DoneBarButton setTitle:@"确定"];
+    }
     
     self.navigationItem.title = newTitle;
 }
@@ -394,7 +403,7 @@ typedef enum {
     if (_selectBarButton) {
         return _selectBarButton;
     }
-    _selectBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectFaces)];
+    _selectBarButton = [[UIBarButtonItem alloc] initWithTitle:@"选 择" style:UIBarButtonItemStyleBordered target:self action:@selector(selectFaces)];
     return _selectBarButton;
 }
 
@@ -402,7 +411,7 @@ typedef enum {
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
-    self.navigationItem.title = @"Select 0 Face";
+    self.navigationItem.title = @"尚未选择头像";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
@@ -449,7 +458,6 @@ typedef enum {
 - (void)addNewPerson
 {
     NSLog(@"add New Person");
-    
     NSInteger sectionCount = [self.collectionView numberOfSections];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
@@ -484,7 +492,7 @@ typedef enum {
     if (_moveBarButton) {
         return _moveBarButton;
     }
-    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Move To" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToPerson)];
+    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"移到" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToPerson)];
     _moveBarButton.enabled = NO;
     return _moveBarButton;
 }
@@ -524,7 +532,8 @@ typedef enum {
     if (_DoneBarButton) {
         return _DoneBarButton;
     }
-    _DoneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEdit)];
+    //_DoneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEdit)];
+    _DoneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEdit)];
     return _DoneBarButton;
 }
 
@@ -544,7 +553,7 @@ typedef enum {
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     }
     
-    self.navigationItem.title = @"Montage Room";
+    self.navigationItem.title = @"";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
     self.navigationItem.rightBarButtonItem = self.showGalleryBarButton;
@@ -622,7 +631,8 @@ typedef enum {
     SDECandidateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"candidateCell" forIndexPath:indexPath];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
     if (firstItemInSection.section == 0) {
-        [cell setCellImage:[UIImage imageNamed:@"Smartisan.png"]];
+        [cell setCellImage:[UIImage imageNamed:@"group-100.png"]];
+        cell.backgroundColor = [UIColor whiteColor];
     }else
         [cell setCellImage:[UIImage imageWithContentsOfFile:firstItemInSection.pathForBackup]];
     return cell;
@@ -805,6 +815,75 @@ typedef enum {
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
     self.collectionView.contentInset = contentInsets;
     //self.collectionView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)trainModelAtSection:(NSInteger)section
+{
+    if (self.onLine) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order == %@", @(section)];
+        [fetchRequest setPredicate:predicate];
+        NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+        if (fetchedObjects && fetchedObjects.count == 1) {
+            Person *personItem = (Person *)fetchedObjects.firstObject;
+            if (personItem.personID) {
+                for (Face *faceItem in personItem.ownedFaces) {
+                    if (faceItem.faceID) {
+                        [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
+                    }else{
+                        if (faceItem.uploaded && !faceItem.accepted) {
+                            ;
+                        }else{
+                            UIImage *faceImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
+                            NSData *faceData = UIImageJPEGRepresentation(faceImage, 0.0);
+                            FaceppResult *uploadResult = [self.onlineDetector detectWithURL:nil orImageData:faceData];
+                            if (uploadResult.success) {
+                                NSArray *detectResult = uploadResult.content[@"face"];
+                                if ([detectResult count] != 0) {
+                                    faceItem.faceID = detectResult[0][@"face_id"];
+                                    NSLog(@"faceID is %@", faceItem.faceID);
+                                    [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
+                                }else{
+                                    faceItem.uploaded = YES;
+                                    faceItem.accepted = NO;
+                                }
+                            }
+                        }
+                    }
+                }
+            }else{
+                FaceppResult *result = [[FaceppPerson alloc] create];
+                personItem.personID = (NSString *)[result.content valueForKey:@"person_id"];
+                [self saveEdit];
+                NSLog(@"Person_ID: %@",personItem.personID);
+                for (Face *faceItem in personItem.ownedFaces) {
+                    if (faceItem.faceID) {
+                        [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
+                    }else{
+                        if (faceItem.uploaded && !faceItem.accepted) {
+                            ;
+                        }else{
+                            UIImage *faceImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
+                            NSData *faceData = UIImageJPEGRepresentation(faceImage, 0.0);
+                            FaceppResult *uploadResult = [self.onlineDetector detectWithURL:nil orImageData:faceData];
+                            if (uploadResult.success) {
+                                NSArray *detectResult = uploadResult.content[@"face"];
+                                if ([detectResult count] != 0) {
+                                    faceItem.faceID = detectResult[0][@"face_id"];
+                                    NSLog(@"faceID is %@", faceItem.faceID);
+                                    [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
+                                }else{
+                                    faceItem.uploaded = YES;
+                                    faceItem.accepted = NO;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }else
+        NSLog(@"No Internet.");
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "SDEPersonProfileHeaderView.h"
+#import "Person.h"
 
 @implementation SDEPersonProfileHeaderView
 
@@ -34,8 +35,8 @@
     [textField resignFirstResponder];
 }
 
-- (IBAction)selectAllAvators:(id)sender
+- (IBAction)trainAvatorsInSection:(id)sender
 {
-    
+    [self.delegate trainModelAtSection:self.personOrder];
 }
 @end

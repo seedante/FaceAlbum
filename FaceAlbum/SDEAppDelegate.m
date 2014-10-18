@@ -8,6 +8,8 @@
 
 #import "SDEAppDelegate.h"
 #import "Store.h"
+#import "APIKey+APISecret.h"
+#import "FaceppAPI.h"
 
 @implementation SDEAppDelegate
 
@@ -26,7 +28,8 @@
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];
     _managedObjectContext = dataStore.managedObjectContext;
     
-    
+    [FaceppAPI initWithApiKey:_API_KEY andApiSecret:_API_SECRET andRegion:APIServerRegionCN];
+    [FaceppAPI setDebugMode:TRUE];
     //self.window.backgroundColor = [UIColor whiteColor];
     //[self.window makeKeyAndVisible];
     return YES;
