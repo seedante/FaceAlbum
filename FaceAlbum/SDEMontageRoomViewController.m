@@ -86,10 +86,10 @@ typedef enum {
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
-        NSLog(@"Face Fetch Fail: %@", error);
+        DLog(@"Face Fetch Fail: %@", error);
     }
 
-    NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
+    DLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
 -(void)goBackToTop
@@ -116,7 +116,7 @@ typedef enum {
     NSManagedObjectContext *moc = self.faceFetchedResultsController.managedObjectContext;
     if (moc != nil) {
         if ([moc hasChanges] && ![moc save:&error]) {
-            NSLog(@"Edit Save error %@, %@", error, [error userInfo]);
+            DLog(@"Edit Save error %@, %@", error, [error userInfo]);
         }
     }
 }
@@ -224,7 +224,7 @@ typedef enum {
 
 - (void)filterSelectedItemSetWithTargetViewSection:(NSInteger)targetViewSection
 {
-    NSLog(@"STEP 1: filter selected items.");
+    DLog(@"STEP 1: filter selected items.");
     [self.guardObjectIDs removeAllObjects];
     [self.triggeredDeletedSections removeAllObjects];
     
@@ -247,7 +247,7 @@ typedef enum {
             NSInteger section = [sectionNumber integerValue];
             NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
             if (itemCount == matchedItems.count) {
-                NSLog(@"All items at section: %d are choiced. This will trigger detele section.", (int)section+1);
+                DLog(@"All items at section: %d are choiced. This will trigger detele section.", (int)section+1);
                 [self.triggeredDeletedSections addObject:sectionNumber];
                 [self.selectedFaces removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
             }
@@ -258,12 +258,12 @@ typedef enum {
 
 - (void)manageSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
 {
-    NSLog(@"STEP 2: create copy items in target section.");
+    DLog(@"STEP 2: create copy items in target section.");
     if (self.triggeredDeletedSections.count > 0) {
         for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
             NSInteger section = sectionNumber.integerValue;
             if (section == targetDataSection) {
-                NSLog(@"It's impossible!!!");
+                DLog(@"It's impossible!!!");
             }else{
                 Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
                 copyFaceItem.section = (int)targetDataSection;
@@ -273,10 +273,10 @@ typedef enum {
     }else{
         if (self.selectedFaces.count > 0) {
             NSIndexPath *anyIndexPath = self.selectedFaces.anyObject;
-            NSLog(@"Index: %@", anyIndexPath);
+            DLog(@"Index: %@", anyIndexPath);
             Face *anyFace = [self.faceFetchedResultsController objectAtIndexPath:anyIndexPath];
             if (anyFace.section == targetDataSection) {
-                NSLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
+                DLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
                 //[self filterSelectedItemsInSection:targetDataSection];
             }else{
                 Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
@@ -320,7 +320,7 @@ typedef enum {
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
     if (self.selectedFaces.count > 0) {
-        NSLog(@"STEP 3: move left items to target section.");
+        DLog(@"STEP 3: move left items to target section.");
         NSInteger targetSection = [targetSectionNumber integerValue];
         for (NSIndexPath *indexPath in self.selectedFaces) {
             Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
@@ -330,7 +330,7 @@ typedef enum {
         }
         [self.selectedFaces removeAllObjects];
     }else
-        NSLog(@"There is no item need to move.");
+        DLog(@"There is no item need to move.");
 
     [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.1];
 }
@@ -338,14 +338,14 @@ typedef enum {
 - (void)deleteOriginalItems
 {
     if (self.guardObjectIDs.count > 0) {
-        NSLog(@"STEP 4: delete original items.");
+        DLog(@"STEP 4: delete original items.");
         for (NSManagedObjectID *objectID in self.guardObjectIDs) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
             [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
         }
         [self.guardObjectIDs removeAllObjects];
     }else
-        NSLog(@"There is no item to delete.");
+        DLog(@"There is no item to delete.");
     
     [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.1];
 }
@@ -402,15 +402,13 @@ typedef enum {
     if (_addBarButton) {
         return _addBarButton;
     }
-    //_addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewPerson)];
-    _addBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_user-32.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addNewPerson)];
+    _addBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addPerson.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addNewPerson)];
     _addBarButton.enabled = NO;
     return _addBarButton;
 }
 
 - (void)addNewPerson
 {
-    NSLog(@"add New Person");
     NSInteger sectionCount = [self.collectionView numberOfSections];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
     NSInteger newSection = firstItemInSection.section + 1;
@@ -537,45 +535,45 @@ typedef enum {
     BOOL ThreeScene = [defaultConfig boolForKey:@"isGalleryOpened"];
     NSUInteger count = [[self.faceFetchedResultsController sections] count];
     if (!ThreeScene){
-        NSLog(@"No Three.");
+        DLog(@"No Three.");
         if (count > 1) {
             [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
             [defaultConfig synchronize];
-            NSLog(@"Open Three");
+            DLog(@"Open Three");
         }else if (count == 1){
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section != 0) {
                 [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
                 [defaultConfig synchronize];
-                NSLog(@"Open Three.");
+                DLog(@"Open Three.");
             }
         }
     }else{
-        NSLog(@"Yeah, Three");
+        DLog(@"Yeah, Three");
         if (count == 1) {
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section == 0) {
                 [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
                 [defaultConfig synchronize];
-                NSLog(@"Close Three.");
+                DLog(@"Close Three.");
             }
         }else if (count == 0){
             [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
             [defaultConfig synchronize];
-            NSLog(@"Close Three.");
+            DLog(@"Close Three.");
         }
     }
 
-    //NSLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
+    //DLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
     [self.navigationController popToRootViewControllerAnimated:YES];
-    //NSLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
+    //DLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger sectionNumber = [self.collectionView numberOfSections];
-    NSLog(@"Candidate Number: %ld", (long)sectionNumber);
+    DLog(@"Candidate Number: %ld", (long)sectionNumber);
     return sectionNumber;
 }
 
@@ -614,7 +612,7 @@ typedef enum {
                 for (NSIndexPath *itemIndexPath in self.selectedFaces) {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
                     if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
-                        NSLog(@"JUST FOR TEST");
+                        DLog(@"JUST FOR TEST");
                         selectedFaceItem.personOwner = selectedPerson;
                         if (selectedPerson.name.length > 0) {
                             selectedFaceItem.name = selectedPerson.name;
@@ -644,22 +642,12 @@ typedef enum {
 
 - (void)processCellAtIndexPath:(NSIndexPath *)indexPath type:(NSString *)type
 {
-    //UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([type isEqual:@"Select"]) {
-        NSLog(@"Select Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
         [self addSelectedFaces:[NSSet setWithObject:indexPath]];
-        
         [self enableLeftBarButtonItems];
-        //cell.layer.borderColor = [[UIColor greenColor] CGColor];
-        //cell.layer.borderWidth = 3.0f;
-        //cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
     }
     
     if ([type isEqual:@"Deselect"]) {
-        NSLog(@"Deselect Cell: %ld, %ld", (long)indexPath.section, (long)indexPath.item);
-        //cell.layer.borderWidth = 0.0f;
-        //cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        //use KVO
         [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
         
         if (self.selectedFaces.count == 0) {
@@ -682,25 +670,25 @@ typedef enum {
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    //NSLog(@"%@", NSStringFromSelector(_cmd));
+    //DLog(@"%@", NSStringFromSelector(_cmd));
     self.activedField = textField;
     self.oldContent = textField.text;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    //NSLog(@"%@", NSStringFromSelector(_cmd));
+    //DLog(@"%@", NSStringFromSelector(_cmd));
     if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
-        NSLog(@"Change Name");
+        DLog(@"Change Name");
         NSUInteger section = [[self.faceFetchedResultsController sections] count];
         CGRect rectInCollectionView = [textField convertRect:textField.frame toView:self.collectionView];
-        //NSLog(@"Text Field Frame: %f, %f, %f, %f", rectInCollectionView.origin.x, rectInCollectionView.origin.y, textField.frame.size.width, textField.frame.size.height);
+        //DLog(@"Text Field Frame: %f, %f, %f, %f", rectInCollectionView.origin.x, rectInCollectionView.origin.y, textField.frame.size.width, textField.frame.size.height);
         for (int i = 0; i<section; i++) {
             NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:0 inSection:i];
             CGRect frame = [[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:currentIndexPath] frame];
-            //NSLog(@"HeadView Frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            //DLog(@"HeadView Frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
             if (CGRectIntersectsRect(frame, rectInCollectionView)) {
-                //NSLog(@"Match at IndexPath: %@", currentIndexPath);
+                //DLog(@"Match at IndexPath: %@", currentIndexPath);
                 Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
                 personItem.name = self.activedField.text;
                 for (Face *faceItem in personItem.ownedFaces) {
@@ -719,7 +707,7 @@ typedef enum {
 // Call this method somewhere in your view controller setup code.
 - (void)registerForKeyboardNotifications
 {
-    NSLog(@"register for keyboard notification.");
+    DLog(@"register for keyboard notification.");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -733,17 +721,10 @@ typedef enum {
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    NSLog(@"Keyboard show");
+    DLog(@"Keyboard show");
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    //CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    //NSLog(@"Keyboard Frame: %f, %f", kbRect.origin.x, kbRect.origin.y);
-    NSLog(@"Keyboard Size: %fx%f", kbSize.height, kbSize.width);
-    
     UIEdgeInsets edgeInsets = self.collectionView.contentInset;
-    //NSLog(@"EdgeInsets: %f, %f, %f, %f", edgeInsets.top, edgeInsets.left, edgeInsets.bottom, edgeInsets.right);
-    //CGRect textFiledRect = [self.collectionView convertRect:self.activedField.frame fromView:self.activedField.superview];
-    //NSLog(@"Active TextField Frame: %f %f", textFiledRect.origin.x, textFiledRect.origin.y);
     edgeInsets.bottom = kbSize.width + 140;
     UIEdgeInsets contentInsets = edgeInsets;
     self.collectionView.contentInset = contentInsets;
@@ -755,7 +736,7 @@ typedef enum {
     //CGRect aRect = self.collectionView.frame;
     //aRect.size.height -= kbSize.width;
     //if (!CGRectContainsPoint(aRect, textFiledRect.origin) ) {
-    //    NSLog(@"I am hidden.");
+    //    DLog(@"I am hidden.");
     //    [self.collectionView scrollRectToVisible:textFiledRect animated:YES];
     //}
     
@@ -764,10 +745,8 @@ typedef enum {
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    NSLog(@"Keyboard hidden.");
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
     self.collectionView.contentInset = contentInsets;
-    //self.collectionView.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)trainModelAtSection:(NSInteger)section
@@ -794,7 +773,7 @@ typedef enum {
                                 NSArray *detectResult = uploadResult.content[@"face"];
                                 if ([detectResult count] != 0) {
                                     faceItem.faceID = detectResult[0][@"face_id"];
-                                    NSLog(@"faceID is %@", faceItem.faceID);
+                                    DLog(@"faceID is %@", faceItem.faceID);
                                     [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
                                 }else{
                                     faceItem.uploaded = YES;
@@ -808,7 +787,7 @@ typedef enum {
                 FaceppResult *result = [[FaceppPerson alloc] create];
                 personItem.personID = (NSString *)[result.content valueForKey:@"person_id"];
                 [self saveEdit];
-                NSLog(@"Person_ID: %@",personItem.personID);
+                DLog(@"Person_ID: %@",personItem.personID);
                 for (Face *faceItem in personItem.ownedFaces) {
                     if (faceItem.faceID) {
                         [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
@@ -823,7 +802,7 @@ typedef enum {
                                 NSArray *detectResult = uploadResult.content[@"face"];
                                 if ([detectResult count] != 0) {
                                     faceItem.faceID = detectResult[0][@"face_id"];
-                                    NSLog(@"faceID is %@", faceItem.faceID);
+                                    DLog(@"faceID is %@", faceItem.faceID);
                                     [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
                                 }else{
                                     faceItem.uploaded = YES;
@@ -836,7 +815,7 @@ typedef enum {
             }
         }
     }else
-        NSLog(@"No Internet.");
+        DLog(@"No Internet.");
 }
 
 

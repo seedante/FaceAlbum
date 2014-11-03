@@ -20,7 +20,6 @@
     self = [super initWithFrame:frameRect];
     if (self) {
         // Initialization code
-        NSLog(@"ITSHOULDBE");
     }
     return self;
 }

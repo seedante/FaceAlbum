@@ -13,6 +13,7 @@
 
 @interface Photo : NSManagedObject
 
+@property (nonatomic) UIImage *thumbnail;
 @property (nonatomic) BOOL isExisted;
 @property (nonatomic) NSTimeInterval offlineTime;
 @property (nonatomic, retain) NSString * uniqueURLString;

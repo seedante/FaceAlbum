@@ -126,7 +126,7 @@
                 }
             }];
         }else{
-            //NSLog(@"All Assets Count: %d", self.allAssetsURLString.count);
+            //DLog(@"All Assets Count: %d", self.allAssetsURLString.count);
             [self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
         }
     } failureBlock:nil];
@@ -149,14 +149,14 @@
         }else
             [self.existAgainAssetsURLString addObject:result[@"uniqueURLString"]];
     }
-    NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLString.count);
-    NSLog(@"Scaned Assets Count: %lu", (unsigned long)(scanedAssets.count + self.existAgainAssetsURLString.count));
+    DLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLString.count);
+    DLog(@"Scaned Assets Count: %lu", (unsigned long)(scanedAssets.count + self.existAgainAssetsURLString.count));
     NSSet *allAssetsCopy = [self.allAssetsURLString copy];
     if (self.existAgainAssetsURLString.count > 0) {
         if ([allAssetsCopy intersectsSet:self.existAgainAssetsURLString]) {
             [self.existAgainAssetsURLString intersectSet:self.allAssetsURLString];
             if (self.existAgainAssetsURLString.count > 0) {
-                NSLog(@"%lu assets go back", (unsigned long)self.existAgainAssetsURLString.count);
+                DLog(@"%lu assets go back", (unsigned long)self.existAgainAssetsURLString.count);
             }
         }
     }
@@ -175,7 +175,7 @@
             
             dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         }
-        NSLog(@"New Photo count: %lu", (unsigned long)self.allNewAssets.count);
+        DLog(@"New Photo count: %lu", (unsigned long)self.allNewAssets.count);
     }else{
         self.isThereNewPhoto = NO;
         self.allNewAssets = nil;
@@ -183,7 +183,7 @@
     [scanedAssets minusSet:allAssetsCopy];
     if (scanedAssets.count > 0) {
         self.deletedAssetsURLString = [scanedAssets copy];
-        NSLog(@"There are %lu photo is deleted from local device.", (unsigned long)scanedAssets.count);
+        DLog(@"There are %lu photo is deleted from local device.", (unsigned long)scanedAssets.count);
     }else
         self.deletedAssetsURLString = nil;
 }

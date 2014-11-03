@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SDEPopupPanel.h"
+#ifdef DEBUG_MODE
+#define DLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define DLog( s, ... )
+#endif
 
 @interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate>
 
@@ -17,13 +22,11 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *galleryView;
 @property (weak, nonatomic) IBOutlet SDEPopupPanel *buttonPanel;
 @property (weak, nonatomic) IBOutlet UIButton *scanRoomButton;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
 @property (weak, nonatomic) IBOutlet UIButton *MontageRoomButton;
 @property (weak, nonatomic) IBOutlet UIButton *actionCenterButton;
 
 
 - (IBAction)scanPhotoLibrary:(id)sender;
-- (IBAction)searchPerson:(id)sender;
 - (IBAction)editAlbum:(id)sender;
 - (IBAction)popMenu:(id)sender;
 @end

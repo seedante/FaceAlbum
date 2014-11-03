@@ -13,6 +13,7 @@
 
 @implementation Photo
 
+@dynamic thumbnail;
 @dynamic isExisted;
 @dynamic offlineTime;
 @dynamic uniqueURLString;

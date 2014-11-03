@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#ifdef DEBUG_MODE
+#define DLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define DLog( s, ... )
+#endif
 
 @interface SDENewPhotoDetector : NSObject
 
