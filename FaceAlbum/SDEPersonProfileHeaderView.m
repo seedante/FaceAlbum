@@ -35,8 +35,4 @@
     [textField resignFirstResponder];
 }
 
-- (IBAction)trainAvatorsInSection:(id)sender
-{
-    [self.delegate trainModelAtSection:self.personOrder];
-}
 @end

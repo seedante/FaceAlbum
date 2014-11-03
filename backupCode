@@ -213,3 +213,46 @@
 {
     NSLog(@"Cell Remove Finish.");
 }
+
+
+- (void)checkFacelessMan
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
+    [fetchRequest setPredicate:predicate];
+    
+    
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    if (fetchedObjects && fetchedObjects.count > 0) {
+        UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [groupButton setTitle:@"AutoGroup" forState:UIControlStateNormal];
+        [groupButton setCenter:CGPointMake(500, 22)];
+        [groupButton addTarget:self action:@selector(autoGroupAvator) forControlEvents:UIControlEventTouchUpInside];
+        Reachability *internetReachableCheck = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+        internetReachableCheck.reachableBlock =  ^(Reachability *reach){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Internet is OK.");
+                [groupButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                groupButton.hidden = NO;
+                self.onlineDetector = [FaceppAPI detection];
+                self.onLine = YES;
+            });
+        };
+        
+        internetReachableCheck.unreachableBlock = ^(Reachability *reach){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"No Internet");
+                [groupButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                groupButton.hidden = YES;
+                self.onlineDetector = nil;
+                self.onLine = NO;
+
+            });
+        };
+        
+        [internetReachableCheck startNotifier];
+        
+        self.navigationItem.titleView = groupButton;
+    }else
+        NSLog(@"FacelessMan is gone.");
+}

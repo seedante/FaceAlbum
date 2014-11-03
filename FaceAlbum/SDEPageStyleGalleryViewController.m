@@ -13,10 +13,8 @@
 #import "Person.h"
 #import "Photo.h"
 #import "SDEGalleryCell.h"
-#import "SDEGalleryModel.h"
 #import "LineLayout.h"
 #import "SDEPageViewLayout.h"
-//#import "SDECenterMenu.h"
 @import AssetsLibrary;
 
 static NSString *CellIdentifier = @"GalleryCell";
@@ -73,6 +71,7 @@ typedef enum: NSUInteger{
     self.inPageViewFlag = NO;
     self.currentLayoutType = PortraitLayout;
     self.currentGridCellType = kFaceType;
+    self.styleSwitch.hidden = YES;
     self.styleSwitch.delegate = self;
     UITabBarItem *item = [self.styleSwitch.items objectAtIndex:self.currentGridCellType];
     [self.styleSwitch setSelectedItem:item];
@@ -95,15 +94,6 @@ typedef enum: NSUInteger{
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
     
-    /*
-    UIImage *startImage = [UIImage imageNamed:@"user_male2-50.png"];
-    UIImage *firstMenuImage = [UIImage imageNamed:@"edit_user-50.png"];
-    UIImage *secondMenyImage = [UIImage imageNamed:@"find_user-50.png"];
-    SDECenterMenu *centerMenu = [[SDECenterMenu alloc] initWithStartPoint:CGPointMake(950, 50) startImage:startImage submenuImages:@[firstMenuImage, secondMenyImage]];
-    centerMenu.delegate = self;
-    [self.view addSubview:centerMenu];
-    [self.view bringSubviewToFront:centerMenu];
-     */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,10 +134,6 @@ typedef enum: NSUInteger{
     return startScene;
 }
 
-- (void)checkEmpty
-{
-    
-}
 
 - (SDENewPhotoDetector *)newPhotoDetector
 {
@@ -630,8 +616,6 @@ typedef enum: NSUInteger{
         case DetailLineLayout:
             space = 24.0f;
             break;
-        default:
-            break;
     }
     return space;
 }
@@ -994,16 +978,16 @@ typedef enum: NSUInteger{
             break;
         case HorizontalGridLayout:{
             if (personItem.name.length == 0) {
-                self.nameTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
+                self.nameTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
                 self.infoTitle.text = @"";
             }else{
                 switch (self.currentGridCellType) {
                     case kFaceType:
                         self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
                         if (faceCount == 1) {
-                            self.infoTitle.text = [NSString stringWithFormat:@"数量：1"];
+                            self.infoTitle.text = [NSString stringWithFormat:@"Count：1"];
                         }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
+                            self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
                         break;
                     case kPhotoType:
                         if ([personItem.name isEqualToString:@"UnKnown"]) {
@@ -1011,9 +995,9 @@ typedef enum: NSUInteger{
                         }else
                             self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
                         if (faceCount == 1){
-                            self.infoTitle.text = [NSString stringWithFormat:@"数量：1"];
+                            self.infoTitle.text = [NSString stringWithFormat:@"Count：1"];
                         }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"数量：%d", faceCount];
+                            self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
                         break;
                 }
             }
@@ -1028,9 +1012,9 @@ typedef enum: NSUInteger{
             }
             self.nameTitle.text = (NSString *)[nameString copy];
             if (personCount == 1) {
-                self.infoTitle.text = @"1人";
+                self.infoTitle.text = @"1 Person";
             }else
-                self.infoTitle.text = [NSString stringWithFormat:@"%d人", personCount];
+                self.infoTitle.text = [NSString stringWithFormat:@"%d Persons", personCount];
             break;
         }
     }

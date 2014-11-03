@@ -74,18 +74,15 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-vl-eb2">
-                                    <rect key="frame" x="681" y="11" width="37" height="33"/>
+                                    <rect key="frame" x="681" y="11" width="67" height="33"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="37" id="E5o-Z0-B1u"/>
+                                        <constraint firstAttribute="width" constant="67" id="E5o-Z0-B1u"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <state key="normal" title="训练">
+                                    <state key="normal" title="SelectAll">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <connections>
-                                        <action selector="trainAvatorsInSection:" destination="18c-uM-ajg" eventType="touchUpInside" id="PtG-5p-yYW"/>
-                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>
@@ -96,7 +93,7 @@
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="18c-uM-ajg" secondAttribute="leading" constant="50" id="gMg-Jj-f3H"/>
                                 <constraint firstAttribute="bottom" secondItem="iRr-Ru-fZl" secondAttribute="bottom" id="gb0-Ke-mns"/>
                                 <constraint firstItem="iRr-Ru-fZl" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="33" id="uNI-DH-q2S"/>
-                                <constraint firstAttribute="trailing" secondItem="KIM-vl-eb2" secondAttribute="trailing" constant="50" id="zgc-MC-NUS"/>
+                                <constraint firstAttribute="trailing" secondItem="KIM-vl-eb2" secondAttribute="trailing" constant="20" id="zgc-MC-NUS"/>
                             </constraints>
                             <connections>
                                 <outlet property="collectionView" destination="0YA-ok-D2X" id="NuW-ew-kF3"/>
@@ -110,7 +107,7 @@
                         </connections>
                     </collectionView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="nXJ-LS-Ybg">
+                    <navigationItem key="navigationItem" title="MontageRoom" id="nXJ-LS-Ybg">
                         <barButtonItem key="backBarButtonItem" title="I don't want this." id="KY8-xY-Dyk"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -138,14 +135,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIS-kh-nXO">
-                                        <rect key="frame" x="700" y="31" width="48" height="38"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIS-kh-nXO">
+                                        <rect key="frame" x="655" y="31" width="93" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="48" id="68K-UE-jJU"/>
+                                            <constraint firstAttribute="width" constant="93" id="68K-UE-jJU"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <state key="normal" title="检测">
+                                        <state key="normal" title="Scan">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -153,10 +150,10 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75/75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-gG-bkg">
-                                        <rect key="frame" x="334" y="26" width="101" height="48"/>
+                                        <rect key="frame" x="284" y="26" width="201" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="101" id="3gr-72-KMN"/>
+                                            <constraint firstAttribute="width" constant="201" id="3gr-72-KMN"/>
                                             <constraint firstAttribute="height" constant="48" id="pJY-q6-GVh"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -194,7 +191,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avator@weibo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="0me-li-2dV">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0me-li-2dV">
                                                     <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -371,7 +368,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrR-ve-wZq">
-                                                <rect key="frame" x="138" y="2" width="44" height="43"/>
+                                                <rect key="frame" x="138" y="4" width="44" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="edit_user-50.png">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -381,7 +378,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJh-Df-MDh">
-                                                <rect key="frame" x="74" y="4" width="44" height="44"/>
+                                                <rect key="frame" x="74" y="1" width="44" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="I87-jr-ecf"/>
@@ -411,7 +408,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="4rN-8l-Vp8"/>
-                                            <constraint firstItem="qJh-Df-MDh" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="4" id="FY0-CP-3ts"/>
+                                            <constraint firstItem="qJh-Df-MDh" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="1" id="FY0-CP-3ts"/>
                                             <constraint firstItem="hyZ-Vb-wt3" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" id="Hjf-ln-yCQ"/>
                                             <constraint firstAttribute="trailing" secondItem="hrR-ve-wZq" secondAttribute="trailing" constant="20" id="NgW-sf-yf8"/>
                                             <constraint firstItem="hrR-ve-wZq" firstAttribute="leading" secondItem="qJh-Df-MDh" secondAttribute="trailing" constant="20" id="WYj-kL-94O"/>
@@ -419,8 +416,8 @@
                                             <constraint firstAttribute="width" constant="202" id="ckJ-ph-Z5f"/>
                                             <constraint firstItem="qJh-Df-MDh" firstAttribute="leading" secondItem="hyZ-Vb-wt3" secondAttribute="trailing" constant="20" id="eZb-Ym-f5t"/>
                                             <constraint firstItem="hyZ-Vb-wt3" firstAttribute="leading" secondItem="v3p-Pe-9PQ" secondAttribute="leading" constant="10" id="ihL-q7-Tbw"/>
-                                            <constraint firstItem="hrR-ve-wZq" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="2" id="s8Y-by-VwC"/>
-                                            <constraint firstAttribute="bottom" secondItem="hrR-ve-wZq" secondAttribute="bottom" constant="3" id="uBQ-5D-rDW"/>
+                                            <constraint firstItem="hrR-ve-wZq" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="4" id="s8Y-by-VwC"/>
+                                            <constraint firstAttribute="bottom" secondItem="hrR-ve-wZq" secondAttribute="bottom" constant="1" id="uBQ-5D-rDW"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -483,13 +480,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <tabBar hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-U0-cER">
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-U0-cER">
                                 <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <tabBarItem title="头像" image="user_female3-25.png" id="BEF-kh-huq"/>
-                                    <tabBarItem title="照片" image="gallery-25.png" id="cpc-96-bBo"/>
+                                    <tabBarItem title="Avator" image="user_female3-25.png" id="BEF-kh-huq"/>
+                                    <tabBarItem title="Photo" image="gallery-25.png" id="cpc-96-bBo"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -667,7 +664,6 @@
     </scenes>
     <resources>
         <image name="Smartisan.png" width="180" height="180"/>
-        <image name="avator@weibo.jpg" width="180" height="180"/>
         <image name="change_user-50.png" width="50" height="50"/>
         <image name="edit_user-50.png" width="50" height="50"/>
         <image name="gallery-25.png" width="25" height="25"/>

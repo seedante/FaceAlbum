@@ -19,6 +19,6 @@
 @property (weak, nonatomic) SDEMontageRoomViewController *delegate;
 
 - (IBAction)userEndInput:(id)sender;
-- (IBAction)trainAvatorsInSection:(id)sender;
+
 
 @end

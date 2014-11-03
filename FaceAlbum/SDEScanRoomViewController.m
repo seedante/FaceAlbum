@@ -22,8 +22,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @property (nonatomic)PhotoScanManager *photoScanManager;
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 @property (nonatomic)NSMutableArray *allAssets;
-@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
 @property (nonatomic, assign) NSUInteger totalCount;
+@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
+
 
 @end
 
@@ -50,12 +51,10 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    NSLog(@"TOO BIG");
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.processIndicator.text = @"";
     self.photoScanManager.faceCountInThisScan = 0;
     NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
     NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
@@ -153,12 +152,12 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     
     ALAsset *asset = (ALAsset *)[self.showAssets objectAtIndex:indexPath.item];
     photoCell.asset = asset;
-    //NSLog(@"Size: %zuX%zu", CGImageGetWidth([asset aspectRatioThumbnail]), CGImageGetHeight([asset aspectRatioThumbnail]));
     return photoCell;
 }
 
 - (IBAction)scanPhotos:(id)sender
 {
+    [self.scanButton setTitle:@"Scan..." forState:UIControlStateNormal];
     self.scanButton.enabled = NO;
     [self productionlineStart];
 }

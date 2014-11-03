@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "SDECenterMenu.h"
 #import "SDEPopupPanel.h"
 
 @interface SDEPageStyleGalleryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UITabBarDelegate>
@@ -26,6 +25,5 @@
 - (IBAction)scanPhotoLibrary:(id)sender;
 - (IBAction)searchPerson:(id)sender;
 - (IBAction)editAlbum:(id)sender;
-
 - (IBAction)popMenu:(id)sender;
 @end

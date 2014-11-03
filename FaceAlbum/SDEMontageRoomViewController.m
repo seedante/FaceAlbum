@@ -61,7 +61,7 @@ typedef enum {
     
     self.goBackUpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.view addSubview:self.goBackUpButton];
-    [self.goBackUpButton setTitle:@"UP" forState:UIControlStateNormal];
+    [self.goBackUpButton setImage:[UIImage imageNamed:@"up-50.png"] forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
     self.goBackUpButton.center = CGPointMake(0, -50);
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
@@ -92,64 +92,17 @@ typedef enum {
     NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
-- (void)autoGroupAvator
-{
-    [[[UIAlertView alloc] initWithTitle:@"AutoGroup" message:@"It's fake" delegate:self cancelButtonTitle:@"Hehe" otherButtonTitles:nil] show];
-}
-
 -(void)goBackToTop
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     self.goBackUpButton.center = CGPointMake(-100, -100);
 }
 
-- (void)checkFacelessMan
-{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Face"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
-    [fetchRequest setPredicate:predicate];
-    
-    
-    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    if (fetchedObjects && fetchedObjects.count > 0) {
-        UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [groupButton setTitle:@"AutoGroup" forState:UIControlStateNormal];
-        [groupButton setCenter:CGPointMake(500, 22)];
-        [groupButton addTarget:self action:@selector(autoGroupAvator) forControlEvents:UIControlEventTouchUpInside];
-        Reachability *internetReachableCheck = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-        internetReachableCheck.reachableBlock =  ^(Reachability *reach){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Internet is OK.");
-                [groupButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-                groupButton.hidden = NO;
-                self.onlineDetector = [FaceppAPI detection];
-                self.onLine = YES;
-            });
-        };
-        
-        internetReachableCheck.unreachableBlock = ^(Reachability *reach){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"No Internet");
-                [groupButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-                groupButton.hidden = YES;
-                self.onlineDetector = nil;
-                self.onLine = NO;
-
-            });
-        };
-        
-        [internetReachableCheck startNotifier];
-        
-        self.navigationItem.titleView = groupButton;
-    }else
-        NSLog(@"FacelessMan is gone.");
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self registerAsObserver];
-    [self checkFacelessMan];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -201,11 +154,11 @@ typedef enum {
 {
     NSString *newTitle;
     if (self.selectedFaces.count > 1) {
-        newTitle = [NSString stringWithFormat:@"已选择%lu个头像", (unsigned long)self.selectedFaces.count];
-        [self.DoneBarButton setTitle:@"确定"];
+        newTitle = [NSString stringWithFormat:@"Select %lu avators", (unsigned long)self.selectedFaces.count];
+        [self.DoneBarButton setTitle:@"Confirm"];
     }else{
-        newTitle = [NSString stringWithFormat:@"已选择%lu个头像", (unsigned long)self.selectedFaces.count];
-        [self.DoneBarButton setTitle:@"确定"];
+        newTitle = [NSString stringWithFormat:@"Select %lu avator", (unsigned long)self.selectedFaces.count];
+        [self.DoneBarButton setTitle:@"Confirm"];
     }
     
     self.navigationItem.title = newTitle;
@@ -403,7 +356,7 @@ typedef enum {
     if (_selectBarButton) {
         return _selectBarButton;
     }
-    _selectBarButton = [[UIBarButtonItem alloc] initWithTitle:@"选 择" style:UIBarButtonItemStyleBordered target:self action:@selector(selectFaces)];
+    _selectBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectFaces)];
     return _selectBarButton;
 }
 
@@ -411,7 +364,7 @@ typedef enum {
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
-    self.navigationItem.title = @"尚未选择头像";
+    self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
@@ -492,7 +445,7 @@ typedef enum {
     if (_moveBarButton) {
         return _moveBarButton;
     }
-    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"移到" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToPerson)];
+    _moveBarButton = [[UIBarButtonItem alloc] initWithTitle:@"MoveTo" style:UIBarButtonItemStyleBordered target:self action:@selector(moveSelectedFacesToPerson)];
     _moveBarButton.enabled = NO;
     return _moveBarButton;
 }
@@ -533,7 +486,7 @@ typedef enum {
         return _DoneBarButton;
     }
     //_DoneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEdit)];
-    _DoneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEdit)];
+    _DoneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEdit)];
     return _DoneBarButton;
 }
 

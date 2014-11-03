@@ -27,7 +27,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
 	<key>UIMainStoryboardFile~ipad</key>
-	<string></string>
+	<string>Main_iPad</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
