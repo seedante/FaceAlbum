@@ -9,15 +9,6 @@
 #import "SDEPopupPanel.h"
 
 @implementation SDEPopupPanel
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        ;
-    }
-    DLog(@"HeHe");
-    return self;
-}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -48,7 +39,6 @@
 }
 
 - (void)hide{
-    DLog(@"Hide");
 	self.isPopup = NO;
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:0.2];

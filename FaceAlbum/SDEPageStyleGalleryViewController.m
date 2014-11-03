@@ -391,8 +391,6 @@ typedef enum: NSUInteger{
         case PortraitLayout:{
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
             [cell setShowContent:firstFaceInSection.posterImage];
-            //cell.layer.borderWidth = 5.0f;
-            //cell.layer.borderColor = [[UIColor whiteColor] CGColor];
             break;
         }
         case HorizontalGridLayout:{
@@ -431,11 +429,7 @@ typedef enum: NSUInteger{
                 if (asset) {
                     UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
                     [cell setShowContent:photoImage];
-                }else{
-                    UIImage *photoImage = [UIImage imageNamed:@"Smartisan.png"];
-                    [cell setShowContent:photoImage];
                 }
-
             }failureBlock:nil];
             
             if ([collectionView isEqual:self.detailContentCollectionView]) {
@@ -896,7 +890,7 @@ typedef enum: NSUInteger{
     self.detailContentCollectionView.hidden = YES;
     
     self.actionCenterButton.hidden = NO;
-    [self.actionCenterButton setImage:[UIImage imageWithContentsOfFile:faceItem.pathForBackup] forState:UIControlStateNormal];
+    [self.actionCenterButton setImage:faceItem.avatorImage forState:UIControlStateNormal];
     self.actionCenterButton.imageView.layer.cornerRadius = 22.0f;
     self.actionCenterButton.imageView.clipsToBounds = YES;
     if (!self.buttonPanel.hidden) {
@@ -934,8 +928,6 @@ typedef enum: NSUInteger{
     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:selectedIndexPath];
     [self updateHeaderView:selectedFaceItem];
     
-    //self.detailContentCollectionView.dataSource = self;
-    //self.detailContentCollectionView.delegate = self;
     [self.detailContentCollectionView reloadData];
     self.detailContentCollectionView.hidden = NO;
     [self.detailContentCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndexPath.item inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
@@ -973,10 +965,7 @@ typedef enum: NSUInteger{
                             self.nameTitle.text = @"UnKnown";
                         }else
                             self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                        if (faceCount == 1){
-                            self.infoTitle.text = [NSString stringWithFormat:@"Count：1"];
-                        }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
+                        self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
                         break;
                 }
             }

@@ -582,10 +582,10 @@ typedef enum {
     SDECandidateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"candidateCell" forIndexPath:indexPath];
     Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
     if (firstItemInSection.section == 0) {
-        [cell setCellImage:[UIImage imageNamed:@"group-100.png"]];
+        [cell setCellImage:[UIImage imageNamed:@"FacelessManAvator.png"]];
         cell.backgroundColor = [UIColor whiteColor];
     }else
-        [cell setCellImage:[UIImage imageWithContentsOfFile:firstItemInSection.pathForBackup]];
+        [cell setCellImage:firstItemInSection.avatorImage];
     return cell;
 }
 
@@ -612,7 +612,6 @@ typedef enum {
                 for (NSIndexPath *itemIndexPath in self.selectedFaces) {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
                     if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
-                        DLog(@"JUST FOR TEST");
                         selectedFaceItem.personOwner = selectedPerson;
                         if (selectedPerson.name.length > 0) {
                             selectedFaceItem.name = selectedPerson.name;
@@ -656,30 +655,16 @@ typedef enum {
     }
 }
 
-#pragma mark - show the edit menu
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    return YES;
-}
-
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    //DLog(@"%@", NSStringFromSelector(_cmd));
     self.activedField = textField;
     self.oldContent = textField.text;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    //DLog(@"%@", NSStringFromSelector(_cmd));
     if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
-        DLog(@"Change Name");
         NSUInteger section = [[self.faceFetchedResultsController sections] count];
         CGRect rectInCollectionView = [textField convertRect:textField.frame toView:self.collectionView];
         //DLog(@"Text Field Frame: %f, %f, %f, %f", rectInCollectionView.origin.x, rectInCollectionView.origin.y, textField.frame.size.width, textField.frame.size.height);
@@ -747,75 +732,6 @@ typedef enum {
 {
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
     self.collectionView.contentInset = contentInsets;
-}
-
-- (void)trainModelAtSection:(NSInteger)section
-{
-    if (self.onLine) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order == %@", @(section)];
-        [fetchRequest setPredicate:predicate];
-        NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-        if (fetchedObjects && fetchedObjects.count == 1) {
-            Person *personItem = (Person *)fetchedObjects.firstObject;
-            if (personItem.personID) {
-                for (Face *faceItem in personItem.ownedFaces) {
-                    if (faceItem.faceID) {
-                        [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
-                    }else{
-                        if (faceItem.uploaded && !faceItem.accepted) {
-                            ;
-                        }else{
-                            UIImage *faceImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
-                            NSData *faceData = UIImageJPEGRepresentation(faceImage, 0.0);
-                            FaceppResult *uploadResult = [self.onlineDetector detectWithURL:nil orImageData:faceData];
-                            if (uploadResult.success) {
-                                NSArray *detectResult = uploadResult.content[@"face"];
-                                if ([detectResult count] != 0) {
-                                    faceItem.faceID = detectResult[0][@"face_id"];
-                                    DLog(@"faceID is %@", faceItem.faceID);
-                                    [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
-                                }else{
-                                    faceItem.uploaded = YES;
-                                    faceItem.accepted = NO;
-                                }
-                            }
-                        }
-                    }
-                }
-            }else{
-                FaceppResult *result = [[FaceppPerson alloc] create];
-                personItem.personID = (NSString *)[result.content valueForKey:@"person_id"];
-                [self saveEdit];
-                DLog(@"Person_ID: %@",personItem.personID);
-                for (Face *faceItem in personItem.ownedFaces) {
-                    if (faceItem.faceID) {
-                        [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
-                    }else{
-                        if (faceItem.uploaded && !faceItem.accepted) {
-                            ;
-                        }else{
-                            UIImage *faceImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
-                            NSData *faceData = UIImageJPEGRepresentation(faceImage, 0.0);
-                            FaceppResult *uploadResult = [self.onlineDetector detectWithURL:nil orImageData:faceData];
-                            if (uploadResult.success) {
-                                NSArray *detectResult = uploadResult.content[@"face"];
-                                if ([detectResult count] != 0) {
-                                    faceItem.faceID = detectResult[0][@"face_id"];
-                                    DLog(@"faceID is %@", faceItem.faceID);
-                                    [[FaceppAPI person] addFaceWithPersonName:nil orPersonId:personItem.personID andFaceId:@[faceItem.faceID]];
-                                }else{
-                                    faceItem.uploaded = YES;
-                                    faceItem.accepted = NO;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }else
-        DLog(@"No Internet.");
 }
 
 
