@@ -24,6 +24,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @property (nonatomic)NSMutableArray *allAssets;
 @property (nonatomic, assign) NSUInteger totalCount;
 @property (weak, nonatomic) IBOutlet UILabel *processIndicator;
+@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 
 @end
@@ -44,6 +45,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.faceDataSource.collectionView = self.faceCollectionView;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
+    self.managedObjectContext = [[Store sharedStore] managedObjectContext];
     
     [self piplineInitialize];
 }
@@ -51,6 +53,15 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    [self cleanManagedObjectContext];
+}
+
+- (void)cleanManagedObjectContext
+{
+    if ([self.managedObjectContext hasChanges]) {
+        [self.managedObjectContext save:nil];
+    }
+    [self.managedObjectContext reset];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -226,7 +237,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                         [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
                     };
                 }completion:nil];
-                //currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
             });
         }
     });
@@ -238,6 +248,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             DLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
             [self.photoScanManager saveAfterScan];
             [self configFirstScene:NO];
+            [self cleanManagedObjectContext];
             UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
             [self.navigationController pushViewController:secondVC animated:YES];
             //[self performSegueWithIdentifier:segueIdentifier sender:self];
@@ -269,6 +280,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         [self configFirstScene:NO];
         //UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
         //[self.navigationController pushViewController:secondVC animated:YES];
+        [self cleanManagedObjectContext];
         [self performSegueWithIdentifier:segueIdentifier sender:self];
         return;
     }else if (self.allAssets.count >= 3){
@@ -278,7 +290,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         [self.showAssets addObjectsFromArray:assetsForLoad];
         [self.allAssets removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)]];
         [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0], [NSIndexPath indexPathForItem:2 inSection:0]]];
-        
         [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.05];
     }else{
         [self.showAssets removeAllObjects];
@@ -289,7 +300,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
         }else
             [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0]]];
-        //[self.photoScanManager saveAfterScan];
         [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.05];
     }
 }

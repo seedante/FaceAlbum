@@ -390,7 +390,10 @@ typedef enum: NSUInteger{
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             Face *firstFaceInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
-            [cell setShowContent:firstFaceInSection.posterImage];
+            if (firstFaceInSection.section == 0) {
+                [cell setShowContent:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
+            }else
+                [cell setShowContent:firstFaceInSection.posterImage];
             break;
         }
         case HorizontalGridLayout:{
@@ -434,8 +437,8 @@ typedef enum: NSUInteger{
             
             if ([collectionView isEqual:self.detailContentCollectionView]) {
                 NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
-                DLog(@"Page Index: %d", pageIndex);
-                DLog(@"Real Page Index: %d", self.currentPageIndex);
+                //DLog(@"Page Index: %d", pageIndex);
+                //DLog(@"Real Page Index: %d", self.currentPageIndex);
                 if (pageIndex > self.currentPageIndex) {
                     DLog(@"Go to Next  page view at behindly.");
                     self.currentPageIndex = pageIndex;
@@ -723,7 +726,7 @@ typedef enum: NSUInteger{
                             UICollectionViewLayoutAttributes *attributes = [self.galleryView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                             if (attributes) {
                                 if (CGRectContainsPoint(attributes.frame, centroid)) {
-                                    DLog(@"Centroid at Item: %d", i);
+                                    DLog(@"Centroid at Item: %ld", (long)i);
                                     [self.detailContentCollectionView reloadData];
                                     [self switchToHorizontalGridModeAtPortraitIndex:i fromMode:PortraitLayout];
                                     break;
@@ -740,7 +743,7 @@ typedef enum: NSUInteger{
                                 UICollectionViewLayoutAttributes *attributes = [self.singlePageCollectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                                 if (attributes) {
                                     if (CGRectContainsPoint(attributes.frame, centroid)) {
-                                        DLog(@"Centroid at Item: %d", i);
+                                        DLog(@"Centroid at Item: %ld", (long)i);
                                         [self switchToDetailModeAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                                     }
                                 }
@@ -753,7 +756,7 @@ typedef enum: NSUInteger{
                                 UICollectionViewLayoutAttributes *attributes = [vc.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                                 if (attributes) {
                                     if (CGRectContainsPoint(attributes.frame, centroid)) {
-                                        DLog(@"Centroid at Item: %d", i);
+                                        DLog(@"Centroid at Item: %ld", (long)i);
                                         [self switchToDetailModeAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                                     }
                                 }
@@ -890,7 +893,10 @@ typedef enum: NSUInteger{
     self.detailContentCollectionView.hidden = YES;
     
     self.actionCenterButton.hidden = NO;
-    [self.actionCenterButton setImage:faceItem.avatorImage forState:UIControlStateNormal];
+    if (faceItem.section == 0) {
+        [self.actionCenterButton setImage:[UIImage imageNamed:@"FacelessManPoster.jpg"] forState:UIControlStateNormal];
+    }else
+        [self.actionCenterButton setImage:faceItem.avatorImage forState:UIControlStateNormal];
     self.actionCenterButton.imageView.layer.cornerRadius = 22.0f;
     self.actionCenterButton.imageView.clipsToBounds = YES;
     if (!self.buttonPanel.hidden) {
@@ -921,7 +927,7 @@ typedef enum: NSUInteger{
     NSInteger itemIndexBase = 0;
     if ([self countForPageViewController] != 1) {
         itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
-        DLog(@"itemIndexBase: %d", itemIndexBase);
+        DLog(@"itemIndexBase: %ld", (long)itemIndexBase);
     }
     
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];
@@ -938,9 +944,11 @@ typedef enum: NSUInteger{
 #pragma mark - Update headerView Info
 - (void)updateHeaderView:(Face *)faceItem
 {
+    id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
+    NSUInteger avatorCount = [sectionInfo numberOfObjects];
+    
     Person *personItem = faceItem.personOwner;
     Photo *photoItem = faceItem.photoOwner;
-    int faceCount = (int)personItem.ownedFaces.count;
     int personCount = photoItem.faceCount;
     switch (self.currentLayoutType) {
         case PortraitLayout:
@@ -949,25 +957,11 @@ typedef enum: NSUInteger{
             break;
         case HorizontalGridLayout:{
             if (personItem.name.length == 0) {
-                self.nameTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
+                self.nameTitle.text = [NSString stringWithFormat:@"Count：%lu", avatorCount];
                 self.infoTitle.text = @"";
             }else{
-                switch (self.currentGridCellType) {
-                    case kFaceType:
-                        self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                        if (faceCount == 1) {
-                            self.infoTitle.text = @"Count：1";
-                        }else
-                            self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
-                        break;
-                    case kPhotoType:
-                        if ([personItem.name isEqualToString:@"UnKnown"]) {
-                            self.nameTitle.text = @"UnKnown";
-                        }else
-                            self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                        self.infoTitle.text = [NSString stringWithFormat:@"Count：%d", faceCount];
-                        break;
-                }
+                self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
+                self.infoTitle.text = [NSString stringWithFormat:@"Count: %lu", avatorCount];
             }
             break;
         }

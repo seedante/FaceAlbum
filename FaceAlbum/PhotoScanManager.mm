@@ -117,6 +117,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     if (self = [super init]) {
         _numberOfItemsInFirstSection = 0;
         _faceCountInThisScan = 0;
+        _saveFlag = 0;
     }
     return self;
 }
@@ -163,11 +164,12 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
 
 - (void)saveAfterScan
 {
-    DLog(@"Save Data.");
+    NSLog(@"Save Data.");
     NSError *error;
     if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
         DLog(@"Scan Finish and Save Error: %@", error);
     }
+    [self.managedObjectContext reset];
 }
 
 - (NSArray *)allFacesInPhoto
@@ -280,79 +282,85 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
         [self.facesInAPhoto removeAllObjects];
     }
     DLog(@"Current Avator count for facelessman: %lu", (unsigned long)self.numberOfItemsInFirstSection);
-    @autoreleasepool {
-        ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-        CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
-        //CGImageRef sourceCGImage = asset.aspectRatioThumbnail;
-        DLog(@"Image Size: %lux%lu", CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
-        UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
-        
-        Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
-        newPhoto.uniqueURLString = [(NSURL *)[asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
-        newPhoto.isExisted = YES;
-        
-        //DLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
-        FaceppLocalResult *detectResult = [self.localFaceppDetector detectWithImage:imageForDetect];
-        if (detectResult.faces.count > 0) {
-            includeFace = YES;
-            DLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
-            self.faceCountInThisScan += detectResult.faces.count;
-            //DLog(@"Face Count: %lu For Now.", (unsigned long)_faceTotalCount);
-            for (FaceppLocalFace *detectedFace in detectResult.faces) {
-                CGSize imageSize = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
+    ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+    CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
+    //CGImageRef sourceCGImage = asset.aspectRatioThumbnail;
+    DLog(@"Image Size: %lux%lu", CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
+    UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
+    
+    Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
+    newPhoto.uniqueURLString = [(NSURL *)[asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
+    newPhoto.isExisted = YES;
+    
+    //DLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
+    FaceppLocalResult *detectResult = [self.localFaceppDetector detectWithImage:imageForDetect];
+    if (detectResult.faces.count > 0) {
+        includeFace = YES;
+        CGSize imageSize = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
+        NSLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
+        self.faceCountInThisScan += detectResult.faces.count;
+        //DLog(@"Face Count: %lu For Now.", (unsigned long)_faceTotalCount);
+        for (FaceppLocalFace *detectedFace in detectResult.faces) {
+            Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
+            newFace.whetherToDisplay = YES;
+            newFace.isMyStar = NO;
+            newFace.section = 0;
+            newFace.photoOwner = newPhoto;
+            newFace.assetURLString = newPhoto.uniqueURLString;
+            newFace.name = @"";
+            //newFace.personOwner = [[Store sharedStore] FacelessMan];
+            
+            @autoreleasepool {
                 CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
                 CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
-                UIImage *headUIImage = CGImageToUIImage(headCGImage);
-                
-                CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
-                CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
-                UIImage *portraitUIImage = CGImageToUIImage(portraitCGImage);
-                CGImageRelease(portraitCGImage);
-                
-                UIImage *avatorUIImage = nil;
+                UIImage *headUIImage = [UIImage imageWithCGImage:headCGImage];
+                //UIImage *avatorUIImage = nil;
                 //avatorUIImage = headUIImage;
-                if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
-                    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
-                }else
-                    avatorUIImage = headUIImage;
+                //if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
+                //    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
+                //}else
+                //    avatorUIImage = headUIImage;
+                
+                
                 CGImageRelease(headCGImage);
-                
-                /*
-                NSString *randomName = [[[NSUUID alloc] init] UUIDString];
-                NSString *saveName = [randomName stringByAppendingPathExtension:@".jpg"];
-                NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
-                @autoreleasepool {
-                    NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
-                    BOOL success = [imageData writeToFile:savePath atomically:YES];
-                    if (!success) {
-                        DLog(@"Wrong!Wrong!Wrong!");
-                    }
-                }
-                 */
-
-                [self.facesInAPhoto addObject:avatorUIImage];
-                
-                self.numberOfItemsInFirstSection += 1;
-                Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
-                newFace.avatorImage = avatorUIImage;
-                newFace.posterImage = portraitUIImage;
-                newFace.whetherToDisplay = YES;
-                newFace.isMyStar = NO;
-                newFace.order = self.numberOfItemsInFirstSection;
-                newFace.section = 0;
-                newFace.photoOwner = newPhoto;
-                newFace.assetURLString = newPhoto.uniqueURLString;
-                //newFace.pathForBackup = savePath;
-                newFace.name = @"";
-                newFace.personOwner = [[Store sharedStore] FacelessMan];
+                newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
+                [self.facesInAPhoto addObject:headUIImage];
             }
-            newPhoto.faceCount = (int32_t)detectResult.faces.count;
-            newPhoto.whetherToDisplay = YES;
-            newPhoto.thumbnail = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
-        }else{
-            newPhoto.faceCount = 0;
-            newPhoto.whetherToDisplay = NO;
+            
+            CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
+            CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
+            newFace.posterImage = [UIImage imageWithCGImage:portraitCGImage];
+            CGImageRelease(portraitCGImage);
+
+            
+            /*
+             NSString *randomName = [[[NSUUID alloc] init] UUIDString];
+             NSString *saveName = [randomName stringByAppendingPathExtension:@".jpg"];
+             NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
+             @autoreleasepool {
+             NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
+             BOOL success = [imageData writeToFile:savePath atomically:YES];
+             if (!success) {
+             DLog(@"Wrong!Wrong!Wrong!");
+             }
+             }
+             */
+            
+            self.numberOfItemsInFirstSection += 1;
+            newFace.order = self.numberOfItemsInFirstSection;
+            
         }
+        newPhoto.faceCount = (int32_t)detectResult.faces.count;
+        newPhoto.whetherToDisplay = YES;
+        newPhoto.thumbnail = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
+    }else{
+        newPhoto.faceCount = 0;
+        newPhoto.whetherToDisplay = NO;
+    }
+    self.saveFlag += 1;
+    if (self.saveFlag == 10) {
+        [self saveAfterScan];
+        self.saveFlag = 0;
     }
     return includeFace;
 }

@@ -61,7 +61,7 @@ typedef enum {
     
     self.goBackUpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.view addSubview:self.goBackUpButton];
-    [self.goBackUpButton setImage:[UIImage imageNamed:@"up-50.png"] forState:UIControlStateNormal];
+    [self.goBackUpButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
     self.goBackUpButton.center = CGPointMake(0, -50);
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];

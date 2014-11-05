@@ -21,7 +21,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="d2G-a2-pdI" customClass="SDEAvatorCell">
-                                <rect key="frame" x="50" y="134" width="100" height="100"/>
+                                <rect key="frame" x="50" y="70" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -48,7 +48,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonProfile" id="18c-uM-ajg" customClass="SDEPersonProfileHeaderView">
-                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NameOrWhatever" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rDV-Xj-e5B">
@@ -149,7 +149,7 @@
                                             <action selector="scanPhotos:" destination="tMj-7K-Ytg" eventType="touchUpInside" id="ayy-c9-QRc"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75/75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-gG-bkg">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-gG-bkg">
                                         <rect key="frame" x="284" y="26" width="201" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
@@ -215,7 +215,7 @@
                                 <rect key="frame" x="0.0" y="200" width="768" height="816"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r7V-UB-Cvw" customClass="LineLayout">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r7V-UB-Cvw">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -381,7 +381,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-Vb-wt3">
-                                                <rect key="frame" x="86" y="2" width="44" height="43"/>
+                                                <rect key="frame" x="78" y="2" width="44" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="6aC-66-byI"/>
@@ -401,7 +401,7 @@
                                             <constraint firstAttribute="trailing" secondItem="hrR-ve-wZq" secondAttribute="trailing" constant="20" id="NgW-sf-yf8"/>
                                             <constraint firstAttribute="bottom" secondItem="hyZ-Vb-wt3" secondAttribute="bottom" constant="3" id="a2o-EM-Rms"/>
                                             <constraint firstAttribute="width" constant="202" id="ckJ-ph-Z5f"/>
-                                            <constraint firstItem="hyZ-Vb-wt3" firstAttribute="leading" secondItem="v3p-Pe-9PQ" secondAttribute="leading" constant="86" id="ihL-q7-Tbw"/>
+                                            <constraint firstItem="hyZ-Vb-wt3" firstAttribute="leading" secondItem="v3p-Pe-9PQ" secondAttribute="leading" constant="78" id="ihL-q7-Tbw"/>
                                             <constraint firstItem="hrR-ve-wZq" firstAttribute="top" secondItem="v3p-Pe-9PQ" secondAttribute="top" constant="4" id="s8Y-by-VwC"/>
                                             <constraint firstAttribute="bottom" secondItem="hrR-ve-wZq" secondAttribute="bottom" constant="1" id="uBQ-5D-rDW"/>
                                         </constraints>
@@ -661,7 +661,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cXo-XD-Ik9"/>
         <segue reference="fYU-IF-XFj"/>
+        <segue reference="mY8-Cd-IyR"/>
     </inferredMetricsTieBreakers>
 </document>
