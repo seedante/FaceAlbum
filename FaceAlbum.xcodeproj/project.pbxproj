@@ -101,6 +101,10 @@
 		FD7E22501A076C5600463C67 /* photoType.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224D1A076C5600463C67 /* photoType.png */; };
 		FD7E22511A076C5600463C67 /* photoType@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* photoType@2x.png */; };
 		FD7E22521A076C5600463C67 /* photoType@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* photoType@2x.png */; };
+		FDA38D421A0D106100FA3E6B /* SDEGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA38D411A0D106100FA3E6B /* SDEGalleryViewController.m */; };
+		FDA38D431A0D106100FA3E6B /* SDEGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA38D411A0D106100FA3E6B /* SDEGalleryViewController.m */; };
+		FDA38D471A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA38D461A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m */; };
+		FDA38D481A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA38D461A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m */; };
 		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
 		FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */; };
 		FDBF6BF719D1038000352DFA /* FaceppDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8BD197DFD4A00D2CCDA /* FaceppDetection.m */; };
@@ -293,6 +297,10 @@
 		FD7E224D1A076C5600463C67 /* photoType.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoType.png; sourceTree = "<group>"; };
 		FD7E224E1A076C5600463C67 /* photoType@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photoType@2x.png"; sourceTree = "<group>"; };
 		FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
+		FDA38D401A0D106100FA3E6B /* SDEGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEGalleryViewController.h; sourceTree = "<group>"; };
+		FDA38D411A0D106100FA3E6B /* SDEGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEGalleryViewController.m; sourceTree = "<group>"; };
+		FDA38D451A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEHorizontalFlowLayout.h; sourceTree = "<group>"; };
+		FDA38D461A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEHorizontalFlowLayout.m; sourceTree = "<group>"; };
 		FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPopupPanel.h; sourceTree = "<group>"; };
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
 		FDB3608019CF1EE800AAE34D /* SDENewPhotoDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDENewPhotoDetector.h; sourceTree = "<group>"; };
@@ -467,6 +475,7 @@
 				FD67D8FC197E048400D2CCDA /* Store.m */,
 				FD4131281997050A00141578 /* ScanRoom */,
 				FD4131291997052500141578 /* MontageRoom */,
+				FDA38D441A0D108000FA3E6B /* GalleryRoom */,
 				FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */,
 				FD67D88A197DFCFB00D2CCDA /* Supporting Files */,
 			);
@@ -634,6 +643,17 @@
 			);
 			name = Source;
 			path = FaceAlbum;
+			sourceTree = "<group>";
+		};
+		FDA38D441A0D108000FA3E6B /* GalleryRoom */ = {
+			isa = PBXGroup;
+			children = (
+				FDA38D401A0D106100FA3E6B /* SDEGalleryViewController.h */,
+				FDA38D411A0D106100FA3E6B /* SDEGalleryViewController.m */,
+				FDA38D451A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.h */,
+				FDA38D461A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m */,
+			);
+			name = GalleryRoom;
 			sourceTree = "<group>";
 		};
 		FDBF6F3919D2D8E700352DFA /* Background */ = {
@@ -862,10 +882,12 @@
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
+				FDA38D471A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */,
 				FD67D8D2197DFD4A00D2CCDA /* FaceppClient.m in Sources */,
+				FDA38D421A0D106100FA3E6B /* SDEGalleryViewController.m in Sources */,
 				FD67D8D6197DFD4A00D2CCDA /* FaceppGrouping.m in Sources */,
 				FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */,
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
@@ -914,10 +936,12 @@
 				FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */,
 				FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */,
 				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
+				FDA38D481A0D13DD00FA3E6B /* SDEHorizontalFlowLayout.m in Sources */,
 				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
 				FDBF6C1219D1038000352DFA /* FaceppGroup.m in Sources */,
 				FDBF6C1319D1038000352DFA /* FaceppClient.m in Sources */,
+				FDA38D431A0D106100FA3E6B /* SDEGalleryViewController.m in Sources */,
 				FDBF6C1419D1038000352DFA /* FaceppGrouping.m in Sources */,
 				FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */,
 				FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */,

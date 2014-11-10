@@ -945,7 +945,7 @@ typedef enum: NSUInteger{
 - (void)updateHeaderView:(Face *)faceItem
 {
     id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.currentPortraitIndex];
-    NSUInteger avatorCount = [sectionInfo numberOfObjects];
+    int avatorCount = (int)[sectionInfo numberOfObjects];
     
     Person *personItem = faceItem.personOwner;
     Photo *photoItem = faceItem.photoOwner;
@@ -957,11 +957,11 @@ typedef enum: NSUInteger{
             break;
         case HorizontalGridLayout:{
             if (personItem.name.length == 0) {
-                self.nameTitle.text = [NSString stringWithFormat:@"Count：%lu", avatorCount];
+                self.nameTitle.text = [NSString stringWithFormat:@"Count：%d", avatorCount];
                 self.infoTitle.text = @"";
             }else{
                 self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
-                self.infoTitle.text = [NSString stringWithFormat:@"Count: %lu", avatorCount];
+                self.infoTitle.text = [NSString stringWithFormat:@"Count: %d", avatorCount];
             }
             break;
         }

@@ -90,6 +90,8 @@ static NSString * const cellIdentifier = @"avatorCell";
             DLog(@"Delete Section: %lu", (unsigned long)sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
+        default:
+            break;
     }
     
     [sectionChanges addObject:change];
@@ -314,6 +316,8 @@ static NSString * const cellIdentifier = @"avatorCell";
                     case NSFetchedResultsChangeUpdate:
                         DLog(@"Blend update: Update Section %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    default:
                         break;
                 }
             }];
