@@ -66,6 +66,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.photoScanManager.faceCountInThisScan = 0;
     NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
     NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];

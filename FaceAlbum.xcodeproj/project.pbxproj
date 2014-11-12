@@ -150,7 +150,6 @@
 		FDBF6C2A19D1038000352DFA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
 		FDBF6C2B19D1038000352DFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
 		FDBF6C2C19D1038000352DFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
-		FDBF6C7C19D1038000352DFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */; };
 		FDBF6CFA19D1038000352DFA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
 		FDBF6D2F19D1038000352DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
 		FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */; };
@@ -437,7 +436,6 @@
 				FD67D8A6197DFCFB00D2CCDA /* FaceAlbumTests */,
 				FD67D880197DFCFB00D2CCDA /* Frameworks */,
 				FD67D87F197DFCFB00D2CCDA /* Products */,
-				FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -487,6 +485,7 @@
 			children = (
 				FD67D898197DFCFB00D2CCDA /* Images.xcassets */,
 				FD67D88B197DFCFB00D2CCDA /* FaceAlbumDev-Info.plist */,
+				FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */,
 				FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */,
 				FD67D88F197DFCFB00D2CCDA /* main.m */,
 				FD67D891197DFCFB00D2CCDA /* FaceAlbum-Prefix.pch */,
@@ -730,7 +729,7 @@
 		FD67D876197DFCFB00D2CCDA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = SD;
+				CLASSPREFIX = SDE;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = seedante;
 				TargetAttributes = {
@@ -832,7 +831,6 @@
 				FD7E224A1A076B9E00463C67 /* up.png in Resources */,
 				FDBF6F4519D2D8E700352DFA /* Aged-Paper.png in Resources */,
 				FD7E224C1A076B9E00463C67 /* up@2x.png in Resources */,
-				FDBF6C7C19D1038000352DFA /* InfoPlist.strings in Resources */,
 				FDBF6F5719D2D8E700352DFA /* Wood-Planks@2x.png in Resources */,
 				FD7E22241A07239700463C67 /* Icon-Small.png in Resources */,
 				FD7E22481A076B9E00463C67 /* editPerson@2x.png in Resources */,
@@ -1205,6 +1203,7 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = FaceAlbum;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
 				WARNING_CFLAGS = (
 					"-Wshadow",
 					"-Wfloat-equal",
@@ -1239,6 +1238,7 @@
 				OTHER_CFLAGS = "-Wno-gnu";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = FaceAlbum;
+				TARGETED_DEVICE_FAMILY = 2;
 				WARNING_CFLAGS = (
 					"-Wshadow",
 					"-Wfloat-equal",

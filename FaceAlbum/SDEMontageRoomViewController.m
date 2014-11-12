@@ -101,6 +101,7 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self registerAsObserver];
 }
@@ -108,6 +109,7 @@ typedef enum {
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self cancelObserver];
+    [super viewWillDisappear:animated];
 }
 
 - (void)saveEdit
@@ -708,9 +710,10 @@ typedef enum {
 {
     DLog(@"Keyboard show");
     NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     UIEdgeInsets edgeInsets = self.collectionView.contentInset;
-    edgeInsets.bottom = kbSize.width + 140;
+    float kbHeight = (kbSize.width > kbSize.height)?kbSize.height:kbSize.width;
+    edgeInsets.bottom = kbHeight + 140;
     UIEdgeInsets contentInsets = edgeInsets;
     self.collectionView.contentInset = contentInsets;
     //self.collectionView.scrollIndicatorInsets = contentInsets;

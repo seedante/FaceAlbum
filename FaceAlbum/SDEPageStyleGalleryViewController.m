@@ -103,7 +103,7 @@ typedef enum: NSUInteger{
     self.buttonPanel.hidden = YES;
     [self.galleryView reloadData];
     //[self.styleSwitch setSelectedItem:(UITabBarItem *)self.styleSwitch.items.firstObject];
-    
+    [super viewWillAppear:animated];
 }
 
 - (NSString *)startScene
