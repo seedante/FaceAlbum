@@ -202,9 +202,52 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBc-8v-fFk">
+                                <rect key="frame" x="0.0" y="72" width="768" height="816"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22g-tq-2Lh">
+                                        <rect key="frame" x="315" y="390" width="139" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The app can't works without photos." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLk-Le-n34">
+                                        <rect key="frame" x="244" y="434" width="281" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUV-uS-ATV">
+                                        <rect key="frame" x="153" y="320" width="463" height="176"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6L-ot-0EZ">
+                                                <rect key="frame" x="20" y="20" width="423" height="136"/>
+                                                <string key="text">You have denied access your photo library. The app needs to access your photo library to work.  Please open the settings app on your iPad, find "FaceAlbum" in the left bottom corner and allow it  to access Photos.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="463" id="e5M-r4-q5N"/>
+                                            <constraint firstAttribute="height" constant="176" id="kf5-zh-w0W"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="22g-tq-2Lh" secondAttribute="centerY" id="1GK-FK-2qM"/>
+                                    <constraint firstItem="22g-tq-2Lh" firstAttribute="centerX" secondItem="tLk-Le-n34" secondAttribute="centerX" constant="0.5" id="Ikx-iO-xFC"/>
+                                    <constraint firstItem="tLk-Le-n34" firstAttribute="top" secondItem="22g-tq-2Lh" secondAttribute="bottom" constant="8" symbolic="YES" id="Wm5-6l-DYc"/>
+                                    <constraint firstItem="22g-tq-2Lh" firstAttribute="centerX" secondItem="qBc-8v-fFk" secondAttribute="centerX" id="fX3-2Q-hMF"/>
+                                    <constraint firstAttribute="centerX" secondItem="WUV-uS-ATV" secondAttribute="centerX" id="l9R-NT-w7C"/>
+                                    <constraint firstAttribute="centerY" secondItem="WUV-uS-ATV" secondAttribute="centerY" id="owr-v9-c8I"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Va-1O-m5e">
                                 <rect key="frame" x="0.0" y="200" width="768" height="816"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r7V-UB-Cvw">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -243,17 +286,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qBc-8v-fFk" firstAttribute="centerX" secondItem="9Va-1O-m5e" secondAttribute="centerX" id="9jg-3M-90k"/>
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="width" secondItem="FB4-hq-aad" secondAttribute="width" id="Hod-NB-Bbo"/>
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="top" secondItem="Pvi-kF-v33" secondAttribute="bottom" id="I2M-wk-Egz"/>
                             <constraint firstItem="9Va-1O-m5e" firstAttribute="leading" secondItem="FB4-hq-aad" secondAttribute="leading" id="IEI-c1-OFh"/>
                             <constraint firstAttribute="trailing" secondItem="03a-Iv-hPP" secondAttribute="trailing" id="PPa-7b-4Cv"/>
+                            <constraint firstItem="qBc-8v-fFk" firstAttribute="centerY" secondItem="9Va-1O-m5e" secondAttribute="centerY" constant="-128" id="QPH-Yh-d9n"/>
                             <constraint firstItem="Pvi-kF-v33" firstAttribute="leading" secondItem="03a-Iv-hPP" secondAttribute="leading" id="Rdg-g7-4sA"/>
                             <constraint firstAttribute="trailing" secondItem="9Va-1O-m5e" secondAttribute="trailing" id="SpK-yU-Cxs"/>
                             <constraint firstItem="03a-Iv-hPP" firstAttribute="leading" secondItem="FB4-hq-aad" secondAttribute="leading" id="XSa-4p-BnM"/>
                             <constraint firstItem="Pvi-kF-v33" firstAttribute="width" secondItem="FB4-hq-aad" secondAttribute="width" id="Yit-HE-Ygk"/>
                             <constraint firstItem="03a-Iv-hPP" firstAttribute="top" secondItem="5Lm-n1-paf" secondAttribute="bottom" id="hMj-Ci-xt5"/>
                             <constraint firstItem="Pvi-kF-v33" firstAttribute="top" secondItem="03a-Iv-hPP" secondAttribute="bottom" id="htb-p9-CSj"/>
+                            <constraint firstItem="qBc-8v-fFk" firstAttribute="height" secondItem="9Va-1O-m5e" secondAttribute="height" id="im5-HP-lO9"/>
                             <constraint firstItem="a25-aR-8dq" firstAttribute="top" secondItem="9Va-1O-m5e" secondAttribute="bottom" constant="-100" id="lm4-ZZ-g2R"/>
+                            <constraint firstItem="qBc-8v-fFk" firstAttribute="width" secondItem="9Va-1O-m5e" secondAttribute="width" id="oeI-02-hO3"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -264,6 +311,7 @@
                         <outlet property="assetCollectionView" destination="9Va-1O-m5e" id="JLN-wW-wDs"/>
                         <outlet property="faceCollectionView" destination="Pvi-kF-v33" id="w0Q-yH-Rxi"/>
                         <outlet property="processIndicator" destination="9hU-gG-bkg" id="ewg-rK-W63"/>
+                        <outlet property="requestPhotoAuthorizationView" destination="WUV-uS-ATV" id="aGm-Qg-hsk"/>
                         <outlet property="scanButton" destination="uIS-kh-nXO" id="jTk-6K-acb"/>
                         <segue destination="3O8-fZ-xdw" kind="push" identifier="enterMontageRoom" id="cXo-XD-Ik9"/>
                     </connections>

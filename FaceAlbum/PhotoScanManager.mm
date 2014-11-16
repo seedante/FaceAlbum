@@ -292,7 +292,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     newPhoto.uniqueURLString = [(NSURL *)[asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
     newPhoto.isExisted = YES;
     
-    //DLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
+    DLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
     FaceppLocalResult *detectResult = [self.localFaceppDetector detectWithImage:imageForDetect];
     if (detectResult.faces.count > 0) {
         includeFace = YES;

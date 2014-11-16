@@ -47,6 +47,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     self.managedObjectContext = [[Store sharedStore] managedObjectContext];
     
+    
     [self piplineInitialize];
 }
 
@@ -67,6 +68,8 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self checkALAuthorizationStatus];
     self.photoScanManager.faceCountInThisScan = 0;
     NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
     NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
@@ -78,6 +81,21 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     NSArray *unknownFaces = [moc executeFetchRequest:faceFetchRequest error:nil];
     self.photoScanManager.numberOfItemsInFirstSection = unknownFaces.count;
     DLog(@"Unknown face count: %lu", (unsigned long)unknownFaces.count);
+}
+
+- (void)checkALAuthorizationStatus
+{
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    switch (status) {
+        case ALAuthorizationStatusAuthorized:
+            DLog(@"AssetsLibrary can acess.");
+            break;
+        default:
+            self.scanButton.enabled = NO;
+            self.assetCollectionView.hidden = YES;
+            self.requestPhotoAuthorizationView.hidden = NO;
+            break;
+    }
 }
 
 - (void)piplineInitialize
@@ -98,8 +116,12 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             if (group && *stop != YES) {
                 //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
                 DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+                DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyPersistentID]);
+                DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyURL]);
                 [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                     if (asset && *stop != YES) {
+                        DLog(@"Asset: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
+                        
                         if (self.showAssets.count < 3) {
                             [self.showAssets addObject:asset];
                         }else
@@ -108,6 +130,12 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                 }];
             }else{
                 self.totalCount = self.allAssets.count + self.showAssets.count;
+                if (self.totalCount == 0) {
+                    self.scanButton.enabled = NO;
+                    self.assetCollectionView.hidden = YES;
+                    self.requestPhotoAuthorizationView.hidden = YES;
+                }
+                
                 [self.assetCollectionView reloadData];
             }
         } failureBlock:nil];
@@ -128,6 +156,11 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             }
             //int count = (int)newAssets.count;
             self.totalCount = newAssets.count;
+            if (self.totalCount == 0) {
+                self.scanButton.enabled = NO;
+                self.assetCollectionView.hidden = YES;
+                self.requestPhotoAuthorizationView.hidden = YES;
+            }
             self.processIndicator.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)self.totalCount, (unsigned long)self.totalCount];
         }else
             DLog(@"There is NO new photo");

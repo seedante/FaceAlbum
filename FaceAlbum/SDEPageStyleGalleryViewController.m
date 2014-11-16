@@ -98,6 +98,7 @@ typedef enum: NSUInteger{
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.buttonPanel.hidden = YES;
@@ -433,7 +434,9 @@ typedef enum: NSUInteger{
                     UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
                     [cell setShowContent:photoImage];
                 }
-            }failureBlock:nil];
+            }failureBlock:^(NSError *accessError){
+                [cell setShowContent:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
+            }];
             
             if ([collectionView isEqual:self.detailContentCollectionView]) {
                 NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
@@ -777,7 +780,8 @@ typedef enum: NSUInteger{
     }else{
         //Pinch In
         if (gestureRecongnizer.state == UIGestureRecognizerStateChanged) {
-            DLog(@"Code not finish.");
+            //DLog(@"Code not finish.");
+            
         }
         if (gestureRecongnizer.state == UIGestureRecognizerStateEnded) {
             if (gestureRecongnizer.scale < 0.5f) {
