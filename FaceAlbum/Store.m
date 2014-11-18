@@ -89,7 +89,7 @@
     NSSortDescriptor *ItemOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:NO];
     [fetchRequest setSortDescriptors:@[SectionOrderDescriptor, ItemOrderDescriptor]];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"whetherToDisplay == YES AND ownedFaces.count > 0"];
     [fetchRequest setPredicate:predicate];
     
     _faceFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"section" cacheName:@"allFaces"];
