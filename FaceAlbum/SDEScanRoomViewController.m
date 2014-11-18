@@ -202,6 +202,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (IBAction)scanPhotos:(id)sender
 {
+    self.tabBarController.tabBar.hidden = YES;
     [self.scanButton setTitle:@"Scan..." forState:UIControlStateNormal];
     self.scanButton.enabled = NO;
     [self productionlineStart];

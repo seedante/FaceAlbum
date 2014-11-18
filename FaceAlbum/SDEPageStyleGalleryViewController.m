@@ -54,6 +54,7 @@ typedef enum: NSUInteger{
 @property (nonatomic) NSMutableArray *pageVCArray;
 @property (nonatomic, assign) BOOL inPageViewFlag;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
+@property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
 @property (nonatomic) SDENewPhotoDetector *newPhotoDetector;
 @end
@@ -65,7 +66,8 @@ typedef enum: NSUInteger{
     // Do any additional setup after loading the view.
     self.galleryView.dataSource = self;
     self.galleryView.delegate = self;
-
+    self.navigationController.delegate = self;
+    
     self.currentPortraitIndex = 0;
     self.pageVCArray = [NSMutableArray new];
     self.inPageViewFlag = NO;
@@ -92,13 +94,16 @@ typedef enum: NSUInteger{
     }
     
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
+    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlShowOfTabBar:)];
     [self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
+    [self.galleryView addGestureRecognizer:self.tapGestureRecognizer];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
+    self.tabBarController.tabBar.hidden = YES;
     [self.newPhotoDetector comparePhotoDataBetweenLocalAndDataBase];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.buttonPanel.hidden = YES;
@@ -406,6 +411,17 @@ typedef enum: NSUInteger{
                     [cell setShowContent:faceItem.avatorImage];
                     break;
                 case kPhotoType:{
+                    /*
+                    NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLString];
+                    [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
+                        if (asset) {
+                            UIImage *photoImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
+                            [cell setShowContent:photoImage];
+                        }
+                    }failureBlock:^(NSError *accessError){
+                        [cell setShowContent:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
+                    }];
+                     */
                     UIImage *photoImage = faceItem.photoOwner.thumbnail;
                     [cell setShowContent:photoImage];
                     break;
@@ -435,7 +451,7 @@ typedef enum: NSUInteger{
                     [cell setShowContent:photoImage];
                 }
             }failureBlock:^(NSError *accessError){
-                [cell setShowContent:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
+                [cell setShowContent:[UIImage imageNamed:@"AccessDenied.png"]];
             }];
             
             if ([collectionView isEqual:self.detailContentCollectionView]) {
@@ -488,6 +504,11 @@ typedef enum: NSUInteger{
     [self updateHeaderView:faceItem];
 }
 
+#pragma mark - UINavigationController Delegate Method
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 #pragma mark - UICollectionView Delegate Method
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -711,6 +732,18 @@ typedef enum: NSUInteger{
 
 
 #pragma mark - Gesture Method
+- (void)controlShowOfTabBar:(UITapGestureRecognizer *)gestureRecognizer
+{
+    CGPoint location = [gestureRecognizer locationInView:self.galleryView];
+    NSIndexPath *indexPath = [self.galleryView indexPathForItemAtPoint:location];
+    if (!indexPath) {
+        self.tabBarController.tabBar.hidden = !self.tabBarController.tabBar.hidden;
+    }else{
+        [self collectionView:self.galleryView didSelectItemAtIndexPath:indexPath];
+    }
+    
+}
+
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
 {
     //DLog(@"Pinch Gesture.");
