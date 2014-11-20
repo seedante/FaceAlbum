@@ -8,6 +8,7 @@
 
 #import "SDEPhotoViewController.h"
 #import "SDESpecialItemVC.h"
+#import "SDEPhotoSceneDataSource.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 typedef enum: NSUInteger {
@@ -21,6 +22,7 @@ typedef enum: NSUInteger {
 @interface SDEPhotoViewController ()
 
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
+@property (nonatomic) NSMutableArray *assetsArray;
 @property (nonatomic) NSMutableArray *albumsArray;
 @property (nonatomic) NSMutableDictionary *timelineDictionary;
 @property (nonatomic) NSMutableArray *timeHeaderArray;
@@ -34,6 +36,7 @@ typedef enum: NSUInteger {
 
 @implementation SDEPhotoViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -46,10 +49,23 @@ typedef enum: NSUInteger {
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"Show albums.");
-    [self checkALAuthorizationStatus];
+    //[self checkALAuthorizationStatus];
     self.contentType = self.rootViewType;
     self.isAlbumContentMode = NO;
     [super viewWillAppear:animated];
+}
+
+- (void)checkPhotoEmpty
+{
+    if (self.assetsArray.count == 0) {
+        self.photoCollectionView.hidden = YES;
+        self.accessErrorView.hidden = YES;
+        self.warnningView.hidden = NO;
+        self.tabBarController.tabBar.hidden = YES;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.title = @"Get Some Photos";
+    }
+    
 }
 
 - (void)checkALAuthorizationStatus
@@ -92,16 +108,22 @@ typedef enum: NSUInteger {
         self.photoLibrary = [[ALAssetsLibrary alloc] init];
     }
     
+    
+    
+    if (!self.assetsArray) {
+        self.assetsArray = [[SDEPhotoSceneDataSource sharedData] assetsArray];
+    }
+    
     if (!self.albumsArray) {
-        self.albumsArray = [NSMutableArray new];
+        self.albumsArray = [[SDEPhotoSceneDataSource sharedData] albumsArray];
     }
     
     if (!self.timelineDictionary) {
-        self.timelineDictionary = [NSMutableDictionary new];
+        self.timelineDictionary = [[SDEPhotoSceneDataSource sharedData] timelineDictionary];
     }
     
     if (!self.timeHeaderArray) {
-        self.timeHeaderArray = [NSMutableArray new];
+        self.timeHeaderArray = [[SDEPhotoSceneDataSource sharedData] timeHeaderArray];
     }
     
     
@@ -132,6 +154,7 @@ typedef enum: NSUInteger {
                                                     @"Date": assetDate,
                                                     @"Album": albumName};
                         [assetsOfAlbum addObject:assetInfo];
+                        [self.assetsArray addObject:assetInfo];
                         
                         NSString *dayString = [dateFormatter stringFromDate:assetDate];
                         NSMutableArray *sameDateArray = (NSMutableArray *)[self.timelineDictionary objectForKey:dayString];
@@ -153,10 +176,14 @@ typedef enum: NSUInteger {
         }else{
             [self.timeHeaderArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"DayDate" ascending:NO]]];
             [self.photoCollectionView reloadData];
+            [self checkPhotoEmpty];
         }
     } failureBlock:^(NSError *error){
         self.photoCollectionView.hidden = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.tabBarController.tabBar.hidden = YES;
+        self.navigationItem.title = @"Access Denied!";
+        self.warnningView.hidden = NO;
     }];
     
 }

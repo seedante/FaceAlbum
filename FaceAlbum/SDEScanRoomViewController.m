@@ -228,7 +228,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         previousCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
     }
     UICollectionViewCell *currentCell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:pipelineWorkIndex inSection:0]];
-    currentCell.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    currentCell.transform = CGAffineTransformMakeScale(1.1, 1.1);
     /*
     void (^scanAnimation)() = ^(){
         UICollectionViewLayoutAttributes *attribute = [self.assetCollectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:pipelineWorkIndex inSection:0]];

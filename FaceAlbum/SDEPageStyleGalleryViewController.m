@@ -357,7 +357,7 @@ typedef enum: NSUInteger{
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             DLog(@"There are %lu person", (unsigned long)[[self.faceFetchedResultsController sections] count]);
-            numberOfItems = [[self.personFetchedResultsController fetchedObjects] count];
+            numberOfItems = [[self.faceFetchedResultsController sections] count];
             break;
         }
         case HorizontalGridLayout:{

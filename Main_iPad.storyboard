@@ -202,7 +202,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBc-8v-fFk">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBc-8v-fFk">
                                 <rect key="frame" x="0.0" y="72" width="768" height="816"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22g-tq-2Lh">
@@ -999,7 +999,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Tkb-Pv-zIQ"/>
+        <segue reference="fYU-IF-XFj"/>
         <segue reference="mY8-Cd-IyR"/>
     </inferredMetricsTieBreakers>
 </document>

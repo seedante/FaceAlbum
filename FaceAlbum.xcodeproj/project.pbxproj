@@ -77,6 +77,8 @@
 		FD7D43281A1A432D00551093 /* changeStyle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43241A1A432D00551093 /* changeStyle@2x.png */; };
 		FD7D432A1A1B017100551093 /* AccessDenied.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43291A1B017100551093 /* AccessDenied.png */; };
 		FD7D432B1A1B017100551093 /* AccessDenied.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43291A1B017100551093 /* AccessDenied.png */; };
+		FD7D433B1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D433A1A1DA4A300551093 /* SDEPhotoSceneDataSource.m */; };
+		FD7D433C1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D433A1A1DA4A300551093 /* SDEPhotoSceneDataSource.m */; };
 		FD7E22371A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
 		FD7E22381A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
 		FD7E22391A076B9E00463C67 /* avator.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222D1A076B9E00463C67 /* avator.png */; };
@@ -283,6 +285,8 @@
 		FD7D43231A1A432D00551093 /* changeStyle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = changeStyle.png; sourceTree = "<group>"; };
 		FD7D43241A1A432D00551093 /* changeStyle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "changeStyle@2x.png"; sourceTree = "<group>"; };
 		FD7D43291A1B017100551093 /* AccessDenied.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AccessDenied.png; sourceTree = "<group>"; };
+		FD7D43391A1DA4A300551093 /* SDEPhotoSceneDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoSceneDataSource.h; sourceTree = "<group>"; };
+		FD7D433A1A1DA4A300551093 /* SDEPhotoSceneDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoSceneDataSource.m; sourceTree = "<group>"; };
 		FD7E222C1A076B9E00463C67 /* addPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPerson.png; sourceTree = "<group>"; };
 		FD7E222D1A076B9E00463C67 /* avator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avator.png; sourceTree = "<group>"; };
 		FD7E222E1A076B9E00463C67 /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -588,6 +592,8 @@
 			children = (
 				FD7D43081A19F9FF00551093 /* SDEPhotoViewController.h */,
 				FD7D43091A19F9FF00551093 /* SDEPhotoViewController.m */,
+				FD7D43391A1DA4A300551093 /* SDEPhotoSceneDataSource.h */,
+				FD7D433A1A1DA4A300551093 /* SDEPhotoSceneDataSource.m */,
 				FD7D43191A1A089C00551093 /* SDESpecialItemVC.h */,
 				FD7D431A1A1A089C00551093 /* SDESpecialItemVC.m */,
 			);
@@ -875,6 +881,7 @@
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
 				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
+				FD7D433B1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD67D8D5197DFD4A00D2CCDA /* FaceppGroup.m in Sources */,
@@ -929,6 +936,7 @@
 				FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */,
 				FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */,
 				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
+				FD7D433C1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
 				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
 				FDBF6C1219D1038000352DFA /* FaceppGroup.m in Sources */,
