@@ -27,8 +27,8 @@
 - (id)init
 {
     self = [super init];
-    if (!self.assetsArray) {
-        self.assetsArray = [NSMutableArray new];
+    if (!self.assetsDictionary) {
+        self.assetsDictionary = [NSMutableDictionary new];
     }
     
     if (!self.albumsArray) {

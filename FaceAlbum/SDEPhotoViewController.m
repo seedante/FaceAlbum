@@ -22,7 +22,7 @@ typedef enum: NSUInteger {
 @interface SDEPhotoViewController ()
 
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
-@property (nonatomic) NSMutableArray *assetsArray;
+@property (nonatomic) NSMutableDictionary *assetsDictionary;
 @property (nonatomic) NSMutableArray *albumsArray;
 @property (nonatomic) NSMutableDictionary *timelineDictionary;
 @property (nonatomic) NSMutableArray *timeHeaderArray;
@@ -31,6 +31,7 @@ typedef enum: NSUInteger {
 @property (nonatomic) BOOL isAlbumContentMode;
 @property (nonatomic) BOOL enableBlackBackGround;
 @property (nonatomic) NSUInteger albumIndex;
+@property (nonatomic) BOOL enableRefresh;
 
 @end
 
@@ -40,6 +41,9 @@ typedef enum: NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(manualRefreshView) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
+    //self.enableFresh = NO;
     self.navigationController.delegate = self;
     self.rootViewType = kAlbumType;
     [self preparePhotoData];
@@ -49,6 +53,7 @@ typedef enum: NSUInteger {
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"Show albums.");
+    self.enableRefresh = YES;
     //[self checkALAuthorizationStatus];
     self.contentType = self.rootViewType;
     self.isAlbumContentMode = NO;
@@ -57,7 +62,7 @@ typedef enum: NSUInteger {
 
 - (void)checkPhotoEmpty
 {
-    if (self.assetsArray.count == 0) {
+    if (self.assetsDictionary.count == 0) {
         self.photoCollectionView.hidden = YES;
         self.accessErrorView.hidden = YES;
         self.warnningView.hidden = NO;
@@ -92,10 +97,33 @@ typedef enum: NSUInteger {
 
 - (void)manualRefreshView
 {
-    self.albumsArray = nil;
-    self.timelineDictionary = nil;
-    self.timeHeaderArray = nil;
-    [self preparePhotoData];
+    //NSLog(@"Photos change.");
+    if (self.enableRefresh) {
+        //NSLog(@"refresh just once.");
+        [self cleanCache];
+        [self preparePhotoData];
+        self.enableRefresh = NO;
+    }
+
+}
+
+- (void)cleanCache
+{
+    if (self.assetsDictionary.count > 0) {
+        [self.assetsDictionary removeAllObjects];
+    }
+    
+    if (self.albumsArray.count > 0) {
+        [self.albumsArray removeAllObjects];
+    }
+    
+    if (self.timelineDictionary.count > 0) {
+        [self.timelineDictionary removeAllObjects];
+    }
+    
+    if (self.timeHeaderArray.count > 0) {
+        [self.timeHeaderArray removeAllObjects];
+    }
 }
 
 - (void)preparePhotoData
@@ -109,9 +137,8 @@ typedef enum: NSUInteger {
     }
     
     
-    
-    if (!self.assetsArray) {
-        self.assetsArray = [[SDEPhotoSceneDataSource sharedData] assetsArray];
+    if (!self.assetsDictionary) {
+        self.assetsDictionary = [[SDEPhotoSceneDataSource sharedData] assetsDictionary];
     }
     
     if (!self.albumsArray) {
@@ -150,11 +177,13 @@ typedef enum: NSUInteger {
                         }
                         
                         NSDate *assetDate = [asset valueForProperty:ALAssetPropertyDate];
+                        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+                        NSString *assetURLString = assetURL.absoluteString;
                         NSDictionary *assetInfo = @{@"Asset": asset,
                                                     @"Date": assetDate,
                                                     @"Album": albumName};
                         [assetsOfAlbum addObject:assetInfo];
-                        [self.assetsArray addObject:assetInfo];
+                        [self.assetsDictionary setObject:asset forKey:assetURLString];
                         
                         NSString *dayString = [dateFormatter stringFromDate:assetDate];
                         NSMutableArray *sameDateArray = (NSMutableArray *)[self.timelineDictionary objectForKey:dayString];
@@ -167,7 +196,7 @@ typedef enum: NSUInteger {
                             [sameDateArray addObject:assetInfo];
                         }
                     }else{
-                        NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
+                        //NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
                         [assetsOfAlbum sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Date" ascending:NO]]];
                     }
                 }];
@@ -223,7 +252,7 @@ typedef enum: NSUInteger {
             section = self.albumsArray.count;
             break;
     }
-    NSLog(@"Section: %d", section);
+   // NSLog(@"Section: %d", section);
     return section;
 }
 
@@ -268,7 +297,7 @@ typedef enum: NSUInteger {
             break;
         }
     }
-    NSLog(@"Section: %d Count: %d", section, count);
+    //NSLog(@"Section: %d Count: %d", section, count);
     return count;
 }
 
@@ -503,9 +532,9 @@ typedef enum: NSUInteger {
 #pragma mark - UINavigationViewController Delegate Method
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    NSLog(@"Navigation Delegate Method.");
+    //NSLog(@"Navigation Delegate Method.");
     NSUInteger count = self.navigationController.viewControllers.count;
-    NSLog(@"View Controller Count: %d", count);
+    //NSLog(@"View Controller Count: %d", count);
     switch (self.contentType) {
         case kPhotoType:
             if (count == 3) {

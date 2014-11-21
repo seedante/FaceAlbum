@@ -10,7 +10,7 @@
 
 @interface SDEPhotoSceneDataSource : NSObject
 
-@property (nonatomic) NSMutableArray *assetsArray;
+@property (nonatomic) NSMutableDictionary *assetsDictionary;
 @property (nonatomic) NSMutableArray *albumsArray;
 @property (nonatomic) NSMutableDictionary *timelineDictionary;
 @property (nonatomic) NSMutableArray *timeHeaderArray;

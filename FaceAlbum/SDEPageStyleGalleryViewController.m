@@ -15,6 +15,7 @@
 #import "SDEGalleryCell.h"
 #import "LineLayout.h"
 #import "SDEPageViewLayout.h"
+#import "SDEPhotoSceneDataSource.h"
 @import AssetsLibrary;
 
 static NSString *CellIdentifier = @"GalleryCell";
@@ -44,6 +45,7 @@ typedef enum: NSUInteger{
 @property (nonatomic) NSInteger currentPageIndex;
 @property (nonatomic) LayoutType currentLayoutType;
 @property (nonatomic) GridCellType currentGridCellType;
+@property (nonatomic) NSDictionary *assetsDictionary;
 
 @property (nonatomic) UICollectionViewController *singlePageCollectionViewController;
 @property (nonatomic) UICollectionView *singlePageCollectionView;
@@ -68,6 +70,7 @@ typedef enum: NSUInteger{
     self.galleryView.delegate = self;
     self.navigationController.delegate = self;
     
+    self.assetsDictionary = [[[SDEPhotoSceneDataSource sharedData] assetsDictionary] copy];
     self.currentPortraitIndex = 0;
     self.pageVCArray = [NSMutableArray new];
     self.inPageViewFlag = NO;
@@ -422,8 +425,13 @@ typedef enum: NSUInteger{
                         [cell setShowContent:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
                     }];
                      */
-                    UIImage *photoImage = faceItem.photoOwner.thumbnail;
-                    [cell setShowContent:photoImage];
+                    ALAsset *asset = (ALAsset *)[self.assetsDictionary objectForKey:faceItem.assetURLString];
+                    if (asset) {
+                        [cell setShowContent:[UIImage imageWithCGImage:asset.aspectRatioThumbnail]];
+                    }else{
+                        UIImage *photoImage = faceItem.photoOwner.thumbnail;
+                        [cell setShowContent:photoImage];
+                    }
                     break;
                 }
             }
@@ -444,15 +452,21 @@ typedef enum: NSUInteger{
                 }
             }
             self.nameTitle.text = [nameString copy];
-            NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLString];
-            [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
-                if (asset) {
-                    UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-                    [cell setShowContent:photoImage];
-                }
-            }failureBlock:^(NSError *accessError){
-                [cell setShowContent:[UIImage imageNamed:@"AccessDenied.png"]];
-            }];
+            ALAsset *assetOfFace =  (ALAsset *)[self.assetsDictionary objectForKey:faceItem.assetURLString];
+            if (assetOfFace) {
+                NSLog(@"Asset: %@", [[assetOfFace valueForProperty:ALAssetPropertyAssetURL] absoluteString]);
+                [cell setShowContent:[UIImage imageWithCGImage:assetOfFace.defaultRepresentation.fullScreenImage]];
+            }else{
+                NSURL *photoURL = [NSURL URLWithString:faceItem.assetURLString];
+                [self.photoLibrary assetForURL:photoURL resultBlock:^(ALAsset *asset){
+                    if (asset) {
+                        UIImage *photoImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                        [cell setShowContent:photoImage];
+                    }
+                }failureBlock:^(NSError *accessError){
+                    [cell setShowContent:[UIImage imageNamed:@"AccessDenied.png"]];
+                }];
+            }
             
             if ([collectionView isEqual:self.detailContentCollectionView]) {
                 NSInteger pageIndex = indexPath.item/NumberOfAvatorPerPage;
@@ -517,7 +531,10 @@ typedef enum: NSUInteger{
     switch (self.currentLayoutType) {
         case PortraitLayout:{
             DLog(@"Switch to Horizontal Grid Mode.");
-            [self.detailContentCollectionView reloadData];
+            //[self.detailContentCollectionView reloadData];
+            if (!self.tabBarController.tabBar.hidden) {
+                self.tabBarController.tabBar.hidden = YES;
+            }
             [self switchToHorizontalGridModeAtPortraitIndex:indexPath.item fromMode:PortraitLayout];
             break;
         }
@@ -683,6 +700,9 @@ typedef enum: NSUInteger{
             if (result.count == 1) {
                 Photo *deletedPhoto = (Photo *)result.firstObject;
                 deletedPhoto.isExisted = NO;
+                for (Face *faceItem in deletedPhoto.faceset) {
+                    faceItem.whetherToDisplay = NO;
+                }
             }else
                 DLog(@"Some Thing Wrong");
         }
@@ -714,10 +734,7 @@ typedef enum: NSUInteger{
         self.scanRoomButton.hidden = YES;
     }else
         self.scanRoomButton.hidden = NO;
-    if ([[self.newPhotoDetector notexistedAssetsURLString] count] > 0) {
-        self.MontageRoomButton.highlighted = YES;
-    }else
-        self.MontageRoomButton.highlighted = NO;
+
     
     if (self.buttonPanel.hidden) {
         self.buttonPanel.hidden = NO;
@@ -964,7 +981,7 @@ typedef enum: NSUInteger{
     NSInteger itemIndexBase = 0;
     if ([self countForPageViewController] != 1) {
         itemIndexBase = self.currentPageIndex * NumberOfAvatorPerPage;
-        DLog(@"itemIndexBase: %ld", (long)itemIndexBase);
+        NSLog(@"itemIndexBase: %ld", (long)itemIndexBase);
     }
     
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + itemIndexBase) inSection:self.currentPortraitIndex];

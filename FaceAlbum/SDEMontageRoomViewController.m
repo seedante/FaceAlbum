@@ -84,6 +84,7 @@ typedef enum {
     self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
     self.managedObjectContext = self.faceFetchedResultsController.managedObjectContext;
     
+    
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
         DLog(@"Face Fetch Fail: %@", error);
