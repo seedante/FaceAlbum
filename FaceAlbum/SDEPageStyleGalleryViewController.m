@@ -13,8 +13,8 @@
 #import "Person.h"
 #import "Photo.h"
 #import "SDEGalleryCell.h"
-#import "LineLayout.h"
-#import "SDEPageViewLayout.h"
+//#import "LineLayout.h"
+//#import "SDEPageViewLayout.h"
 #import "SDEPhotoSceneDataSource.h"
 @import AssetsLibrary;
 

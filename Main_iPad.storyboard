@@ -659,10 +659,10 @@
             </objects>
             <point key="canvasLocation" x="-3914" y="-295"/>
         </scene>
-        <!--Page Style Gallery View Controller-->
+        <!--Face Room View Controller-->
         <scene sceneID="Z14-gc-D2e">
             <objects>
-                <viewController storyboardIdentifier="PersonGallery" id="UMT-jw-iR7" customClass="SDEPageStyleGalleryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonGallery" id="UMT-jw-iR7" customClass="SDEFaceRoomViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UYt-yf-6Ez"/>
                         <viewControllerLayoutGuide type="bottom" id="KiL-2l-sNB"/>
@@ -772,22 +772,22 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4DC-Df-qHV">
                                 <rect key="frame" x="0.0" y="65" width="768" height="910"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m1L-Sv-2JA">
-                                    <size key="itemSize" width="200" height="200"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m1L-Sv-2JA" customClass="HorizontalCollectionViewLayout">
+                                    <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GalleryCell" id="YyD-0K-LbV" customClass="SDEGalleryCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" reuseIdentifier="photoCell" id="YyD-0K-LbV" customClass="SDEGalleryCell">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0N-ft-ahm">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                <imageView tag="10" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0N-ft-ahm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -803,6 +803,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="UMT-jw-iR7" id="ymm-9H-Wlm"/>
+                                    <outlet property="delegate" destination="UMT-jw-iR7" id="TJH-ld-9z4"/>
+                                </connections>
                             </collectionView>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-U0-cER">
                                 <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -834,14 +838,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="KZ8-MX-rtE"/>
                     <connections>
-                        <outlet property="MontageRoomButton" destination="hrR-ve-wZq" id="LaX-Lb-3J3"/>
-                        <outlet property="actionCenterButton" destination="WYX-9r-NlP" id="dqx-fJ-Gbh"/>
-                        <outlet property="buttonPanel" destination="v3p-Pe-9PQ" id="m7J-a3-SvC"/>
+                        <outlet property="MontageRoomButton" destination="hrR-ve-wZq" id="UZT-bd-0Zh"/>
+                        <outlet property="actionCenterButton" destination="WYX-9r-NlP" id="wCA-Vx-g47"/>
+                        <outlet property="buttonPanel" destination="v3p-Pe-9PQ" id="Bni-uP-gHQ"/>
                         <outlet property="galleryView" destination="4DC-Df-qHV" id="oDC-PA-ML5"/>
                         <outlet property="infoTitle" destination="Yhf-uc-2mr" id="dB6-n9-0GB"/>
+                        <outlet property="librarySwitch" destination="1v0-U0-cER" id="XQM-u8-Mt3"/>
                         <outlet property="nameTitle" destination="0vd-OL-nMQ" id="rqW-ZA-qU8"/>
-                        <outlet property="scanRoomButton" destination="hyZ-Vb-wt3" id="Soc-NP-a5v"/>
-                        <outlet property="styleSwitch" destination="1v0-U0-cER" id="9so-FO-cyW"/>
+                        <outlet property="scanRoomButton" destination="hyZ-Vb-wt3" id="1L1-zN-qU0"/>
                         <segue destination="3O8-fZ-xdw" kind="push" identifier="enterMontageRoom" id="mY8-Cd-IyR"/>
                     </connections>
                 </viewController>
@@ -999,7 +1003,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fYU-IF-XFj"/>
+        <segue reference="Tkb-Pv-zIQ"/>
         <segue reference="mY8-Cd-IyR"/>
     </inferredMetricsTieBreakers>
 </document>

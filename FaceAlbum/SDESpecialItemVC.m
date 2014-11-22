@@ -27,6 +27,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"Scroll to special index");
     [self.collectionView scrollToItemAtIndexPath:self.startIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     [super viewWillAppear:animated];
 }

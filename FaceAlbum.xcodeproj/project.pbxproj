@@ -91,6 +91,12 @@
 		FD7D43821A1EDB5200551093 /* FaceppError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436A1A1EDB5200551093 /* FaceppError.m */; };
 		FD7D43831A1EDB5200551093 /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436C1A1EDB5200551093 /* FaceppResult.m */; };
 		FD7D43841A1EDB5200551093 /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436C1A1EDB5200551093 /* FaceppResult.m */; };
+		FD7D438D1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */; };
+		FD7D438E1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */; };
+		FD7D43921A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */; };
+		FD7D43931A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */; };
+		FD7D43961A20D5D200551093 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43951A20D5D200551093 /* LineLayout.m */; };
+		FD7D43971A20D5D200551093 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43951A20D5D200551093 /* LineLayout.m */; };
 		FD7E22371A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
 		FD7E22381A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
 		FD7E22391A076B9E00463C67 /* avator.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222D1A076B9E00463C67 /* avator.png */; };
@@ -152,8 +158,6 @@
 		FDBF6C2C19D1038000352DFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FDBF6CFA19D1038000352DFA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
 		FDBF6D2F19D1038000352DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
-		FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */; };
-		FDBF6EDF19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */; };
 		FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
 		FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
 		FDBF6F4419D2D8E700352DFA /* Aged-Paper.png in Resources */ = {isa = PBXBuildFile; fileRef = FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */; };
@@ -287,6 +291,12 @@
 		FD7D436A1A1EDB5200551093 /* FaceppError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppError.m; sourceTree = "<group>"; };
 		FD7D436B1A1EDB5200551093 /* FaceppResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceppResult.h; sourceTree = "<group>"; };
 		FD7D436C1A1EDB5200551093 /* FaceppResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceppResult.m; sourceTree = "<group>"; };
+		FD7D438B1A1F6DDF00551093 /* SDEFaceRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEFaceRoomViewController.h; sourceTree = "<group>"; };
+		FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEFaceRoomViewController.m; sourceTree = "<group>"; };
+		FD7D43901A1F6E3A00551093 /* HorizontalCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalCollectionViewLayout.h; sourceTree = "<group>"; };
+		FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalCollectionViewLayout.m; sourceTree = "<group>"; };
+		FD7D43941A20D5D200551093 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
+		FD7D43951A20D5D200551093 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		FD7E222C1A076B9E00463C67 /* addPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPerson.png; sourceTree = "<group>"; };
 		FD7E222D1A076B9E00463C67 /* avator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avator.png; sourceTree = "<group>"; };
 		FD7E222E1A076B9E00463C67 /* avator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avator@2x.png"; sourceTree = "<group>"; };
@@ -307,8 +317,6 @@
 		FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDENewPhotoDetector.m; sourceTree = "<group>"; };
 		FDBF6ED319D1038000352DFA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FaceAlbumRelease-Info.plist"; path = "/Users/seedante/Development Library/FaceAlbum/FaceAlbumRelease-Info.plist"; sourceTree = "<absolute>"; };
-		FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPageStyleGalleryViewController.m; sourceTree = "<group>"; };
-		FDBF6EDD19D1376900352DFA /* SDEPageStyleGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPageStyleGalleryViewController.h; sourceTree = "<group>"; };
 		FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
 		FDBF6F3A19D2D8E700352DFA /* Aged-Paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Aged-Paper.png"; sourceTree = "<group>"; };
 		FDBF6F3B19D2D8E700352DFA /* Aged-Paper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Aged-Paper@2x.png"; sourceTree = "<group>"; };
@@ -535,6 +543,7 @@
 			children = (
 				FD4131281997050A00141578 /* ScanRoom */,
 				FD4131291997052500141578 /* MontageRoom */,
+				FD7D438F1A1F6DE500551093 /* FaceRoom */,
 				FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */,
 			);
 			name = FaceScene;
@@ -600,6 +609,19 @@
 			path = FaceppResult;
 			sourceTree = "<group>";
 		};
+		FD7D438F1A1F6DE500551093 /* FaceRoom */ = {
+			isa = PBXGroup;
+			children = (
+				FD7D438B1A1F6DDF00551093 /* SDEFaceRoomViewController.h */,
+				FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */,
+				FD7D43901A1F6E3A00551093 /* HorizontalCollectionViewLayout.h */,
+				FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */,
+				FD7D43941A20D5D200551093 /* LineLayout.h */,
+				FD7D43951A20D5D200551093 /* LineLayout.m */,
+			);
+			name = FaceRoom;
+			sourceTree = "<group>";
+		};
 		FD7E222B1A076B9E00463C67 /* IconForButtons */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,8 +656,6 @@
 		FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */ = {
 			isa = PBXGroup;
 			children = (
-				FDBF6EDD19D1376900352DFA /* SDEPageStyleGalleryViewController.h */,
-				FDBF6EDC19D1376900352DFA /* SDEPageStyleGalleryViewController.m */,
 				FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */,
 				FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */,
 				FDC2609B19B42D980010FF57 /* SDEGalleryCell.h */,
@@ -883,6 +903,7 @@
 				FD7D433B1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
 				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
+				FD7D43961A20D5D200551093 /* LineLayout.m in Sources */,
 				FD7D431B1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
 				FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */,
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
@@ -893,9 +914,10 @@
 				FD4131361997486B00141578 /* FaceCell.m in Sources */,
 				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
-				FDBF6EDE19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
 				FD7D436D1A1EDB5200551093 /* FaceppAPI.m in Sources */,
 				FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */,
+				FD7D43921A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */,
+				FD7D438D1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */,
 				FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */,
 				FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */,
 				FD7D43751A1EDB5200551093 /* FaceppGroup.m in Sources */,
@@ -938,6 +960,7 @@
 				FD7D433C1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
 				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
+				FD7D43971A20D5D200551093 /* LineLayout.m in Sources */,
 				FD7D431C1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
 				FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */,
 				FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */,
@@ -948,9 +971,10 @@
 				FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
 				FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */,
 				FDBF6C1D19D1038000352DFA /* Store.m in Sources */,
-				FDBF6EDF19D1376900352DFA /* SDEPageStyleGalleryViewController.m in Sources */,
 				FD7D436E1A1EDB5200551093 /* FaceppAPI.m in Sources */,
 				FDBF6C2019D1038000352DFA /* SDEMontageRoomViewController.m in Sources */,
+				FD7D43931A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */,
+				FD7D438E1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */,
 				FDBF6C2119D1038000352DFA /* SDEAvatorOverlayView.m in Sources */,
 				FDBF6C2219D1038000352DFA /* Person.m in Sources */,
 				FD7D43761A1EDB5200551093 /* FaceppGroup.m in Sources */,
