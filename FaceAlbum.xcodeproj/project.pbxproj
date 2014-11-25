@@ -311,6 +311,7 @@
 		FD7E224D1A076C5600463C67 /* Photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Photo.png; sourceTree = "<group>"; };
 		FD7E224E1A076C5600463C67 /* Photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo@2x.png"; sourceTree = "<group>"; };
 		FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
+		FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
 		FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPopupPanel.h; sourceTree = "<group>"; };
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
 		FDB3608019CF1EE800AAE34D /* SDENewPhotoDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDENewPhotoDetector.h; sourceTree = "<group>"; };
@@ -544,7 +545,6 @@
 				FD4131281997050A00141578 /* ScanRoom */,
 				FD4131291997052500141578 /* MontageRoom */,
 				FD7D438F1A1F6DE500551093 /* FaceRoom */,
-				FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */,
 			);
 			name = FaceScene;
 			sourceTree = "<group>";
@@ -618,6 +618,10 @@
 				FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */,
 				FD7D43941A20D5D200551093 /* LineLayout.h */,
 				FD7D43951A20D5D200551093 /* LineLayout.m */,
+				FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */,
+				FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */,
+				FDC2609B19B42D980010FF57 /* SDEGalleryCell.h */,
+				FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */,
 			);
 			name = FaceRoom;
 			sourceTree = "<group>";
@@ -651,17 +655,6 @@
 				FD7E22361A076B9E00463C67 /* up@2x.png */,
 			);
 			path = IconForButtons;
-			sourceTree = "<group>";
-		};
-		FD8D0C7119BDDD9F007EF122 /* PageStyleGallery */ = {
-			isa = PBXGroup;
-			children = (
-				FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */,
-				FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */,
-				FDC2609B19B42D980010FF57 /* SDEGalleryCell.h */,
-				FDC2609C19B42D980010FF57 /* SDEGalleryCell.m */,
-			);
-			name = PageStyleGallery;
 			sourceTree = "<group>";
 		};
 		FD9590411985FA76001C2345 /* Source */ = {
@@ -1318,6 +1311,7 @@
 		FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */,
 				FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */,
 				FD339F7019EB28530025E149 /* FaceAlbum 2.xcdatamodel */,
 				FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */,

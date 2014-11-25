@@ -118,8 +118,11 @@ typedef enum {
     NSError *error = nil;
     NSManagedObjectContext *moc = self.faceFetchedResultsController.managedObjectContext;
     if (moc != nil) {
+        if ([moc hasChanges]) {
+            NSLog(@"Fuck change.");
+        }
         if ([moc hasChanges] && ![moc save:&error]) {
-            DLog(@"Edit Save error %@, %@", error, [error userInfo]);
+            NSLog(@"Edit Save error %@, %@", error, [error userInfo]);
         }
     }
 }
@@ -311,7 +314,7 @@ typedef enum {
     copyFaceItem.detectedFaceRect = originalFaceItem.detectedFaceRect;
     copyFaceItem.faceID = originalFaceItem.faceID;
     copyFaceItem.order = originalFaceItem.order;
-    copyFaceItem.posterImage = originalFaceItem.posterImage;
+    copyFaceItem.posterURLString = originalFaceItem.posterURLString;
     copyFaceItem.tag = originalFaceItem.tag;
     copyFaceItem.isMyStar = originalFaceItem.isMyStar;
     copyFaceItem.personOwner = originalFaceItem.personOwner;
@@ -432,11 +435,16 @@ typedef enum {
     
     if (newPerson) {
         newPerson.order = (int)newSection;
+        Face *anyFaceItem = (Face *)newPerson.ownedFaces.anyObject;
+        newPerson.avatorImage = [UIImage imageWithContentsOfFile: anyFaceItem.posterURLString];
+        newPerson.posterURLString = anyFaceItem.posterURLString;
     }
+    NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
     [self saveEdit];
     
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
     self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
+    
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
 

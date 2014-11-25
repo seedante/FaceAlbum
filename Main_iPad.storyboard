@@ -522,7 +522,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="aeu-vj-hcZ">
+                            <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="aeu-vj-hcZ">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -552,7 +552,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fk9-V1-BEx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920" y="-1741"/>
+            <point key="canvasLocation" x="-1853" y="-308"/>
         </scene>
         <!--AlbumContent-->
         <scene sceneID="qrz-UG-MiP">
@@ -772,26 +772,27 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4DC-Df-qHV">
                                 <rect key="frame" x="0.0" y="65" width="768" height="910"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m1L-Sv-2JA" customClass="HorizontalCollectionViewLayout">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m1L-Sv-2JA">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" reuseIdentifier="photoCell" id="YyD-0K-LbV" customClass="SDEGalleryCell">
+                                    <collectionViewCell clipsSubviews="YES" contentMode="scaleAspectFit" reuseIdentifier="photoCell" id="YyD-0K-LbV" customClass="SDEGalleryCell">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView tag="10" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0N-ft-ahm">
+                                                <imageView tag="10" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FacelessManPoster.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Y0N-ft-ahm">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="Y0N-ft-ahm" firstAttribute="top" secondItem="YyD-0K-LbV" secondAttribute="top" id="3xM-aY-bgb"/>
                                             <constraint firstAttribute="bottom" secondItem="Y0N-ft-ahm" secondAttribute="bottom" id="7c5-R2-hij"/>
@@ -853,101 +854,6 @@
             </objects>
             <point key="canvasLocation" x="-2981" y="984"/>
         </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="Lgm-KT-FFZ">
-            <objects>
-                <collectionViewController storyboardIdentifier="DetailVC" autoresizesArchivedViewToFullSize="NO" id="8ld-mY-VgD" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="g9l-Nu-O7n">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="512" minimumInteritemSpacing="10" id="Vz9-W7-VUa">
-                            <size key="itemSize" width="150" height="150"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="262" minY="50" maxX="262" maxY="50"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GalleryCell" id="xKI-ab-4Xv" customClass="SDEGalleryCell">
-                                <rect key="frame" x="262" y="50" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zSX-2W-DG8">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="zSX-2W-DG8" secondAttribute="centerX" id="Gte-yV-N3a"/>
-                                    <constraint firstAttribute="centerY" secondItem="zSX-2W-DG8" secondAttribute="centerY" id="dcY-Te-WUi"/>
-                                    <constraint firstAttribute="bottom" secondItem="zSX-2W-DG8" secondAttribute="bottom" id="pvp-A1-9YK"/>
-                                    <constraint firstItem="zSX-2W-DG8" firstAttribute="leading" secondItem="xKI-ab-4Xv" secondAttribute="leading" id="seZ-4K-X7e"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="galleryContentView" destination="zSX-2W-DG8" id="HwG-E4-vNx"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="8ld-mY-VgD" id="qbQ-Aa-hxa"/>
-                            <outlet property="delegate" destination="8ld-mY-VgD" id="K5K-91-yLM"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BJo-eV-Xdd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1853" y="-295"/>
-        </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="DCa-kQ-eMP">
-            <objects>
-                <collectionViewController storyboardIdentifier="AvatorVC" autoresizesArchivedViewToFullSize="NO" id="TYt-0I-6LU" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="94S-YA-qvz">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cEx-YO-5if">
-                            <size key="itemSize" width="243" height="252"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="60" minY="5" maxX="60" maxY="5"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GalleryCell" id="4a2-Gh-1dU" customClass="SDEGalleryCell">
-                                <rect key="frame" x="60" y="5" width="243" height="252"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="243" height="252"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aiN-F4-GIe">
-                                            <rect key="frame" x="0.0" y="0.0" width="252" height="252"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="aiN-F4-GIe" firstAttribute="leading" secondItem="4a2-Gh-1dU" secondAttribute="leading" id="21b-QP-pyo"/>
-                                    <constraint firstAttribute="bottom" secondItem="aiN-F4-GIe" secondAttribute="bottom" id="MxY-jU-b05"/>
-                                    <constraint firstAttribute="centerX" secondItem="aiN-F4-GIe" secondAttribute="centerX" constant="-4.5" id="RrB-QP-P67"/>
-                                    <constraint firstAttribute="centerY" secondItem="aiN-F4-GIe" secondAttribute="centerY" id="W3T-hn-7N8"/>
-                                    <constraint firstItem="aiN-F4-GIe" firstAttribute="top" secondItem="4a2-Gh-1dU" secondAttribute="top" id="vlZ-OV-rLT"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="galleryContentView" destination="aiN-F4-GIe" id="KSc-By-eO4"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sKI-G4-JPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1853" y="984"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ScP-Ld-2S7">
             <objects>
@@ -969,7 +875,7 @@
         <!--Face-->
         <scene sceneID="6Oi-jg-L02">
             <objects>
-                <navigationController storyboardIdentifier="PersonGalleryNV" automaticallyAdjustsScrollViewInsets="NO" id="kIO-dK-4Aj" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PersonGalleryNV" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="kIO-dK-4Aj" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Face" image="face.png" id="kdg-fE-Y3g"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5gd-28-Cm6"/>

@@ -52,6 +52,7 @@
         FacelessMan.order = 0;
         FacelessMan.name = @"UnKnown";
         FacelessMan.personID = @"FacelessMan";
+        FacelessMan.avatorImage = [UIImage imageNamed:@"FacelessManPoster.jpg"];
         FacelessMan.whetherToDisplay = YES;
         FacelessMan.faceCount = 0;
         FacelessMan.photoCount = 0;
@@ -70,8 +71,18 @@
         NSArray *Persons = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];;
         if (Persons && Persons.count == 1) {
             _FacelessMan = (Person *)Persons.firstObject;
-        }else
-            NSLog(@"FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!FACELESSMAN!");
+        }else{
+            _FacelessMan = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
+            _FacelessMan.order = 0;
+            _FacelessMan.name = @"UnKnown";
+            _FacelessMan.personID = @"FacelessMan";
+            _FacelessMan.avatorImage = [UIImage imageNamed:@"FacelessManPoster.jpg"];
+            _FacelessMan.whetherToDisplay = YES;
+            _FacelessMan.faceCount = 0;
+            _FacelessMan.photoCount = 0;
+            [self.managedObjectContext save:nil];
+        }
+            
     }
     return _FacelessMan;
 }
@@ -111,7 +122,7 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(whetherToDisplay == YES) AND (ownedFaces.@count > 0)"];
     [fetchRequest setPredicate:predicate];
-    _personFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"order" cacheName:@"allPersons"];
+    _personFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"allPersons"];
     
     return _personFetchedResultsController;
 }

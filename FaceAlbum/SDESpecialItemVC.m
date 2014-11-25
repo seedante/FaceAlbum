@@ -32,6 +32,11 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"view is gone.");
+}
+
 - (void)specifyStartIndexPath:(NSIndexPath *)indexPath
 {
     self.startIndexPath = indexPath;

@@ -382,6 +382,9 @@ static NSString * const cellIdentifier = @"avatorCell";
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     cell.clipsToBounds = YES;
     Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    if (face.section == 0 && !face.personOwner) {
+        face.personOwner = [[Store sharedStore] FacelessMan];
+    }
     if(!face.photoOwner.isExisted){
         cell.backgroundColor = [UIColor redColor];
         cell.avatorView.alpha = 0.5;

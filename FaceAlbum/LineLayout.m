@@ -120,9 +120,19 @@
 
 -(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+    NSInteger cellCount = [self.collectionView numberOfItemsInSection:0];
+    NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:cellCount];
     
-    return array;
+    for (NSUInteger i=0; i<cellCount; ++i)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:indexPath];
+        if (CGRectIntersectsRect(attr.frame, rect)) {
+            [allAttributes addObject:attr];
+        }
+    }
+    
+    return allAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath

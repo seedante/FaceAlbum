@@ -18,7 +18,7 @@
 @dynamic order;
 @dynamic section;
 @dynamic whetherToDisplay;
-@dynamic posterImage;
+@dynamic posterURLString;
 @dynamic tag;
 @dynamic isMyStar;
 @dynamic assetURLString;

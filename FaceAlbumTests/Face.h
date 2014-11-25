@@ -22,7 +22,7 @@
 @property (nonatomic) double order;
 @property (nonatomic) int32_t section;
 @property (nonatomic) BOOL whetherToDisplay;
-@property (nonatomic, retain) UIImage * posterImage;
+@property (nonatomic, retain) NSString * posterURLString;
 @property (nonatomic, retain) NSString * tag;
 @property (nonatomic) BOOL isMyStar;
 @property (nonatomic) NSString *assetURLString;

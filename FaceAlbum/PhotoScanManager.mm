@@ -329,30 +329,26 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
             CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
-            newFace.posterImage = [UIImage imageWithCGImage:portraitCGImage];
+            UIImage *posterImage = [UIImage imageWithCGImage:portraitCGImage];
+            NSString *randomName = [[[NSUUID alloc] init] UUIDString];
+            NSString *saveName = [randomName stringByAppendingPathExtension:@"jpg"];
+            NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
+            @autoreleasepool {
+                NSData *imageData = UIImageJPEGRepresentation(posterImage, 1.0);
+                BOOL success = [imageData writeToFile:savePath atomically:YES];
+                if (!success) {
+                    DLog(@"Wrong!Wrong!Wrong!");
+                }
+                newFace.posterURLString = savePath;
+            }
             CGImageRelease(portraitCGImage);
 
-            
-            /*
-             NSString *randomName = [[[NSUUID alloc] init] UUIDString];
-             NSString *saveName = [randomName stringByAppendingPathExtension:@".jpg"];
-             NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
-             @autoreleasepool {
-             NSData *imageData = UIImageJPEGRepresentation(headUIImage, 1.0);
-             BOOL success = [imageData writeToFile:savePath atomically:YES];
-             if (!success) {
-             DLog(@"Wrong!Wrong!Wrong!");
-             }
-             }
-             */
-            
             self.numberOfItemsInFirstSection += 1;
             newFace.order = self.numberOfItemsInFirstSection;
             
         }
         newPhoto.faceCount = (int32_t)detectResult.faces.count;
         newPhoto.whetherToDisplay = YES;
-        newPhoto.thumbnail = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
     }else{
         newPhoto.faceCount = 0;
         newPhoto.whetherToDisplay = NO;

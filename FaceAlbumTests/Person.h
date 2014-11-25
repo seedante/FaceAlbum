@@ -14,6 +14,7 @@
 @interface Person : NSManagedObject
 
 @property (nonatomic, retain) UIImage * avatorImage;
+@property (nonatomic, retain) NSString *posterURLString;
 @property (nonatomic) int32_t faceCount;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * personID;

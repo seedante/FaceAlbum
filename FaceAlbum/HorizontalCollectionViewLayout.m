@@ -109,14 +109,15 @@
     // In this implementation we just return all the attributes.
     // In a better implementation we could compute only those attributes that intersect with the given rect.
     
-    NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:_cellCount];
+    NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:self.cellCount];
     
     for (NSUInteger i=0; i<self.cellCount; ++i)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:indexPath];
-        
-        [allAttributes addObject:attr];
+        if (CGRectIntersectsRect(attr.frame, rect)) {
+            [allAttributes addObject:attr];
+        }
     }
     
     return allAttributes;
@@ -157,6 +158,11 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
     // We should do some math here, but we are lazy.
+    CGRect oldBounds = self.collectionView.bounds;
+    if ((oldBounds.size.width > newBounds.size.width) || (CGRectGetWidth(oldBounds) < CGRectGetWidth(newBounds))) {
+        return YES;
+    }
+    
     return NO;
 }
 
