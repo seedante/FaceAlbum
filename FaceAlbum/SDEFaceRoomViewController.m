@@ -120,6 +120,7 @@ static NSString *cellIdentifier = @"photoCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"view will appear");
+    [self fetchPerson];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     self.buttonPanel.hidden = YES;
@@ -226,6 +227,7 @@ static NSString *cellIdentifier = @"photoCell";
                 [photoView setImage:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
             }else{
                 if (personItem.avatorImage) {
+                    NSLog(@"Work");
                     [photoView setImage:personItem.avatorImage];
                 }else
                     [photoView setImage:[UIImage imageWithContentsOfFile:personItem.posterURLString]];

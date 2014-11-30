@@ -118,9 +118,6 @@ typedef enum {
     NSError *error = nil;
     NSManagedObjectContext *moc = self.faceFetchedResultsController.managedObjectContext;
     if (moc != nil) {
-        if ([moc hasChanges]) {
-            NSLog(@"Fuck change.");
-        }
         if ([moc hasChanges] && ![moc save:&error]) {
             NSLog(@"Edit Save error %@, %@", error, [error userInfo]);
         }
