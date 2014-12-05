@@ -310,22 +310,18 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             newFace.name = @"";
             //newFace.personOwner = [[Store sharedStore] FacelessMan];
             
-            @autoreleasepool {
-                CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
-                CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
-                UIImage *headUIImage = [UIImage imageWithCGImage:headCGImage];
-                //UIImage *avatorUIImage = nil;
-                //avatorUIImage = headUIImage;
-                //if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
-                //    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
-                //}else
-                //    avatorUIImage = headUIImage;
-                
-                
-                CGImageRelease(headCGImage);
-                newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
-                [self.facesInAPhoto addObject:headUIImage];
-            }
+            CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
+            CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
+            UIImage *headUIImage = [UIImage imageWithCGImage:headCGImage];
+            //UIImage *avatorUIImage = nil;
+            //avatorUIImage = headUIImage;
+            //if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
+            //    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
+            //}else
+            //    avatorUIImage = headUIImage;
+            CGImageRelease(headCGImage);
+            newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
+            [self.facesInAPhoto addObject:headUIImage];
             
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
             CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
@@ -333,14 +329,12 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             NSString *randomName = [[[NSUUID alloc] init] UUIDString];
             NSString *saveName = [randomName stringByAppendingPathExtension:@"jpg"];
             NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
-            @autoreleasepool {
-                NSData *imageData = UIImageJPEGRepresentation(posterImage, 1.0);
-                BOOL success = [imageData writeToFile:savePath atomically:YES];
-                if (!success) {
-                    DLog(@"Wrong!Wrong!Wrong!");
-                }
-                newFace.posterURLString = savePath;
+            NSData *imageData = UIImageJPEGRepresentation(posterImage, 1.0);
+            BOOL success = [imageData writeToFile:savePath atomically:YES];
+            if (!success) {
+                DLog(@"Wrong!Wrong!Wrong!");
             }
+            newFace.posterURLString = savePath;
             CGImageRelease(portraitCGImage);
 
             self.numberOfItemsInFirstSection += 1;
@@ -353,6 +347,8 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
         newPhoto.faceCount = 0;
         newPhoto.whetherToDisplay = NO;
     }
+    
+    //CGImageRelease(sourceCGImage);
     self.saveFlag += 1;
     if (self.saveFlag == 10) {
         [self saveAfterScan];

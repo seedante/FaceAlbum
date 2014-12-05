@@ -59,6 +59,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (void)cleanManagedObjectContext
 {
+    NSLog(@"Clean ManagedObject");
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
     }
