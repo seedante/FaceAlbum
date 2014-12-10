@@ -11,6 +11,7 @@
 #import "SDEPhotoSceneDataSource.h"
 #import "SDESpecialItemVC.h"
 #import "SDENewPhotoDetector.h"
+//#import "FJFlowLayoutWithAnimations.h"
 #import "Face.h"
 #import "Photo.h"
 #import "Store.h"
@@ -30,6 +31,7 @@ typedef enum: NSUInteger{
 } LibraryType;
 
 static NSString *cellIdentifier = @"photoCell";
+static NSUInteger numberOfItemsInPage = 20;
 
 @interface SDEFaceRoomViewController ()
 
@@ -43,6 +45,10 @@ static NSString *cellIdentifier = @"photoCell";
 @property (nonatomic) NSDictionary *assetsDictionary;
 @property (nonatomic) NSInteger numberOfPerson;
 @property (nonatomic) NSArray *personItemsArray;
+@property (nonatomic) NSInteger itemNumber;
+@property (nonatomic) NSInteger currentMaxItem;
+@property (nonatomic) BOOL shouldFlyCell;
+@property (nonatomic) CGPoint startPoint;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
@@ -58,6 +64,7 @@ static NSString *cellIdentifier = @"photoCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:YES];
+    //[[UITabBar appearance] setBarTintColor:[UIColor clearColor]];
     
     self.assetsDictionary = [[[SDEPhotoSceneDataSource sharedData] assetsDictionary] copy];
     self.portraitIndex = 0;
@@ -75,6 +82,7 @@ static NSString *cellIdentifier = @"photoCell";
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlShowOfTabBar:)];
     [self.galleryView addGestureRecognizer:self.tapGestureRecognizer];
     [self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
+    //[self.galleryView setCollectionViewLayout:[[FJFlowLayoutWithAnimations alloc] init]];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Aged-Paper"]];
     
     NSString *startSceneName = [self startScene];
@@ -208,6 +216,8 @@ static NSString *cellIdentifier = @"photoCell";
         case kPhotoType:{
             id<NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
             numberOfItems = [sectionInfo numberOfObjects];
+            self.itemNumber = numberOfItems;
+            self.currentMaxItem = -1;
             break;
         }
     }
@@ -232,6 +242,23 @@ static NSString *cellIdentifier = @"photoCell";
                 }else
                     [photoView setImage:[UIImage imageWithContentsOfFile:personItem.posterURLString]];
             }
+            photoView.alpha = 0.1;
+            photoView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+            
+            //set shadow
+            CALayer *layer = cell.layer;
+            [layer setShadowOffset:CGSizeMake(0, 5)];
+            [layer setShadowColor:[[UIColor blackColor] CGColor]];
+            [layer setShadowOpacity:0.5];
+            layer.masksToBounds = NO;
+            //[layer setShadowPath:[[UIBezierPath bezierPathWithRect:cell.bounds] CGPath]];
+            
+            NSTimeInterval delay = indexPath.item * 0.1;
+            [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionCurveEaseIn animations:^{
+                photoView.alpha = 1.0;
+                photoView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            }completion:nil];
+            
             break;
         }
         case kLibraryType:{
@@ -249,6 +276,41 @@ static NSString *cellIdentifier = @"photoCell";
                     break;
                 }
             }
+            
+            BOOL shouldAnimation = NO;
+            if (indexPath.item > self.currentMaxItem) {
+                shouldAnimation = YES;
+                if (indexPath.item == self.itemNumber - 1) {
+                    self.currentMaxItem = indexPath.item;
+                }else if (indexPath.item == self.currentMaxItem + numberOfItemsInPage){
+                    self.currentMaxItem = indexPath.item;
+                }
+            }
+            
+            if (self.shouldFlyCell) {
+                if (indexPath.item == self.itemNumber - 1 || indexPath.item == numberOfItemsInPage - 1)
+                    self.shouldFlyCell = NO;
+                
+                UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
+                
+                CABasicAnimation *fly = [CABasicAnimation animationWithKeyPath:@"position"];
+                fly.fromValue = [NSValue valueWithCGPoint:self.startPoint];
+                fly.toValue = [NSValue valueWithCGPoint:attr.center];
+                fly.duration = 0.5;
+                [cell.layer addAnimation:fly forKey:@"FlyCell"];
+            }
+            
+            if (shouldAnimation) {
+                photoView.alpha = 0.1;
+                photoView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+                
+                NSTimeInterval delay = (indexPath.item % numberOfItemsInPage) * 0.05;
+                [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionCurveEaseIn animations:^{
+                    photoView.alpha = 1.0;
+                    photoView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                }completion:nil];
+            }
+            
             break;
         }
         case kPhotoType:{
@@ -266,6 +328,7 @@ static NSString *cellIdentifier = @"photoCell";
                     [photoView setImage:[UIImage imageNamed:@"AccessDenied.png"]];
                 }];
             }
+            
             break;
         }
     }
@@ -353,12 +416,16 @@ static NSString *cellIdentifier = @"photoCell";
     switch (self.contentType) {
         case kPortraitType:{
             self.contentType = kLibraryType;
+            self.shouldFlyCell = YES;
+            UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            CGPoint cellPosition = attr.center;
+            self.startPoint = [self.view convertPoint:cellPosition fromView:self.galleryView];
+            
             if (!self.tabBarController.tabBar.hidden) {
                 self.tabBarController.tabBar.hidden = YES;
             }
             self.librarySwitch.hidden = NO;
             self.portraitIndex = indexPath.item;
-            
             
             self.libraryVC = (SDESpecialItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
             self.libraryVC.collectionView.frame = self.galleryView.frame;
@@ -373,6 +440,7 @@ static NSString *cellIdentifier = @"photoCell";
             [self.view addSubview:self.libraryVC.collectionView];
             [self.libraryVC didMoveToParentViewController:self];
             [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
+            
 
             break;
         }

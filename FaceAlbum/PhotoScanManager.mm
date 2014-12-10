@@ -307,32 +307,43 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             newFace.section = 0;
             newFace.photoOwner = newPhoto;
             newFace.assetURLString = newPhoto.uniqueURLString;
-            newFace.name = @"";
+            //newFace.name = @"";
             //newFace.personOwner = [[Store sharedStore] FacelessMan];
             
             CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
             CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
             UIImage *headUIImage = [UIImage imageWithCGImage:headCGImage];
+            [self.facesInAPhoto addObject:headUIImage];
+            
             //UIImage *avatorUIImage = nil;
             //avatorUIImage = headUIImage;
             //if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
             //    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
             //}else
             //    avatorUIImage = headUIImage;
-            CGImageRelease(headCGImage);
+            
             newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
-            [self.facesInAPhoto addObject:headUIImage];
+            NSString *avatorName = [[[NSUUID alloc] init] UUIDString];
+            avatorName = [avatorName stringByAppendingPathExtension:@"jpg"];
+            avatorName = [self.cachePath stringByAppendingPathComponent:avatorName];
+            NSData *avatorImageData = UIImageJPEGRepresentation(headUIImage, 1.0);
+            BOOL writeSuccess = [avatorImageData writeToFile:avatorName atomically:YES];
+            if (writeSuccess) {
+                newFace.pathForBackup = avatorName;
+            }
+            CGImageRelease(headCGImage);
+            
             
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
             CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
             UIImage *posterImage = [UIImage imageWithCGImage:portraitCGImage];
-            NSString *randomName = [[[NSUUID alloc] init] UUIDString];
-            NSString *saveName = [randomName stringByAppendingPathExtension:@"jpg"];
-            NSString *savePath = [self.cachePath stringByAppendingPathComponent:saveName];
+            NSString *posterName = [[[NSUUID alloc] init] UUIDString];
+            NSString *posterSaveName = [posterName stringByAppendingPathExtension:@"jpg"];
+            NSString *savePath = [self.cachePath stringByAppendingPathComponent:posterSaveName];
             NSData *imageData = UIImageJPEGRepresentation(posterImage, 1.0);
             BOOL success = [imageData writeToFile:savePath atomically:YES];
             if (!success) {
-                DLog(@"Wrong!Wrong!Wrong!");
+                NSLog(@"Wrong!Wrong!Wrong!");
             }
             newFace.posterURLString = savePath;
             CGImageRelease(portraitCGImage);

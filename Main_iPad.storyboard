@@ -623,7 +623,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="ZbT-Pz-sV1">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
                         <segue destination="lWJ-V8-5g3" kind="relationship" relationship="viewControllers" id="dHX-H8-IlA"/>
@@ -808,9 +807,9 @@
                                     <outlet property="delegate" destination="UMT-jw-iR7" id="TJH-ld-9z4"/>
                                 </connections>
                             </collectionView>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-U0-cER">
+                            <tabBar opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-U0-cER">
                                 <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <tabBarItem title="Avator" image="avator.png" id="BEF-kh-huq"/>
                                     <tabBarItem title="Photo" image="Photo.png" id="cpc-96-bBo"/>

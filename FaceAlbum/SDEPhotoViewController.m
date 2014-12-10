@@ -78,7 +78,7 @@ typedef enum: NSUInteger {
     ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
     switch (status) {
         case ALAuthorizationStatusAuthorized:
-            NSLog(@"AssetsLibrary can acess.");
+            //NSLog(@"AssetsLibrary can acess.");
             self.tabBarController.tabBar.hidden = NO;
             break;
         default:

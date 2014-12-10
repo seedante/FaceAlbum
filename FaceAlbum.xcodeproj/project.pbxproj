@@ -17,6 +17,8 @@
 		FD4131361997486B00141578 /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
 		FD4131371997486B00141578 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
 		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
+		FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
+		FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
 		FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
@@ -213,6 +215,8 @@
 		FD4131331997486B00141578 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
 		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
+		FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJFlowLayoutWithAnimations.h; sourceTree = "<group>"; };
+		FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJFlowLayoutWithAnimations.m; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbumDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -614,6 +618,8 @@
 			children = (
 				FD7D438B1A1F6DDF00551093 /* SDEFaceRoomViewController.h */,
 				FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */,
+				FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */,
+				FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */,
 				FD7D43901A1F6E3A00551093 /* HorizontalCollectionViewLayout.h */,
 				FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */,
 				FD7D43941A20D5D200551093 /* LineLayout.h */,
@@ -884,6 +890,7 @@
 				FD7D430A1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */,
 				FD7D43831A1EDB5200551093 /* FaceppResult.m in Sources */,
 				FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */,
+				FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
 				FD7D43771A1EDB5200551093 /* FaceppGrouping.m in Sources */,
 				FD7D436F1A1EDB5200551093 /* FaceppClient.m in Sources */,
@@ -941,6 +948,7 @@
 				FD7D430B1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */,
 				FD7D43841A1EDB5200551093 /* FaceppResult.m in Sources */,
 				FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */,
+				FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
 				FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */,
 				FD7D43781A1EDB5200551093 /* FaceppGrouping.m in Sources */,
 				FD7D43701A1EDB5200551093 /* FaceppClient.m in Sources */,
