@@ -19,6 +19,12 @@
 @property (nonatomic, assign) NSInteger verticalItemsCount;// (NSInteger)floorf(bounds.size.height / itemSize.height);
 @property (nonatomic, assign) NSInteger horizontalItemsCount; // (NSInteger)floorf(bounds.size.width / itemSize.width);
 
+@property (nonatomic) NSArray *visibleItemIndexPath;
+@property (nonatomic) CGPoint assemblePoint;
+@property (nonatomic, assign) CGFloat scale;
+
+@property (nonatomic) NSMutableDictionary *originalLayoutData;
+
 @end
 
 @implementation HorizontalCollectionViewLayout
@@ -33,6 +39,7 @@
         self.sectionInset = UIEdgeInsetsMake(60, 62, 0, 62);
         self.minimumLineSpacing = 20.0;
         self.minimumInteritemSpacing = 30.0;
+        self.originalLayoutData = [NSMutableDictionary new];
     }
     
     return self;
@@ -41,10 +48,10 @@
 - (void)prepareLayout
 {
     // Get the number of cells and the bounds size
-    NSLog(@"Calculate layout");
+    //NSLog(@"Calculate layout");
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
     self.boundsSize = self.collectionView.bounds.size;
-    NSLog(@"BoundsSize: %fx%f", self.boundsSize.width, self.boundsSize.height);
+    //NSLog(@"BoundsSize: %fx%f", self.boundsSize.width, self.boundsSize.height);
     
     id<UICollectionViewDelegateFlowLayout>delegateFlowLayout =  (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
     if ([delegateFlowLayout respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
@@ -99,7 +106,7 @@
     CGFloat height = self.collectionView.bounds.size.height;
     NSUInteger pageNumber = [self.collectionView numberOfItemsInSection:0]/itemsPerPage + 1;
     CGFloat width = pageNumber * self.collectionView.bounds.size.width;
-    NSLog(@"Content width: %f == %lu pages", width, (unsigned long)pageNumber);
+    //NSLog(@"Content width: %f == %lu pages", width, (unsigned long)pageNumber);
     return CGSizeMake(width, height);
 }
 
@@ -150,7 +157,18 @@
     frame.origin.y = rowPosition * (itemSize.height + self.lineSpace) + self.sectionInset.top + self.lineSpace;
     frame.size = self.itemSize;
     
+    if (self.visibleItemIndexPath) {
+        if ([self.visibleItemIndexPath containsObject:indexPath]) {
+            CGPoint location = [self calculateLocationWithAssemblePoint:self.assemblePoint OriginalPoint:frame.origin Scale:self.scale];
+            frame.origin = location;
+        }
+    }
+    
     attr.frame = frame;
+    
+    if ([self.originalLayoutData objectForKey:indexPath] == nil) {
+        [self.originalLayoutData setObject:attr forKey:indexPath];
+    }
     
     return attr;
 }
@@ -166,5 +184,53 @@
     return NO;
 }
 
+- (void)relocateVisibleItems:(NSArray *)indexPaths withAssemblePosition:(CGPoint)center Scale:(CGFloat)scale
+{
+    self.visibleItemIndexPath = indexPaths;
+    self.assemblePoint = center;
+    self.scale = scale;
+}
+
+- (void)resetVisibleItems
+{
+    NSLog(@"RESET Layout.");
+    self.visibleItemIndexPath = nil;
+    self.assemblePoint = CGPointZero;
+    self.scale = 0.0f;
+}
+
+- (CGPoint)calculateLocationWithAssemblePoint:(CGPoint)assemblePoint OriginalPoint:(CGPoint)originalPoint Scale:(CGFloat)scale
+{
+    CGFloat gestureScale = scale;
+    if (gestureScale >= 1.0) {
+        return originalPoint;
+    }
+
+    CGPoint location = CGPointZero;
+    CGFloat distance_x = fabsf(assemblePoint.x - originalPoint.x);
+    CGFloat distance_y = fabsf(assemblePoint.y - originalPoint.y);
+    
+    if (assemblePoint.x >= originalPoint.x) {
+        location.x = assemblePoint.x - distance_x * gestureScale;
+    }else
+        location.x = assemblePoint.x + distance_x * gestureScale;
+    
+    if (assemblePoint.y >= originalPoint.y) {
+        location.y = assemblePoint.y - distance_y * gestureScale;
+    }else
+        location.y = assemblePoint.y + distance_y * gestureScale;
+    
+    return location;
+}
+
+- (UICollectionViewLayoutAttributes *)originalLayoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self.originalLayoutData objectForKey:indexPath];
+}
+
+- (void)cleanBackupLayoutData
+{
+    [self.originalLayoutData removeAllObjects];
+}
 
 @end

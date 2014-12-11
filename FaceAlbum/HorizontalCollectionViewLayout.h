@@ -11,4 +11,9 @@
 @interface HorizontalCollectionViewLayout : UICollectionViewFlowLayout
 
 
+- (void)relocateVisibleItems:(NSArray *)indexPaths withAssemblePosition:(CGPoint)center Scale:(CGFloat)scale;
+- (void)resetVisibleItems;
+- (UICollectionViewLayoutAttributes *)originalLayoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)cleanBackupLayoutData;
+
 @end
