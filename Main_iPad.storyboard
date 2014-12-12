@@ -514,7 +514,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="taq-Md-nWQ">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jb6-Kz-UaI">
                             <size key="itemSize" width="150" height="150"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -679,13 +679,12 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYX-9r-NlP">
                                         <rect key="frame" x="710" y="19" width="44" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="p8z-QG-HGH"/>
                                         </constraints>
                                         <size key="titleShadowOffset" width="2" height="2"/>
-                                        <state key="normal" image="centerButton.png">
-                                            <color key="titleShadowColor" red="0.58897633230000002" green="1" blue="0.075229649039999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
+                                        <state key="normal" image="centerButton.png"/>
                                         <connections>
                                             <action selector="popMenu:" destination="UMT-jw-iR7" eventType="touchUpInside" id="WU8-of-E1c"/>
                                         </connections>
@@ -713,6 +712,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrR-ve-wZq">
                                                 <rect key="frame" x="138" y="4" width="44" height="43"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="MS8-3P-UDp"/>
                                                 </constraints>
@@ -816,7 +816,7 @@
                                 </items>
                             </tabBar>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aLg-GC-xtf" firstAttribute="top" secondItem="rnY-7o-f2v" secondAttribute="top" id="07i-IA-bj4"/>
                             <constraint firstItem="1v0-U0-cER" firstAttribute="bottom" secondItem="X1P-qy-mgQ" secondAttribute="bottom" id="3ba-Ic-C4d"/>
