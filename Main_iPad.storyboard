@@ -537,9 +537,7 @@
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="u1N-s1-mPp" secondAttribute="bottom" id="1At-Aj-STr"/>
-                                    <constraint firstAttribute="centerY" secondItem="u1N-s1-mPp" secondAttribute="centerY" id="2v8-oP-3k6"/>
                                     <constraint firstItem="u1N-s1-mPp" firstAttribute="leading" secondItem="aeu-vj-hcZ" secondAttribute="leading" id="bQs-sk-DIw"/>
-                                    <constraint firstAttribute="centerX" secondItem="u1N-s1-mPp" secondAttribute="centerX" id="eGP-tT-zT6"/>
                                     <constraint firstAttribute="trailing" secondItem="u1N-s1-mPp" secondAttribute="trailing" id="fnk-1F-AYh"/>
                                     <constraint firstItem="u1N-s1-mPp" firstAttribute="top" secondItem="aeu-vj-hcZ" secondAttribute="top" id="qWF-ln-yTh"/>
                                 </constraints>
@@ -778,7 +776,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell clipsSubviews="YES" contentMode="scaleAspectFit" reuseIdentifier="photoCell" id="YyD-0K-LbV" customClass="SDEGalleryCell">
+                                    <collectionViewCell clipsSubviews="YES" contentMode="scaleAspectFit" reuseIdentifier="photoCell" id="YyD-0K-LbV">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -797,9 +795,6 @@
                                             <constraint firstItem="Y0N-ft-ahm" firstAttribute="leading" secondItem="YyD-0K-LbV" secondAttribute="leading" id="ksq-L3-fIt"/>
                                             <constraint firstAttribute="trailing" secondItem="Y0N-ft-ahm" secondAttribute="trailing" id="pwp-nr-8xN"/>
                                         </constraints>
-                                        <connections>
-                                            <outlet property="galleryContentView" destination="Y0N-ft-ahm" id="9I5-sX-Pfj"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

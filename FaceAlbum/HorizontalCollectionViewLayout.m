@@ -71,7 +71,13 @@
     }
     //NSLog(@"%ld", (NSInteger)floorf(-1.5));
     self.horizontalItemsCount = (NSInteger)floorf((self.boundsSize.width - self.sectionInset.left - self.sectionInset.right)/(self.itemSize.width + self.minimumInteritemSpacing));
+    if (self.horizontalItemsCount > 5) {
+        self.horizontalItemsCount = 5;
+    }
     self.verticalItemsCount = (NSInteger)floorf((self.boundsSize.height - self.sectionInset.top - self.sectionInset.bottom )/(self.itemSize.height + self.minimumLineSpacing));
+    if (self.verticalItemsCount > 4) {
+        self.verticalItemsCount = 4;
+    }
     
     CGFloat HorizontalItemSpace = 0.0f;
     if (self.horizontalItemsCount != 1) {
@@ -157,17 +163,18 @@
     frame.origin.y = rowPosition * (itemSize.height + self.lineSpace) + self.sectionInset.top + self.lineSpace;
     frame.size = self.itemSize;
     
-    if (self.visibleItemIndexPath) {
-        if ([self.visibleItemIndexPath containsObject:indexPath]) {
-            CGPoint location = [self calculateLocationWithAssemblePoint:self.assemblePoint OriginalPoint:frame.origin Scale:self.scale];
-            frame.origin = location;
-        }
-    }
-    
     attr.frame = frame;
     
     if ([self.originalLayoutData objectForKey:indexPath] == nil) {
         [self.originalLayoutData setObject:attr forKey:indexPath];
+    }
+    
+    if (self.visibleItemIndexPath) {
+        if ([self.visibleItemIndexPath containsObject:indexPath]) {
+            CGPoint location = [self calculateLocationWithAssemblePoint:self.assemblePoint OriginalPoint:frame.origin Scale:self.scale];
+            frame.origin = location;
+            attr.frame = frame;
+        }
     }
     
     return attr;
@@ -175,9 +182,8 @@
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
-    // We should do some math here, but we are lazy.
     CGRect oldBounds = self.collectionView.bounds;
-    if ((oldBounds.size.width > newBounds.size.width) || (CGRectGetWidth(oldBounds) < CGRectGetWidth(newBounds))) {
+    if (!CGSizeEqualToSize(oldBounds.size, newBounds.size)) {
         return YES;
     }
     
@@ -193,7 +199,6 @@
 
 - (void)resetVisibleItems
 {
-    NSLog(@"RESET Layout.");
     self.visibleItemIndexPath = nil;
     self.assemblePoint = CGPointZero;
     self.scale = 0.0f;

@@ -11,12 +11,11 @@
 #import "SDEPhotoSceneDataSource.h"
 #import "SDESpecialItemVC.h"
 #import "SDENewPhotoDetector.h"
-//#import "FJFlowLayoutWithAnimations.h"
 #import "Face.h"
 #import "Photo.h"
 #import "Store.h"
 #import "Person.h"
-#import "LineLayout.h"
+#import "LineLayoutWithAnimation.h"
 @import AssetsLibrary;
 #import <QuartzCore/QuartzCore.h>
 
@@ -31,8 +30,10 @@ typedef enum: NSUInteger{
     kThumbnailType
 } LibraryType;
 
-static NSString *cellIdentifier = @"photoCell";
-static NSUInteger numberOfItemsInPage = 20;
+static NSString * const cellIdentifier = @"photoCell";
+static NSUInteger const numberOfItemsInPage = 20;
+static CGFloat const kPhotoWidth = 1024.0;
+static CGFloat const kPhotoHeight = 654.0;
 
 @interface SDEFaceRoomViewController ()
 
@@ -52,6 +53,7 @@ static NSUInteger numberOfItemsInPage = 20;
 @property (nonatomic) BOOL shouldMoveToOriginal;
 @property (nonatomic) BOOL shouldMoveToAssemblePosition;
 @property (nonatomic) BOOL didCrossThreshold;
+@property (nonatomic) BOOL shouldScaleAndBack;
 @property (nonatomic) NSIndexPath *lastVisibleIndexPath;
 @property (nonatomic) CGPoint startPoint;
 
@@ -60,6 +62,7 @@ static NSUInteger numberOfItemsInPage = 20;
 @property (nonatomic) SDENewPhotoDetector *newerPhotoDetector;
 @property (nonatomic) NSIndexPath *specialIndexPath;
 @property (nonatomic) SDESpecialItemVC *libraryVC;
+@property (nonatomic) SDESpecialItemVC *photoVC;
 
 @end
 
@@ -286,9 +289,7 @@ static NSUInteger numberOfItemsInPage = 20;
             BOOL shouldAnimation = NO;
             if (indexPath.item > self.currentMaxItem) {
                 shouldAnimation = YES;
-                if (indexPath.item == self.itemNumber - 1) {
-                    self.currentMaxItem = indexPath.item;
-                }else if (indexPath.item == self.currentMaxItem + numberOfItemsInPage){
+                if (indexPath.item == self.itemNumber - 1 || indexPath.item == self.currentMaxItem + numberOfItemsInPage) {
                     self.currentMaxItem = indexPath.item;
                 }
             }
@@ -328,7 +329,7 @@ static NSUInteger numberOfItemsInPage = 20;
                 NSInteger pageIndex = self.lastVisibleIndexPath.item / numberOfItemsInPage;
                 CGPoint relativeStartPoint;
                 relativeStartPoint.x = self.startPoint.x + pageIndex * 1024;
-                relativeStartPoint.y = self.startPoint.y;
+                relativeStartPoint.y = self.startPoint.y - 150;
                 [UIView animateWithDuration:0.5
                                       delay:0
                                     options:UIViewAnimationOptionCurveEaseIn
@@ -337,16 +338,7 @@ static NSUInteger numberOfItemsInPage = 20;
                                      self.galleryView.alpha = 1.0f;
                                      self.librarySwitch.alpha = 0;
                 }completion:^(BOOL finished){
-                    if (finished) {
-                        [UIView animateWithDuration:0.1
-                                              delay:0
-                                            options:UIViewAnimationOptionCurveEaseIn
-                                         animations:^{
-                                             CGPoint endPoint = relativeStartPoint;
-                                             endPoint.y += 100;
-                                             cell.center = endPoint;
-                        }completion:nil];
-                    }
+
                 }];
                 
                 if ([indexPath isEqual:self.lastVisibleIndexPath]) {
@@ -390,6 +382,7 @@ static NSUInteger numberOfItemsInPage = 20;
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:self.portraitIndex]];
             ALAsset *asset = self.assetsDictionary[faceItem.assetURLString];
             if (asset) {
+                NSLog(@"asset cache");
                 [photoView setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage]];
             }else{
                 NSURL *assetURL = [NSURL URLWithString:faceItem.assetURLString];
@@ -402,6 +395,52 @@ static NSUInteger numberOfItemsInPage = 20;
                 }];
             }
             
+            
+            //set shadow
+            CALayer *layer = cell.layer;
+            [layer setShadowOffset:CGSizeMake(0, 5)];
+            [layer setShadowColor:[[UIColor blackColor] CGColor]];
+            [layer setShadowOpacity:0.5];
+            layer.masksToBounds = NO;
+            
+            if (self.shouldScaleAndBack) {
+                NSArray *indexPaths = [self.libraryVC.collectionView indexPathsForVisibleItems];
+                NSArray *sortedArray = [indexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"item" ascending:YES]]];
+                NSIndexPath *libraryVCMaxIndexPath = sortedArray.lastObject;
+                NSIndexPath *libraryVCMinIndexPath = sortedArray.firstObject;
+                NSLog(@"min: %ld max:%ld", (long)libraryVCMinIndexPath.item, (long)libraryVCMaxIndexPath.item);
+                NSIndexPath *targetIndexPath;
+                if (indexPath.item > libraryVCMaxIndexPath.item || indexPath.item < libraryVCMinIndexPath.item) {
+                    NSInteger item = indexPath.item % numberOfItemsInPage + libraryVCMinIndexPath.item;
+                    NSLog(@"item: %ld", (long)item);
+                    targetIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+                }else
+                    targetIndexPath = indexPath;
+                NSLog(@"target: %ld", (long)targetIndexPath.item);
+                CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position"];
+                UICollectionViewCell *libraryCell = [self.libraryVC.collectionView cellForItemAtIndexPath:targetIndexPath];
+                CGPoint pointOnView = [self.view convertPoint:libraryCell.center fromView:self.libraryVC.collectionView];
+                CGPoint pointOnPhotoVC = [self.photoVC.collectionView convertPoint:pointOnView fromView:self.view];
+                move.toValue = [NSValue valueWithCGPoint:pointOnPhotoVC];
+                
+                CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
+                scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
+                
+                CAAnimationGroup *group = [CAAnimationGroup animation];
+                group.animations = @[move, scale];
+                group.duration = 0.5;
+                group.fillMode = kCAFillModeForwards;
+                group.removedOnCompletion = NO;
+                [layer addAnimation:group forKey:@"scaleback"];
+                
+                self.actionCenterButton.hidden = NO;
+                self.libraryVC.collectionView.hidden = NO;
+                [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.librarySwitch.alpha = 1.0f;
+                    self.libraryVC.collectionView.alpha = 1.0f;
+                }];
+            }
             break;
         }
     }
@@ -438,11 +477,19 @@ static NSUInteger numberOfItemsInPage = 20;
             cellSize = CGSizeMake(300, 300);
             break;
         case kLibraryType:{
-            cellSize = CGSizeMake(144, 144);
+            switch (self.libraryType) {
+                case kFaceType:
+                    cellSize = CGSizeMake(144, 144);
+                    break;
+                case kThumbnailType:
+                    cellSize = CGSizeMake(144, 144);
+                    break;
+            }
+            
             break;
         }
         case kPhotoType:{
-            cellSize = CGSizeMake(1024, 654);
+            cellSize = CGSizeMake(kPhotoWidth, kPhotoHeight);
             break;
         }
     }
@@ -489,15 +536,13 @@ static NSUInteger numberOfItemsInPage = 20;
     self.currentMaxItem = -1;
     switch (self.contentType) {
         case kPortraitType:{
-            
             self.shouldFlyCell = YES;
             self.shouldMoveToOriginal = NO;
             self.shouldMoveToAssemblePosition = NO;
             UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
             CGPoint cellPosition = attr.center;
-            cellPosition.y = cellPosition.y - 150;
+            //cellPosition.y = cellPosition.y - 150;
             self.startPoint = [self.view convertPoint:cellPosition fromView:self.galleryView];
-            //self.startPoint = cellPosition;
             if (!self.tabBarController.tabBar.hidden) {
                 self.tabBarController.tabBar.hidden = YES;
             }
@@ -506,7 +551,6 @@ static NSUInteger numberOfItemsInPage = 20;
                 self.librarySwitch.alpha = 1.0f;
             }];
             self.portraitIndex = indexPath.item;
-            [collectionView reloadItemsAtIndexPaths:@[indexPath]];
             
             self.contentType = kLibraryType;
             self.libraryVC = (SDESpecialItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
@@ -522,47 +566,106 @@ static NSUInteger numberOfItemsInPage = 20;
             [self.view addSubview:self.libraryVC.collectionView];
             [self.libraryVC didMoveToParentViewController:self];
             [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
+            
             break;
         }
         case kLibraryType:{
-            self.contentType = kPhotoType;
-            [UIView animateWithDuration:0.5 animations:^{
-                self.librarySwitch.alpha = 0;
-            }];
-            self.actionCenterButton.hidden = YES;
-
+            self.shouldScaleAndBack = NO;
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+            
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position"];
+            CGPoint point = [self.libraryVC.collectionView convertPoint:self.view.center fromView:self.view];
+            move.toValue = [NSValue valueWithCGPoint:point];
+            
+            CABasicAnimation *zMove = [CABasicAnimation animationWithKeyPath:@"zPosition"];
+            zMove.toValue = [NSNumber numberWithFloat:1.0];
+            
+            CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
+            
+            CGFloat time = 0.2f;
+            CGFloat delay = 0.0f;
+            switch (self.libraryType) {
+                case kFaceType:{
+                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2, 2, -2)];
+                    delay = -0.1f;
+                    break;
+                }
+                case kThumbnailType:{
+                    CGRect bounds = cell.bounds;
+                    CGFloat scaleFactor;
+                    
+                    UIImageView *photoView = (UIImageView *)[cell viewWithTag:10];
+                    if (photoView.image) {
+                        NSLog(@"image exist");
+                        CGFloat hight = photoView.image.size.height;
+                        CGFloat width = photoView.image.size.width;
+                        if (hight >= width) {
+                            scaleFactor = kPhotoHeight/bounds.size.height;
+                        }else
+                            scaleFactor = kPhotoWidth/bounds.size.width;
+                    }else{
+                        CGFloat scale_x = kPhotoWidth/bounds.size.width;
+                        CGFloat scale_y = kPhotoHeight/bounds.size.height;
+                        scaleFactor = (scale_x < scale_y)?scale_y:scale_x;
+                    }
+                    
+                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(scaleFactor, scaleFactor, 1)];
+                    break;
+                }
+            }
+            
+            CAAnimationGroup *group = [CAAnimationGroup animation];
+            group.animations = @[move, zMove, scale];
+            group.duration = time;
+            group.fillMode = kCAFillModeForwards;
+            group.removedOnCompletion = NO;
+            [cell.layer addAnimation:group forKey:@"scale"];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((time + delay) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self showPhotoAtIndexPath:indexPath];
+            });
             /*
-            //this works too.
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-            SDESpecialItemVC *detailVC = (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
-            detailVC.collectionView.frame = self.galleryView.frame;
-            CGRect frame = self.galleryView.frame;
-            detailVC.collectionView.dataSource = self;
-            detailVC.collectionView.delegate = self;
-            [detailVC.collectionView setBackgroundColor:[UIColor clearColor]];
-            [detailVC.collectionView reloadData];
-            [detailVC specifyStartIndexPath:indexPath];
-            
-            [self addChildViewController:detailVC];
-            [self.view addSubview:detailVC.collectionView];
-            [detailVC didMoveToParentViewController:self];
-            
-            [detailVC viewWillAppear:YES];
-            */
-            
             NSLog(@"Select item: %ld",(long)indexPath.item);
-            //HorizontalCollectionViewLayout *detailLayout = [[HorizontalCollectionViewLayout alloc] init];
-            
             LineLayout *detailLayout = [[LineLayout alloc] init];
-            [self.libraryVC.collectionView setCollectionViewLayout:detailLayout animated:NO];
+            [self.libraryVC.collectionView setCollectionViewLayout:detailLayout animated:YES];
             [self.libraryVC.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            
+            */
             break;
         }
         case kPhotoType:{
             break;
         }
     }
+}
+- (void)showPhotoAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.contentType = kPhotoType;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.librarySwitch.alpha = 0;
+        self.libraryVC.collectionView.alpha = 0;;
+    }completion:^(BOOL finished){
+        UICollectionViewCell *cell = [self.libraryVC.collectionView cellForItemAtIndexPath:indexPath];
+        [cell.layer removeAnimationForKey:@"scale"];
+        self.libraryVC.collectionView.hidden = YES;
+    }];
+    self.actionCenterButton.hidden = YES;
+    [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    self.photoVC= (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+    LineLayoutWithAnimation *lineLayout = [[LineLayoutWithAnimation alloc] init];
+    [self.photoVC.collectionView setCollectionViewLayout:lineLayout];
+    self.photoVC.collectionView.frame = self.galleryView.frame;
+    self.photoVC.collectionView.dataSource = self;
+    self.photoVC.collectionView.delegate = self;
+    [self.photoVC.collectionView setBackgroundColor:[UIColor clearColor]];
+    [self.photoVC specifyStartIndexPath:indexPath];
+    
+    [self.photoVC viewWillAppear:NO];
+    [self addChildViewController:self.photoVC];
+    [self.view addSubview:self.photoVC.collectionView];
+    [self.photoVC didMoveToParentViewController:self];
+    [self.photoVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
 }
 
 - (void)animateCell:(UICollectionViewCell *)cell
@@ -620,9 +723,11 @@ static NSUInteger numberOfItemsInPage = 20;
 
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
 {
+    /*
     if (self.libraryVC) {
         self.libraryVC.collectionView.allowsSelection = NO;
     }
+    
     if ([gestureRecongnizer numberOfTouches] > 2) {
         NSLog(@"More than 2");
         return;
@@ -650,6 +755,7 @@ static NSUInteger numberOfItemsInPage = 20;
             NSLog(@"I have no idea");
             break;
     }
+     */
     
     if (gestureRecongnizer.state == UIGestureRecognizerStateBegan || gestureRecongnizer.state == UIGestureRecognizerStateChanged) {
         switch (self.contentType) {
@@ -681,7 +787,7 @@ static NSUInteger numberOfItemsInPage = 20;
                 NSInteger pageIndex = currentItemInPage.item / numberOfItemsInPage;
                 CGPoint relativeStartPoint;
                 relativeStartPoint.x = self.startPoint.x + pageIndex * 1024;
-                relativeStartPoint.y = self.startPoint.y;
+                relativeStartPoint.y = self.startPoint.y - 150;
                 [layout relocateVisibleItems:visibleIndexPaths withAssemblePosition:relativeStartPoint Scale:gestureRecongnizer.scale];
                 [layout invalidateLayout];
                 
@@ -700,9 +806,17 @@ static NSUInteger numberOfItemsInPage = 20;
 
                 break;
             }
-            case kPhotoType:
-                DLog(@"Scale Cell");
+            case kPhotoType:{
+                LineLayoutWithAnimation *lineLayout = (LineLayoutWithAnimation *)self.photoVC.collectionView.collectionViewLayout;
+                NSArray *visibleIndexPaths = [self.photoVC.collectionView indexPathsForVisibleItems];
+                NSIndexPath *indexPath = visibleIndexPaths.firstObject;
+                //UICollectionViewLayoutAttributes *attributes = [self.libraryVC.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+                //CGPoint point = [self.photoVC.collectionView convertPoint:attributes.center fromView:self.libraryVC.collectionView];
+                //CGPoint centroid = [gestureRecongnizer locationInView:self.photoVC.collectionView];
+                [lineLayout resizeItemAtIndexPath:indexPath withScale:gestureRecongnizer.scale];
+                [lineLayout invalidateLayout];
                 break;
+            }
         }
     }
     
@@ -729,51 +843,70 @@ static NSUInteger numberOfItemsInPage = 20;
                 
             }
             case kPhotoType:{
-                HorizontalCollectionViewLayout *springboardLayout = [[HorizontalCollectionViewLayout alloc] init];
-                [self.libraryVC.collectionView setCollectionViewLayout:springboardLayout];
-                self.contentType = kLibraryType;
-                [UIView animateWithDuration:0.5 animations:^{
-                    self.librarySwitch.alpha = 1.0f;
-                }];
-                [self.libraryVC.collectionView reloadData];
+                if (gestureRecongnizer.scale < 0.5f) {
+                    NSArray *visibleIndexPaths = [self.photoVC.collectionView indexPathsForVisibleItems];
+                    self.shouldScaleAndBack = YES;
+                    [self.photoVC.collectionView reloadItemsAtIndexPaths:visibleIndexPaths];
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.5) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.photoVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+                        [self.photoVC.collectionView removeFromSuperview];
+                        [self.photoVC removeFromParentViewController];
+                        self.photoVC = nil;
+                        self.contentType = kLibraryType;
+                        
+                        NSArray *indexPaths = [self.libraryVC.collectionView indexPathsForVisibleItems];
+                        NSArray *sortedArray = [indexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"item" ascending:YES]]];
+                        NSIndexPath *libraryVCMaxIndexPath = sortedArray.lastObject;
+                        NSIndexPath *libraryVCMinIndexPath = sortedArray.firstObject;
+                        NSIndexPath *photoVCCurrentIndexPath = visibleIndexPaths.firstObject;
+                        
+                        if (photoVCCurrentIndexPath.item > libraryVCMaxIndexPath.item) {
+                            if (photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 0 ||
+                                photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 5) {
+                                [self.libraryVC.collectionView scrollToItemAtIndexPath:photoVCCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                            }else{
+                                NSIndexPath *targetIndexPath;
+                                NSInteger item = libraryVCMaxIndexPath.item;
+                                if (photoVCCurrentIndexPath.item - item > numberOfItemsInPage) {
+                                    item = (photoVCCurrentIndexPath.item / numberOfItemsInPage) * numberOfItemsInPage;
+                                }
+                                NSInteger numberOfItems = [self.libraryVC.collectionView numberOfItemsInSection:0];
+                                if (item + 3 <= numberOfItems - 1) {
+                                    targetIndexPath = [NSIndexPath indexPathForItem:item + 3 inSection:0];
+                                }else
+                                    targetIndexPath = [NSIndexPath indexPathForItem:item + 1 inSection:0];
+                                
+                                [self.libraryVC.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                            }
+                        }else if (photoVCCurrentIndexPath.item < libraryVCMinIndexPath.item){
+                            if (photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 0 ||
+                                photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 5) {
+                                [self.libraryVC.collectionView scrollToItemAtIndexPath:photoVCCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                            }else{
+                                NSIndexPath *targetIndexPath;
+                                NSInteger item = libraryVCMinIndexPath.item;
+                                if (item - photoVCCurrentIndexPath.item > numberOfItemsInPage) {
+                                    item = (photoVCCurrentIndexPath.item / numberOfItemsInPage) * numberOfItemsInPage;
+                                }else
+                                    item = libraryVCMinIndexPath.item - numberOfItemsInPage;
+                                targetIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+                                
+                                [self.libraryVC.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                            }
+                        }
+                    });
+
+                }else{
+                    LineLayoutWithAnimation *lineLayout = (LineLayoutWithAnimation *)self.photoVC.collectionView.collectionViewLayout;
+                    [lineLayout resetPinchedItem];
+                }
                 break;
             }
                 
             default:
                 break;
         }
-
-        /*
-        if (gestureRecongnizer.scale < 0.5f) {
-            NSLog(@"scanle < 0.5");
-            switch (self.contentType) {
-                case kPortraitType:
-                    break;
-                case kLibraryType:{
-                    NSLog(@"Go back to PortraitType");
-                    self.contentType = kPortraitType;
-                    self.librarySwitch.hidden = YES;
-                    [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
-                    self.libraryVC.collectionView.dataSource = nil;
-                    self.libraryVC.collectionView.delegate = nil;
-                    [self.libraryVC.collectionView removeFromSuperview];
-                    
-                    [self.libraryVC removeFromParentViewController];
-                    self.libraryVC = nil;
-                    self.galleryView.hidden = NO;
-                    break;
-                }
-                case kPhotoType:
-                    self.contentType = kLibraryType;
-                    self.librarySwitch.hidden = NO;
-                    self.actionCenterButton.hidden = NO;
-                    HorizontalCollectionViewLayout *libraryLayout = [[HorizontalCollectionViewLayout alloc] init];
-                    [self.libraryVC.collectionView setCollectionViewLayout:libraryLayout animated:YES];
-                    break;
-            }
-            
-        }
-         */
         
     }
 
