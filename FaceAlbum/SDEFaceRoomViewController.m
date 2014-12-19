@@ -180,16 +180,6 @@ static CGFloat const kPhotoHeight = 654.0;
     return _faceFetchedResultsController;
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 #pragma mark - Fetch Person
 - (void)fetchPerson
 {
@@ -668,12 +658,6 @@ static CGFloat const kPhotoHeight = 654.0;
     [self.photoVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
 }
 
-- (void)animateCell:(UICollectionViewCell *)cell
-{
-    [UIView animateWithDuration:1 animations:^{
-        cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    }];
-}
 
 #pragma mark - UITabBarDelegate Method
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
@@ -810,9 +794,6 @@ static CGFloat const kPhotoHeight = 654.0;
                 LineLayoutWithAnimation *lineLayout = (LineLayoutWithAnimation *)self.photoVC.collectionView.collectionViewLayout;
                 NSArray *visibleIndexPaths = [self.photoVC.collectionView indexPathsForVisibleItems];
                 NSIndexPath *indexPath = visibleIndexPaths.firstObject;
-                //UICollectionViewLayoutAttributes *attributes = [self.libraryVC.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-                //CGPoint point = [self.photoVC.collectionView convertPoint:attributes.center fromView:self.libraryVC.collectionView];
-                //CGPoint centroid = [gestureRecongnizer locationInView:self.photoVC.collectionView];
                 [lineLayout resizeItemAtIndexPath:indexPath withScale:gestureRecongnizer.scale];
                 [lineLayout invalidateLayout];
                 break;
@@ -860,6 +841,7 @@ static CGFloat const kPhotoHeight = 654.0;
                         NSIndexPath *libraryVCMaxIndexPath = sortedArray.lastObject;
                         NSIndexPath *libraryVCMinIndexPath = sortedArray.firstObject;
                         NSIndexPath *photoVCCurrentIndexPath = visibleIndexPaths.firstObject;
+                        NSLog(@"end at:%ld", (long)photoVCCurrentIndexPath.item);
                         
                         if (photoVCCurrentIndexPath.item > libraryVCMaxIndexPath.item) {
                             if (photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 0 ||
@@ -887,9 +869,9 @@ static CGFloat const kPhotoHeight = 654.0;
                                 NSIndexPath *targetIndexPath;
                                 NSInteger item = libraryVCMinIndexPath.item;
                                 if (item - photoVCCurrentIndexPath.item > numberOfItemsInPage) {
-                                    item = (photoVCCurrentIndexPath.item / numberOfItemsInPage) * numberOfItemsInPage;
+                                    item = (photoVCCurrentIndexPath.item / numberOfItemsInPage) * numberOfItemsInPage + 3;
                                 }else
-                                    item = libraryVCMinIndexPath.item - numberOfItemsInPage;
+                                    item = libraryVCMinIndexPath.item - 3;
                                 targetIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
                                 
                                 [self.libraryVC.collectionView scrollToItemAtIndexPath:targetIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
