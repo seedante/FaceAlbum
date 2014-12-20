@@ -10,7 +10,7 @@
 #import "PhotoCell.h"
 #import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
-#import "SDENewPhotoDetector.h"
+#import "SDEPhotoFileFilter.h"
 #import "Store.h"
 @import AssetsLibrary;
 
@@ -141,7 +141,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             }
         } failureBlock:nil];
     }else{
-        SDENewPhotoDetector *photoDetector = [SDENewPhotoDetector sharedPhotoDetector];
+        SDEPhotoFileFilter *photoDetector = [SDEPhotoFileFilter sharedPhotoFileFilter];
         if ([photoDetector shouldScanPhotoLibrary]) {
             NSArray *newAssets = [photoDetector assetsNeedToScan];
             if (newAssets.count > 0) {

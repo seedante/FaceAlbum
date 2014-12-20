@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 seedante. All rights reserved.
 //
 
-#import "SDENewPhotoDetector.h"
+#import "SDEPhotoFileFilter.h"
 #import "Store.h"
 @import AssetsLibrary;
 
-@interface SDENewPhotoDetector ()
+@interface SDEPhotoFileFilter ()
 
 @property (nonatomic) NSMutableSet *allAssetsURLString;
 @property (nonatomic) NSMutableSet *allNewAssets;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation SDENewPhotoDetector
+@implementation SDEPhotoFileFilter
 
 - (id)init
 {
@@ -35,12 +35,12 @@
     return self;
 }
 
-+ (SDENewPhotoDetector *)sharedPhotoDetector
++ (SDEPhotoFileFilter *)sharedPhotoFileFilter
 {
-    static SDENewPhotoDetector *sharedInstance = nil;
+    static SDEPhotoFileFilter *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[SDENewPhotoDetector alloc] init];
+        sharedInstance = [[SDEPhotoFileFilter alloc] init];
     });
     
     return sharedInstance;

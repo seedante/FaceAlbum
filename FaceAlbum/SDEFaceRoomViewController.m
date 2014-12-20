@@ -10,7 +10,7 @@
 #import "HorizontalCollectionViewLayout.h"
 #import "SDEPhotoSceneDataSource.h"
 #import "SDESpecialItemVC.h"
-#import "SDENewPhotoDetector.h"
+#import "SDEPhotoFileFilter.h"
 #import "Face.h"
 #import "Photo.h"
 #import "Store.h"
@@ -59,7 +59,7 @@ static CGFloat const kPhotoHeight = 654.0;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
-@property (nonatomic) SDENewPhotoDetector *newerPhotoDetector;
+@property (nonatomic) SDEPhotoFileFilter *photoFileFilter;
 @property (nonatomic) NSIndexPath *specialIndexPath;
 @property (nonatomic) SDESpecialItemVC *libraryVC;
 @property (nonatomic) SDESpecialItemVC *photoVC;
@@ -101,7 +101,6 @@ static CGFloat const kPhotoHeight = 654.0;
         [self.navigationController pushViewController:montageRoomVC animated:NO];
     }
     
-    
 }
 
 - (NSString *)startScene
@@ -134,6 +133,7 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"show portrait");
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     self.buttonPanel.hidden = YES;
@@ -445,6 +445,10 @@ static CGFloat const kPhotoHeight = 654.0;
     self.currentMaxItem = -1;
     switch (self.contentType) {
         case kPortraitType:{
+            if (self.buttonPanel.isPopup) {
+                [self.buttonPanel hide];
+            }
+            
             self.shouldFlyCell = YES;
             self.shouldMoveToOriginal = NO;
             self.shouldMoveToAssemblePosition = NO;
@@ -479,6 +483,10 @@ static CGFloat const kPhotoHeight = 654.0;
             break;
         }
         case kLibraryType:{
+            if (self.buttonPanel.isPopup) {
+                [self.buttonPanel hide];
+            }
+            
             self.shouldScaleAndBack = NO;
             UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
             
@@ -687,12 +695,6 @@ static CGFloat const kPhotoHeight = 654.0;
             }
             break;
         }
-        case kLibraryType:{
-            NSIndexPath *indexPath = [self.libraryVC.collectionView indexPathForItemAtPoint:location];
-            if (indexPath) {
-                [self collectionView:self.libraryVC.collectionView didSelectItemAtIndexPath:indexPath];
-            }
-        }
         default:
             break;
     }
@@ -702,14 +704,6 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)gestureRecongnizer
 {
     /*
-    if (self.libraryVC) {
-        self.libraryVC.collectionView.allowsSelection = NO;
-    }
-    
-    if ([gestureRecongnizer numberOfTouches] > 2) {
-        NSLog(@"More than 2");
-        return;
-    }
     switch (gestureRecongnizer.state) {
         case UIGestureRecognizerStatePossible:
             NSLog(@"Possible");
@@ -895,7 +889,7 @@ static CGFloat const kPhotoHeight = 654.0;
 - (IBAction)scanPhotoLibrary:(id)sender
 {
     DLog(@"Scan Library");
-    if ([self.newerPhotoDetector shouldScanPhotoLibrary]) {
+    if ([self.photoFileFilter shouldScanPhotoLibrary]) {
         UIViewController *scanVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
         [self.navigationController pushViewController:scanVC animated:YES];
     }
@@ -907,69 +901,80 @@ static CGFloat const kPhotoHeight = 654.0;
     DLog(@"Need a little change.");
     DLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
-    [self dismissAvatorView];
+    [self resetFaceRoomScene];
     [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
 }
 
-- (void)dismissAvatorView
+- (void)resetFaceRoomScene
 {
-    self.contentType = kPortraitType;
-    
     self.nameTitle.text = @"";
     self.infoTitle.text = @"";
     
-    self.librarySwitch.hidden = YES;
-    self.actionCenterButton.hidden = NO;
-    [self.actionCenterButton setImage:[UIImage imageNamed:@"centerButton.png"] forState:UIControlStateNormal];
-    self.galleryView.hidden = NO;
+    if (self.libraryVC) {
+        [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+        [self.libraryVC.collectionView removeFromSuperview];
+        [self.libraryVC removeFromParentViewController];
+        self.libraryVC = nil;
+        self.galleryView.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.librarySwitch.alpha = 0;
+            self.galleryView.alpha = 1.0f;
+        }];
+    }
     
+    [self.actionCenterButton setImage:[UIImage imageNamed:@"centerButton.png"] forState:UIControlStateNormal];
+    self.contentType = kPortraitType;
 }
 
 - (void)handleDeletedPhotos
 {
-    DLog(@"Handle for Delete");
-    NSArray *deletedAssetsURLString = [self.newerPhotoDetector notexistedAssetsURLString];
-    if (deletedAssetsURLString.count > 0) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
-        for (NSString *URLString in deletedAssetsURLString) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == YES) AND (uniqueURLString like %@)", URLString];
-            [fetchRequest setPredicate:predicate];
-            NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-            if (result.count == 1) {
-                Photo *deletedPhoto = (Photo *)result.firstObject;
-                deletedPhoto.isExisted = NO;
-            }else
-                DLog(@"Some Thing Wrong");
+    NSLog(@"Handle for Delete");
+    dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(defaultQueue, ^{
+        NSArray *deletedAssetsURLString = [self.photoFileFilter notexistedAssetsURLString];
+        if (deletedAssetsURLString.count > 0) {
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
+            for (NSString *URLString in deletedAssetsURLString) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == YES) AND (uniqueURLString like %@)", URLString];
+                [fetchRequest setPredicate:predicate];
+                NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+                if (result.count == 1) {
+                    Photo *deletedPhoto = (Photo *)result.firstObject;
+                    deletedPhoto.isExisted = NO;
+                }else
+                    DLog(@"Some Thing Wrong");
+            }
+            [self.managedObjectContext save:nil];
         }
-        [self.managedObjectContext save:nil];
-    }
-    
-    NSArray *gobackAssetsURLString = [self.newerPhotoDetector againStoredAssetsURLString];
-    if (gobackAssetsURLString.count > 0) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
-        for (NSString *URLString in gobackAssetsURLString) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == NO) AND (uniqueURLString like %@)", URLString];
-            [fetchRequest setPredicate:predicate];
-            NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-            if (result.count == 1) {
-                Photo *gobackPhoto = (Photo *)result.firstObject;
-                gobackPhoto.isExisted = YES;
-            }else
-                DLog(@"Some Wrong here");
+        
+        NSArray *gobackAssetsURLString = [self.photoFileFilter againStoredAssetsURLString];
+        if (gobackAssetsURLString.count > 0) {
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
+            for (NSString *URLString in gobackAssetsURLString) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == NO) AND (uniqueURLString like %@)", URLString];
+                [fetchRequest setPredicate:predicate];
+                NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+                if (result.count == 1) {
+                    Photo *gobackPhoto = (Photo *)result.firstObject;
+                    gobackPhoto.isExisted = YES;
+                }else
+                    DLog(@"Some Wrong here");
+            }
+            [self.managedObjectContext save:nil];
         }
-        [self.managedObjectContext save:nil];
-    }
-    
-    [self.newerPhotoDetector cleanData];
+        
+        [self.photoFileFilter cleanData];
+    });
+
 }
 
 - (IBAction)popMenu:(id)sender
 {
-    if (![self.newerPhotoDetector shouldScanPhotoLibrary]) {
+    if (![self.photoFileFilter shouldScanPhotoLibrary]) {
         self.scanRoomButton.hidden = YES;
     }else
         self.scanRoomButton.hidden = NO;
-    if ([[self.newerPhotoDetector notexistedAssetsURLString] count] > 0) {
+    if ([[self.photoFileFilter notexistedAssetsURLString] count] > 0) {
         self.MontageRoomButton.highlighted = YES;
     }else
         self.MontageRoomButton.highlighted = NO;

@@ -72,7 +72,7 @@
         attributes.size = size;
         
         if(!CGPointEqualToPoint(self.centroid, CGPointZero)){
-            NSLog(@"centroid: %f, %f", self.centroid.x, self.centroid.y);
+            //NSLog(@"centroid: %f, %f", self.centroid.x, self.centroid.y);
             attributes.center = self.centroid;
         }
     }

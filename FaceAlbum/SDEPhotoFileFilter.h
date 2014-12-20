@@ -13,9 +13,9 @@
 #define DLog( s, ... )
 #endif
 
-@interface SDENewPhotoDetector : NSObject
+@interface SDEPhotoFileFilter : NSObject
 
-+ (SDENewPhotoDetector *)sharedPhotoDetector;
++ (SDEPhotoFileFilter *)sharedPhotoFileFilter;
 - (void)comparePhotoDataBetweenLocalAndDataBase;
 - (BOOL)shouldScanPhotoLibrary;
 - (void)cleanData;

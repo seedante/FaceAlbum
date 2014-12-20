@@ -126,7 +126,7 @@
 		FD7E22511A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
 		FD7E22521A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
 		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
-		FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */; };
+		FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
 		FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
 		FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
 		FDBF6BFF19D1038000352DFA /* Face.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9C197E97C7004E8FFD /* Face.m */; };
@@ -139,7 +139,7 @@
 		FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
 		FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
 		FDBF6C1019D1038000352DFA /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
-		FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */; };
+		FDBF6C1519D1038000352DFA /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
 		FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
 		FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */; };
 		FDBF6C1919D1038000352DFA /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
@@ -316,8 +316,8 @@
 		FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
 		FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPopupPanel.h; sourceTree = "<group>"; };
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
-		FDB3608019CF1EE800AAE34D /* SDENewPhotoDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDENewPhotoDetector.h; sourceTree = "<group>"; };
-		FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDENewPhotoDetector.m; sourceTree = "<group>"; };
+		FDB3608019CF1EE800AAE34D /* SDEPhotoFileFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoFileFilter.h; sourceTree = "<group>"; };
+		FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoFileFilter.m; sourceTree = "<group>"; };
 		FDBF6ED319D1038000352DFA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FaceAlbumRelease-Info.plist"; path = "/Users/seedante/Development Library/FaceAlbum/FaceAlbumRelease-Info.plist"; sourceTree = "<absolute>"; };
 		FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
@@ -384,8 +384,8 @@
 			children = (
 				FD41312F1997486B00141578 /* SDEScanRoomViewController.h */,
 				FD41312C1997486B00141578 /* SDEScanRoomViewController.m */,
-				FDB3608019CF1EE800AAE34D /* SDENewPhotoDetector.h */,
-				FDB3608119CF1EE800AAE34D /* SDENewPhotoDetector.m */,
+				FDB3608019CF1EE800AAE34D /* SDEPhotoFileFilter.h */,
+				FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */,
 				FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */,
 				FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */,
 				FD41313819974A5E00141578 /* PhotoScanManager.h */,
@@ -898,7 +898,7 @@
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD7D43961A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
 				FD7D431B1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
-				FDB3608219CF1EE800AAE34D /* SDENewPhotoDetector.m in Sources */,
+				FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */,
 				FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */,
 				FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
 				FD7D43731A1EDB5200551093 /* FaceppFaceset.m in Sources */,
@@ -955,7 +955,7 @@
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
 				FD7D43971A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
 				FD7D431C1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
-				FDBF6C1519D1038000352DFA /* SDENewPhotoDetector.m in Sources */,
+				FDBF6C1519D1038000352DFA /* SDEPhotoFileFilter.m in Sources */,
 				FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */,
 				FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */,
 				FD7D43741A1EDB5200551093 /* FaceppFaceset.m in Sources */,
