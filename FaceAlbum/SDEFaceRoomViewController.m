@@ -55,7 +55,7 @@ static CGFloat const kPhotoHeight = 654.0;
 @property (nonatomic) BOOL didCrossThreshold;
 @property (nonatomic) BOOL shouldScaleAndBack;
 @property (nonatomic) NSIndexPath *lastVisibleIndexPath;
-@property (nonatomic) CGPoint startPoint;
+@property (nonatomic) CGPoint assemblePoint;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
@@ -71,8 +71,7 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.navigationController setNavigationBarHidden:YES];
-    //[[UITabBar appearance] setBarTintColor:[UIColor clearColor]];
+    //[self.navigationController setNavigationBarHidden:YES];
     
     self.assetsDictionary = [[[SDEPhotoSceneDataSource sharedData] assetsDictionary] copy];
     self.portraitIndex = -1;
@@ -135,11 +134,10 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"view will appear");
-    [self fetchPerson];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     self.buttonPanel.hidden = YES;
+    //由于没有引入NSFetchedresultscontroller 后必须设置 delegate 才能更新 person，故在这里采用手动刷新内容。
     [self.galleryView reloadData];
     [super viewWillAppear:animated];
 }
@@ -192,8 +190,9 @@ static CGFloat const kPhotoHeight = 654.0;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(whetherToDisplay == YES) AND (ownedFaces.@count > 0)"];
     [fetchRequest setPredicate:predicate];
     
-    NSError *error;
-    NSArray *personItems = [self.faceFetchedResultsController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    //错误处理还不知怎么做
+    //NSError *error;
+    NSArray *personItems = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
     self.numberOfPerson = personItems.count;
     self.personItemsArray = personItems;
     
@@ -207,7 +206,6 @@ static CGFloat const kPhotoHeight = 654.0;
         case kPortraitType:{
             [self fetchPerson];
             numberOfItems = self.numberOfPerson;
-            NSLog(@"Now %ld persons.", (long)numberOfItems);
             break;
         }
         case kLibraryType:
@@ -215,7 +213,6 @@ static CGFloat const kPhotoHeight = 654.0;
             id<NSFetchedResultsSectionInfo> sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
             numberOfItems = [sectionInfo numberOfObjects];
             self.itemNumber = numberOfItems;
-            //self.currentMaxItem = -1;
             break;
         }
     }
@@ -235,7 +232,7 @@ static CGFloat const kPhotoHeight = 654.0;
                 [photoView setImage:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
             }else{
                 if (personItem.avatorImage) {
-                    NSLog(@"Work");
+                    //NSLog(@"Work");
                     [photoView setImage:personItem.avatorImage];
                 }else
                     [photoView setImage:[UIImage imageWithContentsOfFile:personItem.posterURLString]];
@@ -255,7 +252,7 @@ static CGFloat const kPhotoHeight = 654.0;
             [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionCurveEaseIn animations:^{
                 photoView.alpha = 1.0;
                 photoView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                cell.userInteractionEnabled = NO;
+                //cell.userInteractionEnabled = NO;//不知道这行代码有啥效果
             }completion:nil];
             
             break;
@@ -302,7 +299,7 @@ static CGFloat const kPhotoHeight = 654.0;
                 UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
                 
                 CABasicAnimation *fly = [CABasicAnimation animationWithKeyPath:@"position"];
-                fly.fromValue = [NSValue valueWithCGPoint:self.startPoint];
+                fly.fromValue = [NSValue valueWithCGPoint:self.assemblePoint];
                 fly.toValue = [NSValue valueWithCGPoint:attr.center];
                 fly.duration = 0.5;
                 [cell.layer addAnimation:fly forKey:@"FlyCell"];
@@ -316,20 +313,15 @@ static CGFloat const kPhotoHeight = 654.0;
                 //move.duration = 0.5;
                 //[cell.layer addAnimation:move forKey:@"MoveToAssemblePosition"];
                 //同下，有闪屏现象
-                NSInteger pageIndex = self.lastVisibleIndexPath.item / numberOfItemsInPage;
-                CGPoint relativeStartPoint;
-                relativeStartPoint.x = self.startPoint.x + pageIndex * 1024;
-                relativeStartPoint.y = self.startPoint.y - 150;
+                CGPoint relativeAssemblePoint = [self.libraryVC.collectionView convertPoint:self.assemblePoint fromView:self.view];
                 [UIView animateWithDuration:0.5
                                       delay:0
                                     options:UIViewAnimationOptionCurveEaseIn
                                  animations:^{
-                                     cell.center = relativeStartPoint;
+                                     cell.center = relativeAssemblePoint;
                                      self.galleryView.alpha = 1.0f;
                                      self.librarySwitch.alpha = 0;
-                }completion:^(BOOL finished){
-
-                }];
+                }completion:nil];
                 
                 if ([indexPath isEqual:self.lastVisibleIndexPath]) {
                     [self performSelector:@selector(dismissLibraryVC) withObject:nil afterDelay:0.6];
@@ -398,29 +390,38 @@ static CGFloat const kPhotoHeight = 654.0;
                 NSArray *sortedArray = [indexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"item" ascending:YES]]];
                 NSIndexPath *libraryVCMaxIndexPath = sortedArray.lastObject;
                 NSIndexPath *libraryVCMinIndexPath = sortedArray.firstObject;
-                NSLog(@"min: %ld max:%ld", (long)libraryVCMinIndexPath.item, (long)libraryVCMaxIndexPath.item);
+                //NSLog(@"min: %ld max:%ld", (long)libraryVCMinIndexPath.item, (long)libraryVCMaxIndexPath.item);
                 NSIndexPath *targetIndexPath;
                 if (indexPath.item > libraryVCMaxIndexPath.item || indexPath.item < libraryVCMinIndexPath.item) {
                     NSInteger item = indexPath.item % numberOfItemsInPage + libraryVCMinIndexPath.item;
-                    NSLog(@"item: %ld", (long)item);
+                    //NSLog(@"item: %ld", (long)item);
                     targetIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
                 }else
                     targetIndexPath = indexPath;
-                NSLog(@"target: %ld", (long)targetIndexPath.item);
+                //NSLog(@"target: %ld", (long)targetIndexPath.item);
+                
                 CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position"];
                 UICollectionViewCell *libraryCell = [self.libraryVC.collectionView cellForItemAtIndexPath:targetIndexPath];
-                CGPoint pointOnView = [self.view convertPoint:libraryCell.center fromView:self.libraryVC.collectionView];
-                CGPoint pointOnPhotoVC = [self.photoVC.collectionView convertPoint:pointOnView fromView:self.view];
-                move.toValue = [NSValue valueWithCGPoint:pointOnPhotoVC];
+                CGPoint pointOnRootView = [self.view convertPoint:libraryCell.center fromView:self.libraryVC.collectionView];
+                CGPoint pointOnPhotoVCView = [self.photoVC.collectionView convertPoint:pointOnRootView fromView:self.view];
+                move.toValue = [NSValue valueWithCGPoint:pointOnPhotoVCView];
                 
                 CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
-                scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
-                
+                switch (self.libraryType) {
+                    case kFaceType:
+                        scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, -2)];
+                        break;
+                    case kThumbnailType:
+                        scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
+                        break;
+                }
+
                 CAAnimationGroup *group = [CAAnimationGroup animation];
                 group.animations = @[move, scale];
                 group.duration = 0.5;
                 group.fillMode = kCAFillModeForwards;
                 group.removedOnCompletion = NO;
+
                 [layer addAnimation:group forKey:@"scaleback"];
                 
                 self.actionCenterButton.hidden = NO;
@@ -438,6 +439,138 @@ static CGFloat const kPhotoHeight = 654.0;
 }
 
 
+#pragma mark - UICollectionView Delegate Method
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.currentMaxItem = -1;
+    switch (self.contentType) {
+        case kPortraitType:{
+            self.shouldFlyCell = YES;
+            self.shouldMoveToOriginal = NO;
+            self.shouldMoveToAssemblePosition = NO;
+            
+            self.portraitIndex = indexPath.item;
+            if (!self.tabBarController.tabBar.hidden) {
+                self.tabBarController.tabBar.hidden = YES;
+            }
+            UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            self.assemblePoint = [self.view convertPoint:attr.center fromView:self.galleryView];
+
+            [UIView animateWithDuration:0.5 animations:^{
+                self.librarySwitch.alpha = 1.0f;
+                self.galleryView.alpha = 0;
+            }];
+            
+            self.contentType = kLibraryType;
+            self.libraryVC = (SDESpecialItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+            self.libraryVC.collectionView.frame = self.galleryView.frame;
+            HorizontalCollectionViewLayout *springboardLayout = [[HorizontalCollectionViewLayout alloc] init];
+            [self.libraryVC.collectionView setCollectionViewLayout:springboardLayout];
+            self.libraryVC.collectionView.dataSource = self;
+            self.libraryVC.collectionView.delegate = self;
+            [self.libraryVC.collectionView setBackgroundColor:[UIColor clearColor]];
+            self.galleryView.hidden = YES;
+            
+            [self addChildViewController:self.libraryVC];
+            [self.view addSubview:self.libraryVC.collectionView];
+            [self.libraryVC didMoveToParentViewController:self];
+            [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
+            
+            break;
+        }
+        case kLibraryType:{
+            self.shouldScaleAndBack = NO;
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+            
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position"];
+            CGPoint point = [self.libraryVC.collectionView convertPoint:self.view.center fromView:self.view];
+            move.toValue = [NSValue valueWithCGPoint:point];
+            
+            CABasicAnimation *zMove = [CABasicAnimation animationWithKeyPath:@"zPosition"];
+            zMove.toValue = [NSNumber numberWithFloat:1.0];
+            
+            CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
+            
+            CGFloat time = 0.2f;
+            CGFloat delay = 0.0f;
+            switch (self.libraryType) {
+                case kFaceType:{
+                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2, 2, -2)];
+                    delay = -0.1f;
+                    break;
+                }
+                case kThumbnailType:{
+                    CGRect bounds = cell.bounds;
+                    CGFloat scaleFactor;
+                    
+                    UIImageView *photoView = (UIImageView *)[cell viewWithTag:10];
+                    if (photoView.image) {
+                        NSLog(@"image exist");
+                        CGFloat hight = photoView.image.size.height;
+                        CGFloat width = photoView.image.size.width;
+                        if (hight >= width) {
+                            scaleFactor = kPhotoHeight/bounds.size.height;
+                        }else
+                            scaleFactor = kPhotoWidth/bounds.size.width;
+                    }else{
+                        CGFloat scale_x = kPhotoWidth/bounds.size.width;
+                        CGFloat scale_y = kPhotoHeight/bounds.size.height;
+                        scaleFactor = (scale_x < scale_y)?scale_y:scale_x;
+                    }
+                    
+                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(scaleFactor, scaleFactor, 1)];
+                    break;
+                }
+            }
+            
+            CAAnimationGroup *group = [CAAnimationGroup animation];
+            group.animations = @[move, zMove, scale];
+            group.duration = time;
+            group.fillMode = kCAFillModeForwards;
+            group.removedOnCompletion = NO;
+            [cell.layer addAnimation:group forKey:@"scale"];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((time + delay) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self showPhotoAtIndexPath:indexPath];
+            });
+
+            break;
+        }
+        case kPhotoType:{
+            break;
+        }
+    }
+}
+- (void)showPhotoAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.contentType = kPhotoType;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.librarySwitch.alpha = 0;
+        self.libraryVC.collectionView.alpha = 0;;
+    }completion:^(BOOL finished){
+        UICollectionViewCell *cell = [self.libraryVC.collectionView cellForItemAtIndexPath:indexPath];
+        [cell.layer removeAnimationForKey:@"scale"];
+        self.libraryVC.collectionView.hidden = YES;
+    }];
+    self.actionCenterButton.hidden = YES;
+    [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    self.photoVC= (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+    LineLayoutWithAnimation *lineLayout = [[LineLayoutWithAnimation alloc] init];
+    [self.photoVC.collectionView setCollectionViewLayout:lineLayout];
+    self.photoVC.collectionView.frame = self.galleryView.frame;
+    self.photoVC.collectionView.dataSource = self;
+    self.photoVC.collectionView.delegate = self;
+    [self.photoVC.collectionView setBackgroundColor:[UIColor clearColor]];
+    [self.photoVC specifyStartIndexPath:indexPath];
+    
+    [self.photoVC viewWillAppear:NO];
+    [self addChildViewController:self.photoVC];
+    [self.view addSubview:self.photoVC.collectionView];
+    [self.photoVC didMoveToParentViewController:self];
+    [self.photoVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
+}
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -519,145 +652,6 @@ static CGFloat const kPhotoHeight = 654.0;
     }
     return space;
 }
-
-#pragma mark - UICollectionView Delegate Method
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.currentMaxItem = -1;
-    switch (self.contentType) {
-        case kPortraitType:{
-            self.shouldFlyCell = YES;
-            self.shouldMoveToOriginal = NO;
-            self.shouldMoveToAssemblePosition = NO;
-            UICollectionViewLayoutAttributes *attr = [collectionView layoutAttributesForItemAtIndexPath:indexPath];
-            CGPoint cellPosition = attr.center;
-            //cellPosition.y = cellPosition.y - 150;
-            self.startPoint = [self.view convertPoint:cellPosition fromView:self.galleryView];
-            if (!self.tabBarController.tabBar.hidden) {
-                self.tabBarController.tabBar.hidden = YES;
-            }
-            //self.librarySwitch.hidden = NO;
-            [UIView animateWithDuration:0.5 animations:^{
-                self.librarySwitch.alpha = 1.0f;
-            }];
-            self.portraitIndex = indexPath.item;
-            
-            self.contentType = kLibraryType;
-            self.libraryVC = (SDESpecialItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
-            self.libraryVC.collectionView.frame = self.galleryView.frame;
-            HorizontalCollectionViewLayout *springboardLayout = [[HorizontalCollectionViewLayout alloc] init];
-            [self.libraryVC.collectionView setCollectionViewLayout:springboardLayout];
-            self.libraryVC.collectionView.dataSource = self;
-            self.libraryVC.collectionView.delegate = self;
-            [self.libraryVC.collectionView setBackgroundColor:[UIColor clearColor]];
-            self.galleryView.hidden = YES;
-            
-            [self addChildViewController:self.libraryVC];
-            [self.view addSubview:self.libraryVC.collectionView];
-            [self.libraryVC didMoveToParentViewController:self];
-            [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
-            
-            break;
-        }
-        case kLibraryType:{
-            self.shouldScaleAndBack = NO;
-            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-            
-            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position"];
-            CGPoint point = [self.libraryVC.collectionView convertPoint:self.view.center fromView:self.view];
-            move.toValue = [NSValue valueWithCGPoint:point];
-            
-            CABasicAnimation *zMove = [CABasicAnimation animationWithKeyPath:@"zPosition"];
-            zMove.toValue = [NSNumber numberWithFloat:1.0];
-            
-            CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
-            
-            CGFloat time = 0.2f;
-            CGFloat delay = 0.0f;
-            switch (self.libraryType) {
-                case kFaceType:{
-                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2, 2, -2)];
-                    delay = -0.1f;
-                    break;
-                }
-                case kThumbnailType:{
-                    CGRect bounds = cell.bounds;
-                    CGFloat scaleFactor;
-                    
-                    UIImageView *photoView = (UIImageView *)[cell viewWithTag:10];
-                    if (photoView.image) {
-                        NSLog(@"image exist");
-                        CGFloat hight = photoView.image.size.height;
-                        CGFloat width = photoView.image.size.width;
-                        if (hight >= width) {
-                            scaleFactor = kPhotoHeight/bounds.size.height;
-                        }else
-                            scaleFactor = kPhotoWidth/bounds.size.width;
-                    }else{
-                        CGFloat scale_x = kPhotoWidth/bounds.size.width;
-                        CGFloat scale_y = kPhotoHeight/bounds.size.height;
-                        scaleFactor = (scale_x < scale_y)?scale_y:scale_x;
-                    }
-                    
-                    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(scaleFactor, scaleFactor, 1)];
-                    break;
-                }
-            }
-            
-            CAAnimationGroup *group = [CAAnimationGroup animation];
-            group.animations = @[move, zMove, scale];
-            group.duration = time;
-            group.fillMode = kCAFillModeForwards;
-            group.removedOnCompletion = NO;
-            [cell.layer addAnimation:group forKey:@"scale"];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((time + delay) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self showPhotoAtIndexPath:indexPath];
-            });
-            /*
-            NSLog(@"Select item: %ld",(long)indexPath.item);
-            LineLayout *detailLayout = [[LineLayout alloc] init];
-            [self.libraryVC.collectionView setCollectionViewLayout:detailLayout animated:YES];
-            [self.libraryVC.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            */
-            break;
-        }
-        case kPhotoType:{
-            break;
-        }
-    }
-}
-- (void)showPhotoAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.contentType = kPhotoType;
-    [UIView animateWithDuration:0.2 animations:^{
-        self.librarySwitch.alpha = 0;
-        self.libraryVC.collectionView.alpha = 0;;
-    }completion:^(BOOL finished){
-        UICollectionViewCell *cell = [self.libraryVC.collectionView cellForItemAtIndexPath:indexPath];
-        [cell.layer removeAnimationForKey:@"scale"];
-        self.libraryVC.collectionView.hidden = YES;
-    }];
-    self.actionCenterButton.hidden = YES;
-    [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    self.photoVC= (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
-    LineLayoutWithAnimation *lineLayout = [[LineLayoutWithAnimation alloc] init];
-    [self.photoVC.collectionView setCollectionViewLayout:lineLayout];
-    self.photoVC.collectionView.frame = self.galleryView.frame;
-    self.photoVC.collectionView.dataSource = self;
-    self.photoVC.collectionView.delegate = self;
-    [self.photoVC.collectionView setBackgroundColor:[UIColor clearColor]];
-    [self.photoVC specifyStartIndexPath:indexPath];
-    
-    [self.photoVC viewWillAppear:NO];
-    [self addChildViewController:self.photoVC];
-    [self.view addSubview:self.photoVC.collectionView];
-    [self.photoVC didMoveToParentViewController:self];
-    [self.photoVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
-}
-
 
 #pragma mark - UITabBarDelegate Method
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
@@ -766,26 +760,20 @@ static CGFloat const kPhotoHeight = 654.0;
                 }
                 HorizontalCollectionViewLayout *layout = (HorizontalCollectionViewLayout *)self.libraryVC.collectionView.collectionViewLayout;
                 NSArray *visibleIndexPaths = [self.libraryVC.collectionView indexPathsForVisibleItems];
-                NSArray *sortedArray = [visibleIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"item" ascending:YES]]];
-                NSIndexPath *currentItemInPage = sortedArray.lastObject;
-                NSInteger pageIndex = currentItemInPage.item / numberOfItemsInPage;
-                CGPoint relativeStartPoint;
-                relativeStartPoint.x = self.startPoint.x + pageIndex * 1024;
-                relativeStartPoint.y = self.startPoint.y - 150;
-                [layout relocateVisibleItems:visibleIndexPaths withAssemblePosition:relativeStartPoint Scale:gestureRecongnizer.scale];
+                CGPoint relativeAssemblePoint = [self.libraryVC.collectionView convertPoint:self.assemblePoint fromView:self.view];
+                [layout relocateVisibleItems:visibleIndexPaths withAssemblePosition:relativeAssemblePoint Scale:gestureRecongnizer.scale];
                 [layout invalidateLayout];
                 
+                //NSLog(@"Scale: %f", gestureRecongnizer.scale);
+                //为了能让 gallery不在缩放刚开始就从背景中显露出来，必须结合 hidden 属性， 只有在 scale 下探到0.5之后才在允许从背景中渗透出来
                 if (gestureRecongnizer.scale > 0.8f && gestureRecongnizer.scale < 1.0f) {
-                     NSLog(@"Scale: %f", gestureRecongnizer.scale);
-                    self.galleryView.alpha = 1 - gestureRecongnizer.scale;
+                    self.galleryView.alpha = (1 - gestureRecongnizer.scale)/2;
                 }else if (gestureRecongnizer.scale > 1.0f){
-                     NSLog(@"Scale: %f", gestureRecongnizer.scale);
                     self.galleryView.hidden = YES;
                     self.galleryView.alpha = 0;
                 }else if (gestureRecongnizer.scale < 0.5f){
-                     NSLog(@"Scale: %f", gestureRecongnizer.scale);
                     self.galleryView.hidden = NO;
-                    self.galleryView.alpha = 1 - gestureRecongnizer.scale;
+                    self.galleryView.alpha = (1 - gestureRecongnizer.scale)/2;
                 }
 
                 break;
@@ -802,9 +790,6 @@ static CGFloat const kPhotoHeight = 654.0;
     }
     
     if (gestureRecongnizer.state == UIGestureRecognizerStateEnded || gestureRecongnizer.state == UIGestureRecognizerStateCancelled ||gestureRecongnizer.state == UIGestureRecognizerStateFailed) {
-        //[self performSelector:@selector(enableLibraryCellSelection) withObject:nil afterDelay:0.5];
-        self.libraryVC.collectionView.allowsSelection = YES;
-        
         switch (self.contentType) {
             case kLibraryType:{
                 NSArray *visibleIndexPaths = [self.libraryVC.collectionView indexPathsForVisibleItems];
@@ -841,7 +826,7 @@ static CGFloat const kPhotoHeight = 654.0;
                         NSIndexPath *libraryVCMaxIndexPath = sortedArray.lastObject;
                         NSIndexPath *libraryVCMinIndexPath = sortedArray.firstObject;
                         NSIndexPath *photoVCCurrentIndexPath = visibleIndexPaths.firstObject;
-                        NSLog(@"end at:%ld", (long)photoVCCurrentIndexPath.item);
+                        //NSLog(@"end at:%ld", (long)photoVCCurrentIndexPath.item);
                         
                         if (photoVCCurrentIndexPath.item > libraryVCMaxIndexPath.item) {
                             if (photoVCCurrentIndexPath.item % (numberOfItemsInPage + 2) == 0 ||
@@ -904,16 +889,6 @@ static CGFloat const kPhotoHeight = 654.0;
     
     self.contentType = kPortraitType;
     self.shouldMoveToAssemblePosition = NO;
-    
-    /*
-    UICollectionViewCell *cell = [self.galleryView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.portraitIndex inSection:0]];
-    CAKeyframeAnimation *shine = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-    shine.keyTimes = @[@0, @(1/6.0), @(3/6.0), @(5/6.0), @1];
-    shine.values = @[@0.8, @0.5, @0.8, @0.5, @0.8];
-    shine.duration = 1;
-    [cell.layer addAnimation:shine forKey:@"shine"];
-     */
-    
 }
 
 #pragma mark - IBAction Method

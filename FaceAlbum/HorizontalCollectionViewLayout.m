@@ -8,7 +8,7 @@
 
 #import "HorizontalCollectionViewLayout.h"
 
-#define ITEM_SIZE 150.0
+static CGFloat const kItemSize = 150.0f;
 
 @interface HorizontalCollectionViewLayout ()
 
@@ -35,7 +35,7 @@
     self = [super init];
     if (self) {
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        self.itemSize = (CGSize){ITEM_SIZE, ITEM_SIZE};
+        self.itemSize = (CGSize){kItemSize, kItemSize};
         self.sectionInset = UIEdgeInsetsMake(60, 62, 0, 62);
         self.minimumLineSpacing = 20.0;
         self.minimumInteritemSpacing = 30.0;
@@ -156,24 +156,21 @@
     // Creating an empty attribute
     UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     
-    CGRect frame = CGRectZero;
-    
+    CGPoint center;
     // And finally, we assign the positions of the cells
-    frame.origin.x = itemPage * self.boundsSize.width + columnPosition * (itemSize.width + self.interItemSpace) + self.sectionInset.left + self.interItemSpace;
-    frame.origin.y = rowPosition * (itemSize.height + self.lineSpace) + self.sectionInset.top + self.lineSpace;
-    frame.size = self.itemSize;
+    center.x = itemPage * self.boundsSize.width + columnPosition * (itemSize.width + self.interItemSpace) + self.sectionInset.left + self.interItemSpace + self.itemSize.width/2.0;
+    center.y = rowPosition * (itemSize.height + self.lineSpace) + self.sectionInset.top + self.lineSpace + self.itemSize.height/2.0;
     
-    attr.frame = frame;
-    
+    attr.size = self.itemSize;
+    attr.center = center;
     if ([self.originalLayoutData objectForKey:indexPath] == nil) {
         [self.originalLayoutData setObject:attr forKey:indexPath];
     }
     
     if (self.visibleItemIndexPath) {
         if ([self.visibleItemIndexPath containsObject:indexPath]) {
-            CGPoint location = [self calculateLocationWithAssemblePoint:self.assemblePoint OriginalPoint:frame.origin Scale:self.scale];
-            frame.origin = location;
-            attr.frame = frame;
+            CGPoint location = [self calculateLocationWithAssemblePoint:self.assemblePoint OriginalPoint:center Scale:self.scale];
+            attr.center = location;
         }
     }
     
