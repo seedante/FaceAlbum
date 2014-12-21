@@ -24,6 +24,8 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) BOOL blendBatchUpdateMode;
+@property (nonatomic) NSCache *imageCache;
+@property (nonatomic) dispatch_queue_t imageLoadQueue;
 
 @end
 
@@ -35,6 +37,9 @@ static NSString * const cellIdentifier = @"avatorCell";
     sectionChanges = [[NSMutableArray alloc] init];
     objectChanges = [[NSMutableArray alloc] init];
     self.blendBatchUpdateMode = NO;
+    self.imageCache = [[NSCache alloc] init];
+    self.imageLoadQueue = dispatch_queue_create("com.seedante.FaceAlbum", DISPATCH_QUEUE_SERIAL);
+    //self.imageLoadQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     return self;
 }
 
@@ -72,14 +77,13 @@ static NSString * const cellIdentifier = @"avatorCell";
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    DLog(@"Process I: WILL UPDATE SCREEN");
+    NSLog(@"Process I: WILL UPDATE SCREEN");
 }
-
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    DLog(@"Process II: Record Section Change");
+    NSLog(@"Process II: Record Section Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type) {
         case NSFetchedResultsChangeInsert:
@@ -101,24 +105,24 @@ static NSString * const cellIdentifier = @"avatorCell";
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    DLog(@"Process III: Record Cell Change");
+    NSLog(@"Process III: Record Cell Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            DLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
-            DLog(@"Delete Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Delete Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
-            DLog(@"Update Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Update Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
-            DLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
@@ -127,9 +131,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    DLog(@"Process IV: Batch Update");
-    //DLog(@"Section change: %@", sectionChanges);
-    //DLog(@"Content Change: %@", objectChanges);
+    NSLog(@"Process IV: Batch Update");
     if ([sectionChanges count] > 0)
     {
         NSDictionary *firstJob = sectionChanges[0];
@@ -173,8 +175,6 @@ static NSString * const cellIdentifier = @"avatorCell";
                 break;
         }
     }
-    //DLog(@"Section change: %@", sectionChanges);
-    //DLog(@"Content Change: %@", objectChanges);
     
     if (self.blendBatchUpdateMode)
     {
@@ -224,7 +224,6 @@ static NSString * const cellIdentifier = @"avatorCell";
             }];
         }
     } completion:nil];
-    
 }
 
 - (void)batchUpdateCell
@@ -388,6 +387,18 @@ static NSString * const cellIdentifier = @"avatorCell";
     return cell;
 }
 
+- (void)fetchImageForCellAtIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
+{
+    dispatch_async(self.imageLoadQueue, ^{
+        NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
+        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        UIImage *image = face.avatorImage;
+        [self.imageCache setObject:image forKey:indexPath];
+        Handler();
+    });
+}
+
+
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"HeaderView Indexpath: %@", indexPath);
@@ -395,7 +406,9 @@ static NSString * const cellIdentifier = @"avatorCell";
     personProfileHeaderView.delegate = (SDEMontageRoomViewController *)collectionView.delegate;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
-    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    //Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+
+    /*
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
@@ -405,9 +418,12 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.nameTextField.enabled = YES;
         personProfileHeaderView.selectAllButton.hidden = YES;
     }
-    personProfileHeaderView.personOrder = faceItem.personOwner.order;
+     */
+
+    //personProfileHeaderView.personOrder = faceItem.personOwner.order;
     
     return personProfileHeaderView;
 }
+
 
 @end
