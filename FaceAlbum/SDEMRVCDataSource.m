@@ -398,7 +398,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         __weak SDEAvatorCell *weakCellSelf = cell;
         [self fetchImageForCellAtIndexPath:indexPath completionHandler:^(){
             dispatch_sync(dispatch_get_main_queue(), ^{
-                NSLog(@"complete fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
+                //NSLog(@"complete fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
                 UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:indexPath];
                 weakCellSelf.avatorView.image = cachedImage;
             });
@@ -415,13 +415,13 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)fetchImageForCellAtIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
 {
     dispatch_async(self.imageLoadQueue, ^{
-        NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
+        //NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         UIImage *image = [UIImage imageWithContentsOfFile:face.pathForBackup];
         if (image) {
             [self.imageCache setObject:image forKey:indexPath];
         }else{
-            NSLog(@"Read error");
+            //NSLog(@"Read error");
             image = face.avatorImage;
             [self.imageCache setObject:image forKey:indexPath];
         }

@@ -42,7 +42,7 @@
 - (void)prepareLayout
 {
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
-    NSLog(@"cellCount: %ld", (long)self.cellCount);
+    //NSLog(@"cellCount: %ld", (long)self.cellCount);
 }
 
 -(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect

@@ -551,7 +551,7 @@ static CGFloat const kPhotoHeight = 654.0;
                     
                     UIImageView *photoView = (UIImageView *)[cell viewWithTag:10];
                     if (photoView.image) {
-                        NSLog(@"image exist");
+                        //NSLog(@"image exist");
                         CGFloat hight = photoView.image.size.height;
                         CGFloat width = photoView.image.size.width;
                         if (hight >= width) {
