@@ -85,6 +85,7 @@ static CGFloat const kPhotoHeight = 654.0;
     
     self.nameTitle.text = @"";
     self.infoTitle.text = @"";
+    [self registerAsObserver];
     
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlShowOfTabBar:)];
@@ -130,6 +131,19 @@ static CGFloat const kPhotoHeight = 654.0;
         startScene = @"MontageRoom";
     }
     return startScene;
+}
+
+- (void)registerAsObserver
+{
+    [self addObserver:self forKeyPath:@"contentType" options:0 context:NULL];
+    //[self addObserver:self forKeyPath:@"libraryType" options:0 context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"contentType"] || [keyPath isEqualToString:@"libraryType"]) {
+        [self updateHeaderView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -402,7 +416,7 @@ static CGFloat const kPhotoHeight = 654.0;
                 }];
             }
             
-            
+            [self updateHeaderViewAtIndexPath:indexPath];
             //set shadow
             CALayer *layer = cell.layer;
             [layer setShadowOffset:CGSizeMake(0, 5)];
@@ -504,7 +518,6 @@ static CGFloat const kPhotoHeight = 654.0;
             [self.view addSubview:self.libraryVC.collectionView];
             [self.libraryVC didMoveToParentViewController:self];
             [self.libraryVC.collectionView addGestureRecognizer:self.pinchGestureRecognizer];
-            
             break;
         }
         case kLibraryType:{
@@ -690,8 +703,6 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     
-    //Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.portraitIndex]];
-    //[self updateHeaderView:faceItem];
     LibraryType index = (LibraryType)[tabBar.items indexOfObject:item];
     switch (index) {
         case kFaceType:
@@ -1019,5 +1030,50 @@ static CGFloat const kPhotoHeight = 654.0;
         [self.buttonPanel popup];
 }
 
+#pragma mark - Update headerView Info
+- (void)updateHeaderView
+{
+    switch (self.contentType) {
+        case kPortraitType:
+            self.nameTitle.text = @"";
+            self.infoTitle.text = @"";
+            break;
+        case kLibraryType:{
+            id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
+            int avatorCount = (int)[sectionInfo numberOfObjects];
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.portraitIndex]];
+            
+            Person *personItem = faceItem.personOwner;
+            if (personItem.name.length == 0) {
+                self.nameTitle.text = [NSString stringWithFormat:@"Count：%d", avatorCount];
+                self.infoTitle.text = @"";
+            }else{
+                self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
+                self.infoTitle.text = [NSString stringWithFormat:@"Count: %d", avatorCount];
+            }
+            break;
+        }
+        case kPhotoType:{
+            break;
+        }
+    }
+}
 
+- (void)updateHeaderViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    Photo *photoItem = faceItem.photoOwner;
+    NSMutableString *commentString = [NSMutableString new];
+    for (Face *face in photoItem.faceset) {
+        if (face.name && face.name.length > 0) {
+            [commentString appendString:[NSString stringWithFormat:@"%@ ", faceItem.name]];
+        }else
+            [commentString appendString:@"* "];
+    }
+    
+    id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
+    NSUInteger avatorCount = [sectionInfo numberOfObjects];
+    self.nameTitle.text = [commentString copy];
+    self.infoTitle.text = [NSString stringWithFormat:@"%ld/%lu", (long)indexPath.item + 1, (unsigned long)avatorCount];
+}
 @end
