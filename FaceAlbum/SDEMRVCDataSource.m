@@ -380,8 +380,33 @@ static NSString * const cellIdentifier = @"avatorCell";
     SDEAvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     cell.clipsToBounds = YES;
-    Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-    cell.avatorView.image = face.avatorImage;
+    
+    //Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+     /*
+    if (face.section == 0 && !face.personOwner) {
+        face.personOwner = [[Store sharedStore] FacelessMan];
+    }
+    if(!face.photoOwner.isExisted){
+        cell.backgroundColor = [UIColor redColor];
+        cell.avatorView.alpha = 0.5;
+    }
+     */
+    UIImage *avatorImage = (UIImage *)[self.imageCache objectForKey:indexPath];
+    if (avatorImage) {
+        cell.avatorView.image = avatorImage;
+    }else{
+        __weak SDEAvatorCell *weakCellSelf = cell;
+        [self fetchImageForCellAtIndexPath:indexPath completionHandler:^(){
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                NSLog(@"complete fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
+                UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:indexPath];
+                weakCellSelf.avatorView.image = cachedImage;
+            });
+
+        }];
+        
+    }
+    
     cell.order.hidden = YES;
     
     return cell;
@@ -392,8 +417,15 @@ static NSString * const cellIdentifier = @"avatorCell";
     dispatch_async(self.imageLoadQueue, ^{
         NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        UIImage *image = face.avatorImage;
-        [self.imageCache setObject:image forKey:indexPath];
+        UIImage *image = [UIImage imageWithContentsOfFile:face.pathForBackup];
+        if (image) {
+            [self.imageCache setObject:image forKey:indexPath];
+        }else{
+            NSLog(@"Read error");
+            image = face.avatorImage;
+            [self.imageCache setObject:image forKey:indexPath];
+        }
+        
         Handler();
     });
 }
@@ -405,10 +437,12 @@ static NSString * const cellIdentifier = @"avatorCell";
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     personProfileHeaderView.delegate = (SDEMontageRoomViewController *)collectionView.delegate;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
-    personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
-    //Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-
-    /*
+    if (number == 1) {
+        personProfileHeaderView.numberLabel.text = @"1 avator";
+    }else
+        personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
@@ -418,9 +452,8 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.nameTextField.enabled = YES;
         personProfileHeaderView.selectAllButton.hidden = YES;
     }
-     */
-
-    //personProfileHeaderView.personOrder = faceItem.personOwner.order;
+    
+    personProfileHeaderView.personOrder = faceItem.personOwner.order;
     
     return personProfileHeaderView;
 }

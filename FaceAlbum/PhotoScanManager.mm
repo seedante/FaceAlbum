@@ -187,15 +187,10 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
 - (NSString *)cachePath
 {
     if (!_cachePath) {
-        _cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+        _cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     }
 
     return _cachePath;
-}
-
-- (void)filterAssets
-{
-    
 }
 
 #pragma mark - Scan Method Family
@@ -329,7 +324,8 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             BOOL writeSuccess = [avatorImageData writeToFile:avatorName atomically:YES];
             if (writeSuccess) {
                 newFace.pathForBackup = avatorName;
-            }
+            }else
+                NSLog(@"Write To File error");
             CGImageRelease(headCGImage);
             
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);

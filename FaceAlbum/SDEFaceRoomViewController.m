@@ -256,11 +256,11 @@ static CGFloat const kPhotoHeight = 654.0;
             if (personItem.order == 0) {
                 [photoView setImage:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
             }else{
-                if (personItem.avatorImage) {
-                    //NSLog(@"Work");
-                    [photoView setImage:personItem.avatorImage];
+                UIImage *avatorImage = [UIImage imageWithContentsOfFile:personItem.posterURLString];
+                if (avatorImage) {
+                    [photoView setImage:avatorImage];
                 }else
-                    [photoView setImage:[UIImage imageWithContentsOfFile:personItem.posterURLString]];
+                    [photoView setImage:personItem.avatorImage];
             }
             photoView.alpha = 0.1;
             photoView.transform = CGAffineTransformMakeScale(0.8, 0.8);
