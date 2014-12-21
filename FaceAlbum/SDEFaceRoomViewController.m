@@ -81,6 +81,7 @@ static CGFloat const kPhotoHeight = 654.0;
     self.librarySwitch.delegate = self;
     UITabBarItem *item = [self.librarySwitch.items objectAtIndex:self.libraryType];
     [self.librarySwitch setSelectedItem:item];
+    self.photoFileFilter = [SDEPhotoFileFilter sharedPhotoFileFilter];
     
     self.nameTitle.text = @"";
     self.infoTitle.text = @"";
@@ -134,6 +135,7 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"show portrait");
+    [self.photoFileFilter comparePhotoDataBetweenLocalAndDataBase];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     self.buttonPanel.hidden = YES;
@@ -190,12 +192,35 @@ static CGFloat const kPhotoHeight = 654.0;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(whetherToDisplay == YES) AND (ownedFaces.@count > 0)"];
     [fetchRequest setPredicate:predicate];
     
+    NSMutableArray *personItemsMutableArray = [NSMutableArray new];
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    if (faceItem.section == 0) {
+        [personItemsMutableArray addObject: [[Store sharedStore] FacelessMan]];
+    }
     //错误处理还不知怎么做
     //NSError *error;
     NSArray *personItems = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    self.numberOfPerson = personItems.count;
-    self.personItemsArray = personItems;
+    if (personItems && personItems.count > 0) {
+        [personItemsMutableArray addObjectsFromArray:personItems];
+    }
+    self.numberOfPerson = personItemsMutableArray.count;
+    self.personItemsArray = [personItemsMutableArray copy];
     
+}
+
+- (void)checkRightBarButtionItem
+{
+    NSArray *sections = self.faceFetchedResultsController.sections;
+    if (sections.count > 1) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }else if (sections.count == 1){
+        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        if (faceItem.section == 0) {
+            self.navigationItem.rightBarButtonItem.enabled = NO;
+        }else
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+    }else
+        self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - UICollectionView Data Source Method
@@ -941,8 +966,10 @@ static CGFloat const kPhotoHeight = 654.0;
                 if (result.count == 1) {
                     Photo *deletedPhoto = (Photo *)result.firstObject;
                     deletedPhoto.isExisted = NO;
-                }else
-                    DLog(@"Some Thing Wrong");
+                    for (Face *faceItem in deletedPhoto.faceset) {
+                        faceItem.whetherToDisplay = NO;
+                    }
+                }
             }
             [self.managedObjectContext save:nil];
         }
@@ -957,8 +984,10 @@ static CGFloat const kPhotoHeight = 654.0;
                 if (result.count == 1) {
                     Photo *gobackPhoto = (Photo *)result.firstObject;
                     gobackPhoto.isExisted = YES;
-                }else
-                    DLog(@"Some Wrong here");
+                    for (Face *faceItem in gobackPhoto.faceset) {
+                        faceItem.whetherToDisplay = YES;
+                    }
+                }
             }
             [self.managedObjectContext save:nil];
         }

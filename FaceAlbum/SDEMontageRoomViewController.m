@@ -105,6 +105,22 @@ typedef enum {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self registerAsObserver];
+    [self checkRightBarButtionItem];
+}
+
+- (void)checkRightBarButtionItem
+{
+    NSArray *sections = self.faceFetchedResultsController.sections;
+    if (sections.count > 1) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }else if (sections.count == 1){
+        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        if (faceItem.section == 0) {
+            self.navigationItem.rightBarButtonItem.enabled = NO;
+        }else
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+    }else
+        self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -525,6 +541,7 @@ typedef enum {
     [self.guardObjectIDs removeAllObjects];
     
     [self saveEdit];
+    [self checkRightBarButtionItem];
 }
 
 #pragma mark - go to Gallery Scene
