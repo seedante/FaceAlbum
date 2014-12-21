@@ -308,7 +308,6 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             newFace.photoOwner = newPhoto;
             newFace.assetURLString = newPhoto.uniqueURLString;
             //newFace.name = @"";
-            //newFace.personOwner = [[Store sharedStore] FacelessMan];
             
             CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
             CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
@@ -332,7 +331,6 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
                 newFace.pathForBackup = avatorName;
             }
             CGImageRelease(headCGImage);
-            
             
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
             CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);

@@ -134,7 +134,7 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"show portrait");
+    //NSLog(@"show portrait");
     [self.photoFileFilter comparePhotoDataBetweenLocalAndDataBase];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
@@ -241,7 +241,7 @@ static CGFloat const kPhotoHeight = 654.0;
             break;
         }
     }
-    NSLog(@"Cell Number: %ld in section: %ld", (long)numberOfItems, (long)section);
+    //NSLog(@"Cell Number: %ld in section: %ld", (long)numberOfItems, (long)section);
     return numberOfItems;
 }
 
@@ -389,7 +389,7 @@ static CGFloat const kPhotoHeight = 654.0;
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:self.portraitIndex]];
             ALAsset *asset = self.assetsDictionary[faceItem.assetURLString];
             if (asset) {
-                NSLog(@"asset cache");
+                //NSLog(@"asset cache");
                 [photoView setImage:[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage]];
             }else{
                 NSURL *assetURL = [NSURL URLWithString:faceItem.assetURLString];
@@ -953,7 +953,7 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (void)handleDeletedPhotos
 {
-    NSLog(@"Handle for Delete");
+    //NSLog(@"Handle for Delete");
     dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(defaultQueue, ^{
         NSArray *deletedAssetsURLString = [self.photoFileFilter notexistedAssetsURLString];
