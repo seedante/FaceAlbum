@@ -51,6 +51,7 @@ typedef enum {
 @property (nonatomic)FaceppDetection *onlineDetector;
 @property (nonatomic) BOOL onLine;
 
+
 @end
 
 @implementation SDEMontageRoomViewController
@@ -74,7 +75,6 @@ typedef enum {
     self.includedSections = [[NSMutableSet alloc] init];
     self.triggeredDeletedSections = [NSMutableSet new];
     self.guardObjectIDs = [NSMutableSet new];
-    
     
     self.collectionView.allowsSelection = NO;
     
