@@ -86,6 +86,8 @@ static CGFloat const kPhotoHeight = 654.0;
     self.nameTitle.text = @"";
     self.infoTitle.text = @"";
     [self registerAsObserver];
+    self.actionCenterButton.layer.cornerRadius = 22.0f;
+    self.actionCenterButton.layer.masksToBounds = YES;
     
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlShowOfTabBar:)];
@@ -306,8 +308,19 @@ static CGFloat const kPhotoHeight = 654.0;
                     ALAsset *asset = self.assetsDictionary[faceItem.assetURLString];
                     if (asset) {
                         [photoView setImage:[UIImage imageWithCGImage:asset.aspectRatioThumbnail]];
-                    }else
-                        [photoView setImage:faceItem.photoOwner.thumbnail];
+                    }else{
+                        NSLog(@"asset cache error");
+                        //[photoView setImage:faceItem.photoOwner.thumbnail];
+                        NSURL *assetURL = [NSURL URLWithString:faceItem.assetURLString];
+                        [self.photoLibrary assetForURL:assetURL resultBlock:^(ALAsset *assetForURL){
+                            if (assetForURL) {
+                                [photoView setImage:[UIImage imageWithCGImage:assetForURL.aspectRatioThumbnail]];
+                            }else
+                                [photoView setImage:nil];
+                        }failureBlock:^(NSError *error){
+                            [photoView setImage:[UIImage imageNamed:@"AccessDenied.png"]];
+                        }];
+                    }
                     break;
                 }
             }
@@ -450,9 +463,15 @@ static CGFloat const kPhotoHeight = 654.0;
                     case kFaceType:
                         scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, -2)];
                         break;
-                    case kThumbnailType:
-                        scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
+                    case kThumbnailType:{
+                        CGFloat scaleFactor;
+                        if(photoView.image.size.width > photoView.image.size.height){
+                            scaleFactor = 144/cell.bounds.size.width;
+                        }else
+                            scaleFactor = 144/cell.bounds.size.height;
+                        scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(scaleFactor, scaleFactor, 1)];
                         break;
+                    }
                 }
 
                 CAAnimationGroup *group = [CAAnimationGroup animation];
@@ -470,6 +489,7 @@ static CGFloat const kPhotoHeight = 654.0;
                     self.librarySwitch.alpha = 1.0f;
                     self.libraryVC.collectionView.alpha = 1.0f;
                 }];
+                
             }
             break;
         }
@@ -484,8 +504,8 @@ static CGFloat const kPhotoHeight = 654.0;
     self.currentMaxItem = -1;
     switch (self.contentType) {
         case kPortraitType:{
-            if (self.buttonPanel.isPopup) {
-                [self.buttonPanel hide];
+            if (!self.buttonPanel.hidden) {
+                self.buttonPanel.hidden = YES;
             }
             
             self.shouldFlyCell = YES;
@@ -521,8 +541,8 @@ static CGFloat const kPhotoHeight = 654.0;
             break;
         }
         case kLibraryType:{
-            if (self.buttonPanel.isPopup) {
-                [self.buttonPanel hide];
+            if (!self.buttonPanel.hidden) {
+                self.buttonPanel.hidden = YES;
             }
             
             self.shouldScaleAndBack = NO;
@@ -598,7 +618,7 @@ static CGFloat const kPhotoHeight = 654.0;
         [cell.layer removeAnimationForKey:@"scale"];
         self.libraryVC.collectionView.hidden = YES;
     }];
-    self.actionCenterButton.hidden = YES;
+    //self.actionCenterButton.hidden = YES;
     [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
@@ -1021,13 +1041,17 @@ static CGFloat const kPhotoHeight = 654.0;
     
     if (self.buttonPanel.hidden) {
         self.buttonPanel.hidden = NO;
-        [self.buttonPanel hide];
+        if (!self.buttonPanel.isPopup) {
+            [self.buttonPanel popup];
+        }
+    }else{
+        if (self.buttonPanel.isPopup) {
+            [self.buttonPanel hide];
+        }else
+            [self.buttonPanel popup];
     }
     
-    if (self.buttonPanel.isPopup) {
-        [self.buttonPanel hide];
-    }else
-        [self.buttonPanel popup];
+
 }
 
 #pragma mark - Update headerView Info
@@ -1037,6 +1061,8 @@ static CGFloat const kPhotoHeight = 654.0;
         case kPortraitType:
             self.nameTitle.text = @"";
             self.infoTitle.text = @"";
+            self.buttonPanel.hidden = YES;
+            [self.actionCenterButton setImage:[UIImage imageNamed:@"centerButton.png"] forState:UIControlStateNormal];
             break;
         case kLibraryType:{
             id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
@@ -1051,6 +1077,12 @@ static CGFloat const kPhotoHeight = 654.0;
                 self.nameTitle.text = [NSString stringWithFormat:@"%@", personItem.name];
                 self.infoTitle.text = [NSString stringWithFormat:@"Count: %d", avatorCount];
             }
+            
+            if (personItem) {
+                [self.actionCenterButton setImage:personItem.avatorImage forState:UIControlStateNormal];
+            }else
+                [self.actionCenterButton setImage:[UIImage imageNamed:@"face.png"] forState:UIControlStateNormal];
+
             break;
         }
         case kPhotoType:{

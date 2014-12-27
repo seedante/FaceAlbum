@@ -31,7 +31,6 @@ typedef enum : NSUInteger {
 - (BOOL)updateAsset:(ALAsset *)asset WithDetector:(FaceDetectorType)detectorType;
 - (NSArray *)allFacesInPhoto;
 - (void)cleanCache;
-- (void)filterAssets;
 - (void)saveAfterScan;
 
 @end

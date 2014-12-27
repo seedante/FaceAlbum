@@ -127,7 +127,8 @@
             }];
         }else{
             NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLString.count);
-            [self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
+            //[self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
+            [self continueToCompare];
         }
     } failureBlock:nil];
     

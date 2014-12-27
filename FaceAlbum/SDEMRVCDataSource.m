@@ -379,7 +379,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     SDEAvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.layer.cornerRadius = cell.avatorCornerRadius;
-    cell.clipsToBounds = YES;
+    //cell.clipsToBounds = YES;
     
     //Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
      /*
@@ -418,7 +418,12 @@ static NSString * const cellIdentifier = @"avatorCell";
         //NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         UIImage *image = [UIImage imageWithContentsOfFile:face.pathForBackup];
+        
         if (image) {
+            //UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
+            //[image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
+            //UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
+            //[self.imageCache setObject:thubnailImage forKey:indexPath];
             [self.imageCache setObject:image forKey:indexPath];
         }else{
             //NSLog(@"Read error");

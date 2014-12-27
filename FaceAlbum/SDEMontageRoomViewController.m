@@ -449,7 +449,7 @@ typedef enum {
     if (newPerson) {
         newPerson.order = (int)newSection;
         Face *anyFaceItem = (Face *)newPerson.ownedFaces.anyObject;
-        newPerson.avatorImage = [UIImage imageWithContentsOfFile: anyFaceItem.posterURLString];
+        newPerson.avatorImage = anyFaceItem.avatorImage;
         newPerson.posterURLString = anyFaceItem.posterURLString;
     }
     NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);

@@ -179,6 +179,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD04DC301A4EE30B0088EA43 /* FaceAlbum 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 5.xcdatamodel"; sourceTree = "<group>"; };
 		FD1164E619A8808500C1A41F /* SDECandidateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDECandidateCell.h; sourceTree = "<group>"; };
 		FD1164E719A8808500C1A41F /* SDECandidateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDECandidateCell.m; sourceTree = "<group>"; };
 		FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonProfileHeaderView.h; sourceTree = "<group>"; };
@@ -1261,6 +1262,7 @@
 		FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD04DC301A4EE30B0088EA43 /* FaceAlbum 5.xcdatamodel */,
 				FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */,
 				FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */,
 				FD339F7019EB28530025E149 /* FaceAlbum 2.xcdatamodel */,
