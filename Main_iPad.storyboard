@@ -70,16 +70,22 @@
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-vl-eb2">
-                                    <rect key="frame" x="681" y="11" width="67" height="33"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-vl-eb2">
+                                    <rect key="frame" x="634" y="11" width="114" height="33"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="67" id="E5o-Z0-B1u"/>
+                                        <constraint firstAttribute="width" constant="114" id="E5o-Z0-B1u"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <state key="normal" title="SelectAll">
+                                    <state key="normal" title="Choose Avator">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="performChooseAction:" destination="18c-uM-ajg" eventType="touchUpInside" id="C6X-Cm-kVc"/>
+                                    </connections>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="centerButton.png" translatesAutoresizingMaskIntoConstraints="NO" id="tRi-Ac-ICx">
+                                    <rect key="frame" x="3" y="3" width="44" height="44"/>
+                                </imageView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="10" id="A2b-OY-XIy"/>
@@ -92,10 +98,11 @@
                                 <constraint firstAttribute="trailing" secondItem="KIM-vl-eb2" secondAttribute="trailing" constant="20" id="zgc-MC-NUS"/>
                             </constraints>
                             <connections>
+                                <outlet property="actionButton" destination="KIM-vl-eb2" id="9zR-xZ-T7J"/>
+                                <outlet property="avatorImageView" destination="tRi-Ac-ICx" id="5wy-05-SwH"/>
                                 <outlet property="collectionView" destination="0YA-ok-D2X" id="NuW-ew-kF3"/>
                                 <outlet property="nameTextField" destination="rDV-Xj-e5B" id="DPf-SU-blt"/>
                                 <outlet property="numberLabel" destination="iRr-Ru-fZl" id="keR-yR-Ygj"/>
-                                <outlet property="selectAllButton" destination="KIM-vl-eb2" id="NR5-7e-j0j"/>
                             </connections>
                         </collectionReusableView>
                         <connections>

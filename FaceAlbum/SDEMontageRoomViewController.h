@@ -13,7 +13,8 @@
 #define DLog( s, ... )
 #endif
 
-@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate>
+@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate, UICollectionViewDelegate>
 
-
+@property (nonatomic, assign) BOOL isChoosingAvator;
+@property (nonatomic, assign) NSInteger sectionOfChooseAvator;
 @end

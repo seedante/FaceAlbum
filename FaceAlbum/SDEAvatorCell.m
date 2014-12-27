@@ -67,9 +67,4 @@
     self.overlayView.alpha = 0.f;
 }
 
-- (void)setCellCornerRadius:(CGSize)imageSize
-{
-    
-}
-
 @end

@@ -51,9 +51,9 @@
         <relationship name="faceset" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="photoOwner" inverseEntity="Face" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AlbumGroup" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Face" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="Person" positionX="0" positionY="0" width="128" height="178"/>
-        <element name="Photo" positionX="0" positionY="0" width="128" height="178"/>
+        <element name="AlbumGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Face" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Person" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Photo" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

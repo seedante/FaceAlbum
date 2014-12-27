@@ -15,6 +15,5 @@
 @property (nonatomic, assign) BOOL showOverlayViewWhenSelected;
 
 - (CGFloat)avatorCornerRadius;
-- (void)setCellCornerRadius:(CGSize)imageSize;
 
 @end

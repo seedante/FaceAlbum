@@ -35,4 +35,21 @@
     [textField resignFirstResponder];
 }
 
+- (IBAction)performChooseAction:(id)sender
+{
+    if (self.collectionView.allowsSelection) {
+        self.collectionView.allowsSelection = NO;
+        self.delegate.isChoosingAvator = NO;
+        self.delegate.sectionOfChooseAvator = -1;
+        [self.actionButton setBackgroundColor:[UIColor clearColor]];
+    }else{
+        self.collectionView.allowsSelection = YES;
+        self.collectionView.allowsMultipleSelection = NO;
+        self.delegate.isChoosingAvator = YES;
+        self.delegate.sectionOfChooseAvator = self.section;
+        [self.actionButton setBackgroundColor:[UIColor redColor]];
+    }
+
+}
+
 @end

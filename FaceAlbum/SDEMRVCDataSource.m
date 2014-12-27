@@ -407,8 +407,8 @@ static NSString * const cellIdentifier = @"avatorCell";
         
     }
     
-    cell.order.hidden = YES;
-    
+    //cell.order.hidden = YES;
+    //cell.order.text = [NSString stringWithFormat:@"%@", ];
     return cell;
 }
 
@@ -426,7 +426,7 @@ static NSString * const cellIdentifier = @"avatorCell";
             //[self.imageCache setObject:thubnailImage forKey:indexPath];
             [self.imageCache setObject:image forKey:indexPath];
         }else{
-            //NSLog(@"Read error");
+            NSLog(@"Read error");
             image = face.avatorImage;
             [self.imageCache setObject:image forKey:indexPath];
         }
@@ -448,17 +448,23 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
+    
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
-        personProfileHeaderView.selectAllButton.hidden = YES;
+        personProfileHeaderView.actionButton.hidden = YES;
+        [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
     }else{
         personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
         personProfileHeaderView.nameTextField.enabled = YES;
-        personProfileHeaderView.selectAllButton.hidden = YES;
+        //personProfileHeaderView.actionButton.hidden = YES;
+        Person *personItem = faceItem.personOwner;
+        if (personItem) {
+            [personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
+        }
     }
     
-    personProfileHeaderView.personOrder = faceItem.personOwner.order;
+    personProfileHeaderView.section = indexPath.section;
     
     return personProfileHeaderView;
 }

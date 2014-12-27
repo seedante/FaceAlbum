@@ -30,6 +30,7 @@ typedef enum {
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) SDEMRVCDataSource *dataSource;
 
+
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
 @property (nonatomic) UIBarButtonItem *showGalleryBarButton;
@@ -155,6 +156,7 @@ typedef enum {
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"selectedFaces" options:0 context:NULL];
+    [self addObserver:self forKeyPath:@"isChoosingAvator" options:0 context:NULL];
 }
 
 - (void)cancelObserver
@@ -166,6 +168,8 @@ typedef enum {
 {
     if ([keyPath isEqualToString:@"selectedFaces"]) {
         [self updateTitle];
+    }else if ([keyPath isEqualToString:@"isChoosingAvator"]){
+        
     }
 }
 
@@ -182,6 +186,8 @@ typedef enum {
     
     self.navigationItem.title = newTitle;
 }
+
+
 
 #pragma mark <UICollectionViewDelegateFlowLayout>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -385,6 +391,7 @@ typedef enum {
     self.collectionView.allowsMultipleSelection = YES;
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
+    self.isChoosingAvator = NO;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
@@ -618,10 +625,34 @@ typedef enum {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
-        [self processCellAtIndexPath:indexPath type:@"Select"];
-        if (![self.includedSections containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
-            [self.includedSections addObject:@(indexPath.section)];
+        if (self.isChoosingAvator) {
+            NSLog(@"Choose avator");
+            SDEPersonProfileHeaderView *header = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.sectionOfChooseAvator]];
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            Person *personItem = faceItem.personOwner;
+            UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
+            if (avatorImage) {
+                NSLog(@"what happen");
+                personItem.avatorImage = avatorImage;
+                [header.avatorImageView setImage:avatorImage];
+                header.backgroundColor = [UIColor redColor];
+            }else{
+                NSLog(@"what's wrong");
+                avatorImage = faceItem.avatorImage;
+                personItem.avatorImage = avatorImage;
+                [header.avatorImageView setImage:avatorImage];
+            }
+            [self saveEdit];
+            //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.sectionOfChooseAvator]];
+            
+            
+        }else{
+            [self processCellAtIndexPath:indexPath type:@"Select"];
+            if (![self.includedSections containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+                [self.includedSections addObject:@(indexPath.section)];
+            }
         }
+        
     }else{
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int targetSection = firstItemInSection.section;
@@ -678,6 +709,12 @@ typedef enum {
             [self unenableLeftBarButtonItems];
         }
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Hold on");
+    return YES;
 }
 
 #pragma mark - UITextFieldDelegate
