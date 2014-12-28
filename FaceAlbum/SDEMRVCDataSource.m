@@ -400,7 +400,6 @@ static NSString * const cellIdentifier = @"avatorCell";
         __weak SDEAvatorCell *weakCellSelf = cell;
         [self fetchImageForCellAtIndexPath:indexPath completionHandler:^(){
             dispatch_sync(dispatch_get_main_queue(), ^{
-                //NSLog(@"complete fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
                 UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:face.storeFileName];
                 weakCellSelf.avatorView.image = cachedImage;
             });
@@ -417,7 +416,6 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)fetchImageForCellAtIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
 {
     dispatch_async(self.imageLoadQueue, ^{
-        //NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         NSString *imagePath = [self.storeDirectory stringByAppendingPathComponent:face.storeFileName];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
@@ -460,7 +458,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.actionButton.hidden = NO;
         Person *personItem = faceItem.personOwner;
         if (personItem) {
-            [personProfileHeaderView.avatorImageView setImage:faceItem.avatorImage];
+            [personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
             if (personItem.name && personItem.name.length > 0) {
                 NSLog(@"Person Name: %@", personItem.name);
                 personProfileHeaderView.nameTextField.text = personItem.name;

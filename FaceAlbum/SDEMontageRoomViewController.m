@@ -37,10 +37,10 @@ typedef enum {
 @property (nonatomic) UIBarButtonItem *hiddenBarButton;
 @property (nonatomic) UIBarButtonItem *addBarButton;
 
-@property (nonatomic) NSMutableSet *selectedFaces;
-@property (nonatomic) NSMutableSet *includedSections;
-@property (nonatomic) NSMutableSet *triggeredDeletedSections;
-@property (nonatomic) NSMutableSet *guardObjectIDs;
+@property (nonatomic) NSMutableSet *selectedFacesSet;
+@property (nonatomic) NSMutableSet *includedSectionsSet;
+@property (nonatomic) NSMutableSet *triggeredDeletedSectionsSet;
+@property (nonatomic) NSMutableSet *guardObjectIDsSet;
 
 @property (nonatomic) UICollectionView  *candidateView;
 
@@ -72,10 +72,10 @@ typedef enum {
     [self.navigationItem setRightBarButtonItem:self.showFaceRoomBarButton];
     [self registerForKeyboardNotifications];
     
-    self.selectedFaces = [[NSMutableSet alloc] init];
-    self.includedSections = [[NSMutableSet alloc] init];
-    self.triggeredDeletedSections = [NSMutableSet new];
-    self.guardObjectIDs = [NSMutableSet new];
+    self.selectedFacesSet = [[NSMutableSet alloc] init];
+    self.includedSectionsSet = [[NSMutableSet alloc] init];
+    self.triggeredDeletedSectionsSet = [NSMutableSet new];
+    self.guardObjectIDsSet = [NSMutableSet new];
     
     self.collectionView.allowsSelection = NO;
     
@@ -84,7 +84,6 @@ typedef enum {
     self.dataSource.collectionView = self.collectionView;
     self.faceFetchedResultsController = self.dataSource.faceFetchedResultsController;
     self.managedObjectContext = self.faceFetchedResultsController.managedObjectContext;
-    
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
@@ -143,45 +142,46 @@ typedef enum {
 }
 
 #pragma mark - KVC Complaint for @property selectedFaces
-- (void)addSelectedFaces:(NSSet *)objects
+- (void)addSelectedFacesSet:(NSSet *)objects
 {
-    [self.selectedFaces unionSet:objects];
+    [self.selectedFacesSet unionSet:objects];
 }
 
-- (void)removeSelectedFaces:(NSSet *)objects
+- (void)removeSelectedFacesSet:(NSSet *)objects
 {
-    [self.selectedFaces minusSet:objects];
+    [self.selectedFacesSet minusSet:objects];
 }
 
 #pragma mark - KVO Notification and Response
 - (void)registerAsObserver
 {
-    [self addObserver:self forKeyPath:@"selectedFaces" options:0 context:NULL];
+    [self addObserver:self forKeyPath:@"selectedFacesSet" options:0 context:NULL];
     //[self addObserver:self forKeyPath:@"isChoosingAvator" options:0 context:NULL];
 }
 
 - (void)cancelObserver
 {
-    [self removeObserver:self forKeyPath:@"selectedFaces"];
+    [self removeObserver:self forKeyPath:@"selectedFacesSet"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"selectedFaces"]) {
         [self updateTitle];
-    }else if ([keyPath isEqualToString:@"isChoosingAvator"]){
-        
     }
 }
 
 - (void)updateTitle
 {
     NSString *newTitle;
-    if (self.selectedFaces.count > 1) {
-        newTitle = [NSString stringWithFormat:@"Select %lu avators", (unsigned long)self.selectedFaces.count];
-        [self.DoneBarButton setTitle:@"Confirm"];
+    if (self.selectedFacesSet.count > 1) {
+        newTitle = [NSString stringWithFormat:@"Select %lu avators", (unsigned long)self.selectedFacesSet.count];
+        [self.DoneBarButton setTitle:@"Cancel"];
+    }else if (self.selectedFacesSet.count == 1){
+        newTitle = [NSString stringWithFormat:@"Select 1 avator"];
+        [self.DoneBarButton setTitle:@"Cancel"];
     }else{
-        newTitle = [NSString stringWithFormat:@"Select %lu avator", (unsigned long)self.selectedFaces.count];
+        newTitle = @"";
         [self.DoneBarButton setTitle:@"Confirm"];
     }
     
@@ -224,10 +224,10 @@ typedef enum {
 
 - (void)cleanUsedData
 {
-    [self.triggeredDeletedSections removeAllObjects];
-    [self.guardObjectIDs removeAllObjects];
-    [self removeSelectedFaces:[self.selectedFaces copy]];
-    [self.includedSections removeAllObjects];
+    [self.triggeredDeletedSectionsSet removeAllObjects];
+    [self.guardObjectIDsSet removeAllObjects];
+    [self removeSelectedFacesSet:[self.selectedFacesSet copy]];
+    [self.includedSectionsSet removeAllObjects];
     
     [self saveEdit];
     [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
@@ -250,35 +250,35 @@ typedef enum {
 - (void)filterSelectedItemSetWithTargetViewSection:(NSInteger)targetViewSection
 {
     DLog(@"STEP 1: filter selected items.");
-    [self.guardObjectIDs removeAllObjects];
-    [self.triggeredDeletedSections removeAllObjects];
+    [self.guardObjectIDsSet removeAllObjects];
+    [self.triggeredDeletedSectionsSet removeAllObjects];
     
     NSPredicate *targetViewSectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(targetViewSection)];
-    [self.selectedFaces filterUsingPredicate:targetViewSectionPredicate];
-    [self.includedSections removeObject:@(targetViewSection)];
+    [self.selectedFacesSet filterUsingPredicate:targetViewSectionPredicate];
+    [self.includedSectionsSet removeObject:@(targetViewSection)];
     
     //if selected items include a whole section's items, handle it.
-    for (NSNumber *sectionNumber in self.includedSections) {
+    for (NSNumber *sectionNumber in self.includedSectionsSet) {
         NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
-        NSArray *matchedItems = [self.selectedFaces.allObjects filteredArrayUsingPredicate:sectionPredicate];
+        NSArray *matchedItems = [self.selectedFacesSet.allObjects filteredArrayUsingPredicate:sectionPredicate];
         if (matchedItems.count > 0) {
             NSInteger section = [sectionNumber integerValue];
             NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
             if (itemCount == matchedItems.count) {
                 DLog(@"All items at section: %d are choiced. This will trigger detele section.", (int)section+1);
-                [self.triggeredDeletedSections addObject:sectionNumber];
-                [self.selectedFaces removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
+                [self.triggeredDeletedSectionsSet addObject:sectionNumber];
+                [self.selectedFacesSet removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
             }
         }
     }
-    [self.includedSections removeAllObjects];
+    [self.includedSectionsSet removeAllObjects];
 }
 
 - (void)manageSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
 {
     DLog(@"STEP 2: create copy items in target section.");
-    if (self.triggeredDeletedSections.count > 0) {
-        for (NSNumber *sectionNumber in self.triggeredDeletedSections) {
+    if (self.triggeredDeletedSectionsSet.count > 0) {
+        for (NSNumber *sectionNumber in self.triggeredDeletedSectionsSet) {
             NSInteger section = sectionNumber.integerValue;
             if (section == targetDataSection) {
                 DLog(@"It's impossible!!!");
@@ -289,8 +289,8 @@ typedef enum {
             }
         }
     }else{
-        if (self.selectedFaces.count > 0) {
-            NSIndexPath *anyIndexPath = self.selectedFaces.anyObject;
+        if (self.selectedFacesSet.count > 0) {
+            NSIndexPath *anyIndexPath = self.selectedFacesSet.anyObject;
             DLog(@"Index: %@", anyIndexPath);
             Face *anyFace = [self.faceFetchedResultsController objectAtIndexPath:anyIndexPath];
             if (anyFace.section == targetDataSection) {
@@ -301,7 +301,7 @@ typedef enum {
                 singleCopyFaceItem.section = (int)targetDataSection;
                 singleCopyFaceItem.whetherToDisplay = YES;
             }
-            [self.selectedFaces removeObject:anyIndexPath];
+            [self.selectedFacesSet removeObject:anyIndexPath];
         }
     }
     
@@ -311,14 +311,14 @@ typedef enum {
 - (void)filterSelectedItemsInSection:(NSInteger)section
 {
     NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(section)];
-    [self.selectedFaces filterUsingPredicate:sectionPredicate];
+    [self.selectedFacesSet filterUsingPredicate:sectionPredicate];
 }
 
 - (NSManagedObject *)copyManagedObjectAtIndexPath:(NSIndexPath *)indexPath;
 {
     Face *originalFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     NSManagedObjectID *objectID = originalFaceItem.objectID;
-    [self.guardObjectIDs addObject:objectID];
+    [self.guardObjectIDsSet addObject:objectID];
     Face *copyFaceItem = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
     copyFaceItem.avatorImage = originalFaceItem.avatorImage;
     copyFaceItem.storeFileName = originalFaceItem.storeFileName;
@@ -336,16 +336,16 @@ typedef enum {
 
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
-    if (self.selectedFaces.count > 0) {
+    if (self.selectedFacesSet.count > 0) {
         DLog(@"STEP 3: move left items to target section.");
         NSInteger targetSection = [targetSectionNumber integerValue];
-        for (NSIndexPath *indexPath in self.selectedFaces) {
+        for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             if (selectedFace.section != (int)targetSection) {
                 selectedFace.section = (int)targetSection;
             }
         }
-        [self.selectedFaces removeAllObjects];
+        [self.selectedFacesSet removeAllObjects];
     }else
         DLog(@"There is no item need to move.");
 
@@ -354,13 +354,13 @@ typedef enum {
 
 - (void)deleteOriginalItems
 {
-    if (self.guardObjectIDs.count > 0) {
+    if (self.guardObjectIDsSet.count > 0) {
         DLog(@"STEP 4: delete original items.");
-        for (NSManagedObjectID *objectID in self.guardObjectIDs) {
+        for (NSManagedObjectID *objectID in self.guardObjectIDsSet) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
             [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
         }
-        [self.guardObjectIDs removeAllObjects];
+        [self.guardObjectIDsSet removeAllObjects];
     }else
         DLog(@"There is no item to delete.");
     
@@ -388,7 +388,7 @@ typedef enum {
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
     
-    [self.selectedFaces removeAllObjects];
+    //[self.selectedFaces removeAllObjects];
 }
 
 #pragma mark - hidden somebody
@@ -404,7 +404,7 @@ typedef enum {
 
 - (void)hiddenSelectedFaces
 {
-    for (NSIndexPath *indexPath in self.selectedFaces) {
+    for (NSIndexPath *indexPath in self.selectedFacesSet) {
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         face.whetherToDisplay = NO;
         [self.dataSource removeCachedImageWithKey:face.storeFileName];
@@ -432,10 +432,10 @@ typedef enum {
     NSInteger newSection = firstItemInSection.section + 1;
     [self filterSelectedItemSetWithTargetViewSection:sectionCount];
     Person *newPerson;
-    if (self.selectedFaces.count > 0) {
+    if (self.selectedFacesSet.count > 0) {
         newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
         newPerson.whetherToDisplay = YES;
-        for (NSIndexPath *indexPath in self.selectedFaces) {
+        for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             selectedFaceItem.personOwner = newPerson;
             selectedFaceItem.name = nil;
@@ -555,13 +555,14 @@ typedef enum {
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
     self.navigationItem.rightBarButtonItem = self.showFaceRoomBarButton;
+    [self.DoneBarButton setTitle:@"Cancel"];
     
     [self unenableLeftBarButtonItems];
     self.collectionView.allowsSelection = NO;
-    [self.selectedFaces removeAllObjects];
-    [self.includedSections removeAllObjects];
-    [self.triggeredDeletedSections removeAllObjects];
-    [self.guardObjectIDs removeAllObjects];
+    [self.selectedFacesSet removeAllObjects];
+    [self.includedSectionsSet removeAllObjects];
+    [self.triggeredDeletedSectionsSet removeAllObjects];
+    [self.guardObjectIDsSet removeAllObjects];
     
     [self saveEdit];
     [self checkRightBarButtionItem];
@@ -666,8 +667,8 @@ typedef enum {
             
         }else{
             [self processCellAtIndexPath:indexPath type:@"Select"];
-            if (![self.includedSections containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
-                [self.includedSections addObject:@(indexPath.section)];
+            if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+                [self.includedSectionsSet addObject:@(indexPath.section)];
             }
         }
         
@@ -682,8 +683,8 @@ typedef enum {
         NSArray *Persons = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];
         if (Persons && Persons.count > 0) {
             selectedPerson = (Person *)Persons.firstObject;
-            if (self.selectedFaces.count > 0) {
-                for (NSIndexPath *itemIndexPath in self.selectedFaces) {
+            if (self.selectedFacesSet.count > 0) {
+                for (NSIndexPath *itemIndexPath in self.selectedFacesSet) {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
                     if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
                         selectedFaceItem.personOwner = selectedPerson;
@@ -716,14 +717,14 @@ typedef enum {
 - (void)processCellAtIndexPath:(NSIndexPath *)indexPath type:(NSString *)type
 {
     if ([type isEqual:@"Select"]) {
-        [self addSelectedFaces:[NSSet setWithObject:indexPath]];
+        [self addSelectedFacesSet:[NSSet setWithObject:indexPath]];
         [self enableLeftBarButtonItems];
     }
     
     if ([type isEqual:@"Deselect"]) {
-        [self removeSelectedFaces:[NSSet setWithObject:indexPath]];
+        [self removeSelectedFacesSet:[NSSet setWithObject:indexPath]];
         
-        if (self.selectedFaces.count == 0) {
+        if (self.selectedFacesSet.count == 0) {
             [self unenableLeftBarButtonItems];
         }
     }
