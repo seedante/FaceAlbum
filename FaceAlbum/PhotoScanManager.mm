@@ -16,7 +16,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Foundation/Foundation.h>
 
-#define avatorSize 300.0
+static CGFloat const avatorWidth = 150.0f;
+static CGFloat const avatorHeight = 150.0f;
 
 CGImageRef (^flipCGImage)(CGImageRef sourceCGImage) = ^CGImageRef(CGImageRef sourceCGImage){
     CGSize size = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
@@ -27,7 +28,7 @@ CGImageRef (^flipCGImage)(CGImageRef sourceCGImage) = ^CGImageRef(CGImageRef sou
     return result;
 };
 
-UIImage *(^CGImageToUIImage)(CGImageRef sourceCGImage) = ^UIImage *(CGImageRef sourceCGImage){
+UIImage *(^UIImageConvertedFromCGImage)(CGImageRef sourceCGImage) = ^UIImage *(CGImageRef sourceCGImage){
     CGSize size = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -36,7 +37,7 @@ UIImage *(^CGImageToUIImage)(CGImageRef sourceCGImage) = ^UIImage *(CGImageRef s
     return image;
 };
 
-UIImage *(^resizeToCGSize)(CGImageRef sourceCGImage, CGSize targetSize) = ^UIImage *(CGImageRef sourceCGImage, CGSize targetSize){
+UIImage *(^UIImageFromCGImageWithNewsize)(CGImageRef sourceCGImage, CGSize targetSize) = ^UIImage *(CGImageRef sourceCGImage, CGSize targetSize){
     CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
     UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -45,15 +46,15 @@ UIImage *(^resizeToCGSize)(CGImageRef sourceCGImage, CGSize targetSize) = ^UIIma
     return image;
 };
 
-CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
+CGRect (^CGRectAvatorBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
     CGRect headBound;
-    float x = faceBound.origin.x - faceBound.size.width;
-    float y = faceBound.origin.y - faceBound.size.height;
+    float x = faceBound.origin.x - 0.6*faceBound.size.width;
+    float y = faceBound.origin.y - 0.85*faceBound.size.height;
     headBound.origin.x = x > 0.0?x:0.0;
     headBound.origin.y = y > 0.0?y:0.0;
     
-    float width = faceBound.size.width * 3.0;
-    float height = faceBound.size.height * 3.0;
+    float width = faceBound.size.width * 2.2;
+    float height = faceBound.size.height * 2.2;
     if (width + x > imageSize.width) {
         width = imageSize.width - x;
     }
@@ -66,7 +67,7 @@ CGRect (^HeadBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSi
     return headBound;
 };
 
-CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
+CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize imageSize, CGRect faceBound){
     CGRect headBound;
     float x = faceBound.origin.x - faceBound.size.width;
     float y = faceBound.origin.y - faceBound.size.height;
@@ -291,7 +292,7 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     if (detectResult.faces.count > 0) {
         includeFace = YES;
         CGSize imageSize = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
-        NSLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
+        //NSLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
         self.faceCountInThisScan += detectResult.faces.count;
         for (FaceppLocalFace *detectedFace in detectResult.faces) {
             Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
@@ -302,30 +303,28 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             newFace.assetURLString = newPhoto.uniqueURLString;
             //newFace.name = @"";
             
-            CGRect headBound = HeadBound(imageSize, detectedFace.bounds);
-            CGImageRef headCGImage = CGImageCreateWithImageInRect(sourceCGImage, headBound);
-            UIImage *headUIImage = [UIImage imageWithCGImage:headCGImage];
-            [self.facesInAPhoto addObject:headUIImage];
+            CGRect avatorBound = CGRectAvatorBound(imageSize, detectedFace.bounds);
+            CGImageRef avatorCGImage = CGImageCreateWithImageInRect(sourceCGImage, avatorBound);
+            UIImage *avatorUIImage = nil;
+            if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 100.0f) {
+                NSLog(@"Big Face");
+                avatorUIImage = UIImageFromCGImageWithNewsize(avatorCGImage, CGSizeMake(avatorWidth, avatorHeight));
+            }else
+                avatorUIImage = [UIImage imageWithCGImage:avatorCGImage];
+            [self.facesInAPhoto addObject:avatorUIImage];
             
-            //UIImage *avatorUIImage = nil;
-            //avatorUIImage = headUIImage;
-            //if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 150.0) {
-            //    avatorUIImage = resizeToCGSize(headCGImage, CGSizeMake(avatorSize, avatorSize));
-            //}else
-            //    avatorUIImage = headUIImage;
-            
-            newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
+            newFace.avatorImage = avatorUIImage;
             NSString *avatorName = [[[NSUUID alloc] init] UUIDString];
             avatorName = [avatorName stringByAppendingPathExtension:@"jpg"];
             newFace.storeFileName = avatorName;
             NSString *avatorPath = [self.cachePath stringByAppendingPathComponent:avatorName];
-            NSData *avatorImageData = UIImageJPEGRepresentation(headUIImage, 1.0f);
+            NSData *avatorImageData = UIImageJPEGRepresentation(avatorUIImage, 1.0f);
             BOOL writeSuccess = [avatorImageData writeToFile:avatorPath atomically:YES];
             if (!writeSuccess)
                 NSLog(@"Write Avator Image To File Error");
-            CGImageRelease(headCGImage);
+            CGImageRelease(avatorCGImage);
             
-            CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
+            CGRect portraitBound = CGRectPortraitBound(imageSize, detectedFace.bounds);
             newFace.portraitAreaRect = [NSValue valueWithCGRect:portraitBound];
             /*
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);

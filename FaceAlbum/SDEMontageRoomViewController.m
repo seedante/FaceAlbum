@@ -104,6 +104,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.tabBarController.tabBar.hidden = YES;
     [self registerAsObserver];
     [self checkRightBarButtionItem];
 }
@@ -185,7 +186,6 @@ typedef enum {
     
     self.navigationItem.title = newTitle;
 }
-
 
 
 #pragma mark <UICollectionViewDelegateFlowLayout>

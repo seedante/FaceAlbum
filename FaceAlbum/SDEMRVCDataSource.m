@@ -26,7 +26,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 @property (nonatomic) BOOL blendBatchUpdateMode;
 @property (nonatomic) NSCache *imageCache;
 @property (nonatomic) dispatch_queue_t imageLoadQueue;
-@property (nonatomic, copy) NSString *storeFolder;
+@property (nonatomic, copy) NSString *storeDirectory;
 
 @end
 
@@ -35,12 +35,13 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (instancetype)init
 {
     self = [super init];
-    sectionChanges = [[NSMutableArray alloc] init];
-    objectChanges = [[NSMutableArray alloc] init];
-    self.blendBatchUpdateMode = NO;
-    self.imageCache = [[NSCache alloc] init];
-    self.imageLoadQueue = dispatch_queue_create("com.seedante.FaceAlbum", DISPATCH_QUEUE_SERIAL);
-    //self.imageLoadQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    if (self) {
+        sectionChanges = [[NSMutableArray alloc] init];
+        objectChanges = [[NSMutableArray alloc] init];
+        self.blendBatchUpdateMode = NO;
+        self.imageCache = [[NSCache alloc] init];
+        self.imageLoadQueue = dispatch_queue_create("com.seedante.FaceAlbum", DISPATCH_QUEUE_SERIAL);
+    }
     return self;
 }
 
@@ -53,13 +54,13 @@ static NSString * const cellIdentifier = @"avatorCell";
     return sharedInstance;
 }
 
-- (NSString *)storeFolder
+- (NSString *)storeDirectory
 {
-    if (!_storeFolder) {
-        _storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    if (!_storeDirectory) {
+        _storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     }
     
-    return _storeFolder;
+    return _storeDirectory;
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -417,7 +418,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         
     }
     
-    //cell.order.hidden = YES;
+    cell.order.hidden = YES;
     //cell.order.text = [NSString stringWithFormat:@"%@", ];
     return cell;
 }
@@ -427,7 +428,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     dispatch_async(self.imageLoadQueue, ^{
         //NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        NSString *imagePath = [self.storeFolder stringByAppendingPathComponent:face.storeFileName];
+        NSString *imagePath = [self.storeDirectory stringByAppendingPathComponent:face.storeFileName];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
             UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
@@ -448,7 +449,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"HeaderView Indexpath: %@", indexPath);
+    //DLog(@"HeaderView Indexpath: %@", indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     personProfileHeaderView.delegate = (SDEMontageRoomViewController *)collectionView.delegate;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
@@ -458,24 +459,24 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
-    
+    //there is a stupid issue, whatever I do, cocoa can't diff first header with other header.
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
-        personProfileHeaderView.actionButton.hidden = YES;
         [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
     }else{
-        personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
         personProfileHeaderView.nameTextField.enabled = YES;
-        //personProfileHeaderView.actionButton.hidden = YES;
+        personProfileHeaderView.actionButton.hidden = NO;
         Person *personItem = faceItem.personOwner;
         if (personItem) {
             [personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
+            if (personItem.name && personItem.name.length > 0) {
+                personProfileHeaderView.nameTextField.text = personItem.name;
+            }
         }
     }
     
-    personProfileHeaderView.section = indexPath.section;
-    
+    personProfileHeaderView.section = faceItem.section;
     return personProfileHeaderView;
 }
 
