@@ -20,4 +20,7 @@
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 
+- (void)removeCachedImageWithKey:(id)key;
+- (void)removeAllCachedImages;
+
 @end

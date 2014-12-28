@@ -32,7 +32,7 @@ typedef enum {
 
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
-@property (nonatomic) UIBarButtonItem *showGalleryBarButton;
+@property (nonatomic) UIBarButtonItem *showFaceRoomBarButton;
 @property (nonatomic) UIBarButtonItem *moveBarButton;
 @property (nonatomic) UIBarButtonItem *hiddenBarButton;
 @property (nonatomic) UIBarButtonItem *addBarButton;
@@ -69,7 +69,7 @@ typedef enum {
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
     
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
-    [self.navigationItem setRightBarButtonItem:self.showGalleryBarButton];
+    [self.navigationItem setRightBarButtonItem:self.showFaceRoomBarButton];
     [self registerForKeyboardNotifications];
     
     self.selectedFaces = [[NSMutableSet alloc] init];
@@ -88,16 +88,15 @@ typedef enum {
     
     NSError *error;
     if (![self.faceFetchedResultsController performFetch:&error]) {
-        DLog(@"Face Fetch Fail: %@", error);
+        NSLog(@"Face Fetch Fail: %@", error);
     }
 
-    DLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
+    //NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
 
 -(void)goBackToTop
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-    
     self.goBackUpButton.hidden = YES;
 }
 
@@ -254,13 +253,6 @@ typedef enum {
     [self.guardObjectIDs removeAllObjects];
     [self.triggeredDeletedSections removeAllObjects];
     
-    //remove bordercolor effect.
-    for (NSIndexPath *indexPath in self.selectedFaces) {
-        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        cell.layer.borderWidth = 0.0f;
-        cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }
-    
     NSPredicate *targetViewSectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(targetViewSection)];
     [self.selectedFaces filterUsingPredicate:targetViewSectionPredicate];
     [self.includedSections removeObject:@(targetViewSection)];
@@ -406,7 +398,6 @@ typedef enum {
         return _hiddenBarButton;
     }
     _hiddenBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(hiddenSelectedFaces)];
-    //_hiddenBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"remove_user-32.png"] style:UIBarButtonItemStylePlain target:self action:@selector(hiddenSelectedFaces)];
     _hiddenBarButton.enabled = NO;
     return _hiddenBarButton;
 }
@@ -416,6 +407,7 @@ typedef enum {
     for (NSIndexPath *indexPath in self.selectedFaces) {
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
         face.whetherToDisplay = NO;
+        [self.dataSource removeCachedImageWithKey:face.storeFileName];
     }
 
     [self cleanUsedData];
@@ -442,12 +434,11 @@ typedef enum {
     Person *newPerson;
     if (self.selectedFaces.count > 0) {
         newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
-        newPerson.name = @"";
         newPerson.whetherToDisplay = YES;
         for (NSIndexPath *indexPath in self.selectedFaces) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             selectedFaceItem.personOwner = newPerson;
-            selectedFaceItem.name = @"";
+            selectedFaceItem.name = nil;
         }
     }
     
@@ -496,7 +487,10 @@ typedef enum {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     
     self.goBackUpButton.hidden = NO;
-    [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
+    //奇怪，记得当时是因为正常的调用不起作用，才使用 performSelector 的，这里完全可以正常调用啊。是不是当时写迷糊了？
+    //[self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
+    [self unenableLeftBarButtonItems];
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionCount]];
 }
 
 #pragma mark - move some faces
@@ -545,21 +539,12 @@ typedef enum {
     if (_DoneBarButton) {
         return _DoneBarButton;
     }
-    //_DoneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEdit)];
     _DoneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEdit)];
     return _DoneBarButton;
 }
 
 - (void)doneEdit
 {
-    if (self.selectedFaces.count > 0) {
-        for (NSIndexPath *indexPath in self.selectedFaces) {
-            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-            cell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            cell.layer.borderWidth = 0.0f;
-        }
-    }
-    
     if ([self.view.subviews containsObject:self.candidateView]) {
         [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
@@ -569,7 +554,7 @@ typedef enum {
     self.navigationItem.title = @"";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
-    self.navigationItem.rightBarButtonItem = self.showGalleryBarButton;
+    self.navigationItem.rightBarButtonItem = self.showFaceRoomBarButton;
     
     [self unenableLeftBarButtonItems];
     self.collectionView.allowsSelection = NO;
@@ -582,17 +567,17 @@ typedef enum {
     [self checkRightBarButtionItem];
 }
 
-#pragma mark - go to Gallery Scene
-- (UIBarButtonItem *)showGalleryBarButton
+#pragma mark - go to FaceRoom Scene
+- (UIBarButtonItem *)showFaceRoomBarButton
 {
-    if (_showGalleryBarButton) {
-        return _showGalleryBarButton;
+    if (_showFaceRoomBarButton) {
+        return _showFaceRoomBarButton;
     }
-    _showGalleryBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showGalleryScene)];
-    return _showGalleryBarButton;
+    _showFaceRoomBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showFaceRoomScene)];
+    return _showFaceRoomBarButton;
 }
 
-- (void)showGalleryScene
+- (void)showFaceRoomScene
 {
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     BOOL ThreeScene = [defaultConfig boolForKey:@"isGalleryOpened"];
@@ -629,7 +614,7 @@ typedef enum {
 
     //DLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
     [self.navigationController popToRootViewControllerAnimated:YES];
-    //DLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
+    //NSLog(@"NV VC Count: %lu", (unsigned long)self.navigationController.viewControllers.count);
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source

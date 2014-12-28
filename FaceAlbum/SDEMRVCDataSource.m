@@ -390,27 +390,18 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     SDEAvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.layer.cornerRadius = cell.avatorCornerRadius;
-    //cell.clipsToBounds = YES;
     
-    //Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-     /*
-    if (face.section == 0 && !face.personOwner) {
-        face.personOwner = [[Store sharedStore] FacelessMan];
-    }
-    if(!face.photoOwner.isExisted){
-        cell.backgroundColor = [UIColor redColor];
-        cell.avatorView.alpha = 0.5;
-    }
-     */
-    UIImage *avatorImage = (UIImage *)[self.imageCache objectForKey:indexPath];
+    Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    UIImage *avatorImage = (UIImage *)[self.imageCache objectForKey:face.storeFileName];
     if (avatorImage) {
         cell.avatorView.image = avatorImage;
     }else{
+        NSLog(@"No Cache for cell at %@", indexPath);
         __weak SDEAvatorCell *weakCellSelf = cell;
         [self fetchImageForCellAtIndexPath:indexPath completionHandler:^(){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 //NSLog(@"complete fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
-                UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:indexPath];
+                UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:face.storeFileName];
                 weakCellSelf.avatorView.image = cachedImage;
             });
 
@@ -418,8 +409,8 @@ static NSString * const cellIdentifier = @"avatorCell";
         
     }
     
-    cell.order.hidden = YES;
-    //cell.order.text = [NSString stringWithFormat:@"%@", ];
+    //cell.order.hidden = YES;
+    cell.order.text = [NSString stringWithFormat:@"%ld", (long)indexPath.section];
     return cell;
 }
 
@@ -435,11 +426,11 @@ static NSString * const cellIdentifier = @"avatorCell";
             [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
             UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            [self.imageCache setObject:thubnailImage forKey:indexPath];
+            [self.imageCache setObject:thubnailImage forKey:face.storeFileName];
         }else{
             NSLog(@"Read error");
             image = face.avatorImage;
-            [self.imageCache setObject:image forKey:indexPath];
+            [self.imageCache setObject:image forKey:face.storeFileName];
         }
         
         Handler();
@@ -460,7 +451,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
     //there is a stupid issue, whatever I do, cocoa can't diff first header with other header.
-    if (faceItem.section == 0) {
+    if (indexPath.section == 0 && faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
         [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
@@ -469,16 +460,26 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.actionButton.hidden = NO;
         Person *personItem = faceItem.personOwner;
         if (personItem) {
-            [personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
+            [personProfileHeaderView.avatorImageView setImage:faceItem.avatorImage];
             if (personItem.name && personItem.name.length > 0) {
+                NSLog(@"Person Name: %@", personItem.name);
                 personProfileHeaderView.nameTextField.text = personItem.name;
             }
-        }
+        }else
+            personProfileHeaderView.nameTextField.text = @"????";
     }
     
     personProfileHeaderView.section = faceItem.section;
     return personProfileHeaderView;
 }
 
+- (void)removeCachedImageWithKey:(id)key
+{
+    [self.imageCache removeObjectForKey:key];
+}
 
+- (void)removeAllCachedImages
+{
+    [self.imageCache removeAllObjects];
+}
 @end
