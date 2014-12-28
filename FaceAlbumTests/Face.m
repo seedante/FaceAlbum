@@ -11,14 +11,12 @@
 @implementation Face
 
 @dynamic avatorImage;
-@dynamic pathForBackup;
-@dynamic detectedFaceImage;
-@dynamic detectedFaceRect;
+@dynamic storeFileName;
+@dynamic portraitAreaRect;
 @dynamic faceID;
 @dynamic order;
 @dynamic section;
 @dynamic whetherToDisplay;
-@dynamic posterURLString;
 @dynamic tag;
 @dynamic isMyStar;
 @dynamic assetURLString;

@@ -200,6 +200,7 @@
 		FD4131331997486B00141578 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
 		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
+		FD4ED7ED1A4FF2E20047FA22 /* FaceAlbum 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 6.xcdatamodel"; sourceTree = "<group>"; };
 		FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJFlowLayoutWithAnimations.h; sourceTree = "<group>"; };
 		FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJFlowLayoutWithAnimations.m; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbumDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1262,6 +1263,7 @@
 		FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FD4ED7ED1A4FF2E20047FA22 /* FaceAlbum 6.xcdatamodel */,
 				FD04DC301A4EE30B0088EA43 /* FaceAlbum 5.xcdatamodel */,
 				FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */,
 				FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */,

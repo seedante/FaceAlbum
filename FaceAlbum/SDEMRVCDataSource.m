@@ -26,6 +26,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 @property (nonatomic) BOOL blendBatchUpdateMode;
 @property (nonatomic) NSCache *imageCache;
 @property (nonatomic) dispatch_queue_t imageLoadQueue;
+@property (nonatomic, copy) NSString *storeFolder;
 
 @end
 
@@ -50,6 +51,15 @@ static NSString * const cellIdentifier = @"avatorCell";
         sharedInstance = [[SDEMRVCDataSource alloc]init];
     });
     return sharedInstance;
+}
+
+- (NSString *)storeFolder
+{
+    if (!_storeFolder) {
+        _storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    }
+    
+    return _storeFolder;
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -417,14 +427,14 @@ static NSString * const cellIdentifier = @"avatorCell";
     dispatch_async(self.imageLoadQueue, ^{
         //NSLog(@"async fetch data at item: %ld section: %ld", (long)indexPath.item, (long)indexPath.section);
         Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        UIImage *image = [UIImage imageWithContentsOfFile:face.pathForBackup];
-        
+        NSString *imagePath = [self.storeFolder stringByAppendingPathComponent:face.storeFileName];
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
-            //UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
-            //[image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
-            //UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
-            //[self.imageCache setObject:thubnailImage forKey:indexPath];
-            [self.imageCache setObject:image forKey:indexPath];
+            UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
+            [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
+            UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            [self.imageCache setObject:thubnailImage forKey:indexPath];
         }else{
             NSLog(@"Read error");
             image = face.avatorImage;

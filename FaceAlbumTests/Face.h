@@ -15,14 +15,12 @@
 @interface Face : NSManagedObject
 
 @property (nonatomic, retain) UIImage * avatorImage;
-@property (nonatomic, retain) NSString * pathForBackup;
-@property (nonatomic, retain) UIImage * detectedFaceImage;
-@property (nonatomic, retain) NSValue * detectedFaceRect;
+@property (nonatomic, retain) NSString * storeFileName;
+@property (nonatomic, retain) NSValue * portraitAreaRect;
 @property (nonatomic, retain) NSString * faceID;
 @property (nonatomic) double order;
 @property (nonatomic) int32_t section;
 @property (nonatomic) BOOL whetherToDisplay;
-@property (nonatomic, retain) NSString * posterURLString;
 @property (nonatomic, retain) NSString * tag;
 @property (nonatomic) BOOL isMyStar;
 @property (nonatomic) NSString *assetURLString;

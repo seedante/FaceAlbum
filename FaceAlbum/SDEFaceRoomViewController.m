@@ -39,6 +39,7 @@ static CGFloat const kPhotoHeight = 654.0;
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
+@property (nonatomic) NSString *storeFolder;
 
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
 @property (nonatomic) NSInteger portraitIndex;
@@ -133,6 +134,15 @@ static CGFloat const kPhotoHeight = 654.0;
         startScene = @"MontageRoom";
     }
     return startScene;
+}
+
+- (NSString *)storeFolder
+{
+    if (!_storeFolder) {
+        _storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    }
+    
+    return _storeFolder;
 }
 
 - (void)registerAsObserver
@@ -272,7 +282,8 @@ static CGFloat const kPhotoHeight = 654.0;
             if (personItem.order == 0) {
                 [photoView setImage:[UIImage imageNamed:@"FacelessManPoster.jpg"]];
             }else{
-                UIImage *avatorImage = [UIImage imageWithContentsOfFile:personItem.posterURLString];
+                NSString *imagePath = [self.storeFolder stringByAppendingPathComponent:personItem.portraitFileString];
+                UIImage *avatorImage = [UIImage imageWithContentsOfFile:imagePath];
                 if (avatorImage) {
                     [photoView setImage:avatorImage];
                 }else

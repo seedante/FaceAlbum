@@ -13,7 +13,7 @@
 @implementation Person
 
 @dynamic avatorImage;
-@dynamic posterURLString;
+@dynamic portraitFileString;
 @dynamic faceCount;
 @dynamic name;
 @dynamic personID;

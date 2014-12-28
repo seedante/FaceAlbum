@@ -30,7 +30,6 @@ typedef enum {
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) SDEMRVCDataSource *dataSource;
 
-
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
 @property (nonatomic) UIBarButtonItem *showGalleryBarButton;
@@ -156,7 +155,7 @@ typedef enum {
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"selectedFaces" options:0 context:NULL];
-    [self addObserver:self forKeyPath:@"isChoosingAvator" options:0 context:NULL];
+    //[self addObserver:self forKeyPath:@"isChoosingAvator" options:0 context:NULL];
 }
 
 - (void)cancelObserver
@@ -328,12 +327,11 @@ typedef enum {
     [self.guardObjectIDs addObject:objectID];
     Face *copyFaceItem = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
     copyFaceItem.avatorImage = originalFaceItem.avatorImage;
-    copyFaceItem.pathForBackup = originalFaceItem.pathForBackup;
-    copyFaceItem.detectedFaceImage = originalFaceItem.detectedFaceImage;
-    copyFaceItem.detectedFaceRect = originalFaceItem.detectedFaceRect;
+    copyFaceItem.storeFileName = originalFaceItem.storeFileName;
+    copyFaceItem.portraitAreaRect = originalFaceItem.portraitAreaRect;
     copyFaceItem.faceID = originalFaceItem.faceID;
     copyFaceItem.order = originalFaceItem.order;
-    copyFaceItem.posterURLString = originalFaceItem.posterURLString;
+    copyFaceItem.assetURLString = originalFaceItem.assetURLString;
     copyFaceItem.tag = originalFaceItem.tag;
     copyFaceItem.isMyStar = originalFaceItem.isMyStar;
     copyFaceItem.personOwner = originalFaceItem.personOwner;
@@ -456,8 +454,39 @@ typedef enum {
     if (newPerson) {
         newPerson.order = (int)newSection;
         Face *anyFaceItem = (Face *)newPerson.ownedFaces.anyObject;
-        newPerson.avatorImage = anyFaceItem.avatorImage;
-        newPerson.posterURLString = anyFaceItem.posterURLString;
+        
+        UIImage *avatorImage = anyFaceItem.avatorImage;
+        UIGraphicsBeginImageContext(CGSizeMake(44.0f, 44.0f));
+        [avatorImage drawInRect:CGRectMake(0, 0, 44.0f, 44.0f)];
+        UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        newPerson.avatorImage = thubnailImage;
+        
+        NSString *assetURLString = anyFaceItem.assetURLString;
+        [[[ALAssetsLibrary alloc] init] assetForURL:[NSURL URLWithString:assetURLString] resultBlock:^(ALAsset *asset){
+            if (asset) {
+                CGImageRef sourceCGImage = [asset.defaultRepresentation fullScreenImage];
+                CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, anyFaceItem.portraitAreaRect.CGRectValue);
+                UIImage *portraitUIImage = [UIImage imageWithCGImage:portraitCGImage];
+                NSData *imageData = UIImageJPEGRepresentation(portraitUIImage, 1.0f);
+                NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+                NSString *portraitName = [[[NSUUID alloc] init] UUIDString];
+                portraitName = [portraitName stringByAppendingPathExtension:@"jpg"];
+                newPerson.portraitFileString = portraitName;
+                NSString *savePath = [storeFolder stringByAppendingPathComponent:portraitName];
+                BOOL success = [imageData writeToFile:savePath atomically:YES];
+                if (!success) {
+                    NSLog(@"Create Portrait Image File Error");
+                }else
+                    NSLog(@"Write Portrait Image File to Path: %@", savePath);
+                CGImageRelease(portraitCGImage);
+                //CGImageRelease(sourceCGImage);
+            }else
+                NSLog(@"Access Asset Failed");
+        }failureBlock:^(NSError *error){
+            NSLog(@"Authorizate Failed");
+        }];
+        
     }
     NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
     [self saveEdit];
@@ -630,18 +659,20 @@ typedef enum {
             SDEPersonProfileHeaderView *header = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.sectionOfChooseAvator]];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             Person *personItem = faceItem.personOwner;
-            UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.pathForBackup];
+            UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
             if (avatorImage) {
                 NSLog(@"what happen");
-                personItem.avatorImage = avatorImage;
-                [header.avatorImageView setImage:avatorImage];
+                //personItem.avatorImage = avatorImage;
                 header.backgroundColor = [UIColor redColor];
             }else{
                 NSLog(@"what's wrong");
                 avatorImage = faceItem.avatorImage;
-                personItem.avatorImage = avatorImage;
-                [header.avatorImageView setImage:avatorImage];
             }
+
+            personItem.avatorImage = avatorImage;
+            [header.avatorImageView setImage:avatorImage];
+            header.numberLabel.text = @"hahhhhhh==";
+
             [self saveEdit];
             //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.sectionOfChooseAvator]];
             

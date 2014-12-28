@@ -280,7 +280,6 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
     ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
     CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
     //CGImageRef sourceCGImage = asset.aspectRatioThumbnail;
-    DLog(@"Image Size: %lux%lu", CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
     UIImage *imageForDetect = [UIImage imageWithCGImage:sourceCGImage];
     
     Photo *newPhoto = [Photo insertNewObjectInManagedObjectContext:self.managedObjectContext];
@@ -294,7 +293,6 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
         CGSize imageSize = CGSizeMake(CGImageGetWidth(sourceCGImage), CGImageGetHeight(sourceCGImage));
         NSLog(@"Detect %lu faces in the Photo.", (unsigned long)detectResult.faces.count);
         self.faceCountInThisScan += detectResult.faces.count;
-        //DLog(@"Face Count: %lu For Now.", (unsigned long)_faceTotalCount);
         for (FaceppLocalFace *detectedFace in detectResult.faces) {
             Face *newFace = [Face insertNewObjectInManagedObjectContext:self.managedObjectContext];
             newFace.whetherToDisplay = YES;
@@ -319,28 +317,30 @@ CGRect (^PortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSize ima
             newFace.avatorImage = [[UIImage alloc] initWithCGImage:headCGImage];
             NSString *avatorName = [[[NSUUID alloc] init] UUIDString];
             avatorName = [avatorName stringByAppendingPathExtension:@"jpg"];
-            avatorName = [self.cachePath stringByAppendingPathComponent:avatorName];
-            NSData *avatorImageData = UIImageJPEGRepresentation(headUIImage, 1.0);
-            BOOL writeSuccess = [avatorImageData writeToFile:avatorName atomically:YES];
-            if (writeSuccess) {
-                newFace.pathForBackup = avatorName;
-            }else
-                NSLog(@"Write To File error");
+            newFace.storeFileName = avatorName;
+            NSString *avatorPath = [self.cachePath stringByAppendingPathComponent:avatorName];
+            NSData *avatorImageData = UIImageJPEGRepresentation(headUIImage, 1.0f);
+            BOOL writeSuccess = [avatorImageData writeToFile:avatorPath atomically:YES];
+            if (!writeSuccess)
+                NSLog(@"Write Avator Image To File Error");
             CGImageRelease(headCGImage);
             
+            CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
+            newFace.portraitAreaRect = [NSValue valueWithCGRect:portraitBound];
+            /*
             CGRect portraitBound = PortraitBound(imageSize, detectedFace.bounds);
             CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitBound);
             UIImage *posterImage = [UIImage imageWithCGImage:portraitCGImage];
             NSString *posterName = [[[NSUUID alloc] init] UUIDString];
-            NSString *posterSaveName = [posterName stringByAppendingPathExtension:@"jpg"];
-            NSString *savePath = [self.cachePath stringByAppendingPathComponent:posterSaveName];
+            posterName = [posterName stringByAppendingPathExtension:@"jpg"];
+            newFace.posterURLString = posterName;
+            NSString *savePath = [self.cachePath stringByAppendingPathComponent:posterName];
             NSData *imageData = UIImageJPEGRepresentation(posterImage, 1.0);
             BOOL success = [imageData writeToFile:savePath atomically:YES];
-            if (!success) {
-                NSLog(@"Wrong!Wrong!Wrong!");
-            }
-            newFace.posterURLString = savePath;
+            if (!success)
+                NSLog(@"Write Poster Image to File Error!");
             CGImageRelease(portraitCGImage);
+             */
 
             self.numberOfItemsInFirstSection += 1;
             newFace.order = self.numberOfItemsInFirstSection;
