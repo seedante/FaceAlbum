@@ -64,7 +64,8 @@ typedef enum {
     [self.view addSubview:self.goBackUpButton];
     [self.goBackUpButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
-    self.goBackUpButton.center = CGPointMake(0, -50);
+    self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
+    self.goBackUpButton.hidden = YES;
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
     
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
@@ -95,8 +96,9 @@ typedef enum {
 
 -(void)goBackToTop
 {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
-    self.goBackUpButton.center = CGPointMake(-100, -100);
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    
+    self.goBackUpButton.hidden = YES;
 }
 
 
@@ -491,9 +493,9 @@ typedef enum {
     NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
     [self saveEdit];
     
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-    self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     
+    self.goBackUpButton.hidden = NO;
     [self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
 }
 
@@ -716,7 +718,7 @@ typedef enum {
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         
-        self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
+        self.goBackUpButton.hidden = NO;
     }
 }
 
