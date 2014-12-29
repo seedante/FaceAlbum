@@ -8,8 +8,6 @@
 
 #import "SDEFaceVCDataSource.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "PhotoCell.h"
-#import "FaceCell.h"
 #import "PhotoScanManager.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -87,11 +85,10 @@ static NSString *cellIdentifier = @"faceCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    FaceCell *faceCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    faceCell.layer.cornerRadius = faceCell.faceViewCornerRadius;
-    faceCell.clipsToBounds = YES;
-    
-    faceCell.faceView.image = self.showFaces[indexPath.item];
+    UICollectionViewCell *faceCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    UIImageView *imageView = (UIImageView *)[faceCell viewWithTag:10];
+    //faceCell.layer.cornerRadius = faceCell.faceViewCornerRadius;
+    imageView.image = self.showFaces[indexPath.item];
     
     return faceCell;
 }

@@ -13,14 +13,13 @@
 #define DLog( s, ... )
 #endif
 
-@interface SDEScanRoomViewController : UIViewController
+@interface SDEScanRoomViewController : UIViewController<UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *assetCollectionView;
 @property (strong, nonatomic) IBOutlet UICollectionView *faceCollectionView;
 @property (nonatomic) NSMutableArray *showAssets;
 @property (weak, nonatomic) IBOutlet UIButton *scanButton;
 @property (weak, nonatomic) IBOutlet UIView *requestPhotoAuthorizationView;
-
 
 - (IBAction)scanPhotos:(id)sender;
 

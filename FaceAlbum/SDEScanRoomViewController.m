@@ -7,7 +7,6 @@
 //
 
 #import "SDEScanRoomViewController.h"
-#import "PhotoCell.h"
 #import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
 #import "SDEPhotoFileFilter.h"
@@ -39,16 +38,29 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.faceDataSource = [SDEFaceVCDataSource sharedDataSource];
-    self.faceCollectionView.dataSource = self.faceDataSource;
-    self.faceCollectionView.delegate = self.faceDataSource;
-    self.faceDataSource.collectionView = self.faceCollectionView;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     self.managedObjectContext = [[Store sharedStore] managedObjectContext];
     
-    
     [self piplineInitialize];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    //[self checkALAuthorizationStatus];
+    self.photoScanManager.faceCountInThisScan = 0;
+    NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
+    NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *faceEntity = [NSEntityDescription entityForName:@"Face" inManagedObjectContext:moc];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
+    [faceFetchRequest setEntity:faceEntity];
+    [faceFetchRequest setPredicate:predicate];
+    
+    NSArray *unknownFaces = [moc executeFetchRequest:faceFetchRequest error:nil];
+    self.photoScanManager.numberOfItemsInFirstSection = unknownFaces.count;
+    DLog(@"Unknown face count: %lu", (unsigned long)unknownFaces.count);
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,23 +78,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     [self.managedObjectContext reset];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self checkALAuthorizationStatus];
-    self.photoScanManager.faceCountInThisScan = 0;
-    NSManagedObjectContext *moc = [[Store sharedStore] managedObjectContext];
-    NSFetchRequest *faceFetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *faceEntity = [NSEntityDescription entityForName:@"Face" inManagedObjectContext:moc];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
-    [faceFetchRequest setEntity:faceEntity];
-    [faceFetchRequest setPredicate:predicate];
-    
-    NSArray *unknownFaces = [moc executeFetchRequest:faceFetchRequest error:nil];
-    self.photoScanManager.numberOfItemsInFirstSection = unknownFaces.count;
-    DLog(@"Unknown face count: %lu", (unsigned long)unknownFaces.count);
-}
 
 - (void)checkALAuthorizationStatus
 {
@@ -104,12 +99,38 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     pipelineWorkIndex = 0;
     self.allAssets = [[NSMutableArray alloc] init];
     self.showAssets = [[NSMutableArray alloc] init];
-
     
+    SDEPhotoFileFilter *photoDetector = [SDEPhotoFileFilter sharedPhotoFileFilter];
+    [photoDetector checkPhotoLibrary];
+    if ([photoDetector isPhotoAdded]) {
+        NSArray *newAssets = [photoDetector assetsNeedToScan];
+        if (newAssets.count > 0) {
+            for (ALAsset *asset in newAssets) {
+                if (self.showAssets.count < 3) {
+                    [self.showAssets addObject:asset];
+                }else
+                    [self.allAssets addObject:asset];
+            }
+            [self.assetCollectionView reloadData];
+            NSLog(@"Asset need to scan: %d", (int)(self.allAssets.count + self.showAssets.count));
+            [photoDetector reset];
+        }
+        //int count = (int)newAssets.count;
+        self.totalCount = newAssets.count;
+        if (self.totalCount == 0) {
+            self.scanButton.enabled = NO;
+            self.assetCollectionView.hidden = YES;
+            self.requestPhotoAuthorizationView.hidden = YES;
+        }
+        self.processIndicator.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)self.totalCount, (unsigned long)self.totalCount];
+    }else
+        NSLog(@"There is NO new photo");
+
+    /*
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
-    if (isFirstScan) {
-        DLog(@"This is the firct scan");
+    if (!isFirstScan) {
+        NSLog(@"This is the firct scan");
         self.photoScanManager.numberOfItemsInFirstSection = 0;
         
         NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
@@ -141,31 +162,9 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             }
         } failureBlock:nil];
     }else{
-        SDEPhotoFileFilter *photoDetector = [SDEPhotoFileFilter sharedPhotoFileFilter];
-        if ([photoDetector shouldScanPhotoLibrary]) {
-            NSArray *newAssets = [photoDetector assetsNeedToScan];
-            if (newAssets.count > 0) {
-                for (ALAsset *asset in newAssets) {
-                    if (self.showAssets.count < 3) {
-                        [self.showAssets addObject:asset];
-                    }else
-                        [self.allAssets addObject:asset];
-                }
-                [self.assetCollectionView reloadData];
-                DLog(@"Asset need to scan: %d", (int)(self.allAssets.count + self.showAssets.count));
-                [photoDetector cleanData];
-            }
-            //int count = (int)newAssets.count;
-            self.totalCount = newAssets.count;
-            if (self.totalCount == 0) {
-                self.scanButton.enabled = NO;
-                self.assetCollectionView.hidden = YES;
-                self.requestPhotoAuthorizationView.hidden = YES;
-            }
-            self.processIndicator.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)self.totalCount, (unsigned long)self.totalCount];
-        }else
-            DLog(@"There is NO new photo");
+
     }
+     */
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -194,10 +193,11 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PhotoCell *photoCell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    
+    UICollectionViewCell *photoCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    UIImageView *imageView = (UIImageView *)[photoCell viewWithTag:10];
     ALAsset *asset = (ALAsset *)[self.showAssets objectAtIndex:indexPath.item];
-    photoCell.asset = asset;
+    imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
+
     return photoCell;
 }
 

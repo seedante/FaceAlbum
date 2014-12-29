@@ -161,7 +161,7 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)viewWillAppear:(BOOL)animated
 {
     //NSLog(@"show portrait");
-    [self.photoFileFilter comparePhotoDataBetweenLocalAndDataBase];
+    [self.photoFileFilter checkPhotoLibrary];
     self.tabBarController.tabBar.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     self.buttonPanel.hidden = YES;
@@ -955,8 +955,8 @@ static CGFloat const kPhotoHeight = 654.0;
 #pragma mark - IBAction Method
 - (IBAction)scanPhotoLibrary:(id)sender
 {
-    DLog(@"Scan Library");
-    if ([self.photoFileFilter shouldScanPhotoLibrary]) {
+    NSLog(@"Scan Library");
+    if ([self.photoFileFilter isPhotoAdded]) {
         UIViewController *scanVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
         [self.navigationController pushViewController:scanVC animated:YES];
     }
@@ -965,8 +965,8 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (IBAction)editAlbum:(id)sender
 {
-    DLog(@"Need a little change.");
-    DLog(@"Check for deleted photos");
+    NSLog(@"Need a little change.");
+    NSLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
     [self resetFaceRoomScene];
     [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];
@@ -998,7 +998,7 @@ static CGFloat const kPhotoHeight = 654.0;
     //NSLog(@"Handle for Delete");
     dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(defaultQueue, ^{
-        NSArray *deletedAssetsURLString = [self.photoFileFilter notexistedAssetsURLString];
+        NSArray *deletedAssetsURLString = [self.photoFileFilter deletedAssetsURLStringArray];
         if (deletedAssetsURLString.count > 0) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
             for (NSString *URLString in deletedAssetsURLString) {
@@ -1016,10 +1016,10 @@ static CGFloat const kPhotoHeight = 654.0;
             [self.managedObjectContext save:nil];
         }
         
-        NSArray *gobackAssetsURLString = [self.photoFileFilter againStoredAssetsURLString];
-        if (gobackAssetsURLString.count > 0) {
+        NSArray *restoredAssetsURLString = [self.photoFileFilter restoredAssetsURLStringArray];
+        if (restoredAssetsURLString.count > 0) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Photo"];
-            for (NSString *URLString in gobackAssetsURLString) {
+            for (NSString *URLString in restoredAssetsURLString) {
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(isExisted == NO) AND (uniqueURLString like %@)", URLString];
                 [fetchRequest setPredicate:predicate];
                 NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
@@ -1034,21 +1034,17 @@ static CGFloat const kPhotoHeight = 654.0;
             [self.managedObjectContext save:nil];
         }
         
-        [self.photoFileFilter cleanData];
+        [self.photoFileFilter reset];
     });
 
 }
 
 - (IBAction)popMenu:(id)sender
 {
-    if (![self.photoFileFilter shouldScanPhotoLibrary]) {
+    if (![self.photoFileFilter isPhotoAdded]) {
         self.scanRoomButton.hidden = YES;
     }else
         self.scanRoomButton.hidden = NO;
-    if ([[self.photoFileFilter notexistedAssetsURLString] count] > 0) {
-        self.MontageRoomButton.highlighted = YES;
-    }else
-        self.MontageRoomButton.highlighted = NO;
     
     if (self.buttonPanel.hidden) {
         self.buttonPanel.hidden = NO;
