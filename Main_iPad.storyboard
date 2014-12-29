@@ -250,11 +250,11 @@
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Va-1O-m5e">
                                 <rect key="frame" x="0.0" y="840" width="768" height="120"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="Sp5-oS-BYF"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r7V-UB-Cvw">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="50" minimumInteritemSpacing="10" id="r7V-UB-Cvw">
                                     <size key="itemSize" width="120" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -274,7 +274,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="MQ9-vL-kCW" secondAttribute="bottom" id="Bvf-Gv-hYC"/>
                                             <constraint firstAttribute="trailing" secondItem="MQ9-vL-kCW" secondAttribute="trailing" id="ek3-l5-gI3"/>
@@ -285,6 +284,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="tMj-7K-Ytg" id="0ap-LT-Szu"/>
+                                    <outlet property="delegate" destination="tMj-7K-Ytg" id="W1S-pP-koh"/>
                                 </connections>
                             </collectionView>
                         </subviews>
@@ -905,7 +905,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mY8-Cd-IyR"/>
         <segue reference="fYU-IF-XFj"/>
+        <segue reference="cXo-XD-Ik9"/>
     </inferredMetricsTieBreakers>
 </document>

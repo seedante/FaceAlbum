@@ -101,41 +101,46 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
 
 - (void)checkPhotoLibrary
 {
+    NSLog(@"check photo file.");
+    if (!self.addedAssetsSet) {
+        self.addedAssetsSet = [NSMutableSet new];
+    }else{
+        [self.addedAssetsSet removeAllObjects];
+    }
+    
+    if (!self.allAssetsDictionary) {
+        self.allAssetsDictionary = [NSMutableDictionary new];
+    }else
+        [self.allAssetsDictionary removeAllObjects];
+    
+    if (self.deletedAssetsURLStringSet) {
+        self.deletedAssetsURLStringSet = nil;
+    }
+    
+    NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
+    [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
+        if (group && *stop != YES) {
+            [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
+                if (asset && *shouldStop != YES) {
+                    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+                    NSString *assetURLString = [assetURL absoluteString];
+                    [self.allAssetsURLStringSet addObject:assetURLString];
+                    [self.allAssetsDictionary setObject:asset forKey:assetURLString];
+                }
+            }];
+        }else{
+            NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLStringSet.count);
+            [self continueToCompare];
+            NSLog(@"Check finish.");
+        }
+    } failureBlock:nil];
+    //本担心太占用 CPU 而使用默认优先级的队列，结果发现虽然扫描一次的速度很快，但是切换到主线程去刷新界面还是太慢了。
+    /*
     dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(defaultQueue, ^{
-        NSLog(@"check photo file.");
-        if (!self.addedAssetsSet) {
-            self.addedAssetsSet = [NSMutableSet new];
-        }else{
-            [self.addedAssetsSet removeAllObjects];
-        }
-        
-        if (!self.allAssetsDictionary) {
-            self.allAssetsDictionary = [NSMutableDictionary new];
-        }else
-            [self.allAssetsDictionary removeAllObjects];
-        
-        if (self.deletedAssetsURLStringSet) {
-            self.deletedAssetsURLStringSet = nil;
-        }
-        
-        NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
-        [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
-            if (group && *stop != YES) {
-                [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
-                    if (asset && *shouldStop != YES) {
-                        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-                        NSString *assetURLString = [assetURL absoluteString];
-                        [self.allAssetsURLStringSet addObject:assetURLString];
-                        [self.allAssetsDictionary setObject:asset forKey:assetURLString];
-                    }
-                }];
-            }else{
-                NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLStringSet.count);
-                [self continueToCompare];
-            }
-        } failureBlock:nil];
+
     });
+     */
 
 }
 

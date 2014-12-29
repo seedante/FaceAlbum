@@ -7,7 +7,6 @@
 //
 
 #import "SDEScanRoomViewController.h"
-#import "SDEFaceVCDataSource.h"
 #import "PhotoScanManager.h"
 #import "SDEPhotoFileFilter.h"
 #import "Store.h"
@@ -17,13 +16,12 @@ static NSString *cellIdentifier = @"Cell";
 static NSString *segueIdentifier = @"enterMontageRoom";
 
 @interface SDEScanRoomViewController ()
-@property (nonatomic)SDEFaceVCDataSource *faceDataSource;
 @property (nonatomic)PhotoScanManager *photoScanManager;
 @property (nonatomic)SDEPhotoFileFilter *photoFileFilter;
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
-@property (nonatomic)NSMutableArray *assetsToScan;
-@property (nonatomic) NSArray *allAssets;
+@property (nonatomic) NSArray *assetsToScan;
 @property (nonatomic, assign) NSUInteger totalCount;
+@property (nonatomic, assign) NSUInteger faceCount;
 @property (weak, nonatomic) IBOutlet UILabel *processIndicator;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -31,9 +29,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @end
 
 @implementation SDEScanRoomViewController
-{
-    int pipelineWorkIndex;
-}
 
 #pragma mark - view prepare
 - (void)viewDidLoad
@@ -42,12 +37,18 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 	// Do any additional setup after loading the view, typically from a nib.
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = YES;
+    self.faceCount = 0;
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     self.managedObjectContext = [[Store sharedStore] managedObjectContext];
     self.photoFileFilter = [SDEPhotoFileFilter sharedPhotoFileFilter];
     [self.photoFileFilter addObserver:self forKeyPath:@"photoAdded" options:NSKeyValueObservingOptionNew context:nil];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [self.photoFileFilter checkPhotoLibrary];
-    //[self piplineInitialize];
+    [super viewWillAppear:animated];
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -82,99 +83,10 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 }
 
 
-- (void)checkALAuthorizationStatus
-{
-    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-    switch (status) {
-        case ALAuthorizationStatusAuthorized:
-            DLog(@"AssetsLibrary can acess.");
-            break;
-        default:
-            self.scanButton.enabled = NO;
-            self.assetCollectionView.hidden = YES;
-            self.requestPhotoAuthorizationView.hidden = NO;
-            break;
-    }
-}
-
-- (void)piplineInitialize
-{
-    pipelineWorkIndex = 0;
-    self.assetsToScan = [[NSMutableArray alloc] init];
-    self.showAssets = [[NSMutableArray alloc] init];
-    
-    SDEPhotoFileFilter *photoDetector = [SDEPhotoFileFilter sharedPhotoFileFilter];
-    [photoDetector checkPhotoLibrary];
-    if ([photoDetector isPhotoAdded]) {
-        NSArray *newAssets = [photoDetector assetsNeedToScan];
-        if (newAssets.count > 0) {
-            for (ALAsset *asset in newAssets) {
-                if (self.showAssets.count < 3) {
-                    [self.showAssets addObject:asset];
-                }else
-                    [self.assetsToScan addObject:asset];
-            }
-            [self.assetCollectionView reloadData];
-            NSLog(@"Asset need to scan: %d", (int)(self.assetsToScan.count + self.showAssets.count));
-            [photoDetector reset];
-        }
-        //int count = (int)newAssets.count;
-        self.totalCount = newAssets.count;
-        if (self.totalCount == 0) {
-            self.scanButton.enabled = NO;
-            self.assetCollectionView.hidden = YES;
-            self.requestPhotoAuthorizationView.hidden = YES;
-        }
-        self.processIndicator.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)self.totalCount, (unsigned long)self.totalCount];
-    }else
-        NSLog(@"There is NO new photo");
-
-    /*
-    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
-    if (!isFirstScan) {
-        NSLog(@"This is the firct scan");
-        self.photoScanManager.numberOfItemsInFirstSection = 0;
-        
-        NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
-        [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
-            if (group && *stop != YES) {
-                //NSURL *groupURL = (NSURL *)[group valueForProperty:ALAssetsGroupPropertyURL];
-                DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
-                DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyPersistentID]);
-                DLog(@"Group: %@", [group valueForProperty:ALAssetsGroupPropertyURL]);
-                [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
-                    if (asset && *stop != YES) {
-                        DLog(@"Asset: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
-                        
-                        if (self.showAssets.count < 3) {
-                            [self.showAssets addObject:asset];
-                        }else
-                            [self.allAssets addObject:asset];
-                    }
-                }];
-            }else{
-                self.totalCount = self.allAssets.count + self.showAssets.count;
-                if (self.totalCount == 0) {
-                    self.scanButton.enabled = NO;
-                    self.assetCollectionView.hidden = YES;
-                    self.requestPhotoAuthorizationView.hidden = YES;
-                }
-                
-                [self.assetCollectionView reloadData];
-            }
-        } failureBlock:nil];
-    }else{
-
-    }
-     */
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([self.photoFileFilter isPhotoAdded]) {
-        self.allAssets = [self.photoFileFilter assetsNeedToScan];
-        NSLog(@"asset number: %lu", (unsigned long)self.allAssets.count);
+        self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
     }
 }
@@ -183,25 +95,35 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
     NSInteger numberOfItems = 0;
     if ([collectionView isEqual:self.assetCollectionView]) {
-        numberOfItems = self.allAssets.count;
+        numberOfItems = self.assetsToScan.count;
     }else{
-        
+        numberOfItems = self.faceCount;
     }
     return numberOfItems;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
     UICollectionViewCell *photoCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     UIImageView *imageView = (UIImageView *)[photoCell viewWithTag:10];
-    ALAsset *asset = (ALAsset *)[self.allAssets objectAtIndex:indexPath.item];
-    imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
-
+    if ([collectionView isEqual:self.assetCollectionView]) {
+        ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:indexPath.item];
+        imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
+    }else{
+        
+    }
     return photoCell;
+}
+
+#pragma mark - UICollectionView Delegate Method
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([collectionView isEqual:self.assetCollectionView]) {
+        [self.assetCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    }
 }
 
 - (IBAction)scanPhotos:(id)sender
@@ -209,138 +131,34 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.tabBarController.tabBar.hidden = YES;
     [self.scanButton setTitle:@"Scan..." forState:UIControlStateNormal];
     self.scanButton.enabled = NO;
-    //[self productionlineStart];
+    self.assetCollectionView.allowsSelection = NO;
+    [self enumerateScanAssetAtIndexPath:@(0)];
 }
 
-- (void)productionlineStart
+- (void)enumerateScanAssetAtIndexPath:(NSNumber *)index
 {
-    [self lineScan];
-}
-
-#pragma mark - production line work
-- (void)lineScan
-{
-    if ([self.faceDataSource numberOfSectionsInCollectionView:self.faceCollectionView]) {
-        [self.faceDataSource removeAllFaces];
-        [self.faceCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
-        DLog(@"Remove previous faces");
-    }
-    
-    //solution 1: uiview animation, just can't keep scale effect.
-    if (pipelineWorkIndex > 0) {
-        UICollectionViewCell *previousCell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:pipelineWorkIndex - 1 inSection:0]];
-        previousCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }
-    UICollectionViewCell *currentCell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:pipelineWorkIndex inSection:0]];
-    currentCell.transform = CGAffineTransformMakeScale(1.1, 1.1);
-    /*
-    void (^scanAnimation)() = ^(){
-        UICollectionViewLayoutAttributes *attribute = [self.assetCollectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:pipelineWorkIndex inSection:0]];
-        attribute.transform3D = CATransform3DMakeScale(1.2, 1.2, 1.0);
-    };
-    [UIView transitionWithView:currentCell duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:scanAnimation completion:nil];
-     */
-    
-    /*
-    //en, it can work without GCD.
-    BOOL includeFace = [self.photoScanManager scanSingleAsset:self.showAssets[pipelineFlag] withDetector:FaceppFaceDetector];
-    pipelineFlag += 1;
-    if (includeFace) {
-        [self.faceDataSource addFaces:[self.photoScanManager allFacesInPhoto]];
-        [self.photoScanManager cleanCache];
-        [self.faceCollectionView performBatchUpdates:^{
-            NSUInteger showFaceCount = [[self.faceDataSource allFaces] count];
-            [self.faceDataSource.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
-            for (NSUInteger index = 0; index < showFaceCount; index ++) {
-                [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-            };
-        }completion:nil];
-    }
-     */
-    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
-    
-    dispatch_sync(backgroundQueue, ^{
-        BOOL includeFace = [self.photoScanManager scanAsset:self.showAssets[pipelineWorkIndex] withDetector:FaceppFaceDetector];
-        int count = (int)(self.assetsToScan.count + self.showAssets.count - pipelineWorkIndex);
-        self.processIndicator.text = [NSString stringWithFormat:@"%d/%lu", count, (unsigned long)self.totalCount];
-        pipelineWorkIndex += 1;
-        if (includeFace) {
-            [self.faceDataSource addFaces:[self.photoScanManager allFacesInPhoto]];
-            [self.photoScanManager cleanCache];
-            dispatch_async(mainQueue, ^{
-                [self.faceCollectionView performBatchUpdates:^{
-                    NSUInteger showFaceCount = [[self.faceDataSource allFaces] count];
-                    [self.faceCollectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
-                    for (NSUInteger index = 0; index < showFaceCount; index ++) {
-                        [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-                    };
-                }completion:nil];
-            });
-        }
-    });
-    
-    if (self.showAssets.count != 3) {
-        if (pipelineWorkIndex == self.showAssets.count) {
-            currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            pipelineWorkIndex = 0;
-            DLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
-            [self.photoScanManager saveAfterScan];
-            [self configFirstScene:NO];
-            [self cleanManagedObjectContext];
-            UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
-            [self.navigationController pushViewController:secondVC animated:YES];
-            //[self performSegueWithIdentifier:segueIdentifier sender:self];
-            return;
-        }else
-            [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.5];
-    }else{
-        if (pipelineWorkIndex == 3) {
-            if (self.assetsToScan.count == 0) {
-                currentCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            }
-            pipelineWorkIndex = 0;
-            [self performSelector:@selector(lineLoad) withObject:nil afterDelay:0.5];
-        }else
-            [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.5];
-    }
-}
-
-- (void)lineLoad
-{
-    if ([self.faceDataSource numberOfSectionsInCollectionView:self.faceCollectionView]) {
-        [self.faceDataSource removeAllFaces];
-        [self.faceCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
-        DLog(@"Remove previous faces");
-    }
-    if (self.assetsToScan.count == 0) {
-        DLog(@"Find %lu faces in this scan.", (unsigned long)self.photoScanManager.faceCountInThisScan);
-        [self.photoScanManager saveAfterScan];
-        [self configFirstScene:NO];
-        //UIViewController *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
-        //[self.navigationController pushViewController:secondVC animated:YES];
-        [self cleanManagedObjectContext];
-        [self performSegueWithIdentifier:segueIdentifier sender:self];
+    if (index.integerValue == self.assetsToScan.count - 1) {
         return;
-    }else if (self.assetsToScan.count >= 3){
-        [self.showAssets removeAllObjects];
-        [self.assetCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0], [NSIndexPath indexPathForItem:2 inSection:0]]];
-        NSArray *assetsForLoad = @[self.assetsToScan[0], self.assetsToScan[1], self.assetsToScan[2]];
-        [self.showAssets addObjectsFromArray:assetsForLoad];
-        [self.assetsToScan removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)]];
-        [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0], [NSIndexPath indexPathForItem:2 inSection:0]]];
-        [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.05];
-    }else{
-        [self.showAssets removeAllObjects];
-        [self.assetCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0], [NSIndexPath indexPathForItem:2 inSection:0]]];
-        [self.showAssets addObjectsFromArray:self.assetsToScan];
-        [self.assetsToScan removeAllObjects];
-        if (self.showAssets.count == 1) {
-            [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
-        }else
-            [self.assetCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0], [NSIndexPath indexPathForItem:1 inSection:0]]];
-        [self performSelector:@selector(lineScan) withObject:nil afterDelay:0.05];
     }
+    [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index.integerValue inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    UICollectionViewCell *cell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index.integerValue inSection:0]];
+    CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
+    scale.duration = 0.4;
+    scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1)];
+    [cell.layer addAnimation:scale forKey:@"scale"];
+    ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:index.integerValue];
+    BOOL faceDetected = [self.photoScanManager scanAsset:asset withDetector:FaceppFaceDetector];
+    if (faceDetected) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray *detectedFaces = [self.photoScanManager allFacesInPhoto];
+            self.faceCount += detectedFaces.count;
+        });
+    }
+    //__weak SDEScanRoomViewController *weakVCSelf = self;
+    [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(index.integerValue+1) afterDelay:0.1];
+    //[weakVCSelf enumerateScanAssetAtIndexPath:@(index.integerValue + 1)];
+    
 }
+
 
 @end
