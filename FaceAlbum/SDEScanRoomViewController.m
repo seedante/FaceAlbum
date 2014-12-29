@@ -13,7 +13,6 @@
 @import AssetsLibrary;
 
 static NSString *cellIdentifier = @"Cell";
-static NSString *segueIdentifier = @"enterMontageRoom";
 
 @interface SDEScanRoomViewController ()
 @property (nonatomic)PhotoScanManager *photoScanManager;
@@ -143,6 +142,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 - (void)enumerateScanAssetAtIndexPath:(NSNumber *)index
 {
     if (index.integerValue == self.assetsToScan.count - 1) {
+        [self prepareForNextScene];
         return;
     }
     [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index.integerValue inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
@@ -162,7 +162,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
             self.faceCount += detectedFaces.count;
             [self.avators addObjectsFromArray:detectedFaces];
             NSLog(@"fetch detected face.");
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [self.faceCollectionView performBatchUpdates:^{
                     for (NSInteger i = self.faceCount - detectedFaces.count; i < self.faceCount; i++) {
                         [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
@@ -170,6 +170,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
                 }completion:nil];
             });
         });
+        
     }
     //__weak SDEScanRoomViewController *weakVCSelf = self;
     [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(index.integerValue+1) afterDelay:0.1];
@@ -177,5 +178,11 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     
 }
 
+- (void)prepareForNextScene
+{
+    [self configFirstScene:NO];
+    UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
+    [self.navigationController pushViewController:montageRoomVC animated:NO];
+}
 
 @end
