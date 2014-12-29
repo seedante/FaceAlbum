@@ -155,7 +155,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         }else
             [self.restoredAssetsURLStringSet addObject:result[@"uniqueURLString"]];
     }
-    NSLog(@"Scaned Assets Count: %lu", kURLStringResults.count);
+    NSLog(@"Scaned Assets Count: %lu", (unsigned long)kURLStringResults.count);
     NSSet *allAssetsCopy = [self.allAssetsURLStringSet copy];
     [scanedAssetsURLStringSet minusSet:allAssetsCopy];
     if (scanedAssetsURLStringSet.count > 0) {
@@ -177,13 +177,14 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
     [self.allAssetsURLStringSet minusSet:self.restoredAssetsURLStringSet];
     [self.allAssetsURLStringSet minusSet:scanedAssetsURLStringSet];
     if (self.allAssetsURLStringSet.count > 0) {
-        self.photoAdded = YES;
         for (NSString *assetURLString in self.allAssetsURLStringSet) {
             ALAsset *asset = self.allAssetsDictionary[assetURLString];
             [self.addedAssetsSet addObject:asset];
         }
         [self.allAssetsDictionary removeAllObjects];
+        
         NSLog(@"New Photo count: %lu", (unsigned long)self.addedAssetsSet.count);
+        self.photoAdded = YES;
         /*
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         for (NSString *URLString in self.allAssetsURLStringSet) {
