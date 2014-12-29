@@ -20,6 +20,7 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 @property (nonatomic)SDEPhotoFileFilter *photoFileFilter;
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 @property (nonatomic) NSArray *assetsToScan;
+@property (nonatomic) NSMutableArray *avators;
 @property (nonatomic, assign) NSUInteger totalCount;
 @property (nonatomic, assign) NSUInteger faceCount;
 @property (weak, nonatomic) IBOutlet UILabel *processIndicator;
@@ -95,12 +96,14 @@ static NSString *segueIdentifier = @"enterMontageRoom";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
     NSInteger numberOfItems = 0;
     if ([collectionView isEqual:self.assetCollectionView]) {
         numberOfItems = self.assetsToScan.count;
     }else{
         numberOfItems = self.faceCount;
     }
+    NSLog(@"item number: %ld", (long)numberOfItems);
     return numberOfItems;
 }
 
@@ -113,7 +116,10 @@ static NSString *segueIdentifier = @"enterMontageRoom";
         ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:indexPath.item];
         imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
     }else{
-        
+        UIImage *avatorImage = (UIImage *)[self.avators objectAtIndex:indexPath.item];
+        if (avatorImage) {
+            imageView.image = avatorImage;
+        }
     }
     return photoCell;
 }
@@ -131,7 +137,6 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     self.tabBarController.tabBar.hidden = YES;
     [self.scanButton setTitle:@"Scan..." forState:UIControlStateNormal];
     self.scanButton.enabled = NO;
-    self.assetCollectionView.allowsSelection = NO;
     [self enumerateScanAssetAtIndexPath:@(0)];
 }
 
@@ -147,11 +152,23 @@ static NSString *segueIdentifier = @"enterMontageRoom";
     scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1)];
     [cell.layer addAnimation:scale forKey:@"scale"];
     ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:index.integerValue];
+    
     BOOL faceDetected = [self.photoScanManager scanAsset:asset withDetector:FaceppFaceDetector];
     if (faceDetected) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Scan a photo");
+        dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(defaultQueue, ^{
             NSArray *detectedFaces = [self.photoScanManager allFacesInPhoto];
             self.faceCount += detectedFaces.count;
+            [self.avators addObjectsFromArray:detectedFaces];
+            NSLog(@"fetch detected face.");
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self.faceCollectionView performBatchUpdates:^{
+                    for (NSInteger i = self.faceCount - detectedFaces.count; i < self.faceCount; i++) {
+                        [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+                    }
+                }completion:nil];
+            });
         });
     }
     //__weak SDEScanRoomViewController *weakVCSelf = self;

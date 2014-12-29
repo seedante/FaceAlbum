@@ -214,34 +214,35 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pvi-kF-v33">
                                 <rect key="frame" x="0.0" y="100" width="768" height="740"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pCA-YM-OYP">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="50" minY="5" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="uIR-7Z-0bq">
                                         <rect key="frame" x="50" y="8" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="10" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FacelessManPoster.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="0me-li-2dV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" red="1" green="0.36198939229999999" blue="0.77059635479999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="0me-li-2dV" firstAttribute="top" secondItem="uIR-7Z-0bq" secondAttribute="top" id="GA4-ly-I25"/>
                                             <constraint firstAttribute="trailing" secondItem="0me-li-2dV" secondAttribute="trailing" id="L7C-kL-kek"/>
                                             <constraint firstAttribute="bottom" secondItem="0me-li-2dV" secondAttribute="bottom" id="WEn-Ot-7m3"/>
                                             <constraint firstItem="0me-li-2dV" firstAttribute="leading" secondItem="uIR-7Z-0bq" secondAttribute="leading" id="dBW-bC-Yxo"/>
                                         </constraints>
-                                        <size key="customSize" width="90" height="90"/>
+                                        <size key="customSize" width="50" height="50"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
