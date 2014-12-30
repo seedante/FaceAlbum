@@ -391,19 +391,20 @@ static NSString * const cellIdentifier = @"avatorCell";
     SDEAvatorCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.layer.cornerRadius = cell.avatorCornerRadius;
     
-    Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-    UIImage *avatorImage = (UIImage *)[self.imageCache objectForKey:face.storeFileName];
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    UIImage *avatorImage = (UIImage *)[self.imageCache objectForKey:faceItem.storeFileName];
     if (avatorImage) {
         cell.avatorView.image = avatorImage;
     }else{
         NSLog(@"No Cache for cell at %@", indexPath);
         __weak SDEAvatorCell *weakCellSelf = cell;
-        [self fetchImageForCellAtIndexPath:indexPath completionHandler:^(){
+        NSString *cacheKey = faceItem.storeFileName;
+        [self fetchImageForCacheKey:cacheKey WithIndexPath:indexPath completionHandler:^(){
             dispatch_sync(dispatch_get_main_queue(), ^{
-                UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:face.storeFileName];
+                UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:cacheKey];
                 weakCellSelf.avatorView.image = cachedImage;
             });
-
+            
         }];
         
     }
@@ -413,22 +414,25 @@ static NSString * const cellIdentifier = @"avatorCell";
     return cell;
 }
 
-- (void)fetchImageForCellAtIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
+//原来的方法通过 IndexPath来定位需要读取的头像文件时，会出现一个问题，当你新建人物后，界面会跳转至该人物处，可能会有部分 cell 还没有出现过，这时候就会去显示该 cell 的内容，这时候该 cell 的位置相对于原来已经变化了，这时候传递的 IndexPath 是不对的，于是fetch 越界。从程序设计的角度来讲，缓存的键更改为头像文件的文件名更好，缓存的 UIImage不会因为 indexpath 变化而失效，这样是对的，同样，异步读取时也应该传递文件名而不是对应的索引位置，这样也避免了重复 fetch Face。问题的原因是，新建人物后界面跳转，这时候获取的索引位置还是原来的，这应该是是 CoreData内部的机制导致的问题。这样说来，下面备选的索引参数其实是没有必要的，因为这时候依然是错误的，没有意义。无解。
+- (void)fetchImageForCacheKey:(NSString *)cacheKey WithIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
 {
     dispatch_async(self.imageLoadQueue, ^{
-        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        NSString *imagePath = [self.storeDirectory stringByAppendingPathComponent:face.storeFileName];
+        NSString *imagePath = [self.storeDirectory stringByAppendingPathComponent:cacheKey];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
             UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
             [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
             UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            [self.imageCache setObject:thubnailImage forKey:face.storeFileName];
+            [self.imageCache setObject:thubnailImage forKey:cacheKey];
         }else{
             NSLog(@"Read error");
-            image = face.avatorImage;
-            [self.imageCache setObject:image forKey:face.storeFileName];
+            if (indexPath) {
+                Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+                image = faceItem.avatorImage;
+                [self.imageCache setObject:image forKey:cacheKey];
+            }
         }
         
         Handler();
