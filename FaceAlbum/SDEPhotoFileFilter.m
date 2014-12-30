@@ -10,15 +10,20 @@
 #import "Store.h"
 @import AssetsLibrary;
 
+NSString *const SDEPhotoFileFilterAddedPhotosKey = @"SDEPhotoAddedKey";
+NSString *const SDEPhotoFileFilterDeletedPhotosKey = @"SDEPhotoDeletedKey";
+NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
+
 @interface SDEPhotoFileFilter ()
 
-@property (nonatomic) NSMutableSet *allAssetsURLString;
-@property (nonatomic) NSMutableSet *allNewAssets;
-@property (nonatomic) NSMutableSet *existAgainAssetsURLString;
-@property (nonatomic) NSSet *deletedAssetsURLString;
+@property (nonatomic) NSMutableSet *allAssetsURLStringSet;
+@property (nonatomic) NSMutableSet *addedAssetsSet;
+@property (nonatomic) NSMutableSet *restoredAssetsURLStringSet;
+@property (nonatomic) NSMutableDictionary *allAssetsDictionary;
+@property (nonatomic) NSSet *deletedAssetsURLStringSet;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
-@property (nonatomic) BOOL isThereNewPhoto;
+
 
 @end
 
@@ -28,9 +33,10 @@
 {
     self = [super init];
     if (self) {
-        self.allAssetsURLString = [NSMutableSet new];
-        self.allNewAssets = [NSMutableSet new];
-        self.existAgainAssetsURLString = [NSMutableSet new];
+        self.allAssetsURLStringSet = [NSMutableSet new];
+        self.addedAssetsSet = [NSMutableSet new];
+        self.restoredAssetsURLStringSet = [NSMutableSet new];
+        self.allAssetsDictionary = [NSMutableDictionary new];
     }
     return self;
 }
@@ -54,28 +60,18 @@
     return _managedObjectContext;
 }
 
-- (BOOL)shouldScanPhotoLibrary
+- (BOOL)isPhotoAdded
 {
-    return self.isThereNewPhoto;
+    return self.photoAdded;
 }
 
-- (void)cleanData
+- (void)reset
 {
-    if (self.allNewAssets) {
-        [self.allNewAssets removeAllObjects];
-    }
-    
-    if (self.deletedAssetsURLString) {
-        self.deletedAssetsURLString = nil;
-    }
-    
-    if (self.existAgainAssetsURLString) {
-        [self.existAgainAssetsURLString removeAllObjects];
-    }
-    
-    if (self.isThereNewPhoto) {
-        self.isThereNewPhoto = NO;
-    }
+    [self.allAssetsDictionary removeAllObjects];
+    [self.addedAssetsSet removeAllObjects];
+    [self.allAssetsURLStringSet removeAllObjects];
+    self.deletedAssetsURLStringSet = nil;
+    self.photoAdded = NO;
 }
 
 - (ALAssetsLibrary *)photoLibrary
@@ -90,30 +86,40 @@
 
 - (NSArray *)assetsNeedToScan
 {
-    return [self.allNewAssets allObjects];
+    return [self.addedAssetsSet allObjects];
 }
 
-- (NSArray *)notexistedAssetsURLString
+- (NSArray *)deletedAssetsURLStringArray
 {
-    return [self.deletedAssetsURLString allObjects];
+    return [self.deletedAssetsURLStringSet allObjects];
 }
 
-- (NSArray *)againStoredAssetsURLString
+- (NSArray *)restoredAssetsURLStringArray
 {
-    return [self.existAgainAssetsURLString allObjects];
+    return [self.restoredAssetsURLStringSet allObjects];
 }
 
-- (void)comparePhotoDataBetweenLocalAndDataBase
+- (void)checkPhotoLibrary
 {
     NSLog(@"check photo file.");
-    if (!self.allNewAssets) {
-        self.allNewAssets = [NSMutableSet new];
+    if (!self.addedAssetsSet) {
+        self.addedAssetsSet = [NSMutableSet new];
     }else{
-        [self.allNewAssets removeAllObjects];
+        [self.addedAssetsSet removeAllObjects];
     }
     
-    if (self.deletedAssetsURLString) {
-        self.deletedAssetsURLString = nil;
+    if (!self.restoredAssetsURLStringSet) {
+        self.restoredAssetsURLStringSet = [NSMutableSet new];
+    }else
+        [self.restoredAssetsURLStringSet removeAllObjects];
+    
+    if (!self.allAssetsDictionary) {
+        self.allAssetsDictionary = [NSMutableDictionary new];
+    }else
+        [self.allAssetsDictionary removeAllObjects];
+    
+    if (self.deletedAssetsURLStringSet) {
+        self.deletedAssetsURLStringSet = nil;
     }
     
     NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
@@ -122,21 +128,30 @@
             [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *shouldStop){
                 if (asset && *shouldStop != YES) {
                     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-                    [self.allAssetsURLString addObject:[assetURL absoluteString]];
+                    NSString *assetURLString = [assetURL absoluteString];
+                    [self.allAssetsURLStringSet addObject:assetURLString];
+                    [self.allAssetsDictionary setObject:asset forKey:assetURLString];
                 }
             }];
         }else{
-            NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLString.count);
-            //[self performSelector:@selector(continueToCompare) withObject:nil afterDelay:0.1];
+            NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLStringSet.count);
             [self continueToCompare];
+            NSLog(@"Check finish.");
         }
     } failureBlock:nil];
-    
+    //本担心太占用 CPU 而使用默认优先级的队列，结果发现虽然扫描一次的速度很快，但是切换到主线程去刷新界面还是太慢了。
+    /*
+    dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(defaultQueue, ^{
+
+    });
+     */
+
 }
 
 - (void)continueToCompare
 {
-    NSMutableSet *scanedAssets = [NSMutableSet new];
+    NSMutableSet *scanedAssetsURLStringSet = [NSMutableSet new];
     NSEntityDescription *photoEntity = [NSEntityDescription entityForName:@"Photo" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *photoFetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
     [photoFetchRequest setResultType:NSDictionaryResultType];
@@ -146,47 +161,60 @@
     NSArray *kURLStringResults = [self.managedObjectContext executeFetchRequest:photoFetchRequest error:nil];
     for (NSDictionary *result in kURLStringResults) {
         if([result[@"isExisted"] boolValue]){
-            [scanedAssets addObject:result[@"uniqueURLString"]];
+            [scanedAssetsURLStringSet addObject:result[@"uniqueURLString"]];
         }else
-            [self.existAgainAssetsURLString addObject:result[@"uniqueURLString"]];
+            [self.restoredAssetsURLStringSet addObject:result[@"uniqueURLString"]];
     }
-    NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLString.count);
-    NSLog(@"Scaned Assets Count: %lu", (unsigned long)(scanedAssets.count + self.existAgainAssetsURLString.count));
-    NSSet *allAssetsCopy = [self.allAssetsURLString copy];
-    if (self.existAgainAssetsURLString.count > 0) {
-        if ([allAssetsCopy intersectsSet:self.existAgainAssetsURLString]) {
-            [self.existAgainAssetsURLString intersectSet:self.allAssetsURLString];
-            if (self.existAgainAssetsURLString.count > 0) {
-                NSLog(@"%lu assets go back", (unsigned long)self.existAgainAssetsURLString.count);
-            }
-        }
-    }
+    NSLog(@"Scaned Assets Count: %lu", (unsigned long)scanedAssetsURLStringSet.count);
+    NSSet *allAssetsCopy = [self.allAssetsURLStringSet copy];
     
-    [self.allAssetsURLString minusSet:scanedAssets];
-    if (self.allAssetsURLString.count > 0) {
-        self.isThereNewPhoto = YES;
+    [self.allAssetsURLStringSet minusSet:self.restoredAssetsURLStringSet];
+    [self.allAssetsURLStringSet minusSet:scanedAssetsURLStringSet];
+    if (self.allAssetsURLStringSet.count > 0) {
+        for (NSString *assetURLString in self.allAssetsURLStringSet) {
+            ALAsset *asset = self.allAssetsDictionary[assetURLString];
+            [self.addedAssetsSet addObject:asset];
+        }
+        [self.allAssetsDictionary removeAllObjects];
+        
+        NSLog(@"New Photo count: %lu", (unsigned long)self.addedAssetsSet.count);
+        self.photoAdded = YES;
+        /*
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        for (NSString *URLString in self.allAssetsURLString) {
+        for (NSString *URLString in self.allAssetsURLStringSet) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self.photoLibrary assetForURL:[NSURL URLWithString:URLString] resultBlock:^(ALAsset *asset){
-                    [self.allNewAssets addObject:asset];
+                    [self.addedAssetsSet addObject:asset];
                     dispatch_semaphore_signal(sema);
                 }failureBlock:nil];
             });
             
             dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         }
-        NSLog(@"New Photo count: %lu", (unsigned long)self.allNewAssets.count);
+         */
+        
     }else{
-        self.isThereNewPhoto = NO;
-        self.allNewAssets = nil;
+        self.photoAdded = NO;
+        [self.addedAssetsSet removeAllObjects];
     }
-    [scanedAssets minusSet:allAssetsCopy];
-    if (scanedAssets.count > 0) {
-        self.deletedAssetsURLString = [scanedAssets copy];
-        NSLog(@"There are %lu photo is deleted from local device.", (unsigned long)scanedAssets.count);
+    
+    [scanedAssetsURLStringSet minusSet:allAssetsCopy];
+    if (scanedAssetsURLStringSet.count > 0) {
+        self.deletedAssetsURLStringSet = [scanedAssetsURLStringSet copy];
+        NSLog(@"There are %lu photos deleted from local device.", (unsigned long)scanedAssetsURLStringSet.count);
     }else
-        self.deletedAssetsURLString = nil;
+        self.deletedAssetsURLStringSet = [NSSet set];
+    
+    if (self.restoredAssetsURLStringSet.count > 0) {
+        NSSet *restoredAssetsCopy = [self.restoredAssetsURLStringSet copy];
+        if ([allAssetsCopy intersectsSet:restoredAssetsCopy]) {
+            [self.restoredAssetsURLStringSet intersectSet:self.allAssetsURLStringSet];
+            if (self.restoredAssetsURLStringSet.count > 0) {
+                NSLog(@"%lu assets go back", (unsigned long)self.restoredAssetsURLStringSet.count);
+            }
+        }
+    }
+
 }
 
 @end

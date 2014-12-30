@@ -7,19 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#ifdef DEBUG_MODE
-#define DLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-#else
-#define DLog( s, ... )
-#endif
+
+extern NSString *const SDEPhotoFileFilterAddedPhotosKey;
+extern NSString *const SDEPhotoFileFilterDeletedPhotosKey;
+extern NSString *const SDEPhotoFileFilterRestoredPhotosKey;
 
 @interface SDEPhotoFileFilter : NSObject
 
+@property (nonatomic) BOOL photoAdded;
+
 + (SDEPhotoFileFilter *)sharedPhotoFileFilter;
-- (void)comparePhotoDataBetweenLocalAndDataBase;
-- (BOOL)shouldScanPhotoLibrary;
-- (void)cleanData;
+- (void)checkPhotoLibrary;
+- (BOOL)isPhotoAdded;
+- (void)reset;
 - (NSArray *)assetsNeedToScan; //include asset, not url string
-- (NSArray *)notexistedAssetsURLString;
-- (NSArray *)againStoredAssetsURLString;
+- (NSArray *)deletedAssetsURLStringArray;
+- (NSArray *)restoredAssetsURLStringArray;
 @end

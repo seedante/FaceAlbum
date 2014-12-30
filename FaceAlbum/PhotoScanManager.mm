@@ -173,7 +173,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     [self.managedObjectContext reset];
 }
 
-- (NSArray *)allFacesInPhoto
+- (NSArray *)allAvatorsInPhoto
 {
     return [self.facesInAPhoto copy];
 }
@@ -287,7 +287,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     newPhoto.uniqueURLString = [(NSURL *)[asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
     newPhoto.isExisted = YES;
     
-    DLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
+    //NSLog(@"Scan Photo: %@", [asset valueForProperty:ALAssetPropertyAssetURL]);
     FaceppLocalResult *detectResult = [self.localFaceppDetector detectWithImage:imageForDetect];
     if (detectResult.faces.count > 0) {
         includeFace = YES;
@@ -307,7 +307,6 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
             CGImageRef avatorCGImage = CGImageCreateWithImageInRect(sourceCGImage, avatorBound);
             UIImage *avatorUIImage = nil;
             if (MAX(detectedFace.bounds.size.width, detectedFace.bounds.size.height) > 100.0f) {
-                NSLog(@"Big Face");
                 avatorUIImage = UIImageFromCGImageWithNewsize(avatorCGImage, CGSizeMake(avatorWidth, avatorHeight));
             }else
                 avatorUIImage = [UIImage imageWithCGImage:avatorCGImage];

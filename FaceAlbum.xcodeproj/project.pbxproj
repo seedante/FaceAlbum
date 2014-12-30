@@ -13,9 +13,6 @@
 		FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */; };
 		FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106419CDC44F006A3B4E /* SDEAvatorOverlayView.m */; };
 		FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
-		FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
-		FD4131361997486B00141578 /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
-		FD4131371997486B00141578 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
 		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
 		FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
@@ -125,6 +122,8 @@
 		FD7E22521A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
 		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
 		FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
+		FDB99A191A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */; };
+		FDB99A1A1A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */; };
 		FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
 		FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
 		FDBF6BFF19D1038000352DFA /* Face.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9C197E97C7004E8FFD /* Face.m */; };
@@ -134,13 +133,10 @@
 		FDBF6C0719D1038000352DFA /* SDEPersonProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */; };
 		FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */; };
 		FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E719A8808500C1A41F /* SDECandidateCell.m */; };
-		FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */; };
-		FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131331997486B00141578 /* PhotoCell.m */; };
 		FDBF6C1019D1038000352DFA /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
 		FDBF6C1519D1038000352DFA /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
 		FDBF6C1719D1038000352DFA /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
 		FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */; };
-		FDBF6C1919D1038000352DFA /* FaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4131311997486B00141578 /* FaceCell.m */; };
 		FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */; };
 		FDBF6C1D19D1038000352DFA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8FC197E048400D2CCDA /* Store.m */; };
 		FDBF6C2019D1038000352DFA /* SDEMontageRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */; };
@@ -191,13 +187,7 @@
 		FD3A106319CDC44F006A3B4E /* SDEAvatorOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEAvatorOverlayView.h; sourceTree = "<group>"; };
 		FD3A106419CDC44F006A3B4E /* SDEAvatorOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEAvatorOverlayView.m; sourceTree = "<group>"; };
 		FD41312C1997486B00141578 /* SDEScanRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEScanRoomViewController.m; sourceTree = "<group>"; };
-		FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEFaceVCDataSource.h; sourceTree = "<group>"; };
-		FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEFaceVCDataSource.m; sourceTree = "<group>"; };
 		FD41312F1997486B00141578 /* SDEScanRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEScanRoomViewController.h; sourceTree = "<group>"; };
-		FD4131301997486B00141578 /* FaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceCell.h; sourceTree = "<group>"; };
-		FD4131311997486B00141578 /* FaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceCell.m; sourceTree = "<group>"; };
-		FD4131321997486B00141578 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
-		FD4131331997486B00141578 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
 		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
 		FD4ED7ED1A4FF2E20047FA22 /* FaceAlbum 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 6.xcdatamodel"; sourceTree = "<group>"; };
@@ -305,6 +295,8 @@
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
 		FDB3608019CF1EE800AAE34D /* SDEPhotoFileFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoFileFilter.h; sourceTree = "<group>"; };
 		FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoFileFilter.m; sourceTree = "<group>"; };
+		FDB99A171A5313EC00916A1E /* SDECrytalBallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDECrytalBallLayout.h; sourceTree = "<group>"; };
+		FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDECrytalBallLayout.m; sourceTree = "<group>"; };
 		FDBF6ED319D1038000352DFA /* FaceAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBF6ED419D1038100352DFA /* FaceAlbumRelease-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FaceAlbumRelease-Info.plist"; path = "/Users/seedante/Development Library/FaceAlbum/FaceAlbumRelease-Info.plist"; sourceTree = "<absolute>"; };
 		FDBF6EF019D1A78F00352DFA /* FaceAlbum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FaceAlbum.xcdatamodel; sourceTree = "<group>"; };
@@ -365,16 +357,12 @@
 			children = (
 				FD41312F1997486B00141578 /* SDEScanRoomViewController.h */,
 				FD41312C1997486B00141578 /* SDEScanRoomViewController.m */,
+				FDB99A171A5313EC00916A1E /* SDECrytalBallLayout.h */,
+				FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */,
 				FDB3608019CF1EE800AAE34D /* SDEPhotoFileFilter.h */,
 				FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */,
-				FD41312D1997486B00141578 /* SDEFaceVCDataSource.h */,
-				FD41312E1997486B00141578 /* SDEFaceVCDataSource.m */,
 				FD41313819974A5E00141578 /* PhotoScanManager.h */,
 				FD41313919974A5E00141578 /* PhotoScanManager.mm */,
-				FD4131301997486B00141578 /* FaceCell.h */,
-				FD4131311997486B00141578 /* FaceCell.m */,
-				FD4131321997486B00141578 /* PhotoCell.h */,
-				FD4131331997486B00141578 /* PhotoCell.m */,
 			);
 			name = ScanRoom;
 			sourceTree = "<group>";
@@ -839,14 +827,13 @@
 				FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
 				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
 				FD7D43771A1EDB5200551093 /* FaceppGrouping.m in Sources */,
+				FDB99A191A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */,
 				FD7D436F1A1EDB5200551093 /* FaceppClient.m in Sources */,
 				FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */,
 				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
 				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
 				FD7D437F1A1EDB5200551093 /* FaceppTrainer.m in Sources */,
-				FD4131351997486B00141578 /* SDEFaceVCDataSource.m in Sources */,
 				FD7D433B1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
-				FD4131371997486B00141578 /* PhotoCell.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD7D43961A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
 				FD7D431B1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
@@ -856,7 +843,6 @@
 				FD7D43731A1EDB5200551093 /* FaceppFaceset.m in Sources */,
 				FD7D43791A1EDB5200551093 /* FaceppInfo.m in Sources */,
 				FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */,
-				FD4131361997486B00141578 /* FaceCell.m in Sources */,
 				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
 				FD7D436D1A1EDB5200551093 /* FaceppAPI.m in Sources */,
@@ -896,14 +882,13 @@
 				FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
 				FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */,
 				FD7D43781A1EDB5200551093 /* FaceppGrouping.m in Sources */,
+				FDB99A1A1A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */,
 				FD7D43701A1EDB5200551093 /* FaceppClient.m in Sources */,
 				FDBF6C0719D1038000352DFA /* SDEPersonProfileHeaderView.m in Sources */,
 				FDBF6C0919D1038000352DFA /* SDEAppDelegate.m in Sources */,
 				FDBF6C0A19D1038000352DFA /* SDECandidateCell.m in Sources */,
 				FD7D43801A1EDB5200551093 /* FaceppTrainer.m in Sources */,
-				FDBF6C0B19D1038000352DFA /* SDEFaceVCDataSource.m in Sources */,
 				FD7D433C1A1DA4A300551093 /* SDEPhotoSceneDataSource.m in Sources */,
-				FDBF6C0E19D1038000352DFA /* PhotoCell.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
 				FD7D43971A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
 				FD7D431C1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
@@ -912,7 +897,6 @@
 				FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */,
 				FD7D43741A1EDB5200551093 /* FaceppFaceset.m in Sources */,
 				FD7D437A1A1EDB5200551093 /* FaceppInfo.m in Sources */,
-				FDBF6C1919D1038000352DFA /* FaceCell.m in Sources */,
 				FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
 				FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */,
 				FDBF6C1D19D1038000352DFA /* Store.m in Sources */,
