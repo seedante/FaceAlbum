@@ -396,7 +396,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     if (avatorImage) {
         cell.avatorView.image = avatorImage;
     }else{
-        NSLog(@"No Cache for cell at %@", indexPath);
+        //NSLog(@"No Cache for cell at %@", indexPath);
         __weak SDEAvatorCell *weakCellSelf = cell;
         NSString *cacheKey = faceItem.storeFileName;
         [self fetchImageForCacheKey:cacheKey WithIndexPath:indexPath completionHandler:^(){

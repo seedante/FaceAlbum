@@ -160,24 +160,8 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         }else
             [self.restoredAssetsURLStringSet addObject:result[@"uniqueURLString"]];
     }
-    NSLog(@"Scaned Assets Count: %lu", (unsigned long)kURLStringResults.count);
+    NSLog(@"Scaned Assets Count: %lu", (unsigned long)scanedAssetsURLStringSet.count);
     NSSet *allAssetsCopy = [self.allAssetsURLStringSet copy];
-    [scanedAssetsURLStringSet minusSet:allAssetsCopy];
-    if (scanedAssetsURLStringSet.count > 0) {
-        self.deletedAssetsURLStringSet = [scanedAssetsURLStringSet copy];
-        NSLog(@"There are %lu photos deleted from local device.", (unsigned long)scanedAssetsURLStringSet.count);
-    }else
-        self.deletedAssetsURLStringSet = [NSSet set];
-    
-    if (self.restoredAssetsURLStringSet.count > 0) {
-        NSSet *restoredAssetsCopy = [self.restoredAssetsURLStringSet copy];
-        if ([allAssetsCopy intersectsSet:restoredAssetsCopy]) {
-            [self.restoredAssetsURLStringSet intersectSet:self.allAssetsURLStringSet];
-            if (self.restoredAssetsURLStringSet.count > 0) {
-                NSLog(@"%lu assets go back", (unsigned long)self.restoredAssetsURLStringSet.count);
-            }
-        }
-    }
     
     [self.allAssetsURLStringSet minusSet:self.restoredAssetsURLStringSet];
     [self.allAssetsURLStringSet minusSet:scanedAssetsURLStringSet];
@@ -207,6 +191,23 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
     }else{
         self.photoAdded = NO;
         [self.addedAssetsSet removeAllObjects];
+    }
+    
+    [scanedAssetsURLStringSet minusSet:allAssetsCopy];
+    if (scanedAssetsURLStringSet.count > 0) {
+        self.deletedAssetsURLStringSet = [scanedAssetsURLStringSet copy];
+        NSLog(@"There are %lu photos deleted from local device.", (unsigned long)scanedAssetsURLStringSet.count);
+    }else
+        self.deletedAssetsURLStringSet = [NSSet set];
+    
+    if (self.restoredAssetsURLStringSet.count > 0) {
+        NSSet *restoredAssetsCopy = [self.restoredAssetsURLStringSet copy];
+        if ([allAssetsCopy intersectsSet:restoredAssetsCopy]) {
+            [self.restoredAssetsURLStringSet intersectSet:self.allAssetsURLStringSet];
+            if (self.restoredAssetsURLStringSet.count > 0) {
+                NSLog(@"%lu assets go back", (unsigned long)self.restoredAssetsURLStringSet.count);
+            }
+        }
     }
 
 }

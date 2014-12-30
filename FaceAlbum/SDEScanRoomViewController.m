@@ -51,6 +51,12 @@ static NSString *cellIdentifier = @"Cell";
     [super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.photoFileFilter removeObserver:self forKeyPath:@"photoAdded"];
+    [super viewWillDisappear:animated];
+}
+
 - (ALAssetsLibrary *)photoLibrary
 {
     if (_photoLibrary != nil) {
@@ -95,14 +101,14 @@ static NSString *cellIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    //NSLog(@"%@", NSStringFromSelector(_cmd));
     NSInteger numberOfItems = 0;
     if ([collectionView isEqual:self.assetCollectionView]) {
         numberOfItems = self.assetsToScan.count;
     }else{
         numberOfItems = self.faceCount;
     }
-    NSLog(@"item number: %ld", (long)numberOfItems);
+    //NSLog(@"item number: %ld", (long)numberOfItems);
     return numberOfItems;
 }
 
@@ -118,7 +124,8 @@ static NSString *cellIdentifier = @"Cell";
         UIImage *avatorImage = (UIImage *)[self.avators objectAtIndex:indexPath.item];
         if (avatorImage) {
             imageView.image = avatorImage;
-        }
+        }else
+            NSLog(@"??");
     }
     return photoCell;
 }
@@ -139,25 +146,25 @@ static NSString *cellIdentifier = @"Cell";
     [self enumerateScanAssetAtIndexPath:@(0)];
 }
 
-- (void)enumerateScanAssetAtIndexPath:(NSNumber *)index
+- (void)enumerateScanAssetAtIndexPath:(NSNumber *)indexNumber
 {
-    if (index.integerValue == self.assetsToScan.count - 1) {
+    if (indexNumber.integerValue == self.assetsToScan.count) {
         [self prepareForNextScene];
         return;
     }
-    [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index.integerValue inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    UICollectionViewCell *cell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index.integerValue inSection:0]];
+    
+    NSInteger index = indexNumber.integerValue;
+    [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    UICollectionViewCell *cell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
     CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
     scale.duration = 0.4;
     scale.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1)];
     [cell.layer addAnimation:scale forKey:@"scale"];
-    ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:index.integerValue];
     
-    BOOL faceDetected = [self.photoScanManager scanAsset:asset withDetector:FaceppFaceDetector];
-    if (faceDetected) {
-        NSLog(@"Scan a photo");
-        dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(defaultQueue, ^{
+    ALAsset *asset = (ALAsset *)[self.assetsToScan objectAtIndex:index];
+    if (asset) {
+        BOOL faceDetected = [self.photoScanManager scanAsset:asset withDetector:FaceppFaceDetector];
+        if (faceDetected) {
             NSArray *detectedFaces = [self.photoScanManager allFacesInPhoto];
             self.faceCount += detectedFaces.count;
             [self.avators addObjectsFromArray:detectedFaces];
@@ -169,18 +176,21 @@ static NSString *cellIdentifier = @"Cell";
                     }
                 }completion:nil];
             });
-        });
-        
-    }
-    //__weak SDEScanRoomViewController *weakVCSelf = self;
-    [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(index.integerValue+1) afterDelay:0.1];
-    //[weakVCSelf enumerateScanAssetAtIndexPath:@(index.integerValue + 1)];
+            
+        }
+    }else
+        NSLog(@"Asset fetch error.");
+
+    [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(index + 1) afterDelay:0.1];
     
 }
 
 - (void)prepareForNextScene
 {
     [self configFirstScene:NO];
+    if ([self.managedObjectContext hasChanges]) {
+        [self.managedObjectContext save:nil];
+    }
     UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
     [self.navigationController pushViewController:montageRoomVC animated:NO];
 }

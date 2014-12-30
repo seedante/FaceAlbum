@@ -170,6 +170,7 @@ static CGFloat const kPhotoHeight = 654.0;
     [super viewWillAppear:animated];
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -284,10 +285,12 @@ static CGFloat const kPhotoHeight = 654.0;
             }else{
                 NSString *imagePath = [self.storeFolder stringByAppendingPathComponent:personItem.portraitFileString];
                 UIImage *avatorImage = [UIImage imageWithContentsOfFile:imagePath];
-                if (avatorImage) {
-                    [photoView setImage:avatorImage];
-                }else
+                if (!avatorImage) {
+                    NSLog(@"Get Portrait Image Failed");
                     [photoView setImage:personItem.avatorImage];
+                }else
+                    [photoView setImage:avatorImage];
+                    
             }
             photoView.alpha = 0.1;
             photoView.transform = CGAffineTransformMakeScale(0.8, 0.8);
