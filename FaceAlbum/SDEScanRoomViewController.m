@@ -25,7 +25,6 @@ static NSString *cellIdentifier = @"Cell";
 @property (weak, nonatomic) IBOutlet UILabel *processIndicator;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-
 @end
 
 @implementation SDEScanRoomViewController
@@ -37,9 +36,19 @@ static NSString *cellIdentifier = @"Cell";
 	// Do any additional setup after loading the view, typically from a nib.
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = YES;
+    self.avators = [NSMutableArray new];
     self.faceCount = 0;
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
     self.managedObjectContext = [[Store sharedStore] managedObjectContext];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Face"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
+    [fetchRequest setPredicate:predicate];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    if (results.count>0) {
+        NSLog(@"%lu Zero", (unsigned long)results.count);
+        self.photoScanManager.numberOfItemsInFirstSection = results.count;
+    }
+    
     self.photoFileFilter = [SDEPhotoFileFilter sharedPhotoFileFilter];
     [self.photoFileFilter addObserver:self forKeyPath:@"photoAdded" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -47,13 +56,21 @@ static NSString *cellIdentifier = @"Cell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.photoFileFilter checkPhotoLibrary];
+    //[self.photoFileFilter checkPhotoLibrary];
+    NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
+    BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
+    if (!isFirstScan) {
+        self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
+        [self.assetCollectionView reloadData];
+    }
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.photoFileFilter removeObserver:self forKeyPath:@"photoAdded"];
+    [self.photoFileFilter reset];
+    NSLog(@"Detect %lu faces in this scan", (unsigned long)self.faceCount);
     [super viewWillDisappear:animated];
 }
 
@@ -92,6 +109,7 @@ static NSString *cellIdentifier = @"Cell";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([self.photoFileFilter isPhotoAdded]) {
+        NSLog(@"YoYo");
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
     }
@@ -124,8 +142,7 @@ static NSString *cellIdentifier = @"Cell";
         UIImage *avatorImage = (UIImage *)[self.avators objectAtIndex:indexPath.item];
         if (avatorImage) {
             imageView.image = avatorImage;
-        }else
-            NSLog(@"??");
+        }
     }
     return photoCell;
 }
@@ -165,10 +182,9 @@ static NSString *cellIdentifier = @"Cell";
     if (asset) {
         BOOL faceDetected = [self.photoScanManager scanAsset:asset withDetector:FaceppFaceDetector];
         if (faceDetected) {
-            NSArray *detectedFaces = [self.photoScanManager allFacesInPhoto];
+            NSArray *detectedFaces = [self.photoScanManager allAvatorsInPhoto];
             self.faceCount += detectedFaces.count;
             [self.avators addObjectsFromArray:detectedFaces];
-            NSLog(@"fetch detected face.");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.faceCollectionView performBatchUpdates:^{
                     for (NSInteger i = self.faceCount - detectedFaces.count; i < self.faceCount; i++) {
@@ -188,6 +204,7 @@ static NSString *cellIdentifier = @"Cell";
 - (void)prepareForNextScene
 {
     [self configFirstScene:NO];
+    [self.photoFileFilter reset];
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
     }

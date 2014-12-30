@@ -99,6 +99,7 @@ static CGFloat const kPhotoHeight = 654.0;
     
     NSString *startSceneName = [self startScene];
     if ([startSceneName isEqualToString:@"ScanRoom"]) {
+        [self.photoFileFilter checkPhotoLibrary];
         UIViewController *scanRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
         [self.navigationController pushViewController:scanRoomVC animated:NO];
     }else if ([startSceneName isEqualToString:@"MontageRoom"]){

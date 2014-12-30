@@ -29,7 +29,7 @@ typedef enum : NSUInteger {
 + (PhotoScanManager *)sharedPhotoScanManager;
 - (BOOL)scanAsset:(ALAsset *)asset withDetector: (FaceDetectorType)detectorType;
 - (BOOL)updateAsset:(ALAsset *)asset WithDetector:(FaceDetectorType)detectorType;
-- (NSArray *)allFacesInPhoto;
+- (NSArray *)allAvatorsInPhoto;
 - (void)cleanCache;
 - (void)saveAfterScan;
 

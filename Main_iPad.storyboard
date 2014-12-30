@@ -235,7 +235,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="1" green="0.36198939229999999" blue="0.77059635479999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="0me-li-2dV" firstAttribute="top" secondItem="uIR-7Z-0bq" secondAttribute="top" id="GA4-ly-I25"/>
                                             <constraint firstAttribute="trailing" secondItem="0me-li-2dV" secondAttribute="trailing" id="L7C-kL-kek"/>
