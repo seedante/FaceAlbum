@@ -85,6 +85,41 @@ static NSString * const cellIdentifier = @"avatorCell";
     return _faceFetchedResultsController;
 }
 
+#pragma mark - Preferences Improve
+- (void)fetchDataAtBackground
+{
+    NSArray *visibleIndexPath = [self.collectionView indexPathsForVisibleItems];
+    NSArray *sections = [self.faceFetchedResultsController sections];
+    NSString *storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    
+    dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(defaultQueue, ^{
+        for (NSUInteger sectionIndex = 0; sectionIndex < sections.count; sectionIndex ++) {
+            id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:sectionIndex];
+            NSUInteger itemCount = [sectionInfo numberOfObjects];
+            for (NSUInteger itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
+                if ([visibleIndexPath containsObject:indexPath]) {
+                    continue;
+                }else{
+                    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+                    NSString *cacheKey = faceItem.storeFileName;
+                    NSString *imagePath = [storeDirectory stringByAppendingPathComponent:cacheKey];
+                    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+                    if (image) {
+                        UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
+                        [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
+                        UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
+                        UIGraphicsEndImageContext();
+                        [self.imageCache setObject:thubnailImage forKey:cacheKey];
+                    }
+                }
+            }
+        }
+    });
+    
+}
+
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -427,11 +462,15 @@ static NSString * const cellIdentifier = @"avatorCell";
             UIGraphicsEndImageContext();
             [self.imageCache setObject:thubnailImage forKey:cacheKey];
         }else{
-            NSLog(@"Read error");
+            NSLog(@"Read Image File Error");
             if (indexPath) {
                 Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
                 image = faceItem.avatorImage;
-                [self.imageCache setObject:image forKey:cacheKey];
+                UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
+                [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
+                UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                [self.imageCache setObject:thubnailImage forKey:cacheKey];
             }
         }
         

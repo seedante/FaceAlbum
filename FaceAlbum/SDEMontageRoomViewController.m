@@ -109,6 +109,12 @@ typedef enum {
     [self checkRightBarButtionItem];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.dataSource fetchDataAtBackground];
+}
+
 - (void)checkRightBarButtionItem
 {
     NSArray *sections = self.faceFetchedResultsController.sections;
@@ -140,6 +146,8 @@ typedef enum {
         }
     }
 }
+
+
 
 #pragma mark - KVC Complaint for @property selectedFaces
 - (void)addSelectedFacesSet:(NSSet *)objects
@@ -506,10 +514,19 @@ typedef enum {
 
 - (void)moveSelectedFacesToPerson
 {
-    [self.view addSubview:self.candidateView];
-    [self.candidateView reloadData];
+    //[self.view addSubview:self.candidateView];
+    CGRect frame = self.collectionView.frame;
+    frame.size.height = 120.0f;
+    frame.origin.y = 44.0f;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.candidateView setFrame:frame];
+    }completion:^(BOOL isFinished){
+        [self.candidateView reloadData];
+    }];
+    
     [self unenableLeftBarButtonItems];
     
+    self.collectionView.bounces = YES;
     [self.collectionView setContentInset:UIEdgeInsetsMake(164.0f, 0.0f, 0.0f, 0.0f)];
 }
 
@@ -520,16 +537,18 @@ typedef enum {
     }
     
     CGRect frame = self.collectionView.frame;
-    frame.size.height = 120.0f;
+    frame.size.height = 0.0f;
     frame.origin.y = 44.0f;
     UICollectionViewFlowLayout *lineLayout = [[UICollectionViewFlowLayout alloc] init];
     lineLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     lineLayout.itemSize = CGSizeMake(100.0f, 100.0f);
     lineLayout.sectionInset = UIEdgeInsetsMake(10.0f, 25.0f, 10.0f, 25.0f);
     _candidateView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:lineLayout];
+    [_candidateView setBackgroundColor:[UIColor clearColor]];
     [_candidateView registerClass:[SDECandidateCell class] forCellWithReuseIdentifier:@"candidateCell"];
     _candidateView.dataSource = self;
     _candidateView.delegate = self;
+    [self.view addSubview:_candidateView];
     return _candidateView;
 }
 
@@ -543,12 +562,23 @@ typedef enum {
     return _DoneBarButton;
 }
 
+- (void)hiddenCandidateView
+{
+    CGRect frame = self.collectionView.frame;
+    frame.size.height = 0.0f;
+    frame.origin.y = 44.0f;
+    [UIView animateWithDuration:0.2 animations:^{
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [self.candidateView setFrame:frame];
+    }];
+}
+
 - (void)doneEdit
 {
     if ([self.view.subviews containsObject:self.candidateView]) {
-        [self.candidateView removeFromSuperview];
+        [self hiddenCandidateView];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+
     }
     
     self.navigationItem.title = @"";
@@ -649,11 +679,9 @@ typedef enum {
             Person *personItem = faceItem.personOwner;
             UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
             if (avatorImage) {
-                NSLog(@"what happen");
                 //personItem.avatorImage = avatorImage;
                 header.backgroundColor = [UIColor redColor];
             }else{
-                NSLog(@"what's wrong");
                 avatorImage = faceItem.avatorImage;
             }
 
@@ -667,6 +695,7 @@ typedef enum {
             
         }else{
             [self processCellAtIndexPath:indexPath type:@"Select"];
+            self.collectionView.bounces = NO;
             if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
                 [self.includedSectionsSet addObject:@(indexPath.section)];
             }
@@ -696,11 +725,12 @@ typedef enum {
             }
         }
         
+        [self hiddenCandidateView];
+        
         [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
         [self manageSelectedItemsWithTargetDataSection:targetSection];
         
         [self unenableLeftBarButtonItems];
-        [self.candidateView removeFromSuperview];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         
