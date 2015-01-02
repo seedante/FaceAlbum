@@ -101,7 +101,6 @@
                             <connections>
                                 <outlet property="actionButton" destination="KIM-vl-eb2" id="9zR-xZ-T7J"/>
                                 <outlet property="avatorImageView" destination="tRi-Ac-ICx" id="5wy-05-SwH"/>
-                                <outlet property="collectionView" destination="0YA-ok-D2X" id="NuW-ew-kF3"/>
                                 <outlet property="nameTextField" destination="rDV-Xj-e5B" id="DPf-SU-blt"/>
                                 <outlet property="numberLabel" destination="iRr-Ru-fZl" id="keR-yR-Ygj"/>
                             </connections>

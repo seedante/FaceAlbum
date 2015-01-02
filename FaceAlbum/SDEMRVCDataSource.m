@@ -13,6 +13,7 @@
 #import "Store.h"
 #import "SDEAvatorCell.h"
 #import "SDEPersonProfileHeaderView.h"
+#import "SDEMontageRoomViewController.h"
 
 static NSString * const cellIdentifier = @"avatorCell";
 
@@ -25,6 +26,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) BOOL blendBatchUpdateMode;
 @property (nonatomic) NSCache *imageCache;
+@property (nonatomic) NSCache *headerViewCache;
 @property (nonatomic) dispatch_queue_t imageLoadQueue;
 @property (nonatomic, copy) NSString *storeDirectory;
 
@@ -40,6 +42,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         objectChanges = [[NSMutableArray alloc] init];
         self.blendBatchUpdateMode = NO;
         self.imageCache = [[NSCache alloc] init];
+        self.headerViewCache = [[NSCache alloc] init];
         self.imageLoadQueue = dispatch_queue_create("com.seedante.FaceAlbum", DISPATCH_QUEUE_SERIAL);
     }
     return self;
@@ -118,6 +121,13 @@ static NSString * const cellIdentifier = @"avatorCell";
         }
     });
     
+}
+
+- (UIImage *)cachedAvatorImageForKey:(NSString *)cachedKey
+{
+    UIImage *avatorImage = nil;
+    avatorImage = [self.imageCache objectForKey:cachedKey];
+    return avatorImage;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -481,9 +491,17 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    //DLog(@"HeaderView Indexpath: %@", indexPath);
+    //NSLog(@"%@ %@", NSStringFromSelector(_cmd), indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
-    personProfileHeaderView.delegate = (SDEMontageRoomViewController *)collectionView.delegate;
+    //NSLog(@"%@", personProfileHeaderView);
+    if (personProfileHeaderView == nil) {
+        NSLog(@"Create HeaderView");
+        personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
+        [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
+    }
+
+    personProfileHeaderView.collectionView = collectionView;
+    personProfileHeaderView.delegate = (id<SDEUICollectionSupplementaryViewDelegate>)collectionView.delegate;
     NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
     if (number == 1) {
         personProfileHeaderView.numberLabel.text = @"1 avator";
@@ -501,16 +519,13 @@ static NSString * const cellIdentifier = @"avatorCell";
         personProfileHeaderView.actionButton.hidden = NO;
         Person *personItem = faceItem.personOwner;
         if (personItem) {
-            [personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
+            //[personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
             if (personItem.name && personItem.name.length > 0) {
-                NSLog(@"Person Name: %@", personItem.name);
                 personProfileHeaderView.nameTextField.text = personItem.name;
             }
-        }else
-            personProfileHeaderView.nameTextField.text = @"????";
+        }
     }
     
-    personProfileHeaderView.section = faceItem.section;
     return personProfileHeaderView;
 }
 

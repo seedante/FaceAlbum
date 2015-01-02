@@ -8,7 +8,7 @@
 
 #import "SDEMontageRoomViewController.h"
 #import "SDEMRVCDataSource.h"
-#import "SDEPersonProfileHeaderView.h"
+//#import "SDEPersonProfileHeaderView.h"
 #import "PhotoScanManager.h"
 #import "Store.h"
 #import "Person.h"
@@ -43,6 +43,7 @@ typedef enum {
 @property (nonatomic) NSMutableSet *guardObjectIDsSet;
 
 @property (nonatomic) UICollectionView  *candidateView;
+@property (nonatomic) UIImageView *maskImageView;
 
 @property (nonatomic) UITextField *activedField;
 @property (nonatomic) UIButton *goBackUpButton;
@@ -78,6 +79,8 @@ typedef enum {
     self.guardObjectIDsSet = [NSMutableSet new];
     
     self.collectionView.allowsSelection = NO;
+    self.maskImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, -100, 44, 44)];
+    [self.view addSubview:self.maskImageView];
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
     self.collectionView.dataSource = self.dataSource;
@@ -463,30 +466,13 @@ typedef enum {
         UIGraphicsEndImageContext();
         newPerson.avatorImage = thubnailImage;
         
-        NSString *assetURLString = anyFaceItem.assetURLString;
-        [[[ALAssetsLibrary alloc] init] assetForURL:[NSURL URLWithString:assetURLString] resultBlock:^(ALAsset *asset){
-            if (asset) {
-                CGImageRef sourceCGImage = [asset.defaultRepresentation fullScreenImage];
-                CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, anyFaceItem.portraitAreaRect.CGRectValue);
-                UIImage *portraitUIImage = [UIImage imageWithCGImage:portraitCGImage];
-                NSData *imageData = UIImageJPEGRepresentation(portraitUIImage, 1.0f);
-                NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-                NSString *portraitName = [[[NSUUID alloc] init] UUIDString];
-                portraitName = [portraitName stringByAppendingPathExtension:@"jpg"];
-                newPerson.portraitFileString = portraitName;
-                NSString *savePath = [storeFolder stringByAppendingPathComponent:portraitName];
-                BOOL success = [imageData writeToFile:savePath atomically:YES];
-                if (!success) {
-                    NSLog(@"Create Portrait Image File Error");
-                }else
-                    NSLog(@"Write Portrait Image File to Path: %@", savePath);
-                CGImageRelease(portraitCGImage);
-                //CGImageRelease(sourceCGImage);
-            }else
-                NSLog(@"Access Asset Failed");
-        }failureBlock:^(NSError *error){
-            NSLog(@"Authorizate Failed");
-        }];
+        NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *portraitName = [[[NSUUID alloc] init] UUIDString];
+        portraitName = [portraitName stringByAppendingPathExtension:@"jpg"];
+        newPerson.portraitFileString = portraitName;
+        NSString *savePath = [storeFolder stringByAppendingPathComponent:portraitName];
+        
+        [self createPosterFileFromAsset:anyFaceItem.assetURLString WithArea:anyFaceItem.portraitAreaRect AtPath:savePath];
         
     }
     NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
@@ -499,6 +485,41 @@ typedef enum {
     //[self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
     [self unenableLeftBarButtonItems];
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionCount]];
+}
+
+- (BOOL)createPosterFileFromAsset:(NSString *)assetURLString WithArea:(NSValue *)portraitAreaRect AtPath:(NSString *)storePath
+{
+    __block BOOL success = NO;
+    [[[ALAssetsLibrary alloc] init] assetForURL:[NSURL URLWithString:assetURLString] resultBlock:^(ALAsset *asset){
+        if (asset) {
+            CGImageRef sourceCGImage = [asset.defaultRepresentation fullScreenImage];
+            CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitAreaRect.CGRectValue);
+            UIImage *portraitUIImage = [UIImage imageWithCGImage:portraitCGImage];
+            NSData *imageData = UIImageJPEGRepresentation(portraitUIImage, 1.0f);
+            
+            BOOL isExisted = [[NSFileManager defaultManager] fileExistsAtPath:storePath];
+            if (isExisted) {
+                BOOL deleteResult = [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
+                if (!deleteResult) {
+                    NSLog(@"Delete File Error.");
+                }else
+                    NSLog(@"Delete Success.");
+            }
+            
+            success = [imageData writeToFile:storePath atomically:YES];
+            if (!success) {
+                NSLog(@"Create Portrait Image File Error");
+            }
+            //NSLog(@"Write Portrait Image File to Path: %@", storePath);
+            CGImageRelease(portraitCGImage);
+            //CGImageRelease(sourceCGImage);
+        }else
+            NSLog(@"Access Asset Failed");
+    }failureBlock:^(NSError *error){
+        NSLog(@"Authorizate Failed");
+    }];
+    
+    return success;
 }
 
 #pragma mark - move some faces
@@ -544,12 +565,22 @@ typedef enum {
     lineLayout.itemSize = CGSizeMake(100.0f, 100.0f);
     lineLayout.sectionInset = UIEdgeInsetsMake(10.0f, 25.0f, 10.0f, 25.0f);
     _candidateView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:lineLayout];
-    [_candidateView setBackgroundColor:[UIColor clearColor]];
     [_candidateView registerClass:[SDECandidateCell class] forCellWithReuseIdentifier:@"candidateCell"];
     _candidateView.dataSource = self;
     _candidateView.delegate = self;
     [self.view addSubview:_candidateView];
     return _candidateView;
+}
+
+- (void)hiddenCandidateView
+{
+    CGRect frame = self.collectionView.frame;
+    frame.size.height = 0.0f;
+    frame.origin.y = 44.0f;
+    [UIView animateWithDuration:0.3 animations:^{
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [self.candidateView setFrame:frame];
+    }];
 }
 
 #pragma mark - done and save
@@ -562,23 +593,12 @@ typedef enum {
     return _DoneBarButton;
 }
 
-- (void)hiddenCandidateView
-{
-    CGRect frame = self.collectionView.frame;
-    frame.size.height = 0.0f;
-    frame.origin.y = 44.0f;
-    [UIView animateWithDuration:0.2 animations:^{
-        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        [self.candidateView setFrame:frame];
-    }];
-}
 
 - (void)doneEdit
 {
     if ([self.view.subviews containsObject:self.candidateView]) {
         [self hiddenCandidateView];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
-
     }
     
     self.navigationItem.title = @"";
@@ -652,7 +672,6 @@ typedef enum {
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger sectionNumber = [self.collectionView numberOfSections];
-    DLog(@"Candidate Number: %ld", (long)sectionNumber);
     return sectionNumber;
 }
 
@@ -673,26 +692,29 @@ typedef enum {
 {
     if ([collectionView isEqual:self.collectionView]) {
         if (self.isChoosingAvator) {
-            NSLog(@"Choose avator");
-            SDEPersonProfileHeaderView *header = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.sectionOfChooseAvator]];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             Person *personItem = faceItem.personOwner;
-            UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
-            if (avatorImage) {
-                //personItem.avatorImage = avatorImage;
-                header.backgroundColor = [UIColor redColor];
-            }else{
-                avatorImage = faceItem.avatorImage;
+            UIImage *avatorImage = [self.dataSource cachedAvatorImageForKey:faceItem.storeFileName];
+            //UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
+            if (!avatorImage) {
+                avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
             }
-
+            
+            UIGraphicsBeginImageContext(CGSizeMake(44.0f, 44.0f));
+            [avatorImage drawInRect:CGRectMake(0, 0, 44.0f, 44.0f)];
+            avatorImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
             personItem.avatorImage = avatorImage;
-            [header.avatorImageView setImage:avatorImage];
-            header.numberLabel.text = @"hahhhhhh==";
-
-            [self saveEdit];
-            //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.sectionOfChooseAvator]];
             
+            SDEPersonProfileHeaderView *headerView = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.section]];
+            headerView.assetURLString = faceItem.assetURLString;
+            headerView.portraitAreaRectValue = faceItem.portraitAreaRect;
             
+            NSString *storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            NSString *storePath = [storeDirectory stringByAppendingPathComponent:personItem.portraitFileString];
+            headerView.storePath = storePath;
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+                
         }else{
             [self processCellAtIndexPath:indexPath type:@"Select"];
             self.collectionView.bounces = NO;

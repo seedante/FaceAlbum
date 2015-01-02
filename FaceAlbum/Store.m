@@ -52,7 +52,8 @@
         FacelessMan.order = 0;
         FacelessMan.name = @"UnKnown";
         FacelessMan.personID = @"FacelessMan";
-        FacelessMan.avatorImage = [UIImage imageNamed:@"FacelessManPoster.jpg"];
+        FacelessMan.avatorImage = [UIImage imageNamed:@"FacelessManAvator.png"];
+        FacelessMan.portraitFileString = @"FacelessManPoster.jpg";
         FacelessMan.whetherToDisplay = YES;
         FacelessMan.faceCount = 0;
         FacelessMan.photoCount = 0;

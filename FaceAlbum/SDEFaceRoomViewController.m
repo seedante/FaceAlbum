@@ -1092,7 +1092,7 @@ static CGFloat const kPhotoHeight = 654.0;
             if (personItem) {
                 [self.actionCenterButton setImage:personItem.avatorImage forState:UIControlStateNormal];
             }else
-                [self.actionCenterButton setImage:[UIImage imageNamed:@"face.png"] forState:UIControlStateNormal];
+                [self.actionCenterButton setImage:[UIImage imageNamed:@"FacelessManAvator.png"] forState:UIControlStateNormal];
 
             break;
         }

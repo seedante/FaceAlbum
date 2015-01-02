@@ -7,6 +7,7 @@
 //
 
 #import "SDEPersonProfileHeaderView.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "Person.h"
 
 @implementation SDEPersonProfileHeaderView
@@ -15,11 +16,14 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [[NSBundle mainBundle] loadNibNamed:@"SDEPersonProfileHeaderView" owner:self options:nil];
+        [self addSubview:self.avatorImageView];
+        [self addSubview:self.nameTextField];
+        [self addSubview:self.numberLabel];
+        [self addSubview:self.actionButton];
     }
     return self;
 }
-
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -40,16 +44,48 @@
     if (self.collectionView.allowsSelection) {
         self.collectionView.allowsSelection = NO;
         self.delegate.isChoosingAvator = NO;
-        self.delegate.sectionOfChooseAvator = -1;
-        [self.actionButton setBackgroundColor:[UIColor clearColor]];
+        self.delegate.editedSection = -1;
+        [self.actionButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self createPosterFileFromAsset:self.assetURLString WithArea:self.portraitAreaRectValue AtPath:self.storePath];
     }else{
         self.collectionView.allowsSelection = YES;
         self.collectionView.allowsMultipleSelection = NO;
         self.delegate.isChoosingAvator = YES;
-        self.delegate.sectionOfChooseAvator = self.section;
-        [self.actionButton setBackgroundColor:[UIColor redColor]];
+        self.delegate.editedSection = self.section;
+        [self.actionButton setTitle:@"Confirm" forState:UIControlStateNormal];
     }
+}
 
+- (void)createPosterFileFromAsset:(NSString *)assetURLString WithArea:(NSValue *)portraitAreaRect AtPath:(NSString *)storePath
+{
+    [[[ALAssetsLibrary alloc] init] assetForURL:[NSURL URLWithString:assetURLString] resultBlock:^(ALAsset *asset){
+        if (asset) {
+            CGImageRef sourceCGImage = [asset.defaultRepresentation fullScreenImage];
+            CGImageRef portraitCGImage = CGImageCreateWithImageInRect(sourceCGImage, portraitAreaRect.CGRectValue);
+            UIImage *portraitUIImage = [UIImage imageWithCGImage:portraitCGImage];
+            NSData *imageData = UIImageJPEGRepresentation(portraitUIImage, 1.0f);
+            
+            BOOL isExisted = [[NSFileManager defaultManager] fileExistsAtPath:storePath];
+            if (isExisted) {
+                BOOL deleteResult = [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
+                if (!deleteResult) {
+                    NSLog(@"Delete File Error.");
+                }else
+                    NSLog(@"Delete Success.");
+            }
+            
+            BOOL success = [imageData writeToFile:storePath atomically:YES];
+            if (!success) {
+                NSLog(@"Create Portrait Image File Error");
+            }
+            //NSLog(@"Write Portrait Image File to Path: %@", storePath);
+            CGImageRelease(portraitCGImage);
+            //CGImageRelease(sourceCGImage);
+        }else
+            NSLog(@"Access Asset Failed");
+    }failureBlock:^(NSError *error){
+        NSLog(@"Authorizate Failed");
+    }];
 }
 
 @end
