@@ -692,6 +692,7 @@ typedef enum {
 {
     if ([collectionView isEqual:self.collectionView]) {
         if (self.isChoosingAvator) {
+            /*
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             Person *personItem = faceItem.personOwner;
             UIImage *avatorImage = [self.dataSource cachedAvatorImageForKey:faceItem.storeFileName];
@@ -705,16 +706,18 @@ typedef enum {
             avatorImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             personItem.avatorImage = avatorImage;
+            [self saveEdit];
             
             SDEPersonProfileHeaderView *headerView = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.section]];
+            NSLog(@"%@", headerView);
             headerView.assetURLString = faceItem.assetURLString;
             headerView.portraitAreaRectValue = faceItem.portraitAreaRect;
             
             NSString *storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
             NSString *storePath = [storeDirectory stringByAppendingPathComponent:personItem.portraitFileString];
             headerView.storePath = storePath;
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
-                
+            //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+            */
         }else{
             [self processCellAtIndexPath:indexPath type:@"Select"];
             self.collectionView.bounces = NO;

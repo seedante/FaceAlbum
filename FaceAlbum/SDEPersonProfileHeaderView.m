@@ -16,11 +16,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        /*
         [[NSBundle mainBundle] loadNibNamed:@"SDEPersonProfileHeaderView" owner:self options:nil];
         [self addSubview:self.avatorImageView];
         [self addSubview:self.nameTextField];
         [self addSubview:self.numberLabel];
         [self addSubview:self.actionButton];
+         */
     }
     return self;
 }
@@ -32,6 +34,19 @@
     // Drawing code
 }
 */
+- (void)prepareForReuse
+{
+    NSLog(@"prepareForReuse");
+    [super prepareForReuse];
+    [self.avatorImageView setImage:nil];
+    self.section = -1;
+    self.assetURLString = nil;
+    self.portraitAreaRectValue = nil;
+    self.storePath = nil;
+    self.numberLabel.text = nil;
+    self.nameTextField.text = nil;
+    
+}
 
 - (IBAction)userEndInput:(id)sender
 {
@@ -58,6 +73,9 @@
 
 - (void)createPosterFileFromAsset:(NSString *)assetURLString WithArea:(NSValue *)portraitAreaRect AtPath:(NSString *)storePath
 {
+    if (!assetURLString) {
+        NSLog(@"null URL");
+    }
     [[[ALAssetsLibrary alloc] init] assetForURL:[NSURL URLWithString:assetURLString] resultBlock:^(ALAsset *asset){
         if (asset) {
             CGImageRef sourceCGImage = [asset.defaultRepresentation fullScreenImage];

@@ -491,40 +491,105 @@ static NSString * const cellIdentifier = @"avatorCell";
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"%@ %@", NSStringFromSelector(_cmd), indexPath);
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
-    //NSLog(@"%@", personProfileHeaderView);
-    if (personProfileHeaderView == nil) {
-        NSLog(@"Create HeaderView");
-        personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
-        [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
-    }
-
+    personProfileHeaderView.section = indexPath.section;
+    [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
+    
     personProfileHeaderView.collectionView = collectionView;
     personProfileHeaderView.delegate = (id<SDEUICollectionSupplementaryViewDelegate>)collectionView.delegate;
-    NSInteger number = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSInteger number = [collectionView numberOfItemsInSection:indexPath.section];
     if (number == 1) {
         personProfileHeaderView.numberLabel.text = @"1 avator";
     }else
         personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
-    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
-    //there is a stupid issue, whatever I do, cocoa can't diff first header with other header.
-    if (indexPath.section == 0 && faceItem.section == 0) {
+    //If use Person directly, there will always same names appear at two header
+    if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
         [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
     }else{
         personProfileHeaderView.nameTextField.enabled = YES;
         personProfileHeaderView.actionButton.hidden = NO;
-        Person *personItem = faceItem.personOwner;
-        if (personItem) {
-            //[personProfileHeaderView.avatorImageView setImage:personItem.avatorImage];
-            if (personItem.name && personItem.name.length > 0) {
-                personProfileHeaderView.nameTextField.text = personItem.name;
-            }
+        personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
+        [personProfileHeaderView.avatorImageView setImage:faceItem.personOwner.avatorImage];
+    }
+    /*
+    //NSLog(@"%@ %@", NSStringFromSelector(_cmd), indexPath);
+    SDEPersonProfileHeaderView *personProfileHeaderView = [self.headerViewCache objectForKey:indexPath];
+    //NSLog(@"%@", personProfileHeaderView);
+    
+    if (personProfileHeaderView == nil) {
+        NSLog(@"Create HeaderView");
+        personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
+        personProfileHeaderView.section = indexPath.section;
+        [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
+        
+        personProfileHeaderView.collectionView = collectionView;
+        personProfileHeaderView.delegate = (id<SDEUICollectionSupplementaryViewDelegate>)collectionView.delegate;
+        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+        
+        //If use Person directly, there will always same names appear at two header
+        if (faceItem.section == 0) {
+            personProfileHeaderView.nameTextField.text = @"FacelessMan";
+            personProfileHeaderView.nameTextField.enabled = NO;
+            [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
+        }else{
+            personProfileHeaderView.nameTextField.enabled = YES;
+            personProfileHeaderView.actionButton.hidden = NO;
+            personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
+            [personProfileHeaderView.avatorImageView setImage:faceItem.personOwner.avatorImage];
         }
     }
+     NSLog(@"current %ld original %ld", (long)indexPath.section, (long)personProfileHeaderView.section);
+    if (personProfileHeaderView.section != indexPath.section) {
+        NSIndexPath *oldIndexPath = [NSIndexPath indexPathForItem:0 inSection:personProfileHeaderView.section];
+        [self.headerViewCache removeObjectForKey:oldIndexPath];
+        personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
+        personProfileHeaderView.section = indexPath.section;
+        [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
+    }
+    
+    NSInteger number = [collectionView numberOfItemsInSection:indexPath.section];
+    if (number == 1) {
+        personProfileHeaderView.numberLabel.text = @"1 avator";
+    }else
+        personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
+    
+   
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+    [fetchRequest setFetchBatchSize:10];
+    
+    NSSortDescriptor *orderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+    [fetchRequest setSortDescriptors:@[orderDescriptor]];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(whetherToDisplay == YES) AND (ownedFaces.@count > 0)"];
+    [fetchRequest setPredicate:predicate];
+    
+    NSMutableArray *personItemsMutableArray = [NSMutableArray new];
+    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    if (faceItem.section == 0) {
+        NSLog(@"FacelessMan Exist");
+        [personItemsMutableArray addObject: [[Store sharedStore] FacelessMan]];
+    }
+
+    NSArray *personItems = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    if (personItems && personItems.count > 0) {
+        NSLog(@"Fetch %lu person", (unsigned long)personItems.count);
+        [personItemsMutableArray addObjectsFromArray:personItems];
+    }
+    Person *currentPersonItem = personItemsMutableArray[indexPath.section];
+    [personProfileHeaderView.avatorImageView setImage:currentPersonItem.avatorImage];
+    if (currentPersonItem.order == 0) {
+        personProfileHeaderView.nameTextField.text = @"FacelessMan";
+        personProfileHeaderView.nameTextField.enabled = NO;
+    }else{
+        personProfileHeaderView.nameTextField.text = currentPersonItem.name;
+        personProfileHeaderView.nameTextField.enabled = YES;
+    }
+     */
     
     return personProfileHeaderView;
 }
