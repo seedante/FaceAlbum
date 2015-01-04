@@ -20,10 +20,9 @@
 @property (nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatorImageView;
-@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, weak) UIViewController *parentVC;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (nonatomic, assign) NSInteger section;
-@property (weak, nonatomic) id<SDEUICollectionSupplementaryViewDelegate> delegate;
 @property (nonatomic, copy) NSString *assetURLString;
 @property (nonatomic) NSValue *portraitAreaRectValue;
 @property (nonatomic, copy) NSString *storePath;

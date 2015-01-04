@@ -72,16 +72,16 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIM-vl-eb2">
-                                    <rect key="frame" x="634" y="11" width="114" height="33"/>
+                                    <rect key="frame" x="634" y="9" width="114" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="114" id="E5o-Z0-B1u"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <state key="normal" title="Edit">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="performChooseAction:" destination="18c-uM-ajg" eventType="touchUpInside" id="C6X-Cm-kVc"/>
+                                        <action selector="performChooseAction:" destination="18c-uM-ajg" eventType="touchUpInside" id="ZXB-tr-PLk"/>
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="centerButton.png" translatesAutoresizingMaskIntoConstraints="NO" id="tRi-Ac-ICx">
@@ -91,7 +91,7 @@
                             <constraints>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="top" secondItem="18c-uM-ajg" secondAttribute="top" constant="10" id="A2b-OY-XIy"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="iRr-Ru-fZl" secondAttribute="leading" id="Fkj-vX-0Tt"/>
-                                <constraint firstItem="KIM-vl-eb2" firstAttribute="baseline" secondItem="rDV-Xj-e5B" secondAttribute="baseline" constant="2" id="Fsi-7w-Lf7"/>
+                                <constraint firstItem="KIM-vl-eb2" firstAttribute="baseline" secondItem="rDV-Xj-e5B" secondAttribute="baseline" constant="3" id="Fsi-7w-Lf7"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="centerY" secondItem="18c-uM-ajg" secondAttribute="centerY" id="Qa1-Ep-IZH"/>
                                 <constraint firstItem="rDV-Xj-e5B" firstAttribute="leading" secondItem="18c-uM-ajg" secondAttribute="leading" constant="50" id="gMg-Jj-f3H"/>
                                 <constraint firstAttribute="bottom" secondItem="iRr-Ru-fZl" secondAttribute="bottom" id="gb0-Ke-mns"/>
@@ -116,16 +116,17 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="UMT-jw-iR7" kind="push" identifier="enterGallery" id="fYU-IF-XFj"/>
+                        <segue destination="ZOj-7r-KTa" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="zqR-zT-IEG"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-D4-GVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3914" y="984"/>
         </scene>
-        <!--View Controller-->
+        <!--Person Info Edit View Controller-->
         <scene sceneID="FpY-rk-b01">
             <objects>
-                <viewController storyboardIdentifier="PersonInfoEditVC" id="ZOj-7r-KTa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonInfoEditVC" id="ZOj-7r-KTa" customClass="SDEPersonInfoEditViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qK1-C9-Iuz"/>
                         <viewControllerLayoutGuide type="bottom" id="LyD-DM-XwM"/>
@@ -134,33 +135,128 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQj-p4-3Fe">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQj-p4-3Fe">
+                                <rect key="frame" x="0.0" y="236" width="768" height="939"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="939" id="7dN-am-NQH"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iBA-C6-eME">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="uIB-m6-NmW">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="zic-qa-h96" customClass="SDEAvatorCell">
+                                        <rect key="frame" x="50" y="70" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6X5-rk-3kB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                </imageView>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="538.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oB-Tp-bdb">
+                                                    <rect key="frame" x="24" y="59" width="53" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <connections>
+                                            <outlet property="avatorView" destination="6X5-rk-3kB" id="sxp-TV-lbD"/>
+                                            <outlet property="order" destination="4oB-Tp-bdb" id="ZKb-I5-AKh"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CandidateInfo" id="IJV-3e-wQx">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avators for Person Poster" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oG-4b-xlk">
+                                            <rect key="frame" x="14" y="14" width="201" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="201" id="NaO-We-Knn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="9oG-4b-xlk" firstAttribute="top" secondItem="IJV-3e-wQx" secondAttribute="topMargin" constant="6" id="DVG-VJ-Ym0"/>
+                                        <constraint firstItem="9oG-4b-xlk" firstAttribute="leading" secondItem="IJV-3e-wQx" secondAttribute="leadingMargin" constant="6" id="yn3-W9-dK3"/>
+                                    </constraints>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZOj-7r-KTa" id="pcq-nC-U1U"/>
+                                    <outlet property="delegate" destination="ZOj-7r-KTa" id="BQG-J2-af2"/>
+                                </connections>
                             </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FacelessManAvator.png" translatesAutoresizingMaskIntoConstraints="NO" id="mVe-bS-eVg">
+                                <rect key="frame" x="312" y="40" width="144" height="144"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="144" id="Doq-aI-DvL"/>
+                                    <constraint firstAttribute="width" constant="144" id="hbM-kg-T2w"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umg-qP-z6l">
+                                <rect key="frame" x="699" y="154" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelAllModify:" destination="ZOj-7r-KTa" eventType="touchUpInside" id="fcA-Ee-3Sb"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="NameOrWhatever" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bbs-Ar-TgG">
+                                <rect key="frame" x="325" y="192" width="119" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ZOj-7r-KTa" id="852-yc-azd"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upg-Hd-WeC">
+                                <rect key="frame" x="692" y="40" width="55" height="30"/>
+                                <state key="normal" title="Confirm">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveAllModify:" destination="ZOj-7r-KTa" eventType="touchUpInside" id="RqJ-lH-dhR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mVe-bS-eVg" firstAttribute="top" secondItem="qK1-C9-Iuz" secondAttribute="bottom" constant="20" id="18i-SH-PEB"/>
+                            <constraint firstItem="Umg-qP-z6l" firstAttribute="top" secondItem="upg-Hd-WeC" secondAttribute="bottom" constant="84" id="PIx-VZ-uHm"/>
+                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="leading" secondItem="i9T-OQ-PS1" secondAttribute="leading" id="Tox-y8-pTV"/>
+                            <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="iQj-p4-3Fe" secondAttribute="centerX" id="U9I-iS-e1C"/>
+                            <constraint firstItem="Umg-qP-z6l" firstAttribute="bottom" secondItem="mVe-bS-eVg" secondAttribute="bottom" id="bhK-qu-Sop"/>
+                            <constraint firstItem="Bbs-Ar-TgG" firstAttribute="top" secondItem="mVe-bS-eVg" secondAttribute="bottom" constant="8" id="dvw-1J-QVs"/>
+                            <constraint firstItem="Umg-qP-z6l" firstAttribute="trailing" secondItem="upg-Hd-WeC" secondAttribute="trailing" id="kbj-2l-h8B"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Umg-qP-z6l" secondAttribute="trailing" constant="1" id="n42-6W-Are"/>
+                            <constraint firstAttribute="centerX" secondItem="mVe-bS-eVg" secondAttribute="centerX" id="uA2-NA-QTu"/>
+                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="Bbs-Ar-TgG" secondAttribute="bottom" constant="27" id="vU6-Q0-qPY"/>
+                            <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="Bbs-Ar-TgG" secondAttribute="centerX" id="ylz-jb-BYt"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="tSw-pT-173"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="500"/>
+                    <connections>
+                        <outlet property="candidateAvatorCollectionView" destination="iQj-p4-3Fe" id="bXz-It-LNc"/>
+                        <outlet property="posterImageView" destination="mVe-bS-eVg" id="JMj-1D-NuA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJv-Sr-RGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3914" y="2120"/>
+            <point key="canvasLocation" x="-3914" y="2128"/>
         </scene>
         <!--Scan Room-->
         <scene sceneID="hbB-3X-cdK">
@@ -929,6 +1025,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="FacelessManAvator.png" width="297" height="297"/>
         <image name="FacelessManPoster.jpg" width="300" height="386"/>
         <image name="Photo.png" width="25" height="25"/>
         <image name="avator.png" width="25" height="25"/>

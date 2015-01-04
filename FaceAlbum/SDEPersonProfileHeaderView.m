@@ -9,6 +9,7 @@
 #import "SDEPersonProfileHeaderView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Person.h"
+#import "SDEPersonInfoEditViewController.h"
 
 @implementation SDEPersonProfileHeaderView
 
@@ -56,6 +57,10 @@
 
 - (IBAction)performChooseAction:(id)sender
 {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    SDEPersonInfoEditViewController *personInfoEditVC = [storyboard instantiateViewControllerWithIdentifier:@"PersonInfoEditVC"];
+    personInfoEditVC.secction = self.section;
+    /*
     if (self.collectionView.allowsSelection) {
         self.collectionView.allowsSelection = NO;
         self.delegate.isChoosingAvator = NO;
@@ -69,6 +74,7 @@
         self.delegate.editedSection = self.section;
         [self.actionButton setTitle:@"Confirm" forState:UIControlStateNormal];
     }
+     */
 }
 
 - (void)createPosterFileFromAsset:(NSString *)assetURLString WithArea:(NSValue *)portraitAreaRect AtPath:(NSString *)storePath

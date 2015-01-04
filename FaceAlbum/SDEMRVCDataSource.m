@@ -493,10 +493,8 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     personProfileHeaderView.section = indexPath.section;
-    [self.headerViewCache setObject:personProfileHeaderView forKey:indexPath];
     
-    personProfileHeaderView.collectionView = collectionView;
-    personProfileHeaderView.delegate = (id<SDEUICollectionSupplementaryViewDelegate>)collectionView.delegate;
+    personProfileHeaderView.parentVC = (UIViewController *)collectionView.delegate;
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
     NSInteger number = [collectionView numberOfItemsInSection:indexPath.section];

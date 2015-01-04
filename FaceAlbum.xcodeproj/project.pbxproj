@@ -122,6 +122,8 @@
 		FD7E22521A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
 		FDA2E4F91A572AE300A6147A /* SDEPersonProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA2E4F61A572AE300A6147A /* SDEPersonProfileHeaderView.xib */; };
 		FDA2E4FA1A572AE300A6147A /* SDEPersonProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA2E4F61A572AE300A6147A /* SDEPersonProfileHeaderView.xib */; };
+		FDA2E4FD1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */; };
+		FDA2E4FE1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */; };
 		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
 		FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
 		FDB99A191A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */; };
@@ -294,6 +296,8 @@
 		FD7E22531A0770B200463C67 /* FaceAlbum 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 3.xcdatamodel"; sourceTree = "<group>"; };
 		FD91AACE1A2393F5000E4EB1 /* FaceAlbum 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 4.xcdatamodel"; sourceTree = "<group>"; };
 		FDA2E4F61A572AE300A6147A /* SDEPersonProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDEPersonProfileHeaderView.xib; sourceTree = "<group>"; };
+		FDA2E4FB1A591EAE00A6147A /* SDEPersonInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPersonInfoEditViewController.h; sourceTree = "<group>"; };
+		FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPersonInfoEditViewController.m; sourceTree = "<group>"; };
 		FDB3607D19CEC33300AAE34D /* SDEPopupPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPopupPanel.h; sourceTree = "<group>"; };
 		FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPopupPanel.m; sourceTree = "<group>"; };
 		FDB3608019CF1EE800AAE34D /* SDEPhotoFileFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoFileFilter.h; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 				FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */,
 				FD7327AB197FDD60006C5A2C /* SDEMRVCDataSource.h */,
 				FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */,
+				FDA2E4FB1A591EAE00A6147A /* SDEPersonInfoEditViewController.h */,
+				FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */,
 				FDA2E4F61A572AE300A6147A /* SDEPersonProfileHeaderView.xib */,
 				FD290B2619C5860E003A26DC /* SDEPersonProfileHeaderView.h */,
 				FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */,
@@ -849,6 +855,7 @@
 				FD7D43731A1EDB5200551093 /* FaceppFaceset.m in Sources */,
 				FD7D43791A1EDB5200551093 /* FaceppInfo.m in Sources */,
 				FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */,
+				FDA2E4FD1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */,
 				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
 				FD67D8FD197E048400D2CCDA /* Store.m in Sources */,
 				FD7D436D1A1EDB5200551093 /* FaceppAPI.m in Sources */,
@@ -904,6 +911,7 @@
 				FD7D43741A1EDB5200551093 /* FaceppFaceset.m in Sources */,
 				FD7D437A1A1EDB5200551093 /* FaceppInfo.m in Sources */,
 				FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
+				FDA2E4FE1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */,
 				FDBF6C1B19D1038000352DFA /* SDEAvatorCell.m in Sources */,
 				FDBF6C1D19D1038000352DFA /* Store.m in Sources */,
 				FD7D436E1A1EDB5200551093 /* FaceppAPI.m in Sources */,
