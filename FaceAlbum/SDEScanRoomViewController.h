@@ -7,18 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#ifdef DEBUG_MODE
-#define DLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-#else
-#define DLog( s, ... )
-#endif
 
 @interface SDEScanRoomViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *assetCollectionView;
 @property (strong, nonatomic) IBOutlet UICollectionView *faceCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *scanButton;
-@property (weak, nonatomic) IBOutlet UIView *requestPhotoAuthorizationView;
+@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
 
 - (IBAction)scanPhotos:(id)sender;
 

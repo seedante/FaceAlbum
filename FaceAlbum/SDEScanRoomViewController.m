@@ -10,6 +10,7 @@
 #import "PhotoScanManager.h"
 #import "SDEPhotoFileFilter.h"
 #import "Store.h"
+#import "SDECrytalBallLayout.h"
 @import AssetsLibrary;
 
 static NSString *cellIdentifier = @"Cell";
@@ -22,7 +23,8 @@ static NSString *cellIdentifier = @"Cell";
 @property (nonatomic) NSMutableArray *avators;
 @property (nonatomic, assign) NSUInteger totalCount;
 @property (nonatomic, assign) NSUInteger faceCount;
-@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
+@property (nonatomic, assign) BOOL isScaning;
+@property (nonatomic, assign) NSInteger startIndex;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
@@ -36,6 +38,8 @@ static NSString *cellIdentifier = @"Cell";
 	// Do any additional setup after loading the view, typically from a nib.
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = YES;
+    self.isScaning = NO;
+    self.startIndex = 0;
     self.avators = [NSMutableArray new];
     self.faceCount = 0;
     self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
@@ -45,9 +49,11 @@ static NSString *cellIdentifier = @"Cell";
     [fetchRequest setPredicate:predicate];
     NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
     if (results.count>0) {
-        NSLog(@"%lu Zero", (unsigned long)results.count);
         self.photoScanManager.numberOfItemsInFirstSection = results.count;
     }
+    
+    //SDECrytalBallLayout *cryalBallLayout = [[SDECrytalBallLayout alloc] init];
+    //[self.faceCollectionView setCollectionViewLayout:cryalBallLayout];
     
     self.photoFileFilter = [SDEPhotoFileFilter sharedPhotoFileFilter];
     [self.photoFileFilter addObserver:self forKeyPath:@"photoAdded" options:NSKeyValueObservingOptionNew context:nil];
@@ -99,17 +105,25 @@ static NSString *cellIdentifier = @"Cell";
 - (void)cleanManagedObjectContext
 {
     NSLog(@"Clean ManagedObject");
+    self.isScaning = NO;
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
     }
     [self.managedObjectContext reset];
+    [self performSelector:@selector(continueScan) withObject:nil afterDelay:0.5];
+}
+
+- (void)continueScan
+{
+    NSLog(@"continue Scan");
+    self.isScaning = YES;
+    [self enumerateScanAssetAtIndexPath:@(self.startIndex)];;
 }
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([self.photoFileFilter isPhotoAdded]) {
-        NSLog(@"YoYo");
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
     }
@@ -157,10 +171,16 @@ static NSString *cellIdentifier = @"Cell";
 
 - (IBAction)scanPhotos:(id)sender
 {
+    if (!self.isScaning) {
+        self.isScaning = YES;
+        [self.scanButton setTitle:@"Pause" forState:UIControlStateNormal];
+        [self enumerateScanAssetAtIndexPath:@(self.startIndex)];
+    }else{
+        self.isScaning = NO;
+        [self.scanButton setTitle:@"Continue" forState:UIControlStateNormal];
+    }
     self.tabBarController.tabBar.hidden = YES;
-    [self.scanButton setTitle:@"Scan..." forState:UIControlStateNormal];
-    self.scanButton.enabled = NO;
-    [self enumerateScanAssetAtIndexPath:@(0)];
+
 }
 
 - (void)enumerateScanAssetAtIndexPath:(NSNumber *)indexNumber
@@ -170,6 +190,11 @@ static NSString *cellIdentifier = @"Cell";
         return;
     }
     
+    if (!self.isScaning) {
+        return;
+    }
+    
+    self.processIndicator.text = [NSString stringWithFormat:@"%ld/%lu", (long)self.startIndex, (unsigned long)self.assetsToScan.count];
     NSInteger index = indexNumber.integerValue;
     [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     UICollectionViewCell *cell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
@@ -186,19 +211,40 @@ static NSString *cellIdentifier = @"Cell";
             self.faceCount += detectedFaces.count;
             [self.avators addObjectsFromArray:detectedFaces];
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Batch insert Item");
                 [self.faceCollectionView performBatchUpdates:^{
                     for (NSInteger i = self.faceCount - detectedFaces.count; i < self.faceCount; i++) {
                         [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
                     }
-                }completion:nil];
+                }completion:^(BOOL isFinished){
+                    if (isFinished) {
+                        if (self.faceCount > 10) {
+                            NSRange deleteRange;
+                            deleteRange.location = 0;
+                            deleteRange.length = self.faceCount - 10;
+                            self.faceCount = 10;
+                            [self.avators removeObjectsInRange:deleteRange];
+                            NSMutableArray *indexPathArray = [[NSMutableArray alloc] initWithCapacity:self.faceCount - 10];
+                            for (NSInteger j = 0; j < deleteRange.length; j++) {
+                                [indexPathArray addObject:[NSIndexPath indexPathForItem:j inSection:0]];
+                            }
+                            NSLog(@"Batch delete items");
+                            [self.faceCollectionView performBatchUpdates:^{
+                                [self.faceCollectionView deleteItemsAtIndexPaths:indexPathArray];
+                            }completion:nil];
+                        }else{
+                            
+                        }
+                    }
+                }];
             });
             
         }
     }else
         NSLog(@"Asset fetch error.");
-
-    [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(index + 1) afterDelay:0.1];
     
+    self.startIndex = index + 1;
+    [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(self.startIndex) afterDelay:0.1];
 }
 
 - (void)prepareForNextScene
@@ -208,6 +254,7 @@ static NSString *cellIdentifier = @"Cell";
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
     }
+    [self.managedObjectContext reset];
     UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
     [self.navigationController pushViewController:montageRoomVC animated:NO];
 }
