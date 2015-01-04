@@ -413,14 +413,22 @@ typedef enum {
 
 - (void)hiddenSelectedFaces
 {
-    for (NSIndexPath *indexPath in self.selectedFacesSet) {
-        Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-        face.whetherToDisplay = NO;
-        [self.dataSource removeCachedImageWithKey:face.storeFileName];
-    }
-
-    [self cleanUsedData];
-    [self unenableLeftBarButtonItems];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Selected Faces" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        for (NSIndexPath *indexPath in self.selectedFacesSet) {
+            Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            face.whetherToDisplay = NO;
+            [self.dataSource removeCachedImageWithKey:face.storeFileName];
+        }
+        
+        [self cleanUsedData];
+        [self unenableLeftBarButtonItems];
+    }];
+    [alert addAction:OKAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - add a new person

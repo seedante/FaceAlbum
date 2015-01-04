@@ -27,7 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.posterImageView.layer.cornerRadius = 15.0f;
     self.choosedIndex = -1;
     self.faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
     self.mangedObjectContext = [[Store sharedStore] managedObjectContext];

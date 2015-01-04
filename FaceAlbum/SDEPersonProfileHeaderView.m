@@ -14,20 +14,6 @@
 
 @implementation SDEPersonProfileHeaderView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        /*
-        [[NSBundle mainBundle] loadNibNamed:@"SDEPersonProfileHeaderView" owner:self options:nil];
-        [self addSubview:self.avatorImageView];
-        [self addSubview:self.nameTextField];
-        [self addSubview:self.numberLabel];
-        [self addSubview:self.actionButton];
-         */
-    }
-    return self;
-}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
