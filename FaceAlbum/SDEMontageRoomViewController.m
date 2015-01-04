@@ -8,7 +8,6 @@
 
 #import "SDEMontageRoomViewController.h"
 #import "SDEMRVCDataSource.h"
-//#import "SDEPersonProfileHeaderView.h"
 #import "PhotoScanManager.h"
 #import "Store.h"
 #import "Person.h"
@@ -394,7 +393,6 @@ typedef enum {
     self.collectionView.allowsMultipleSelection = YES;
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
-    self.isChoosingAvator = NO;
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
@@ -459,12 +457,14 @@ typedef enum {
         newPerson.order = (int)newSection;
         Face *anyFaceItem = (Face *)newPerson.ownedFaces.anyObject;
         
-        UIImage *avatorImage = anyFaceItem.avatorImage;
+        UIImage *avatorImage = [UIImage imageWithContentsOfFile:anyFaceItem.storeFileName];
+        /*
         UIGraphicsBeginImageContext(CGSizeMake(44.0f, 44.0f));
         [avatorImage drawInRect:CGRectMake(0, 0, 44.0f, 44.0f)];
         UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        newPerson.avatorImage = thubnailImage;
+         */
+        newPerson.avatorImage = avatorImage;
         
         NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         NSString *portraitName = [[[NSUUID alloc] init] UUIDString];
@@ -691,41 +691,11 @@ typedef enum {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
-        if (self.isChoosingAvator) {
-            /*
-            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-            Person *personItem = faceItem.personOwner;
-            UIImage *avatorImage = [self.dataSource cachedAvatorImageForKey:faceItem.storeFileName];
-            //UIImage *avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
-            if (!avatorImage) {
-                avatorImage = [UIImage imageWithContentsOfFile:faceItem.storeFileName];
-            }
-            
-            UIGraphicsBeginImageContext(CGSizeMake(44.0f, 44.0f));
-            [avatorImage drawInRect:CGRectMake(0, 0, 44.0f, 44.0f)];
-            avatorImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            personItem.avatorImage = avatorImage;
-            [self saveEdit];
-            
-            SDEPersonProfileHeaderView *headerView = (SDEPersonProfileHeaderView *)[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.section]];
-            NSLog(@"%@", headerView);
-            headerView.assetURLString = faceItem.assetURLString;
-            headerView.portraitAreaRectValue = faceItem.portraitAreaRect;
-            
-            NSString *storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-            NSString *storePath = [storeDirectory stringByAppendingPathComponent:personItem.portraitFileString];
-            headerView.storePath = storePath;
-            //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
-            */
-        }else{
-            [self processCellAtIndexPath:indexPath type:@"Select"];
-            self.collectionView.bounces = NO;
-            if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
-                [self.includedSectionsSet addObject:@(indexPath.section)];
-            }
+        [self processCellAtIndexPath:indexPath type:@"Select"];
+        self.collectionView.bounces = NO;
+        if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+            [self.includedSectionsSet addObject:@(indexPath.section)];
         }
-        
     }else{
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int targetSection = firstItemInSection.section;

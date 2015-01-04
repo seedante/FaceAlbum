@@ -493,7 +493,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     SDEPersonProfileHeaderView *personProfileHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PersonProfile" forIndexPath:indexPath];
     personProfileHeaderView.section = indexPath.section;
-    
+    personProfileHeaderView.MontangeRoomCollectionView = self.collectionView;
     personProfileHeaderView.parentVC = (UIViewController *)collectionView.delegate;
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
@@ -507,6 +507,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     if (faceItem.section == 0) {
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
+        personProfileHeaderView.actionButton.hidden = YES;
         [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
     }else{
         personProfileHeaderView.nameTextField.enabled = YES;

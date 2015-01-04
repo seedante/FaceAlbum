@@ -16,8 +16,6 @@
 #import "SDEPersonProfileHeaderView.h"
 //@class SDEPersonProfileHeaderView;
 
-@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate, UICollectionViewDelegate, SDEUICollectionSupplementaryViewDelegate>
+@interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate, UICollectionViewDelegate>
 
-@property (nonatomic, assign) BOOL isChoosingAvator;
-@property (nonatomic, assign) NSInteger editedSection;
 @end

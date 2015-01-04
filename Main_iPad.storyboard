@@ -136,11 +136,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQj-p4-3Fe">
-                                <rect key="frame" x="0.0" y="236" width="768" height="939"/>
+                                <rect key="frame" x="0.0" y="234" width="768" height="790"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="939" id="7dN-am-NQH"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iBA-C6-eME">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
@@ -206,7 +203,8 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umg-qP-z6l">
-                                <rect key="frame" x="699" y="154" width="48" height="30"/>
+                                <rect key="frame" x="691" y="150" width="56" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -215,15 +213,16 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="NameOrWhatever" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bbs-Ar-TgG">
-                                <rect key="frame" x="325" y="192" width="119" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="314" y="192" width="141" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="ZOj-7r-KTa" id="852-yc-azd"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upg-Hd-WeC">
-                                <rect key="frame" x="692" y="40" width="55" height="30"/>
+                                <rect key="frame" x="682" y="32" width="65" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Confirm">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -235,6 +234,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="top" secondItem="qK1-C9-Iuz" secondAttribute="bottom" constant="20" id="18i-SH-PEB"/>
+                            <constraint firstItem="LyD-DM-XwM" firstAttribute="top" secondItem="iQj-p4-3Fe" secondAttribute="bottom" id="D4z-Oi-iDl"/>
                             <constraint firstItem="Umg-qP-z6l" firstAttribute="top" secondItem="upg-Hd-WeC" secondAttribute="bottom" constant="84" id="PIx-VZ-uHm"/>
                             <constraint firstItem="iQj-p4-3Fe" firstAttribute="leading" secondItem="i9T-OQ-PS1" secondAttribute="leading" id="Tox-y8-pTV"/>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="iQj-p4-3Fe" secondAttribute="centerX" id="U9I-iS-e1C"/>
@@ -243,7 +243,7 @@
                             <constraint firstItem="Umg-qP-z6l" firstAttribute="trailing" secondItem="upg-Hd-WeC" secondAttribute="trailing" id="kbj-2l-h8B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Umg-qP-z6l" secondAttribute="trailing" constant="1" id="n42-6W-Are"/>
                             <constraint firstAttribute="centerX" secondItem="mVe-bS-eVg" secondAttribute="centerX" id="uA2-NA-QTu"/>
-                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="Bbs-Ar-TgG" secondAttribute="bottom" constant="27" id="vU6-Q0-qPY"/>
+                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="Bbs-Ar-TgG" secondAttribute="bottom" constant="20" id="vU6-Q0-qPY"/>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="Bbs-Ar-TgG" secondAttribute="centerX" id="ylz-jb-BYt"/>
                         </constraints>
                     </view>
@@ -251,6 +251,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="500"/>
                     <connections>
                         <outlet property="candidateAvatorCollectionView" destination="iQj-p4-3Fe" id="bXz-It-LNc"/>
+                        <outlet property="nameTextField" destination="Bbs-Ar-TgG" id="2EF-8k-Lt0"/>
                         <outlet property="posterImageView" destination="mVe-bS-eVg" id="JMj-1D-NuA"/>
                     </connections>
                 </viewController>

@@ -7,19 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "SDEMontageRoomViewController.h"
-
-@protocol  SDEUICollectionSupplementaryViewDelegate <NSObject>
-@property (nonatomic, assign) BOOL isChoosingAvator;
-@property (nonatomic, assign) NSInteger editedSection;
-
-@end
 
 @interface SDEPersonProfileHeaderView : UICollectionReusableView
 
 @property (nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatorImageView;
+@property (weak, nonatomic) UICollectionView *MontangeRoomCollectionView;
 @property (nonatomic, weak) UIViewController *parentVC;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (nonatomic, assign) NSInteger section;
