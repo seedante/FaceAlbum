@@ -13,7 +13,8 @@
 #import "SDECrytalBallLayout.h"
 @import AssetsLibrary;
 
-static NSString *cellIdentifier = @"Cell";
+static NSString * const cellIdentifier = @"Cell";
+static NSInteger const MAXCellCount = 15;
 
 @interface SDEScanRoomViewController ()
 @property (nonatomic)PhotoScanManager *photoScanManager;
@@ -52,8 +53,8 @@ static NSString *cellIdentifier = @"Cell";
         self.photoScanManager.numberOfItemsInFirstSection = results.count;
     }
     
-    //SDECrytalBallLayout *cryalBallLayout = [[SDECrytalBallLayout alloc] init];
-    //[self.faceCollectionView setCollectionViewLayout:cryalBallLayout];
+    SDECrytalBallLayout *cryalBallLayout = [[SDECrytalBallLayout alloc] init];
+    [self.faceCollectionView setCollectionViewLayout:cryalBallLayout];
     
     self.photoFileFilter = [SDEPhotoFileFilter sharedPhotoFileFilter];
     [self.photoFileFilter addObserver:self forKeyPath:@"photoAdded" options:NSKeyValueObservingOptionNew context:nil];
@@ -139,6 +140,7 @@ static NSString *cellIdentifier = @"Cell";
         numberOfItems = self.assetsToScan.count;
     }else{
         numberOfItems = self.faceCount;
+        [collectionView.collectionViewLayout invalidateLayout];
     }
     //NSLog(@"item number: %ld", (long)numberOfItems);
     return numberOfItems;
@@ -211,32 +213,26 @@ static NSString *cellIdentifier = @"Cell";
             self.faceCount += detectedFaces.count;
             [self.avators addObjectsFromArray:detectedFaces];
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Batch insert Item");
                 [self.faceCollectionView performBatchUpdates:^{
                     for (NSInteger i = self.faceCount - detectedFaces.count; i < self.faceCount; i++) {
                         [self.faceCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
                     }
-                }completion:^(BOOL isFinished){
-                    if (isFinished) {
-                        if (self.faceCount > 10) {
-                            NSRange deleteRange;
-                            deleteRange.location = 0;
-                            deleteRange.length = self.faceCount - 10;
-                            self.faceCount = 10;
-                            [self.avators removeObjectsInRange:deleteRange];
-                            NSMutableArray *indexPathArray = [[NSMutableArray alloc] initWithCapacity:self.faceCount - 10];
-                            for (NSInteger j = 0; j < deleteRange.length; j++) {
-                                [indexPathArray addObject:[NSIndexPath indexPathForItem:j inSection:0]];
-                            }
-                            NSLog(@"Batch delete items");
-                            [self.faceCollectionView performBatchUpdates:^{
-                                [self.faceCollectionView deleteItemsAtIndexPaths:indexPathArray];
-                            }completion:nil];
-                        }else{
-                            
-                        }
+                }completion:nil];
+                
+                if (self.faceCount > MAXCellCount) {
+                    NSRange deleteRange;
+                    deleteRange.location = 0;
+                    deleteRange.length = self.faceCount - MAXCellCount;
+                    self.faceCount = MAXCellCount;
+                    [self.avators removeObjectsInRange:deleteRange];
+                    NSMutableArray *indexPathArray = [[NSMutableArray alloc] initWithCapacity:deleteRange.length];
+                    for (NSInteger j = 0; j < deleteRange.length; j++) {
+                        [indexPathArray addObject:[NSIndexPath indexPathForItem:j inSection:0]];
                     }
-                }];
+                    [self.faceCollectionView performBatchUpdates:^{
+                        [self.faceCollectionView deleteItemsAtIndexPaths:indexPathArray];
+                    }completion:nil];
+                }
             });
             
         }

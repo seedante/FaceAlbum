@@ -43,12 +43,12 @@ static CGFloat const kItemSizeHeight = 100.0f;
 {
     NSLog(@"prepareLayout");
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
+    NSLog(@"cellCount: %ld", (long)self.cellCount);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     NSLog(@"Ask for LayoutAttributes in Rect");
-    //NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:self.cellCount];
     
     if (self.layoutDataArray.count == 0) {
         for (NSUInteger i=0; i<self.cellCount; ++i)
@@ -61,17 +61,30 @@ static CGFloat const kItemSizeHeight = 100.0f;
         }
     }else{
         if (self.layoutDataArray.count < self.cellCount) {
+            //NSLog(@"calculate new item layout attributes");
             for (NSUInteger j=self.layoutDataArray.count; j<self.cellCount; j++) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:0];
                 UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
                 [self.layoutDataArray addObject:attributes];
             }
         }else if (self.layoutDataArray.count > self.cellCount){
+            //NSLog(@"previous count: %lu new count: %ld", (unsigned long)self.layoutDataArray.count, (long)self.cellCount);
             NSInteger length = self.layoutDataArray.count - self.cellCount;
+
             NSRange deleteRange;
             deleteRange.location = 0;
             deleteRange.length = length;
             [self.layoutDataArray removeObjectsInRange:deleteRange];
+            
+            NSArray *attributesArray = [self.layoutDataArray copy];
+            [self.layoutDataArray removeAllObjects];
+            
+            for (NSInteger i = 0; i<attributesArray.count; i++) {
+                UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+                attributes.center = [(UICollectionViewLayoutAttributes *)attributesArray[i] center];
+                [self.layoutDataArray addObject:attributes];
+            }
+            
         }else
             NSLog(@"It can't be impossible.");
     }
