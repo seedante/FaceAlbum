@@ -69,6 +69,8 @@ static NSInteger const MAXCellCount = 15;
     if (!isFirstScan) {
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
+        self.processIndicator.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
+        
     }
     [super viewWillAppear:animated];
 }
@@ -127,6 +129,7 @@ static NSInteger const MAXCellCount = 15;
     if ([self.photoFileFilter isPhotoAdded]) {
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
+        self.processIndicator.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
     }
 }
 
@@ -159,6 +162,7 @@ static NSInteger const MAXCellCount = 15;
         if (avatorImage) {
             imageView.image = avatorImage;
         }
+        photoCell.layer.cornerRadius = 50.0f;
     }
     return photoCell;
 }

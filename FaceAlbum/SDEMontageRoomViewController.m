@@ -811,7 +811,7 @@ typedef enum {
 {
     DLog(@"register for keyboard notification.");
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
+                                             selector:@selector(keyboardDidShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -821,9 +821,8 @@ typedef enum {
 }
 
 // Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardDidShown:(NSNotification*)aNotification
 {
-    DLog(@"Keyboard show");
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     UIEdgeInsets edgeInsets = self.collectionView.contentInset;

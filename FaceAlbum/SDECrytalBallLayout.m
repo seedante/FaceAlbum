@@ -14,6 +14,11 @@ static CGFloat const kItemSizeHeight = 100.0f;
 @interface SDECrytalBallLayout ()
 @property (nonatomic, assign) NSInteger cellCount;
 @property (nonatomic) NSMutableArray *layoutDataArray;
+@property (nonatomic, assign) CGPoint appearPoint;
+
+//@property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
+//@property (nonatomic, weak) UIGravityBehavior *gravityBehaviour;
+//@property (nonatomic, weak) UICollisionBehavior *collisionBehaviour;
 
 @end
 
@@ -29,6 +34,7 @@ static CGFloat const kItemSizeHeight = 100.0f;
         self.minimumLineSpacing = 20.0;
         self.minimumInteritemSpacing = 30.0;
         self.layoutDataArray = [NSMutableArray new];
+        
     }
     
     return self;
@@ -43,8 +49,10 @@ static CGFloat const kItemSizeHeight = 100.0f;
 {
     NSLog(@"prepareLayout");
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
+    self.appearPoint = CGPointMake(self.collectionView.bounds.size.width/2, self.collectionView.bounds.size.width/2);
     NSLog(@"cellCount: %ld", (long)self.cellCount);
 }
+
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
@@ -94,23 +102,36 @@ static CGFloat const kItemSizeHeight = 100.0f;
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"layout for %@", indexPath);
+    //NSLog(@"layout for %@", indexPath);
     UICollectionViewLayoutAttributes *atttibutes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     int width = self.collectionView.bounds.size.width;
     int height = self.collectionView.bounds.size.height;
     
     CGFloat randomWidth =  arc4random() % width;
     CGFloat randomHeight = arc4random() % height;
-    if (randomWidth < kItemSizeWidth/2) {
-        randomWidth += kItemSizeWidth/2;
+    if (randomWidth < kItemSizeWidth) {
+        randomWidth += kItemSizeWidth;
+    }else if (randomWidth > self.collectionView.bounds.size.width - kItemSizeWidth){
+        randomWidth -= kItemSizeWidth;
     }
-    if (randomHeight > self.collectionView.bounds.size.height) {
-        randomHeight -= kItemSizeHeight/2;
+    
+    if (randomHeight > self.collectionView.bounds.size.height - kItemSizeHeight) {
+        randomHeight -= kItemSizeHeight;
+    }else if (randomHeight < kItemSizeHeight){
+        randomHeight += kItemSizeHeight;
     }
     
     atttibutes.center = CGPointMake(randomWidth, randomHeight);
     atttibutes.size = CGSizeMake(100, 100);
     return atttibutes;
+}
+
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
+{
+    UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+    attributes.center = self.appearPoint;
+    
+    return attributes;
 }
 
 @end
