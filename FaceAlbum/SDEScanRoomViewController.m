@@ -143,7 +143,7 @@ static NSInteger const MAXCellCount = 15;
         numberOfItems = self.assetsToScan.count;
     }else{
         numberOfItems = self.faceCount;
-        [collectionView.collectionViewLayout invalidateLayout];
+        //[collectionView.collectionViewLayout invalidateLayout];
     }
     //NSLog(@"item number: %ld", (long)numberOfItems);
     return numberOfItems;
