@@ -136,13 +136,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQj-p4-3Fe">
-                                <rect key="frame" x="0.0" y="234" width="768" height="790"/>
+                                <rect key="frame" x="0.0" y="255" width="768" height="769"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iBA-C6-eME">
                                     <size key="itemSize" width="100" height="100"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="10" maxX="20" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="avatorCell" id="zic-qa-h96" customClass="SDEAvatorCell">
@@ -152,44 +152,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6X5-rk-3kB">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6X5-rk-3kB">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
-                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="538.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oB-Tp-bdb">
-                                                    <rect key="frame" x="24" y="59" width="53" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="6X5-rk-3kB" secondAttribute="trailing" id="IfE-sI-913"/>
+                                            <constraint firstAttribute="bottom" secondItem="6X5-rk-3kB" secondAttribute="bottom" id="JLg-x2-Ii3"/>
+                                            <constraint firstItem="6X5-rk-3kB" firstAttribute="leading" secondItem="zic-qa-h96" secondAttribute="leading" id="bJv-ET-bU6"/>
+                                            <constraint firstItem="6X5-rk-3kB" firstAttribute="top" secondItem="zic-qa-h96" secondAttribute="top" id="sgS-4D-H7z"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="avatorView" destination="6X5-rk-3kB" id="sxp-TV-lbD"/>
-                                            <outlet property="order" destination="4oB-Tp-bdb" id="ZKb-I5-AKh"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CandidateInfo" id="IJV-3e-wQx">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avators for Person Poster" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oG-4b-xlk">
-                                            <rect key="frame" x="14" y="14" width="201" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="201" id="NaO-We-Knn"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="9oG-4b-xlk" firstAttribute="top" secondItem="IJV-3e-wQx" secondAttribute="topMargin" constant="6" id="DVG-VJ-Ym0"/>
-                                        <constraint firstItem="9oG-4b-xlk" firstAttribute="leading" secondItem="IJV-3e-wQx" secondAttribute="leadingMargin" constant="6" id="yn3-W9-dK3"/>
-                                    </constraints>
-                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="ZOj-7r-KTa" id="pcq-nC-U1U"/>
                                     <outlet property="delegate" destination="ZOj-7r-KTa" id="BQG-J2-af2"/>
@@ -230,20 +210,31 @@
                                     <action selector="saveAllModify:" destination="ZOj-7r-KTa" eventType="touchUpInside" id="RqJ-lH-dhR"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avators for Person" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Oz-Ny-Iq6">
+                                <rect key="frame" x="16" y="226" width="201" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="201" id="gq6-sX-9JG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="top" secondItem="qK1-C9-Iuz" secondAttribute="bottom" constant="20" id="18i-SH-PEB"/>
                             <constraint firstItem="LyD-DM-XwM" firstAttribute="top" secondItem="iQj-p4-3Fe" secondAttribute="bottom" id="D4z-Oi-iDl"/>
+                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="1Oz-Ny-Iq6" secondAttribute="bottom" constant="8" symbolic="YES" id="FnV-Q6-zez"/>
                             <constraint firstItem="Umg-qP-z6l" firstAttribute="top" secondItem="upg-Hd-WeC" secondAttribute="bottom" constant="84" id="PIx-VZ-uHm"/>
                             <constraint firstItem="iQj-p4-3Fe" firstAttribute="leading" secondItem="i9T-OQ-PS1" secondAttribute="leading" id="Tox-y8-pTV"/>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="iQj-p4-3Fe" secondAttribute="centerX" id="U9I-iS-e1C"/>
+                            <constraint firstItem="1Oz-Ny-Iq6" firstAttribute="leading" secondItem="i9T-OQ-PS1" secondAttribute="leadingMargin" constant="-4" id="bC7-4q-E3N"/>
                             <constraint firstItem="Umg-qP-z6l" firstAttribute="bottom" secondItem="mVe-bS-eVg" secondAttribute="bottom" id="bhK-qu-Sop"/>
                             <constraint firstItem="Bbs-Ar-TgG" firstAttribute="top" secondItem="mVe-bS-eVg" secondAttribute="bottom" constant="8" id="dvw-1J-QVs"/>
                             <constraint firstItem="Umg-qP-z6l" firstAttribute="trailing" secondItem="upg-Hd-WeC" secondAttribute="trailing" id="kbj-2l-h8B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Umg-qP-z6l" secondAttribute="trailing" constant="1" id="n42-6W-Are"/>
                             <constraint firstAttribute="centerX" secondItem="mVe-bS-eVg" secondAttribute="centerX" id="uA2-NA-QTu"/>
-                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="Bbs-Ar-TgG" secondAttribute="bottom" constant="20" id="vU6-Q0-qPY"/>
+                            <constraint firstItem="iQj-p4-3Fe" firstAttribute="top" secondItem="Bbs-Ar-TgG" secondAttribute="bottom" constant="41" id="vU6-Q0-qPY"/>
                             <constraint firstItem="mVe-bS-eVg" firstAttribute="centerX" secondItem="Bbs-Ar-TgG" secondAttribute="centerX" id="ylz-jb-BYt"/>
                         </constraints>
                     </view>
@@ -251,6 +242,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="500"/>
                     <connections>
                         <outlet property="candidateAvatorCollectionView" destination="iQj-p4-3Fe" id="bXz-It-LNc"/>
+                        <outlet property="infoLabel" destination="1Oz-Ny-Iq6" id="9IX-BY-2yk"/>
                         <outlet property="nameTextField" destination="Bbs-Ar-TgG" id="2EF-8k-Lt0"/>
                         <outlet property="posterImageView" destination="mVe-bS-eVg" id="JMj-1D-NuA"/>
                     </connections>

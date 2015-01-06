@@ -40,15 +40,15 @@
         self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
         
         UIGravityBehavior *gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:@[]];
-        gravityBehaviour.gravityDirection = CGVectorMake(0, -0.1);
+        gravityBehaviour.gravityDirection = CGVectorMake(0, -3);
         self.gravityBehaviour = gravityBehaviour;
         [self.dynamicAnimator addBehavior:gravityBehaviour];
         
         UICollisionBehavior *collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:@[]];
+        [collisionBehaviour setTranslatesReferenceBoundsIntoBoundaryWithInsets:UIEdgeInsetsMake(100, 100, 100, 100)];
         collisionBehaviour.translatesReferenceBoundsIntoBoundary = YES;
         [self.dynamicAnimator addBehavior:collisionBehaviour];
         self.collisionBehaviour = collisionBehaviour;
-        
     }
     
     return self;
@@ -57,7 +57,8 @@
 - (CGPoint)randomCenter
 {
     CGPoint position;
-    position.y = self.collectionView.center.y;
+    int heightInt = (int)self.collectionView.bounds.size.height;
+    position.y = arc4random() % heightInt;
     position.x = arc4random() % 300 + 372;
     return position;
 }
@@ -69,11 +70,11 @@
 
 - (void)prepareLayout
 {
-    NSLog(@"prepareLayout");
+    //NSLog(@"prepareLayout");
     [super prepareLayout];
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
     self.appearPoint = CGPointMake(self.collectionView.bounds.size.width/2, self.collectionView.bounds.size.width);
-    NSLog(@"cellCount: %ld", (long)self.cellCount);
+    //NSLog(@"cellCount: %ld", (long)self.cellCount);
     
     CGRect visibleRect = self.collectionView.bounds;
     
@@ -126,7 +127,7 @@
                 UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                 attributes.center = [(UICollectionViewLayoutAttributes *)attributesArray[i] center];
                 attributes.size = CGSizeMake(100, 100);
-                attributes.center = [self randomCenter];
+                //attributes.center = [self randomCenter];
                 [self.layoutDataArray addObject:attributes];
                 [self.gravityBehaviour addItem:attributes];
                 [self.collisionBehaviour addItem:attributes];
@@ -140,13 +141,11 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
     return [self.dynamicAnimator itemsInRect:rect];
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
     return [self.dynamicAnimator layoutAttributesForCellAtIndexPath:indexPath];
     /*
     NSLog(@"layout for %@", indexPath);
@@ -173,32 +172,6 @@
     return atttibutes;
      */
 }
-
-
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
-{
-    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
-    attributes.center = self.appearPoint;
-    
-    return attributes;
-}
-
-
--(void)prepareForCollectionViewUpdates:(NSArray *)updateItems
-{
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    [super prepareForCollectionViewUpdates:updateItems];
-    
-    [updateItems enumerateObjectsUsingBlock:^(UICollectionViewUpdateItem *updateItem, NSUInteger idx, BOOL *stop) {
-        if (updateItem.updateAction == UICollectionUpdateActionDelete){
-            UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:updateItem.indexPathAfterUpdate];
-            
-            [self.gravityBehaviour removeItem:attributes];
-            [self.collisionBehaviour removeItem:attributes];
-        }
-    }];
-}
-
 
 
 @end
