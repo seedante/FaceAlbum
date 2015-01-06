@@ -13,6 +13,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *posterImageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UICollectionView *candidateAvatorCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (nonatomic, weak) UICollectionView *MontangeRoomCollectionView;
 @property (nonatomic, assign) NSInteger section;
 @property (nonatomic, weak) NSFetchedResultsController *faceFetchedResultsController;
