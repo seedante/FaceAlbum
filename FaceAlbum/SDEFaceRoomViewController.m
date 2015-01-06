@@ -99,7 +99,7 @@ static CGFloat const kPhotoHeight = 654.0;
     //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Aged-Paper"]];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(responseToPhotoLibraryNotification) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
+    [notificationCenter addObserver:self selector:@selector(responseToPhotoLibraryNotification) name:ALAssetsLibraryChangedNotification object:nil];
     
     NSString *startSceneName = [self startScene];
     if ([startSceneName isEqualToString:@"ScanRoom"]) {
@@ -197,7 +197,6 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (void)responseToPhotoLibraryNotification
 {
-    NSLog(@"what's wrong");
     [self.photoFileFilter checkPhotoLibrary];
 }
 
@@ -1068,6 +1067,7 @@ static CGFloat const kPhotoHeight = 654.0;
     [self.actionCenterButton stopGlowing];
     if (![self.photoFileFilter isPhotoAdded]) {
         self.scanRoomButton.hidden = YES;
+        [self.scanRoomButton stopGlowing];
     }else{
         self.scanRoomButton.hidden = NO;
         [self.scanRoomButton startGlowing];
@@ -1097,6 +1097,7 @@ static CGFloat const kPhotoHeight = 654.0;
             [self.actionCenterButton setImage:[UIImage imageNamed:@"centerButton.png"] forState:UIControlStateNormal];
             break;
         case kLibraryType:{
+            [self.actionCenterButton stopGlowing];
             id<NSFetchedResultsSectionInfo>sectionInfo = [[self.faceFetchedResultsController sections] objectAtIndex:self.portraitIndex];
             int avatorCount = (int)[sectionInfo numberOfObjects];
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.portraitIndex]];
