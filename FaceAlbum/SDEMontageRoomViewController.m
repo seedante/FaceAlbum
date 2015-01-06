@@ -464,17 +464,20 @@ typedef enum {
     if (newPerson) {
         newPerson.order = (int)newSection;
         Face *anyFaceItem = (Face *)newPerson.ownedFaces.anyObject;
-        
-        UIImage *avatorImage = [UIImage imageWithContentsOfFile:anyFaceItem.storeFileName];
+        NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *avatorStorePath = [storeFolder stringByAppendingPathComponent:anyFaceItem.storeFileName];
+        UIImage *avatorImage = [UIImage imageWithContentsOfFile:avatorStorePath];
         /*
         UIGraphicsBeginImageContext(CGSizeMake(44.0f, 44.0f));
         [avatorImage drawInRect:CGRectMake(0, 0, 44.0f, 44.0f)];
         UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
          */
+        if (!avatorImage) {
+            avatorImage = anyFaceItem.avatorImage;
+        }
         newPerson.avatorImage = avatorImage;
         
-        NSString *storeFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         NSString *portraitName = [[[NSUUID alloc] init] UUIDString];
         portraitName = [portraitName stringByAppendingPathExtension:@"jpg"];
         newPerson.portraitFileString = portraitName;
@@ -807,7 +810,7 @@ typedef enum {
 {
     DLog(@"register for keyboard notification.");
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
+                                             selector:@selector(keyboardDidShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -817,9 +820,8 @@ typedef enum {
 }
 
 // Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardDidShown:(NSNotification*)aNotification
 {
-    DLog(@"Keyboard show");
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     UIEdgeInsets edgeInsets = self.collectionView.contentInset;

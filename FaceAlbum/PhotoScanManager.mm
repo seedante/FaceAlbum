@@ -168,9 +168,9 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     NSLog(@"Save Data.");
     NSError *error;
     if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
-        DLog(@"Scan Finish and Save Error: %@", error);
+        NSLog(@"Scan Finish and Save Error: %@", error);
     }
-    [self.managedObjectContext reset];
+    //[self.managedObjectContext reset];
 }
 
 - (NSArray *)allAvatorsInPhoto
@@ -277,7 +277,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     if (self.facesInAPhoto.count > 0) {
         [self.facesInAPhoto removeAllObjects];
     }
-    DLog(@"Current Avator count for facelessman: %lu", (unsigned long)self.numberOfItemsInFirstSection);
+    //NSLog(@"Current Avator count for facelessman: %lu", (unsigned long)self.numberOfItemsInFirstSection);
     ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
     CGImageRef sourceCGImage = [assetRepresentation fullScreenImage];
     //CGImageRef sourceCGImage = asset.aspectRatioThumbnail;
