@@ -40,17 +40,26 @@
         self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
         
         UIGravityBehavior *gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:@[]];
-        gravityBehaviour.gravityDirection = CGVectorMake(1, 0);
+        gravityBehaviour.gravityDirection = CGVectorMake(0, -0.1);
         self.gravityBehaviour = gravityBehaviour;
         [self.dynamicAnimator addBehavior:gravityBehaviour];
         
         UICollisionBehavior *collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:@[]];
+        collisionBehaviour.translatesReferenceBoundsIntoBoundary = YES;
         [self.dynamicAnimator addBehavior:collisionBehaviour];
         self.collisionBehaviour = collisionBehaviour;
         
     }
     
     return self;
+}
+
+- (CGPoint)randomCenter
+{
+    CGPoint position;
+    position.y = self.collectionView.center.y;
+    position.x = arc4random() % 300 + 372;
+    return position;
 }
 
 - (CGSize)collectionViewContentSize
@@ -66,7 +75,6 @@
     self.appearPoint = CGPointMake(self.collectionView.bounds.size.width/2, self.collectionView.bounds.size.width);
     NSLog(@"cellCount: %ld", (long)self.cellCount);
     
-    
     CGRect visibleRect = self.collectionView.bounds;
     
     if (self.layoutDataArray.count == 0) {
@@ -75,7 +83,7 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attributes.size = CGSizeMake(100, 100);
-            attributes.center = self.collectionView.center;
+            attributes.center = [self randomCenter];
             if (CGRectIntersectsRect(attributes.frame, visibleRect)) {
                 [self.layoutDataArray addObject:attributes];
                 [self.gravityBehaviour addItem:attributes];
@@ -90,7 +98,7 @@
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:0];
                 UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 attributes.size = CGSizeMake(100, 100);
-                attributes.center = self.collectionView.center;
+                attributes.center = [self randomCenter];
                 [self.layoutDataArray addObject:attributes];
                 [self.gravityBehaviour addItem:attributes];
                 [self.collisionBehaviour addItem:attributes];
@@ -118,7 +126,7 @@
                 UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
                 attributes.center = [(UICollectionViewLayoutAttributes *)attributesArray[i] center];
                 attributes.size = CGSizeMake(100, 100);
-                attributes.center = self.collectionView.center;
+                attributes.center = [self randomCenter];
                 [self.layoutDataArray addObject:attributes];
                 [self.gravityBehaviour addItem:attributes];
                 [self.collisionBehaviour addItem:attributes];
@@ -166,15 +174,14 @@
      */
 }
 
-/*
+
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemIndexPath];
     attributes.center = self.appearPoint;
     
     return attributes;
 }
- */
 
 
 -(void)prepareForCollectionViewUpdates:(NSArray *)updateItems
