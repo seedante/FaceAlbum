@@ -63,7 +63,6 @@ static NSInteger const MAXCellCount = 15;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //[self.photoFileFilter checkPhotoLibrary];
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
     if (!isFirstScan) {
@@ -79,7 +78,7 @@ static NSInteger const MAXCellCount = 15;
 {
     [self.photoFileFilter removeObserver:self forKeyPath:@"photoAdded"];
     [self.photoFileFilter reset];
-    NSLog(@"Detect %lu faces in this scan", (unsigned long)self.faceCount);
+    //NSLog(@"Detect %lu faces in this scan", (unsigned long)self.faceCount);
     [super viewWillDisappear:animated];
 }
 
@@ -107,7 +106,6 @@ static NSInteger const MAXCellCount = 15;
 
 - (void)cleanManagedObjectContext
 {
-    NSLog(@"Clean ManagedObject");
     self.isScaning = NO;
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
@@ -118,7 +116,6 @@ static NSInteger const MAXCellCount = 15;
 
 - (void)continueScan
 {
-    NSLog(@"continue Scan");
     self.isScaning = YES;
     [self enumerateScanAssetAtIndexPath:@(self.startIndex)];;
 }
@@ -240,8 +237,7 @@ static NSInteger const MAXCellCount = 15;
             });
             
         }
-    }else
-        NSLog(@"Asset fetch error.");
+    }
     
     self.startIndex = index + 1;
     [self performSelector:@selector(enumerateScanAssetAtIndexPath:) withObject:@(self.startIndex) afterDelay:0.1];

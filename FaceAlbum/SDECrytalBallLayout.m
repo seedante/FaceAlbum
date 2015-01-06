@@ -132,9 +132,7 @@
                 [self.gravityBehaviour addItem:attributes];
                 [self.collisionBehaviour addItem:attributes];
             }
-            
-        }else
-            NSLog(@"It can't be impossible.");
+        }
     }
     
 }
@@ -147,30 +145,6 @@
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.dynamicAnimator layoutAttributesForCellAtIndexPath:indexPath];
-    /*
-    NSLog(@"layout for %@", indexPath);
-    UICollectionViewLayoutAttributes *atttibutes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    int width = self.collectionView.bounds.size.width;
-    int height = self.collectionView.bounds.size.height;
-    
-    CGFloat randomWidth =  arc4random() % width;
-    CGFloat randomHeight = arc4random() % height;
-    if (randomWidth < kItemSizeWidth) {
-        randomWidth += kItemSizeWidth;
-    }else if (randomWidth > self.collectionView.bounds.size.width - kItemSizeWidth){
-        randomWidth -= kItemSizeWidth;
-    }
-    
-    if (randomHeight > self.collectionView.bounds.size.height - kItemSizeHeight) {
-        randomHeight -= kItemSizeHeight;
-    }else if (randomHeight < kItemSizeHeight){
-        randomHeight += kItemSizeHeight;
-    }
-    
-    atttibutes.center = CGPointMake(randomWidth, randomHeight);
-    atttibutes.size = CGSizeMake(100, 100);
-    return atttibutes;
-     */
 }
 
 

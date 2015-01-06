@@ -99,10 +99,10 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
 - (void)checkPhotoLibrary
 {
     if ([self isExecuting]) {
-        NSLog(@"Wait for Last call finish");
+        //NSLog(@"Wait for Last call finish");
         return;
     }
-    NSLog(@"check photo file.");
+    //NSLog(@"check photo file.");
     if (!self.addedAssetsSet) {
         self.addedAssetsSet = [NSMutableSet new];
     }else{
@@ -136,9 +136,9 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
                 }
             }];
         }else{
-            NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLStringSet.count);
+            //NSLog(@"All Assets Count: %lu", (unsigned long)self.allAssetsURLStringSet.count);
             [self continueToCompare];
-            NSLog(@"Check finish.");
+            //NSLog(@"Check finish.");
         }
     } failureBlock:nil];
     //本担心太占用 CPU 而使用默认优先级的队列，结果发现虽然扫描一次的速度很快，但是切换到主线程去刷新界面还是太慢了。
@@ -167,7 +167,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         }else
             [self.restoredAssetsURLStringSet addObject:result[@"uniqueURLString"]];
     }
-    NSLog(@"Scaned Assets Count: %lu", (unsigned long)scanedAssetsURLStringSet.count);
+    //NSLog(@"Scaned Assets Count: %lu", (unsigned long)scanedAssetsURLStringSet.count);
     NSSet *allAssetsCopy = [self.allAssetsURLStringSet copy];
     
     [self.allAssetsURLStringSet minusSet:self.restoredAssetsURLStringSet];
@@ -179,22 +179,6 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         }
         [self.allAssetsDictionary removeAllObjects];
         
-        NSLog(@"New Photo count: %lu", (unsigned long)self.addedAssetsSet.count);
-        self.photoAdded = YES;
-        /*
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        for (NSString *URLString in self.allAssetsURLStringSet) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self.photoLibrary assetForURL:[NSURL URLWithString:URLString] resultBlock:^(ALAsset *asset){
-                    [self.addedAssetsSet addObject:asset];
-                    dispatch_semaphore_signal(sema);
-                }failureBlock:nil];
-            });
-            
-            dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        }
-         */
-        
     }else{
         self.photoAdded = NO;
         [self.addedAssetsSet removeAllObjects];
@@ -203,7 +187,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
     [scanedAssetsURLStringSet minusSet:allAssetsCopy];
     if (scanedAssetsURLStringSet.count > 0) {
         self.deletedAssetsURLStringSet = [scanedAssetsURLStringSet copy];
-        NSLog(@"There are %lu photos deleted from local device.", (unsigned long)scanedAssetsURLStringSet.count);
+        //NSLog(@"There are %lu photos deleted from local device.", (unsigned long)scanedAssetsURLStringSet.count);
     }else
         self.deletedAssetsURLStringSet = [NSSet set];
     
@@ -211,9 +195,6 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         NSSet *restoredAssetsCopy = [self.restoredAssetsURLStringSet copy];
         if ([allAssetsCopy intersectsSet:restoredAssetsCopy]) {
             [self.restoredAssetsURLStringSet intersectSet:self.allAssetsURLStringSet];
-            if (self.restoredAssetsURLStringSet.count > 0) {
-                NSLog(@"%lu assets go back", (unsigned long)self.restoredAssetsURLStringSet.count);
-            }
         }
     }
     self.executing = NO;
