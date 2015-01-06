@@ -23,7 +23,7 @@ typedef enum {
     MontageEditTypeMove,
 } MontageEditType;
 
-@interface SDEMontageRoomViewController ()
+@interface SDEMontageRoomViewController ()<UIAlertViewDelegate>
 
 @property (nonatomic) NSFetchedResultsController *faceFetchedResultsController;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -413,8 +413,34 @@ typedef enum {
 
 - (void)hiddenSelectedFaces
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Selected Faces" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    NSArray *versionArray = [[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."];
+    if ([versionArray[0] intValue] >= 8) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Selected Avators" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            for (NSIndexPath *indexPath in self.selectedFacesSet) {
+                Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+                face.whetherToDisplay = NO;
+                [self.dataSource removeCachedImageWithKey:face.storeFileName];
+            }
+            
+            [self cleanUsedData];
+            [self unenableLeftBarButtonItems];
+        }];
+        [alert addAction:OKAction];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete Selected Avators" message:@"" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Sure", nil];
+        
+        [alertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             face.whetherToDisplay = NO;
@@ -423,12 +449,7 @@ typedef enum {
         
         [self cleanUsedData];
         [self unenableLeftBarButtonItems];
-    }];
-    [alert addAction:OKAction];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 #pragma mark - add a new person
@@ -510,25 +531,15 @@ typedef enum {
             
             BOOL isExisted = [[NSFileManager defaultManager] fileExistsAtPath:storePath];
             if (isExisted) {
-                BOOL deleteResult = [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
-                if (!deleteResult) {
-                    NSLog(@"Delete File Error.");
-                }else
-                    NSLog(@"Delete Success.");
+                [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
             }
             
             success = [imageData writeToFile:storePath atomically:YES];
-            if (!success) {
-                NSLog(@"Create Portrait Image File Error");
-            }
             //NSLog(@"Write Portrait Image File to Path: %@", storePath);
             CGImageRelease(portraitCGImage);
             //CGImageRelease(sourceCGImage);
-        }else
-            NSLog(@"Access Asset Failed");
-    }failureBlock:^(NSError *error){
-        NSLog(@"Authorizate Failed");
-    }];
+        }
+    }failureBlock:nil];
     
     return success;
 }
