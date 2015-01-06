@@ -14,6 +14,8 @@
 		FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106419CDC44F006A3B4E /* SDEAvatorOverlayView.m */; };
 		FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
 		FD41313A19974A5E00141578 /* PhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* PhotoScanManager.mm */; };
+		FD5695A51A5BF3AB0096B884 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */; };
+		FD5695A61A5BF3AB0096B884 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */; };
 		FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
@@ -193,6 +195,8 @@
 		FD41313819974A5E00141578 /* PhotoScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanManager.h; sourceTree = "<group>"; };
 		FD41313919974A5E00141578 /* PhotoScanManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoScanManager.mm; sourceTree = "<group>"; };
 		FD4ED7ED1A4FF2E20047FA22 /* FaceAlbum 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 6.xcdatamodel"; sourceTree = "<group>"; };
+		FD5695A31A5BF3AB0096B884 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
+		FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJFlowLayoutWithAnimations.h; sourceTree = "<group>"; };
 		FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJFlowLayoutWithAnimations.m; sourceTree = "<group>"; };
 		FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbumDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -589,6 +593,8 @@
 			children = (
 				FD7D438B1A1F6DDF00551093 /* SDEFaceRoomViewController.h */,
 				FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */,
+				FD5695A31A5BF3AB0096B884 /* UIView+Glow.h */,
+				FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */,
 				FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */,
 				FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */,
 				FD7D43901A1F6E3A00551093 /* HorizontalCollectionViewLayout.h */,
@@ -860,6 +866,7 @@
 				FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */,
 				FD7D43751A1EDB5200551093 /* FaceppGroup.m in Sources */,
 				FD7D43711A1EDB5200551093 /* FaceppDetection.m in Sources */,
+				FD5695A51A5BF3AB0096B884 /* UIView+Glow.m in Sources */,
 				FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */,
 				FD7D437B1A1EDB5200551093 /* FaceppPerson.m in Sources */,
 			);
@@ -916,6 +923,7 @@
 				FDBF6C2219D1038000352DFA /* Person.m in Sources */,
 				FD7D43761A1EDB5200551093 /* FaceppGroup.m in Sources */,
 				FD7D43721A1EDB5200551093 /* FaceppDetection.m in Sources */,
+				FD5695A61A5BF3AB0096B884 /* UIView+Glow.m in Sources */,
 				FDBF6C2319D1038000352DFA /* FaceppDetection+LocalResultUploader.m in Sources */,
 				FD7D437C1A1EDB5200551093 /* FaceppPerson.m in Sources */,
 			);

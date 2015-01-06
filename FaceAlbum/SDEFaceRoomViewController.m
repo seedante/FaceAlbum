@@ -18,6 +18,7 @@
 #import "LineLayoutWithAnimation.h"
 @import AssetsLibrary;
 #import <QuartzCore/QuartzCore.h>
+#import "UIView+Glow.h"
 
 typedef enum: NSUInteger{
     kPortraitType,
@@ -97,6 +98,9 @@ static CGFloat const kPhotoHeight = 654.0;
     //[self.galleryView setCollectionViewLayout:[[FJFlowLayoutWithAnimations alloc] init]];
     //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Aged-Paper"]];
     
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(responseToPhotoLibraryNotification) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
+    
     NSString *startSceneName = [self startScene];
     if ([startSceneName isEqualToString:@"ScanRoom"]) {
         [self.photoFileFilter checkPhotoLibrary];
@@ -149,6 +153,7 @@ static CGFloat const kPhotoHeight = 654.0;
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"contentType" options:0 context:NULL];
+    [self.photoFileFilter addObserver:self forKeyPath:@"photoAdded" options:0 context:NULL];
     //[self addObserver:self forKeyPath:@"libraryType" options:0 context:NULL];
 }
 
@@ -156,6 +161,10 @@ static CGFloat const kPhotoHeight = 654.0;
 {
     if ([keyPath isEqualToString:@"contentType"] || [keyPath isEqualToString:@"libraryType"]) {
         [self updateHeaderView];
+    }else if ([keyPath isEqualToString:@"photoAdded"]){
+        if ([self.photoFileFilter isPhotoAdded]) {
+            [self.actionCenterButton startGlowing];
+        }
     }
 }
 
@@ -179,11 +188,17 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (ALAssetsLibrary *)photoLibrary
 {
-    if (_photoLibrary != nil) {
-        return _photoLibrary;
+    if (!_photoLibrary) {
+        _photoLibrary = [[ALAssetsLibrary alloc] init];
     }
-    _photoLibrary = [[ALAssetsLibrary alloc] init];
+    
     return _photoLibrary;
+}
+
+- (void)responseToPhotoLibraryNotification
+{
+    NSLog(@"what's wrong");
+    [self.photoFileFilter checkPhotoLibrary];
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -221,10 +236,15 @@ static CGFloat const kPhotoHeight = 654.0;
     [fetchRequest setPredicate:predicate];
     
     NSMutableArray *personItemsMutableArray = [NSMutableArray new];
-    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-    if (faceItem.section == 0) {
-        [personItemsMutableArray addObject: [[Store sharedStore] FacelessMan]];
+    
+    NSArray *fetchedFaceItems = [self.faceFetchedResultsController fetchedObjects];
+    if (fetchedFaceItems && fetchedFaceItems.count > 0) {
+        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        if (faceItem.section == 0) {
+            [personItemsMutableArray addObject: [[Store sharedStore] FacelessMan]];
+        }
     }
+
     //错误处理还不知怎么做
     //NSError *error;
     NSArray *personItems = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
@@ -959,7 +979,7 @@ static CGFloat const kPhotoHeight = 654.0;
 #pragma mark - IBAction Method
 - (IBAction)scanPhotoLibrary:(id)sender
 {
-    NSLog(@"Scan Library");
+    [self.scanRoomButton stopGlowing];
     if ([self.photoFileFilter isPhotoAdded]) {
         UIViewController *scanVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
         [self.navigationController pushViewController:scanVC animated:YES];
@@ -1045,10 +1065,13 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (IBAction)popMenu:(id)sender
 {
+    [self.actionCenterButton stopGlowing];
     if (![self.photoFileFilter isPhotoAdded]) {
         self.scanRoomButton.hidden = YES;
-    }else
+    }else{
         self.scanRoomButton.hidden = NO;
+        [self.scanRoomButton startGlowing];
+    }
     
     if (self.buttonPanel.hidden) {
         self.buttonPanel.hidden = NO;
@@ -1061,8 +1084,6 @@ static CGFloat const kPhotoHeight = 654.0;
         }else
             [self.buttonPanel popup];
     }
-    
-
 }
 
 #pragma mark - Update headerView Info

@@ -765,7 +765,6 @@ typedef enum {
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Hold on");
     return YES;
 }
 

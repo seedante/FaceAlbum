@@ -14,11 +14,11 @@ extern NSString *const SDEPhotoFileFilterRestoredPhotosKey;
 
 @interface SDEPhotoFileFilter : NSObject
 
-@property (nonatomic) BOOL photoAdded;
+@property (nonatomic, getter=isPhotoAdded) BOOL photoAdded;
+@property (nonatomic, getter=isExecuting) BOOL executing;
 
 + (SDEPhotoFileFilter *)sharedPhotoFileFilter;
 - (void)checkPhotoLibrary;
-- (BOOL)isPhotoAdded;
 - (void)reset;
 - (NSArray *)assetsNeedToScan; //include asset, not url string
 - (NSArray *)deletedAssetsURLStringArray;

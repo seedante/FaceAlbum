@@ -37,6 +37,8 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         self.addedAssetsSet = [NSMutableSet new];
         self.restoredAssetsURLStringSet = [NSMutableSet new];
         self.allAssetsDictionary = [NSMutableDictionary new];
+        self.executing = NO;
+        self.photoAdded = NO;
     }
     return self;
 }
@@ -58,11 +60,6 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
         _managedObjectContext = [[Store sharedStore] managedObjectContext];
     }
     return _managedObjectContext;
-}
-
-- (BOOL)isPhotoAdded
-{
-    return self.photoAdded;
 }
 
 - (void)reset
@@ -101,6 +98,10 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
 
 - (void)checkPhotoLibrary
 {
+    if ([self isExecuting]) {
+        NSLog(@"Wait for Last call finish");
+        return;
+    }
     NSLog(@"check photo file.");
     if (!self.addedAssetsSet) {
         self.addedAssetsSet = [NSMutableSet new];
@@ -121,6 +122,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
     if (self.deletedAssetsURLStringSet) {
         self.deletedAssetsURLStringSet = nil;
     }
+    self.executing = YES;
     
     NSUInteger groupType = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupSavedPhotos;
     [self.photoLibrary enumerateGroupsWithTypes:groupType usingBlock:^(ALAssetsGroup *group, BOOL *stop){
@@ -214,7 +216,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
             }
         }
     }
-
+    self.executing = NO;
 }
 
 @end
