@@ -178,7 +178,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
             [self.addedAssetsSet addObject:asset];
         }
         [self.allAssetsDictionary removeAllObjects];
-        
+        self.photoAdded = YES;
     }else{
         self.photoAdded = NO;
         [self.addedAssetsSet removeAllObjects];
