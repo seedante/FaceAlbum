@@ -7,7 +7,7 @@
 //
 
 #import "SDEPhotoFileFilter.h"
-#import "Store.h"
+#import "SDEStore.h"
 @import AssetsLibrary;
 
 NSString *const SDEPhotoFileFilterAddedPhotosKey = @"SDEPhotoAddedKey";
@@ -57,7 +57,7 @@ NSString *const SDEPhotoFileFilterRestoredPhotosKey = @"SDEPhotoRestoredKey";
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (!_managedObjectContext) {
-        _managedObjectContext = [[Store sharedStore] managedObjectContext];
+        _managedObjectContext = [[SDEStore sharedStore] managedObjectContext];
     }
     return _managedObjectContext;
 }

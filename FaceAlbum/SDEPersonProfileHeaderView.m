@@ -10,7 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Person.h"
 #import "SDEPersonInfoEditViewController.h"
-#import "Store.h"
+#import "SDEStore.h"
 
 @implementation SDEPersonProfileHeaderView
 

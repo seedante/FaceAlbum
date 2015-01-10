@@ -8,7 +8,7 @@
 
 #import "SDEPhotoViewController.h"
 #import "SDESpecialItemVC.h"
-#import "SDEPhotoSceneDataSource.h"
+#import "SDEAssetsCache.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 typedef enum: NSUInteger {
@@ -138,19 +138,19 @@ typedef enum: NSUInteger {
     
     
     if (!self.assetsDictionary) {
-        self.assetsDictionary = [[SDEPhotoSceneDataSource sharedData] assetsDictionary];
+        self.assetsDictionary = [[SDEAssetsCache sharedData] assetsDictionary];
     }
     
     if (!self.albumsArray) {
-        self.albumsArray = [[SDEPhotoSceneDataSource sharedData] albumsArray];
+        self.albumsArray = [[SDEAssetsCache sharedData] albumsArray];
     }
     
     if (!self.timelineDictionary) {
-        self.timelineDictionary = [[SDEPhotoSceneDataSource sharedData] timelineDictionary];
+        self.timelineDictionary = [[SDEAssetsCache sharedData] timelineDictionary];
     }
     
     if (!self.timeHeaderArray) {
-        self.timeHeaderArray = [[SDEPhotoSceneDataSource sharedData] timeHeaderArray];
+        self.timeHeaderArray = [[SDEAssetsCache sharedData] timeHeaderArray];
     }
     
     

@@ -8,8 +8,8 @@
 
 #import "SDEMontageRoomViewController.h"
 #import "SDEMRVCDataSource.h"
-#import "PhotoScanManager.h"
-#import "Store.h"
+#import "SDEPhotoScanManager.h"
+#import "SDEStore.h"
 #import "Person.h"
 #import "Face.h"
 #import "Reachability.h"

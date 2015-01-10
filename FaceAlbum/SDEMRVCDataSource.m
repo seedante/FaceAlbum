@@ -10,7 +10,7 @@
 #import "Face.h"
 #import "Photo.h"
 #import "Person.h"
-#import "Store.h"
+#import "SDEStore.h"
 #import "SDEAvatorCell.h"
 #import "SDEPersonProfileHeaderView.h"
 #import "SDEMontageRoomViewController.h"
@@ -69,7 +69,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    Store *storeCenter = [Store sharedStore];
+    SDEStore *storeCenter = [SDEStore sharedStore];
     _managedObjectContext = storeCenter.managedObjectContext;
     return _managedObjectContext;
 }
@@ -80,7 +80,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         return _faceFetchedResultsController;
     }
     
-    _faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
+    _faceFetchedResultsController = [[SDEStore sharedStore] faceFetchedResultsController];
     _faceFetchedResultsController.delegate = self;
     
     return _faceFetchedResultsController;

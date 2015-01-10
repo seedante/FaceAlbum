@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SDEPhotoSceneDataSource : NSObject
+@interface SDEAssetsCache : NSObject
 
 @property (nonatomic) NSMutableDictionary *assetsDictionary;
 @property (nonatomic) NSMutableArray *albumsArray;
 @property (nonatomic) NSMutableDictionary *timelineDictionary;
 @property (nonatomic) NSMutableArray *timeHeaderArray;
 
-+ (SDEPhotoSceneDataSource *)sharedData;
++ (SDEAssetsCache *)sharedData;
 
 @end

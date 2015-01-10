@@ -7,9 +7,9 @@
 //
 
 #import "SDEScanRoomViewController.h"
-#import "PhotoScanManager.h"
+#import "SDEPhotoScanManager.h"
 #import "SDEPhotoFileFilter.h"
-#import "Store.h"
+#import "SDEStore.h"
 #import "SDECrytalBallLayout.h"
 @import AssetsLibrary;
 
@@ -17,7 +17,7 @@ static NSString * const cellIdentifier = @"Cell";
 static NSInteger const MAXCellCount = 15;
 
 @interface SDEScanRoomViewController ()
-@property (nonatomic)PhotoScanManager *photoScanManager;
+@property (nonatomic)SDEPhotoScanManager *photoScanManager;
 @property (nonatomic)SDEPhotoFileFilter *photoFileFilter;
 @property (nonatomic)ALAssetsLibrary *photoLibrary;
 @property (nonatomic) NSArray *assetsToScan;
@@ -43,8 +43,8 @@ static NSInteger const MAXCellCount = 15;
     self.startIndex = 0;
     self.avators = [NSMutableArray new];
     self.faceCount = 0;
-    self.photoScanManager = [PhotoScanManager sharedPhotoScanManager];
-    self.managedObjectContext = [[Store sharedStore] managedObjectContext];
+    self.photoScanManager = [SDEPhotoScanManager sharedPhotoScanManager];
+    self.managedObjectContext = [[SDEStore sharedStore] managedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Face"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"section == 0"];
     [fetchRequest setPredicate:predicate];

@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 seedante. All rights reserved.
 //
 
-#import "PhotoScanManager.h"
+#import "SDEPhotoScanManager.h"
 #import "APIKey+APISecret.h"
 #import "FaceppLocalDetector.h"
-#import "Store.h"
+#import "SDEStore.h"
 #import "Photo.h"
 #import "Face.h"
 #import "AlbumGroup.h"
@@ -88,7 +88,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     return headBound;
 };
 
-@interface PhotoScanManager ()
+@interface SDEPhotoScanManager ()
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) FaceppLocalDetector *localFaceppDetector;
@@ -100,14 +100,14 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
 @end
 
 
-@implementation PhotoScanManager
+@implementation SDEPhotoScanManager
 
-+ (PhotoScanManager *)sharedPhotoScanManager
++ (SDEPhotoScanManager *)sharedPhotoScanManager
 {
-    static PhotoScanManager *sharedInstance = nil;
+    static SDEPhotoScanManager *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[PhotoScanManager alloc] init];
+        sharedInstance = [[SDEPhotoScanManager alloc] init];
     });
     
     return sharedInstance;
@@ -128,7 +128,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    _managedObjectContext = [[Store sharedStore] managedObjectContext];
+    _managedObjectContext = [[SDEStore sharedStore] managedObjectContext];
     return _managedObjectContext;
 }
 

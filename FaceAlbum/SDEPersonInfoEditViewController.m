@@ -11,7 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Face.h"
 #import "Person.h"
-#import "Store.h"
+#import "SDEStore.h"
 
 @interface SDEPersonInfoEditViewController ()
 
@@ -28,8 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.choosedIndex = -1;
-    self.faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
-    self.mangedObjectContext = [[Store sharedStore] managedObjectContext];
+    self.faceFetchedResultsController = [[SDEStore sharedStore] faceFetchedResultsController];
+    self.mangedObjectContext = [[SDEStore sharedStore] managedObjectContext];
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:self.section]];
     self.currentPersonItem = faceItem.personOwner;
     [self.posterImageView setImage:self.currentPersonItem.avatorImage];

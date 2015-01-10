@@ -6,23 +6,23 @@
 //  Copyright (c) 2014年 seedante. All rights reserved.
 //
 
-#import "Store.h"
+#import "SDEStore.h"
 #import "Person.h"
 
-@interface Store ()
+@interface SDEStore ()
 
 @property (nonatomic, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, readwrite) Person *FacelessMan;
 @end
 
-@implementation Store
+@implementation SDEStore
 
-+ (Store *)sharedStore
++ (SDEStore *)sharedStore
 {
-    static Store *sharedInstance = nil;
+    static SDEStore *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[Store alloc]init];
+        sharedInstance = [[SDEStore alloc]init];
     });
     return sharedInstance;
 }

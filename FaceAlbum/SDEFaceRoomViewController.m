@@ -8,12 +8,12 @@
 
 #import "SDEFaceRoomViewController.h"
 #import "HorizontalCollectionViewLayout.h"
-#import "SDEPhotoSceneDataSource.h"
+#import "SDEAssetsCache.h"
 #import "SDESpecialItemVC.h"
 #import "SDEPhotoFileFilter.h"
 #import "Face.h"
 #import "Photo.h"
-#import "Store.h"
+#import "SDEStore.h"
 #import "Person.h"
 #import "LineLayoutWithAnimation.h"
 @import AssetsLibrary;
@@ -75,7 +75,7 @@ static CGFloat const kPhotoHeight = 654.0;
     // Do any additional setup after loading the view.
     //[self.navigationController setNavigationBarHidden:YES];
     
-    self.assetsDictionary = [[[SDEPhotoSceneDataSource sharedData] assetsDictionary] copy];
+    self.assetsDictionary = [[[SDEAssetsCache sharedData] assetsDictionary] copy];
     self.portraitIndex = -1;
     self.contentType = kPortraitType;
     self.libraryType = kFaceType;
@@ -205,7 +205,7 @@ static CGFloat const kPhotoHeight = 654.0;
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    Store *storeCenter = [Store sharedStore];
+    SDEStore *storeCenter = [SDEStore sharedStore];
     _managedObjectContext = storeCenter.managedObjectContext;
     return _managedObjectContext;
 }
@@ -216,7 +216,7 @@ static CGFloat const kPhotoHeight = 654.0;
         return _faceFetchedResultsController;
     }
     
-    _faceFetchedResultsController = [[Store sharedStore] faceFetchedResultsController];
+    _faceFetchedResultsController = [[SDEStore sharedStore] faceFetchedResultsController];
     [_faceFetchedResultsController performFetch:nil];
     
     return _faceFetchedResultsController;
@@ -240,7 +240,7 @@ static CGFloat const kPhotoHeight = 654.0;
     if (fetchedFaceItems && fetchedFaceItems.count > 0) {
         Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
         if (faceItem.section == 0) {
-            [personItemsMutableArray addObject: [[Store sharedStore] FacelessMan]];
+            [personItemsMutableArray addObject: [[SDEStore sharedStore] FacelessMan]];
         }
     }
 

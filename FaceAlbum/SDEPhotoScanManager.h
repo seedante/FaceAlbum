@@ -16,13 +16,13 @@ typedef enum : NSUInteger {
     AppleFaceDetector
 } FaceDetectorType;
 
-@interface PhotoScanManager : NSObject
+@interface SDEPhotoScanManager : NSObject
 
 @property (nonatomic) NSUInteger numberOfItemsInFirstSection;
 @property (nonatomic) NSUInteger faceCountInThisScan;
 @property (nonatomic) NSUInteger saveFlag;
 
-+ (PhotoScanManager *)sharedPhotoScanManager;
++ (SDEPhotoScanManager *)sharedPhotoScanManager;
 - (BOOL)scanAsset:(ALAsset *)asset withDetector: (FaceDetectorType)detectorType;
 - (BOOL)updateAsset:(ALAsset *)asset WithDetector:(FaceDetectorType)detectorType;
 - (NSArray *)allAvatorsInPhoto;

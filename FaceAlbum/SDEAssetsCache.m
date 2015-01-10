@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 seedante. All rights reserved.
 //
 
-#import "SDEPhotoSceneDataSource.h"
+#import "SDEAssetsCache.h"
 
-@interface SDEPhotoSceneDataSource ()
+@interface SDEAssetsCache ()
 
 @end
 
-@implementation SDEPhotoSceneDataSource
+@implementation SDEAssetsCache
 
-+ (SDEPhotoSceneDataSource *)sharedData
++ (SDEAssetsCache *)sharedData
 {
-    static SDEPhotoSceneDataSource *sharedInstance = nil;
+    static SDEAssetsCache *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[SDEPhotoSceneDataSource alloc]init];
+        sharedInstance = [[SDEAssetsCache alloc]init];
     });
     return sharedInstance;
 }

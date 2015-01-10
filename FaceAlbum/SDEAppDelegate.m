@@ -7,7 +7,7 @@
 //
 
 #import "SDEAppDelegate.h"
-#import "Store.h"
+#import "SDEStore.h"
 #import "APIKey+APISecret.h"
 #import "FaceppAPI.h"
 
@@ -24,7 +24,7 @@
     //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     //UINavigationController *initialViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"PersonGalleryNV"];
     //self.window.rootViewController = initialViewController;
-    Store *dataStore = [Store sharedStore];
+    SDEStore *dataStore = [SDEStore sharedStore];
     [dataStore setupStoreWithStoreURL:self.storeURL modelURL:self.modelURL];
     _managedObjectContext = dataStore.managedObjectContext;
     
