@@ -7,126 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1164E719A8808500C1A41F /* SDECandidateCell.m */; };
-		FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD290B2719C5860E003A26DC /* SDEPersonProfileHeaderView.m */; };
-		FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
-		FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106119CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m */; };
-		FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A106419CDC44F006A3B4E /* SDEAvatorOverlayView.m */; };
-		FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
-		FD41313A19974A5E00141578 /* SDEPhotoScanManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD41313919974A5E00141578 /* SDEPhotoScanManager.mm */; };
-		FD5695A51A5BF3AB0096B884 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */; };
 		FD5695A61A5BF3AB0096B884 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */; };
-		FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
-		FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
-		FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */; };
-		FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
-		FD67D888197DFCFB00D2CCDA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
-		FD67D88E197DFCFB00D2CCDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */; };
-		FD67D890197DFCFB00D2CCDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D88F197DFCFB00D2CCDA /* main.m */; };
-		FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D893197DFCFB00D2CCDA /* SDEAppDelegate.m */; };
-		FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
 		FD67D8A0197DFCFB00D2CCDA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D89F197DFCFB00D2CCDA /* XCTest.framework */; };
 		FD67D8A1197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D8A2197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
 		FD67D8A3197DFCFB00D2CCDA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D887197DFCFB00D2CCDA /* CoreData.framework */; };
 		FD67D8AB197DFCFB00D2CCDA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD67D8A9197DFCFB00D2CCDA /* InfoPlist.strings */; };
 		FD67D8AD197DFCFB00D2CCDA /* FaceAlbumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8AC197DFCFB00D2CCDA /* FaceAlbumTests.m */; };
-		FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8E0197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m */; };
-		FD67D8E4197DFD6100D2CCDA /* libFaceppLocalDetector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D8E2197DFD6100D2CCDA /* libFaceppLocalDetector.a */; };
-		FD67D8FD197E048400D2CCDA /* SDEStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD67D8FC197E048400D2CCDA /* SDEStore.m */; };
-		FD732782197F5C03006C5A2C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD732781197F5C03006C5A2C /* AssetsLibrary.framework */; };
-		FD7327A7197FA082006C5A2C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7327A6197FA082006C5A2C /* QuartzCore.framework */; };
-		FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
-		FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F94197E7B55004E8FFD /* SDEMontageRoomViewController.m */; };
-		FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F99197E97C7004E8FFD /* AlbumGroup.m */; };
-		FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9C197E97C7004E8FFD /* Face.m */; };
-		FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9F197E97C7004E8FFD /* Person.m */; };
-		FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
-		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
-		FD7D430A1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */; };
 		FD7D430B1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */; };
-		FD7D430F1A19FB4500551093 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430D1A19FB4500551093 /* face.png */; };
 		FD7D43101A19FB4500551093 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430D1A19FB4500551093 /* face.png */; };
-		FD7D43111A19FB4500551093 /* face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430E1A19FB4500551093 /* face@2x.png */; };
 		FD7D43121A19FB4500551093 /* face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430E1A19FB4500551093 /* face@2x.png */; };
-		FD7D43151A1A04BF00551093 /* drawer.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43131A1A04BF00551093 /* drawer.png */; };
 		FD7D43161A1A04BF00551093 /* drawer.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43131A1A04BF00551093 /* drawer.png */; };
-		FD7D43171A1A04BF00551093 /* drawer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43141A1A04BF00551093 /* drawer@2x.png */; };
 		FD7D43181A1A04BF00551093 /* drawer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43141A1A04BF00551093 /* drawer@2x.png */; };
-		FD7D431B1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */; };
 		FD7D431C1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */; };
-		FD7D431F1A1A40F900551093 /* Album.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431D1A1A40F900551093 /* Album.png */; };
 		FD7D43201A1A40F900551093 /* Album.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431D1A1A40F900551093 /* Album.png */; };
-		FD7D43211A1A40F900551093 /* Album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431E1A1A40F900551093 /* Album@2x.png */; };
 		FD7D43221A1A40F900551093 /* Album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431E1A1A40F900551093 /* Album@2x.png */; };
-		FD7D43251A1A432D00551093 /* changeStyle.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43231A1A432D00551093 /* changeStyle.png */; };
 		FD7D43261A1A432D00551093 /* changeStyle.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43231A1A432D00551093 /* changeStyle.png */; };
-		FD7D43271A1A432D00551093 /* changeStyle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43241A1A432D00551093 /* changeStyle@2x.png */; };
 		FD7D43281A1A432D00551093 /* changeStyle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43241A1A432D00551093 /* changeStyle@2x.png */; };
-		FD7D433B1A1DA4A300551093 /* SDEAssetsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D433A1A1DA4A300551093 /* SDEAssetsCache.m */; };
 		FD7D433C1A1DA4A300551093 /* SDEAssetsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D433A1A1DA4A300551093 /* SDEAssetsCache.m */; };
-		FD7D436D1A1EDB5200551093 /* FaceppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43541A1EDB5200551093 /* FaceppAPI.m */; };
 		FD7D436E1A1EDB5200551093 /* FaceppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43541A1EDB5200551093 /* FaceppAPI.m */; };
-		FD7D436F1A1EDB5200551093 /* FaceppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43571A1EDB5200551093 /* FaceppClient.m */; };
 		FD7D43701A1EDB5200551093 /* FaceppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43571A1EDB5200551093 /* FaceppClient.m */; };
-		FD7D43711A1EDB5200551093 /* FaceppDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43591A1EDB5200551093 /* FaceppDetection.m */; };
 		FD7D43721A1EDB5200551093 /* FaceppDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43591A1EDB5200551093 /* FaceppDetection.m */; };
-		FD7D43731A1EDB5200551093 /* FaceppFaceset.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435B1A1EDB5200551093 /* FaceppFaceset.m */; };
 		FD7D43741A1EDB5200551093 /* FaceppFaceset.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435B1A1EDB5200551093 /* FaceppFaceset.m */; };
-		FD7D43751A1EDB5200551093 /* FaceppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435D1A1EDB5200551093 /* FaceppGroup.m */; };
 		FD7D43761A1EDB5200551093 /* FaceppGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435D1A1EDB5200551093 /* FaceppGroup.m */; };
-		FD7D43771A1EDB5200551093 /* FaceppGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435F1A1EDB5200551093 /* FaceppGrouping.m */; };
 		FD7D43781A1EDB5200551093 /* FaceppGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D435F1A1EDB5200551093 /* FaceppGrouping.m */; };
-		FD7D43791A1EDB5200551093 /* FaceppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43611A1EDB5200551093 /* FaceppInfo.m */; };
 		FD7D437A1A1EDB5200551093 /* FaceppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43611A1EDB5200551093 /* FaceppInfo.m */; };
-		FD7D437B1A1EDB5200551093 /* FaceppPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43631A1EDB5200551093 /* FaceppPerson.m */; };
 		FD7D437C1A1EDB5200551093 /* FaceppPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43631A1EDB5200551093 /* FaceppPerson.m */; };
-		FD7D437D1A1EDB5200551093 /* FaceppRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43651A1EDB5200551093 /* FaceppRecognition.m */; };
 		FD7D437E1A1EDB5200551093 /* FaceppRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43651A1EDB5200551093 /* FaceppRecognition.m */; };
-		FD7D437F1A1EDB5200551093 /* FaceppTrainer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43671A1EDB5200551093 /* FaceppTrainer.m */; };
 		FD7D43801A1EDB5200551093 /* FaceppTrainer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43671A1EDB5200551093 /* FaceppTrainer.m */; };
-		FD7D43811A1EDB5200551093 /* FaceppError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436A1A1EDB5200551093 /* FaceppError.m */; };
 		FD7D43821A1EDB5200551093 /* FaceppError.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436A1A1EDB5200551093 /* FaceppError.m */; };
-		FD7D43831A1EDB5200551093 /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436C1A1EDB5200551093 /* FaceppResult.m */; };
 		FD7D43841A1EDB5200551093 /* FaceppResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D436C1A1EDB5200551093 /* FaceppResult.m */; };
-		FD7D438D1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */; };
 		FD7D438E1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */; };
-		FD7D43921A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */; };
 		FD7D43931A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */; };
-		FD7D43961A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43951A20D5D200551093 /* LineLayoutWithAnimation.m */; };
 		FD7D43971A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43951A20D5D200551093 /* LineLayoutWithAnimation.m */; };
-		FD7E22371A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
 		FD7E22381A076B9E00463C67 /* addPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222C1A076B9E00463C67 /* addPerson.png */; };
-		FD7E22391A076B9E00463C67 /* avator.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222D1A076B9E00463C67 /* avator.png */; };
 		FD7E223A1A076B9E00463C67 /* avator.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222D1A076B9E00463C67 /* avator.png */; };
-		FD7E223B1A076B9E00463C67 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222E1A076B9E00463C67 /* avator@2x.png */; };
 		FD7E223C1A076B9E00463C67 /* avator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222E1A076B9E00463C67 /* avator@2x.png */; };
-		FD7E223D1A076B9E00463C67 /* centerButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222F1A076B9E00463C67 /* centerButton.png */; };
 		FD7E223E1A076B9E00463C67 /* centerButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E222F1A076B9E00463C67 /* centerButton.png */; };
-		FD7E223F1A076B9E00463C67 /* centerButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22301A076B9E00463C67 /* centerButton@2x.png */; };
 		FD7E22401A076B9E00463C67 /* centerButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22301A076B9E00463C67 /* centerButton@2x.png */; };
-		FD7E22411A076B9E00463C67 /* detectFace.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22311A076B9E00463C67 /* detectFace.png */; };
 		FD7E22421A076B9E00463C67 /* detectFace.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22311A076B9E00463C67 /* detectFace.png */; };
-		FD7E22431A076B9E00463C67 /* detectFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22321A076B9E00463C67 /* detectFace@2x.png */; };
 		FD7E22441A076B9E00463C67 /* detectFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22321A076B9E00463C67 /* detectFace@2x.png */; };
-		FD7E22451A076B9E00463C67 /* editPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22331A076B9E00463C67 /* editPerson.png */; };
 		FD7E22461A076B9E00463C67 /* editPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22331A076B9E00463C67 /* editPerson.png */; };
-		FD7E22471A076B9E00463C67 /* editPerson@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22341A076B9E00463C67 /* editPerson@2x.png */; };
 		FD7E22481A076B9E00463C67 /* editPerson@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22341A076B9E00463C67 /* editPerson@2x.png */; };
-		FD7E22491A076B9E00463C67 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22351A076B9E00463C67 /* up.png */; };
 		FD7E224A1A076B9E00463C67 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22351A076B9E00463C67 /* up.png */; };
-		FD7E224B1A076B9E00463C67 /* up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22361A076B9E00463C67 /* up@2x.png */; };
 		FD7E224C1A076B9E00463C67 /* up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E22361A076B9E00463C67 /* up@2x.png */; };
-		FD7E224F1A076C5600463C67 /* Photo.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224D1A076C5600463C67 /* Photo.png */; };
 		FD7E22501A076C5600463C67 /* Photo.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224D1A076C5600463C67 /* Photo.png */; };
-		FD7E22511A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
 		FD7E22521A076C5600463C67 /* Photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7E224E1A076C5600463C67 /* Photo@2x.png */; };
-		FDA2E4FD1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */; };
 		FDA2E4FE1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA2E4FC1A591EAE00A6147A /* SDEPersonInfoEditViewController.m */; };
-		FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3607E19CEC33300AAE34D /* SDEPopupPanel.m */; };
-		FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB3608119CF1EE800AAE34D /* SDEPhotoFileFilter.m */; };
-		FDB99A191A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */; };
 		FDB99A1A1A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB99A181A5313EC00916A1E /* SDECrytalBallLayout.m */; };
 		FDBF6BF819D1038000352DFA /* SDEMRVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7327AC197FDD60006C5A2C /* SDEMRVCDataSource.m */; };
 		FDBF6BFD19D1038000352DFA /* SDEScanRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD41312C1997486B00141578 /* SDEScanRoomViewController.m */; };
@@ -157,26 +85,11 @@
 		FDBF6C2C19D1038000352DFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FDBF6CFA19D1038000352DFA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD3802B51981040100AE51DF /* Main_iPad.storyboard */; };
 		FDBF6D2F19D1038000352DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD67D898197DFCFB00D2CCDA /* Images.xcassets */; };
-		FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
 		FDBF6EF219D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDBF6EEF19D1A78F00352DFA /* FaceAlbum.xcdatamodeld */; };
-		FDC755531A09038300ECBFFF /* addPerson@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC755521A09038300ECBFFF /* addPerson@2x.png */; };
 		FDC755541A09038300ECBFFF /* addPerson@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDC755521A09038300ECBFFF /* addPerson@2x.png */; };
-		FDC755591A090B0000ECBFFF /* FacelessManPoster.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDC755581A090B0000ECBFFF /* FacelessManPoster.jpg */; };
 		FDC7555A1A090B0000ECBFFF /* FacelessManPoster.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FDC755581A090B0000ECBFFF /* FacelessManPoster.jpg */; };
-		FDDA9DC71A07B3DE00055225 /* FacelessManAvator.png in Resources */ = {isa = PBXBuildFile; fileRef = FDDA9DC61A07B3DE00055225 /* FacelessManAvator.png */; };
 		FDDA9DC81A07B3DE00055225 /* FacelessManAvator.png in Resources */ = {isa = PBXBuildFile; fileRef = FDDA9DC61A07B3DE00055225 /* FacelessManAvator.png */; };
-		FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE09AB81980A96400CDB283 /* SDEAvatorCell.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		FD67D8A4197DFCFB00D2CCDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FD67D876197DFCFB00D2CCDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FD67D87D197DFCFB00D2CCDA;
-			remoteInfo = FaceAlbum;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		FD04DC301A4EE30B0088EA43 /* FaceAlbum 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 5.xcdatamodel"; sourceTree = "<group>"; };
@@ -199,7 +112,6 @@
 		FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJFlowLayoutWithAnimations.h; sourceTree = "<group>"; };
 		FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJFlowLayoutWithAnimations.m; sourceTree = "<group>"; };
-		FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceAlbumDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FD67D885197DFCFB00D2CCDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -316,21 +228,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FD67D87B197DFCFB00D2CCDA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD7327A7197FA082006C5A2C /* QuartzCore.framework in Frameworks */,
-				FD732782197F5C03006C5A2C /* AssetsLibrary.framework in Frameworks */,
-				FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */,
-				FD67D8E4197DFD6100D2CCDA /* libFaceppLocalDetector.a in Frameworks */,
-				FD67D884197DFCFB00D2CCDA /* CoreGraphics.framework in Frameworks */,
-				FD67D888197DFCFB00D2CCDA /* CoreData.framework in Frameworks */,
-				FD67D886197DFCFB00D2CCDA /* UIKit.framework in Frameworks */,
-				FD67D882197DFCFB00D2CCDA /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FD67D89B197DFCFB00D2CCDA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -414,7 +311,6 @@
 		FD67D87F197DFCFB00D2CCDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */,
 				FD67D89E197DFCFB00D2CCDA /* FaceAlbumTests.xctest */,
 				FDBF6ED319D1038000352DFA /* FaceAlbum.app */,
 			);
@@ -652,23 +548,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumDev" */;
-			buildPhases = (
-				FD67D87A197DFCFB00D2CCDA /* Sources */,
-				FD67D87B197DFCFB00D2CCDA /* Frameworks */,
-				FD67D87C197DFCFB00D2CCDA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FaceAlbumDev;
-			productName = FaceAlbum;
-			productReference = FD67D87E197DFCFB00D2CCDA /* FaceAlbumDev.app */;
-			productType = "com.apple.product-type.application";
-		};
 		FD67D89D197DFCFB00D2CCDA /* FaceAlbumTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD67D8B3197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumTests" */;
@@ -680,7 +559,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FD67D8A5197DFCFB00D2CCDA /* PBXTargetDependency */,
 			);
 			name = FaceAlbumTests;
 			productName = FaceAlbumTests;
@@ -714,9 +592,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = seedante;
 				TargetAttributes = {
-					FD67D87D197DFCFB00D2CCDA = {
-						DevelopmentTeam = 6Z8XUV9H6J;
-					};
 					FD67D89D197DFCFB00D2CCDA = {
 						TestTargetID = FD67D87D197DFCFB00D2CCDA;
 					};
@@ -737,7 +612,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */,
 				FD67D89D197DFCFB00D2CCDA /* FaceAlbumTests */,
 				FDBF6BF519D1038000352DFA /* FaceAlbumRelease */,
 			);
@@ -745,40 +619,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FD67D87C197DFCFB00D2CCDA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD7E22411A076B9E00463C67 /* detectFace.png in Resources */,
-				FD7E22511A076C5600463C67 /* Photo@2x.png in Resources */,
-				FD7D430F1A19FB4500551093 /* face.png in Resources */,
-				FD7E22431A076B9E00463C67 /* detectFace@2x.png in Resources */,
-				FD7E223D1A076B9E00463C67 /* centerButton.png in Resources */,
-				FD7D43211A1A40F900551093 /* Album@2x.png in Resources */,
-				FD7E22451A076B9E00463C67 /* editPerson.png in Resources */,
-				FD7D43151A1A04BF00551093 /* drawer.png in Resources */,
-				FD7E223F1A076B9E00463C67 /* centerButton@2x.png in Resources */,
-				FD7E22491A076B9E00463C67 /* up.png in Resources */,
-				FD7E224B1A076B9E00463C67 /* up@2x.png in Resources */,
-				FD67D88E197DFCFB00D2CCDA /* InfoPlist.strings in Resources */,
-				FD7D43271A1A432D00551093 /* changeStyle@2x.png in Resources */,
-				FD7E22471A076B9E00463C67 /* editPerson@2x.png in Resources */,
-				FD7D43111A19FB4500551093 /* face@2x.png in Resources */,
-				FD3802B61981040100AE51DF /* Main_iPad.storyboard in Resources */,
-				FD7E22371A076B9E00463C67 /* addPerson.png in Resources */,
-				FDC755531A09038300ECBFFF /* addPerson@2x.png in Resources */,
-				FD7E224F1A076C5600463C67 /* Photo.png in Resources */,
-				FD67D899197DFCFB00D2CCDA /* Images.xcassets in Resources */,
-				FD7D431F1A1A40F900551093 /* Album.png in Resources */,
-				FD7D43251A1A432D00551093 /* changeStyle.png in Resources */,
-				FD7D43171A1A04BF00551093 /* drawer@2x.png in Resources */,
-				FD7E22391A076B9E00463C67 /* avator.png in Resources */,
-				FDC755591A090B0000ECBFFF /* FacelessManPoster.jpg in Resources */,
-				FD7E223B1A076B9E00463C67 /* avator@2x.png in Resources */,
-				FDDA9DC71A07B3DE00055225 /* FacelessManAvator.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FD67D89C197DFCFB00D2CCDA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -823,55 +663,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FD67D87A197DFCFB00D2CCDA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD7327AD197FDD60006C5A2C /* SDEMRVCDataSource.m in Sources */,
-				FD7D437D1A1EDB5200551093 /* FaceppRecognition.m in Sources */,
-				FD4131341997486B00141578 /* SDEScanRoomViewController.m in Sources */,
-				FD7D43811A1EDB5200551093 /* FaceppError.m in Sources */,
-				FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */,
-				FD67D890197DFCFB00D2CCDA /* main.m in Sources */,
-				FD7D430A1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */,
-				FD7D43831A1EDB5200551093 /* FaceppResult.m in Sources */,
-				FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */,
-				FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
-				FD7D2F9A197E97C7004E8FFD /* AlbumGroup.m in Sources */,
-				FD7D43771A1EDB5200551093 /* FaceppGrouping.m in Sources */,
-				FDB99A191A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */,
-				FD7D436F1A1EDB5200551093 /* FaceppClient.m in Sources */,
-				FD290B2819C5860E003A26DC /* SDEPersonProfileHeaderView.m in Sources */,
-				FD67D894197DFCFB00D2CCDA /* SDEAppDelegate.m in Sources */,
-				FD1164E819A8808500C1A41F /* SDECandidateCell.m in Sources */,
-				FD7D437F1A1EDB5200551093 /* FaceppTrainer.m in Sources */,
-				FD7D433B1A1DA4A300551093 /* SDEAssetsCache.m in Sources */,
-				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
-				FD7D43961A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
-				FD7D431B1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */,
-				FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */,
-				FD41313A19974A5E00141578 /* SDEPhotoScanManager.mm in Sources */,
-				FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
-				FD7D43731A1EDB5200551093 /* FaceppFaceset.m in Sources */,
-				FD7D43791A1EDB5200551093 /* FaceppInfo.m in Sources */,
-				FD3A106219CDC3C9006A3B4E /* SDEAvatorCheckmarkView.m in Sources */,
-				FDA2E4FD1A591EAE00A6147A /* SDEPersonInfoEditViewController.m in Sources */,
-				FDE09AB91980A96400CDB283 /* SDEAvatorCell.m in Sources */,
-				FD67D8FD197E048400D2CCDA /* SDEStore.m in Sources */,
-				FD7D436D1A1EDB5200551093 /* FaceppAPI.m in Sources */,
-				FD7D2F95197E7B55004E8FFD /* SDEMontageRoomViewController.m in Sources */,
-				FD7D43921A1F6E3A00551093 /* HorizontalCollectionViewLayout.m in Sources */,
-				FD7D438D1A1F6DDF00551093 /* SDEFaceRoomViewController.m in Sources */,
-				FD3A106519CDC44F006A3B4E /* SDEAvatorOverlayView.m in Sources */,
-				FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */,
-				FD7D43751A1EDB5200551093 /* FaceppGroup.m in Sources */,
-				FD7D43711A1EDB5200551093 /* FaceppDetection.m in Sources */,
-				FD5695A51A5BF3AB0096B884 /* UIView+Glow.m in Sources */,
-				FD67D8E3197DFD6100D2CCDA /* FaceppDetection+LocalResultUploader.m in Sources */,
-				FD7D437B1A1EDB5200551093 /* FaceppPerson.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FD67D89A197DFCFB00D2CCDA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -930,14 +721,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		FD67D8A5197DFCFB00D2CCDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FD67D87D197DFCFB00D2CCDA /* FaceAlbumDev */;
-			targetProxy = FD67D8A4197DFCFB00D2CCDA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FD67D88C197DFCFB00D2CCDA /* InfoPlist.strings */ = {
@@ -1029,80 +812,6 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		FD67D8B1197DFCFB00D2CCDA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbum/FaceAlbumDev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/FaceppLocalDetector",
-				);
-				OTHER_CFLAGS = "-Wno-gnu";
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				WARNING_CFLAGS = (
-					"-Wshadow",
-					"-Wfloat-equal",
-				);
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		FD67D8B2197DFCFB00D2CCDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FaceAlbum/FaceAlbum-Prefix.pch";
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/FaceAlbum/FaceAlbumDev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/FaceppLocalDetector",
-				);
-				OTHER_CFLAGS = "-Wno-gnu";
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				WARNING_CFLAGS = (
-					"-Wshadow",
-					"-Wfloat-equal",
-				);
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -1226,15 +935,6 @@
 			buildConfigurations = (
 				FD67D8AE197DFCFB00D2CCDA /* Debug */,
 				FD67D8AF197DFCFB00D2CCDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FD67D8B0197DFCFB00D2CCDA /* Build configuration list for PBXNativeTarget "FaceAlbumDev" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FD67D8B1197DFCFB00D2CCDA /* Debug */,
-				FD67D8B2197DFCFB00D2CCDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
