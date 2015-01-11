@@ -439,6 +439,7 @@
     }
 }
 
+
 #pragma mark - add a new person
 - (UIBarButtonItem *)addBarButton
 {
@@ -459,6 +460,7 @@
     if (self.selectedFacesSet.count > 0) {
         newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
         newPerson.whetherToDisplay = YES;
+        newPerson.personID = @"";
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             selectedFaceItem.personOwner = newPerson;
@@ -653,11 +655,36 @@
 
 - (void)jumpToFaceRoomScene
 {
+    [self deleteEmptyPersonItems];
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     [defaultConfig setBool:NO forKey:@"isNeedEdited"];
     [defaultConfig synchronize];
 
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)deleteEmptyPersonItems
+{
+    NSFetchRequest *personFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(personID != %@) AND (ownedFaces.@count == 0)", @"FacelessMan"];
+    [personFetchRequest setPredicate:predicate];
+    NSArray *emptyPersonItems = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];
+    if (emptyPersonItems.count > 0) {
+        NSString *storeDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        for (Person *personItem in emptyPersonItems) {
+            //NSLog(@"delete person %@", personItem);
+            NSString *storePath = [storeDirectory stringByAppendingPathComponent:personItem.portraitFileString];
+            BOOL isExisted = [[NSFileManager defaultManager] fileExistsAtPath:storePath];
+            if (isExisted) {
+                BOOL deleteResult = [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
+                if (!deleteResult) {
+                    NSLog(@"Delete File Error.");
+                }
+            }
+            [self.managedObjectContext deleteObject:personItem];
+        }
+        [self saveEdit];
+    }
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source
