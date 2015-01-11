@@ -15,13 +15,7 @@
 #import "Reachability.h"
 #import "FaceppAPI.h"
 #import "APIKey+APISecret.h"
-
 #import "SDECandidateCell.h"
-
-typedef enum {
-    MontageEditTypeAdd,
-    MontageEditTypeMove,
-} MontageEditType;
 
 @interface SDEMontageRoomViewController ()<UIAlertViewDelegate>
 
@@ -197,6 +191,7 @@ typedef enum {
         [self.DoneBarButton setTitle:@"Cancel"];
     }else{
         newTitle = @"";
+        [self unenableLeftBarButtonItems];
         [self.DoneBarButton setTitle:@"Confirm"];
     }
     
@@ -237,34 +232,9 @@ typedef enum {
     self.moveBarButton.enabled = NO;
 }
 
-- (void)cleanUsedData
-{
-    [self.triggeredDeletedSectionsSet removeAllObjects];
-    [self.guardObjectIDsSet removeAllObjects];
-    [self removeSelectedFacesSet:[self.selectedFacesSet copy]];
-    [self.includedSectionsSet removeAllObjects];
-    
-    [self saveEdit];
-    [self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.1];
-}
-
-- (void)deselectAllSelectedItems
-{
-    self.collectionView.allowsSelection = NO;
-    
-    [self performSelector:@selector(enableSelect) withObject:nil afterDelay:0.1];
-    
-}
-
-- (void)enableSelect
-{
-    self.collectionView.allowsSelection = YES;
-    self.collectionView.allowsMultipleSelection = YES;
-}
-
 - (void)filterSelectedItemSetWithTargetViewSection:(NSInteger)targetViewSection
 {
-    DLog(@"STEP 1: filter selected items.");
+    NSLog(@"STEP 1: filter selected items.");
     [self.guardObjectIDsSet removeAllObjects];
     [self.triggeredDeletedSectionsSet removeAllObjects];
     
@@ -272,7 +242,8 @@ typedef enum {
     [self.selectedFacesSet filterUsingPredicate:targetViewSectionPredicate];
     [self.includedSectionsSet removeObject:@(targetViewSection)];
     
-    //if selected items include a whole section's items, handle it.
+    //if all of items in a section are selected, this section will be deleted.
+    //if a item is in target section, do nothing to it.
     for (NSNumber *sectionNumber in self.includedSectionsSet) {
         NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
         NSArray *matchedItems = [self.selectedFacesSet.allObjects filteredArrayUsingPredicate:sectionPredicate];
@@ -280,7 +251,7 @@ typedef enum {
             NSInteger section = [sectionNumber integerValue];
             NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
             if (itemCount == matchedItems.count) {
-                DLog(@"All items at section: %d are choiced. This will trigger detele section.", (int)section+1);
+                //NSLog(@"All items at section: %d are choiced. This will trigger section deletion.", (int)section+1);
                 [self.triggeredDeletedSectionsSet addObject:sectionNumber];
                 [self.selectedFacesSet removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
             }
@@ -289,44 +260,37 @@ typedef enum {
     [self.includedSectionsSet removeAllObjects];
 }
 
-- (void)manageSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
+- (void)processSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
 {
-    DLog(@"STEP 2: create copy items in target section.");
+    NSLog(@"STEP 2: move a part of items to target section.");
     if (self.triggeredDeletedSectionsSet.count > 0) {
         for (NSNumber *sectionNumber in self.triggeredDeletedSectionsSet) {
             NSInteger section = sectionNumber.integerValue;
-            if (section == targetDataSection) {
-                DLog(@"It's impossible!!!");
-            }else{
+            if (section != targetDataSection) {
                 Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
                 copyFaceItem.section = (int)targetDataSection;
                 copyFaceItem.whetherToDisplay = YES;
-            }
+            }else
+                NSLog(@"It's impossible!!!");
         }
+        [self.triggeredDeletedSectionsSet removeAllObjects];
     }else{
         if (self.selectedFacesSet.count > 0) {
             NSIndexPath *anyIndexPath = self.selectedFacesSet.anyObject;
-            DLog(@"Index: %@", anyIndexPath);
-            Face *anyFace = [self.faceFetchedResultsController objectAtIndexPath:anyIndexPath];
-            if (anyFace.section == targetDataSection) {
-                DLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
-                //[self filterSelectedItemsInSection:targetDataSection];
-            }else{
+            Face *anyFaceItem = [self.faceFetchedResultsController objectAtIndexPath:anyIndexPath];
+            if (anyFaceItem.section != targetDataSection) {
                 Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
                 singleCopyFaceItem.section = (int)targetDataSection;
                 singleCopyFaceItem.whetherToDisplay = YES;
-            }
-            [self.selectedFacesSet removeObject:anyIndexPath];
+                [self.selectedFacesSet removeObject:anyIndexPath];
+            }else
+                NSLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
         }
     }
     
-    [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetDataSection) afterDelay:0.1];
-}
-
-- (void)filterSelectedItemsInSection:(NSInteger)section
-{
-    NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(section)];
-    [self.selectedFacesSet filterUsingPredicate:sectionPredicate];
+    //[self moveOtherItemsToSection:@(targetDataSection)];
+    self.collectionView.allowsSelection = NO;
+    [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetDataSection) afterDelay:0.01];
 }
 
 - (NSManagedObject *)copyManagedObjectAtIndexPath:(NSIndexPath *)indexPath;
@@ -352,35 +316,47 @@ typedef enum {
 - (void)moveOtherItemsToSection:(NSNumber *)targetSectionNumber
 {
     if (self.selectedFacesSet.count > 0) {
-        DLog(@"STEP 3: move left items to target section.");
+        NSLog(@"STEP 3: move remainder items to target section.");
         NSInteger targetSection = [targetSectionNumber integerValue];
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
-            Face *selectedFace = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-            if (selectedFace.section != (int)targetSection) {
-                selectedFace.section = (int)targetSection;
+            Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            if (selectedFaceItem.section != (int)targetSection) {
+                selectedFaceItem.section = (int)targetSection;
             }
         }
-        [self.selectedFacesSet removeAllObjects];
-    }else
-        DLog(@"There is no item need to move.");
-
-    [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.1];
+        
+        [self removeSelectedFacesSet:[self.selectedFacesSet copy]];
+    }
+    
+    self.collectionView.allowsSelection = YES;
+    [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.001];
 }
 
 - (void)deleteOriginalItems
 {
     if (self.guardObjectIDsSet.count > 0) {
-        DLog(@"STEP 4: delete original items.");
+        NSLog(@"STEP 4: delete original items.");
         for (NSManagedObjectID *objectID in self.guardObjectIDsSet) {
             Face *originalFace = (Face *)[self.managedObjectContext existingObjectWithID:objectID error:nil];
-            [self.faceFetchedResultsController.managedObjectContext deleteObject:originalFace];
+            [self.managedObjectContext deleteObject:originalFace];
         }
         [self.guardObjectIDsSet removeAllObjects];
-    }else
-        DLog(@"There is no item to delete.");
+    }
     
-    [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.01];
 }
+
+- (void)cleanUsedData
+{
+    [self.triggeredDeletedSectionsSet removeAllObjects];
+    [self.guardObjectIDsSet removeAllObjects];
+    //[self removeSelectedFacesSet:[self.selectedFacesSet copy]];
+    [self.includedSectionsSet removeAllObjects];
+    
+    [self saveEdit];
+    //[self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.01];
+}
+
 
 #pragma mark - select Method
 - (UIBarButtonItem *)selectBarButton
@@ -401,8 +377,6 @@ typedef enum {
     
     NSArray *leftBarButtonItems = @[self.hiddenBarButton, self.addBarButton, self.moveBarButton];
     self.navigationItem.leftBarButtonItems = leftBarButtonItems;
-    
-    //[self.selectedFaces removeAllObjects];
 }
 
 #pragma mark - hidden somebody
@@ -471,9 +445,8 @@ typedef enum {
 - (void)addNewPerson
 {
     NSInteger sectionCount = [self.collectionView numberOfSections];
-    Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
-    NSInteger newSection = firstItemInSection.section + 1;
     [self filterSelectedItemSetWithTargetViewSection:sectionCount];
+    
     Person *newPerson;
     if (self.selectedFacesSet.count > 0) {
         newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
@@ -485,7 +458,9 @@ typedef enum {
         }
     }
     
-    [self manageSelectedItemsWithTargetDataSection:newSection];
+    Face *firstItemInLastSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
+    NSInteger newSection = firstItemInLastSection.section + 1;
+    [self processSelectedItemsWithTargetDataSection:newSection];
     
     if (newPerson) {
         newPerson.order = (int)newSection;
@@ -510,18 +485,16 @@ typedef enum {
         NSString *savePath = [storeFolder stringByAppendingPathComponent:portraitName];
         
         [self createPosterFileFromAsset:anyFaceItem.assetURLString WithArea:anyFaceItem.portraitAreaRect AtPath:savePath];
-        
     }
-    NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
+    //NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
     [self saveEdit];
-    
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     
     self.goBackUpButton.hidden = NO;
     //奇怪，记得当时是因为正常的调用不起作用，才使用 performSelector 的，这里完全可以正常调用啊。是不是当时写迷糊了？
-    //[self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.1];
+    //[self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.01];
     [self unenableLeftBarButtonItems];
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionCount]];
+    //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionCount]];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
 - (BOOL)createPosterFileFromAsset:(NSString *)assetURLString WithArea:(NSValue *)portraitAreaRect AtPath:(NSString *)storePath
@@ -562,7 +535,6 @@ typedef enum {
 
 - (void)moveSelectedFacesToPerson
 {
-    //[self.view addSubview:self.candidateView];
     CGRect frame = self.collectionView.frame;
     frame.size.height = 120.0f;
     frame.origin.y = 44.0f;
@@ -661,32 +633,32 @@ typedef enum {
     BOOL ThreeScene = [defaultConfig boolForKey:@"isNeedEdited"];
     NSUInteger count = [[self.faceFetchedResultsController sections] count];
     if (!ThreeScene){
-        DLog(@"No Three.");
+        NSLog(@"No Three.");
         if (count > 1) {
             [defaultConfig setBool:YES forKey:@"isNeedEdited"];
             [defaultConfig synchronize];
-            DLog(@"Open Three");
+            NSLog(@"Open Three");
         }else if (count == 1){
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section != 0) {
                 [defaultConfig setBool:YES forKey:@"isNeedEdited"];
                 [defaultConfig synchronize];
-                DLog(@"Open Three.");
+                NSLog(@"Open Three.");
             }
         }
     }else{
-        DLog(@"Yeah, Three");
+        NSLog(@"Yeah, Three");
         if (count == 1) {
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section == 0) {
                 [defaultConfig setBool:NO forKey:@"isNeedEdited"];
                 [defaultConfig synchronize];
-                DLog(@"Close Three.");
+                NSLog(@"Close Three.");
             }
         }else if (count == 0){
             [defaultConfig setBool:NO forKey:@"isNeedEdited"];
             [defaultConfig synchronize];
-            DLog(@"Close Three.");
+            NSLog(@"Close Three.");
         }
     }
 
@@ -750,7 +722,7 @@ typedef enum {
         [self hiddenCandidateView];
         
         [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
-        [self manageSelectedItemsWithTargetDataSection:targetSection];
+        [self processSelectedItemsWithTargetDataSection:targetSection];
         
         [self unenableLeftBarButtonItems];
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
@@ -824,7 +796,7 @@ typedef enum {
 // Call this method somewhere in your view controller setup code.
 - (void)registerForKeyboardNotifications
 {
-    DLog(@"register for keyboard notification.");
+    NSLog(@"register for keyboard notification.");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];

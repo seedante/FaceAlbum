@@ -141,11 +141,11 @@ static NSString * const cellIdentifier = @"avatorCell";
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            //DLog(@"ADD New Section At Index: %lu", (unsigned long)sectionIndex);
+            //NSLog(@"ADD New Section At Index: %lu", (unsigned long)sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
         case NSFetchedResultsChangeDelete:
-            DLog(@"Delete Section: %lu", (unsigned long)sectionIndex);
+            //NSLog(@"Delete Section: %lu", (unsigned long)sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
         default:
@@ -164,19 +164,19 @@ static NSString * const cellIdentifier = @"avatorCell";
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            NSLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            //NSLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
-            NSLog(@"Delete Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            //NSLog(@"Delete Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
-            NSLog(@"Update Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            //NSLog(@"Update Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
-            NSLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
+            //NSLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
@@ -194,12 +194,12 @@ static NSString * const cellIdentifier = @"avatorCell";
         
         switch (changeType) {
             case NSFetchedResultsChangeDelete:{
-                DLog(@"Section Change Type: Delete Section");
+                //NSLog(@"Section Change Type: Delete Section");
                 for (NSDictionary *change in sectionChanges) {
                     NSNumber * section = (NSNumber *)[change objectForKey:@(NSFetchedResultsChangeDelete)];
-                    //DLog(@"section: %@", section);
+                    //NSLog(@"section: %@", section);
                     NSUInteger itemNumberInSection = [self.collectionView numberOfItemsInSection:[section unsignedIntegerValue]];
-                    //DLog(@"Item Number: %d", itemNumberInSection);
+                    //NSLog(@"Item Number: %d", itemNumberInSection);
                     for (NSUInteger i = 0; i < itemNumberInSection; i++) {
                         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:[section unsignedIntegerValue]];
                         NSDictionary *deletedItemInfo = @{@(NSFetchedResultsChangeDelete):indexPath};
@@ -208,24 +208,24 @@ static NSString * const cellIdentifier = @"avatorCell";
                 }
                 if (objectChanges.count > 0) {
                     self.blendBatchUpdateMode = YES;
-                    DLog(@"Blend Change");
+                    //NSLog(@"Blend Change");
                 }else{
                     self.blendBatchUpdateMode = NO;
-                    DLog(@"Regular Change");
+                    //NSLog(@"Regular Change");
                 }
                 break;
             }
             case NSFetchedResultsChangeInsert:
-                DLog(@"Section Change Type: Insert Section. Ignored.");
+                //NSLog(@"Section Change Type: Insert Section. Ignored.");
                 break;
             case NSFetchedResultsChangeUpdate:
-                DLog(@"Section Change Type: Insert Section. Ignored.");
+                //NSLog(@"Section Change Type: Insert Section. Ignored.");
                 break;
             case NSFetchedResultsChangeMove:
-                DLog(@"Section Change Type: Insert Section. Ignored.");
+                //NSLog(@"Section Change Type: Insert Section. Ignored.");
                 break;
             default:
-                DLog(@"Impossible");
+                //NSLog(@"Impossible");
                 break;
         }
     }
@@ -235,12 +235,12 @@ static NSString * const cellIdentifier = @"avatorCell";
         [self blendBatchUpdate];
     }else{
         if (sectionChanges.count > 0) {
-            DLog(@"Regular Update Section");
+            //NSLog(@"Regular Update Section");
             [self batchUpdateSection];
         }
         
         if (objectChanges.count > 0 && sectionChanges.count == 0) {
-            DLog(@"Regular Update Content");
+            //NSLog(@"Regular Update Content");
             [self batchUpdateCell];
         }
         
@@ -260,19 +260,19 @@ static NSString * const cellIdentifier = @"avatorCell";
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        DLog(@"ADD Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
+                        //NSLog(@"ADD Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        DLog(@"Delete Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
+                        //NSLog(@"Delete Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeUpdate:
-                        DLog(@"Update Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
+                        //NSLog(@"Update Section: %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeMove:
-                        DLog(@"MOVE Section. NOT FINISHED NOW.");
+                        //NSLog(@"MOVE Section. NOT FINISHED NOW.");
                         break;
                 }
             }];
@@ -301,11 +301,11 @@ static NSString * const cellIdentifier = @"avatorCell";
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        DLog(@"ADD CELL AT %@", (NSIndexPath *)obj);
+                        //NSLog(@"ADD CELL AT %@", (NSIndexPath *)obj);
                         [self.collectionView insertItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        DLog(@"Delete Cell AT %@", (NSIndexPath *)obj);
+                        //NSLog(@"Delete Cell AT %@", (NSIndexPath *)obj);
                         [self.collectionView deleteItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeUpdate:
@@ -323,24 +323,24 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)blendBatchUpdate
 {
     [self.collectionView performBatchUpdates:^{
-        DLog(@"BlendBatchUpdate:");
-        DLog(@"First: objectChanges: %@", objectChanges);
+        //NSLog(@"BlendBatchUpdate:");
+        //NSLog(@"First: objectChanges: %@", objectChanges);
         for (NSDictionary *change in objectChanges) {
-            DLog(@"object change: %@", change);
+            //NSLog(@"object change: %@", change);
             [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        DLog(@"Blend update: ADD CELL");
+                        //NSLog(@"Blend update: ADD CELL");
                         [self.collectionView insertItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        DLog(@"Blend update: Delete CELL");
+                        //NSLog(@"Blend update: Delete CELL");
                         [self.collectionView deleteItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeUpdate:
-                        DLog(@"Blend update: Update Cell");
+                        //NSLog(@"Blend update: Update Cell");
                         [self.collectionView reloadItemsAtIndexPaths:@[obj]];
                         break;
                     case NSFetchedResultsChangeMove:
@@ -350,24 +350,24 @@ static NSString * const cellIdentifier = @"avatorCell";
             }];
         }
         
-        DLog(@"Then SectionChanges: %@", sectionChanges);
+        //NSLog(@"Then SectionChanges: %@", sectionChanges);
         for (NSDictionary *sectionChange in sectionChanges)
         {
-            DLog(@"Section Change: %@", sectionChange);
+            //NSLog(@"Section Change: %@", sectionChange);
             [sectionChange enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                 switch (type)
                 {
                     case NSFetchedResultsChangeInsert:
-                        DLog(@"Blend update: ADD New Section");
+                        //NSLog(@"Blend update: ADD New Section");
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeDelete:
-                        DLog(@"xxxBlend update: Delete Section %lu", (unsigned long)[obj unsignedIntegerValue]);
+                        //NSLog(@"xxxBlend update: Delete Section %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeUpdate:
-                        DLog(@"Blend update: Update Section %lu", (unsigned long)[obj unsignedIntegerValue]);
+                        //NSLog(@"Blend update: Update Section %lu", (unsigned long)[obj unsignedIntegerValue]);
                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     default:
@@ -495,23 +495,27 @@ static NSString * const cellIdentifier = @"avatorCell";
     personProfileHeaderView.parentVC = (UIViewController *)collectionView.delegate;
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     
-    NSInteger number = [collectionView numberOfItemsInSection:indexPath.section];
-    if (number == 1) {
-        personProfileHeaderView.numberLabel.text = @"1 avator";
-    }else
-        personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
+    NSInteger number;
     
     if (faceItem.section == 0) {
+        number = [collectionView numberOfItemsInSection:indexPath.section];
         personProfileHeaderView.nameTextField.text = @"FacelessMan";
         personProfileHeaderView.nameTextField.enabled = NO;
         personProfileHeaderView.actionButton.hidden = YES;
         [personProfileHeaderView.avatorImageView setImage:[UIImage imageNamed:@"centerButton.png"]];
     }else{
+        number = faceItem.personOwner.ownedFaces.count;
         personProfileHeaderView.nameTextField.enabled = YES;
         personProfileHeaderView.actionButton.hidden = NO;
         personProfileHeaderView.nameTextField.text = faceItem.personOwner.name;
         [personProfileHeaderView.avatorImageView setImage:faceItem.personOwner.avatorImage];
     }
+    
+    if (number == 1) {
+        personProfileHeaderView.numberLabel.text = @"1 avator";
+    }else
+        personProfileHeaderView.numberLabel.text = [NSString stringWithFormat:@"%ld avators", (long)number];
+
     
     return personProfileHeaderView;
 }
