@@ -99,44 +99,44 @@ static CGFloat const kPhotoHeight = 654.0;
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(responseToPhotoLibraryNotification) name:ALAssetsLibraryChangedNotification object:nil];
     
-    NSString *startSceneName = [self startScene];
-    if ([startSceneName isEqualToString:@"ScanRoom"]) {
+    NSString *topRoomName = [self topRoomForFaceScene];
+    if ([topRoomName isEqualToString:@"ScanRoom"]) {
         [self.photoFileFilter checkPhotoLibrary];
         UIViewController *scanRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ScanRoom"];
         [self.navigationController pushViewController:scanRoomVC animated:NO];
-    }else if ([startSceneName isEqualToString:@"MontageRoom"]){
+    }else if ([topRoomName isEqualToString:@"MontageRoom"]){
         UIViewController *montageRoomVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MontageRoom"];
         [self.navigationController pushViewController:montageRoomVC animated:NO];
     }
     
 }
 
-- (NSString *)startScene
+- (NSString *)topRoomForFaceScene
 {
-    NSString *startScene;
+    NSString *topRoom;
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
     [defaultConfig registerDefaults:@{@"isFirstScan": @YES}];
-    [defaultConfig registerDefaults:@{@"isGalleryOpened": @NO}];
-    [defaultConfig registerDefaults:@{@"shouldBeMontageRoom": @YES}];
+    [defaultConfig registerDefaults:@{@"isPersonExisted": @NO}];
+    [defaultConfig registerDefaults:@{@"isNeedEdited": @YES}];
     [defaultConfig synchronize];
     
-    BOOL isGalleryOpened = [defaultConfig boolForKey:@"isGalleryOpened"];
-    if (isGalleryOpened) {
-        startScene = @"PersonGallery";
-        return startScene;
+    BOOL isPersonExisted = [defaultConfig boolForKey:@"isPersonExisted"];
+    if (isPersonExisted) {
+        topRoom = @"FaceRoom";
+        return topRoom;
     }
     
     BOOL isFirstScan = [defaultConfig boolForKey:@"isFirstScan"];
     if (isFirstScan) {
-        startScene = @"ScanRoom";
-        return startScene;
+        topRoom = @"ScanRoom";
+        return topRoom;
     }
     
-    BOOL shouldBeMontageRoom = [defaultConfig boolForKey:@"shouldBeMontageRoom"];
-    if (shouldBeMontageRoom) {
-        startScene = @"MontageRoom";
+    BOOL isNeedEdited = [defaultConfig boolForKey:@"isNeedEdited"];
+    if (isNeedEdited) {
+        topRoom = @"MontageRoom";
     }
-    return startScene;
+    return topRoom;
 }
 
 - (NSString *)storeFolder
@@ -986,8 +986,6 @@ static CGFloat const kPhotoHeight = 654.0;
 
 - (IBAction)editAlbum:(id)sender
 {
-    NSLog(@"Need a little change.");
-    NSLog(@"Check for deleted photos");
     [self handleDeletedPhotos];
     [self resetFaceRoomScene];
     [self performSegueWithIdentifier:@"enterMontageRoom" sender:self];

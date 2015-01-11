@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *assetCollectionView;
 @property (strong, nonatomic) IBOutlet UICollectionView *faceCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *scanButton;
-@property (weak, nonatomic) IBOutlet UILabel *processIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *indicatorLabel;
 
 - (IBAction)scanPhotos:(id)sender;
 

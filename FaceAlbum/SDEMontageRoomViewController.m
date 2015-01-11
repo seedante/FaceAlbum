@@ -31,7 +31,7 @@ typedef enum {
 
 @property (nonatomic) UIBarButtonItem *selectBarButton;
 @property (nonatomic) UIBarButtonItem *DoneBarButton;
-@property (nonatomic) UIBarButtonItem *showFaceRoomBarButton;
+@property (nonatomic) UIBarButtonItem *jumpToFaceRoomBarButton;
 @property (nonatomic) UIBarButtonItem *moveBarButton;
 @property (nonatomic) UIBarButtonItem *hiddenBarButton;
 @property (nonatomic) UIBarButtonItem *addBarButton;
@@ -42,7 +42,6 @@ typedef enum {
 @property (nonatomic) NSMutableSet *guardObjectIDsSet;
 
 @property (nonatomic) UICollectionView  *candidateView;
-@property (nonatomic) UIImageView *maskImageView;
 
 @property (nonatomic) UITextField *activedField;
 @property (nonatomic) UIButton *goBackUpButton;
@@ -61,15 +60,15 @@ typedef enum {
     [super viewDidLoad];
     
     self.goBackUpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.view addSubview:self.goBackUpButton];
     [self.goBackUpButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
     self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
     self.goBackUpButton.hidden = YES;
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.goBackUpButton];
     
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
-    [self.navigationItem setRightBarButtonItem:self.showFaceRoomBarButton];
+    [self.navigationItem setRightBarButtonItem:self.jumpToFaceRoomBarButton];
     [self registerForKeyboardNotifications];
     
     self.selectedFacesSet = [[NSMutableSet alloc] init];
@@ -78,8 +77,6 @@ typedef enum {
     self.guardObjectIDsSet = [NSMutableSet new];
     
     self.collectionView.allowsSelection = NO;
-    self.maskImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, -100, 44, 44)];
-    [self.view addSubview:self.maskImageView];
     
     self.dataSource = [SDEMRVCDataSource sharedDataSource];
     self.collectionView.dataSource = self.dataSource;
@@ -91,16 +88,7 @@ typedef enum {
     if (![self.faceFetchedResultsController performFetch:&error]) {
         NSLog(@"Face Fetch Fail: %@", error);
     }
-
-    //NSLog(@"FetchedObjects include %lu objects", (unsigned long)[[self.faceFetchedResultsController fetchedObjects] count]);
 }
-
--(void)goBackToTop
-{
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-    self.goBackUpButton.hidden = YES;
-}
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -108,7 +96,7 @@ typedef enum {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.tabBarController.tabBar.hidden = YES;
     [self registerAsObserver];
-    [self checkRightBarButtionItem];
+    [self checkPersonNumber];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,26 +105,44 @@ typedef enum {
     [self.dataSource fetchDataAtBackground];
 }
 
-- (void)checkRightBarButtionItem
-{
-    NSArray *sections = self.faceFetchedResultsController.sections;
-    if (sections.count > 1) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }else if (sections.count == 1){
-        Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-        if (faceItem.section == 0) {
-            self.navigationItem.rightBarButtonItem.enabled = NO;
-        }else
-            self.navigationItem.rightBarButtonItem.enabled = YES;
-    }else
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self cancelObserver];
     [super viewWillDisappear:animated];
 }
+
+-(void)goBackToTop
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    self.goBackUpButton.hidden = YES;
+}
+
+- (void)checkPersonNumber
+{
+    //If there is only FacelessMan, can't jump to FaceRoom Scene
+    NSArray *sections = self.faceFetchedResultsController.sections;
+    if (sections) {
+        if (sections.count > 1) {
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+        }else if (sections.count == 1){
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+            if (faceItem.section == 0) {
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+            }else
+                self.navigationItem.rightBarButtonItem.enabled = YES;
+        }else if (sections.count == 0){
+            self.jumpToFaceRoomBarButton.enabled = YES;
+            self.selectBarButton.enabled = NO;
+            self.tabBarController.tabBar.hidden = NO;
+            self.navigationItem.title = @"No Face Here.";
+        }
+    }else{
+        self.jumpToFaceRoomBarButton.enabled = NO;
+        self.selectBarButton.enabled = NO;
+    }
+
+}
+
 
 - (void)saveEdit
 {
@@ -166,7 +172,6 @@ typedef enum {
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"selectedFacesSet" options:0 context:NULL];
-    //[self addObserver:self forKeyPath:@"isChoosingAvator" options:0 context:NULL];
 }
 
 - (void)cancelObserver
@@ -199,7 +204,7 @@ typedef enum {
 }
 
 
-#pragma mark <UICollectionViewDelegateFlowLayout>
+#pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(100.0, 100.0);
@@ -433,7 +438,7 @@ typedef enum {
         [self presentViewController:alert animated:YES completion:nil];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete Selected Avators" message:@"" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Sure", nil];
-        
+        alertView.delegate = self;
         [alertView show];
     }
 }
@@ -626,7 +631,7 @@ typedef enum {
     self.navigationItem.title = @"";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
-    self.navigationItem.rightBarButtonItem = self.showFaceRoomBarButton;
+    self.navigationItem.rightBarButtonItem = self.jumpToFaceRoomBarButton;
     [self.DoneBarButton setTitle:@"Cancel"];
     
     [self unenableLeftBarButtonItems];
@@ -637,34 +642,34 @@ typedef enum {
     [self.guardObjectIDsSet removeAllObjects];
     
     [self saveEdit];
-    [self checkRightBarButtionItem];
+    [self checkPersonNumber];
 }
 
-#pragma mark - go to FaceRoom Scene
-- (UIBarButtonItem *)showFaceRoomBarButton
+#pragma mark - jump to FaceRoom Scene
+- (UIBarButtonItem *)jumpToFaceRoomBarButton
 {
-    if (_showFaceRoomBarButton) {
-        return _showFaceRoomBarButton;
+    if (_jumpToFaceRoomBarButton) {
+        return _jumpToFaceRoomBarButton;
     }
-    _showFaceRoomBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showFaceRoomScene)];
-    return _showFaceRoomBarButton;
+    _jumpToFaceRoomBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(jumpToFaceRoomScene)];
+    return _jumpToFaceRoomBarButton;
 }
 
-- (void)showFaceRoomScene
+- (void)jumpToFaceRoomScene
 {
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    BOOL ThreeScene = [defaultConfig boolForKey:@"isGalleryOpened"];
+    BOOL ThreeScene = [defaultConfig boolForKey:@"isNeedEdited"];
     NSUInteger count = [[self.faceFetchedResultsController sections] count];
     if (!ThreeScene){
         DLog(@"No Three.");
         if (count > 1) {
-            [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
+            [defaultConfig setBool:YES forKey:@"isNeedEdited"];
             [defaultConfig synchronize];
             DLog(@"Open Three");
         }else if (count == 1){
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section != 0) {
-                [defaultConfig setBool:YES forKey:@"isGalleryOpened"];
+                [defaultConfig setBool:YES forKey:@"isNeedEdited"];
                 [defaultConfig synchronize];
                 DLog(@"Open Three.");
             }
@@ -674,12 +679,12 @@ typedef enum {
         if (count == 1) {
             Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             if (faceItem.section == 0) {
-                [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
+                [defaultConfig setBool:NO forKey:@"isNeedEdited"];
                 [defaultConfig synchronize];
                 DLog(@"Close Three.");
             }
         }else if (count == 0){
-            [defaultConfig setBool:NO forKey:@"isGalleryOpened"];
+            [defaultConfig setBool:NO forKey:@"isNeedEdited"];
             [defaultConfig synchronize];
             DLog(@"Close Three.");
         }

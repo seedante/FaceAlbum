@@ -29,13 +29,6 @@ typedef enum: NSUInteger {
     kTimelineType,
 } SDEPhotoSceneContentType;
 
-enum SDERootViewContentType {
-    SDERVAlbumType,
-    SDERVAlbumAndPhotoType,
-    SDERVTimelineType,
-};
-
-typedef enum SDERootViewContentType SDERootViewContentType;
 
 @interface SDEPhotoSceneController ()
 
@@ -99,7 +92,7 @@ typedef enum SDERootViewContentType SDERootViewContentType;
                 title = @"Albums and Photos";
                 break;
             case kTimelineType:
-                title = @"Memonts";
+                title = @"Moments";
                 break;
             default:
                 break;
@@ -121,7 +114,7 @@ typedef enum SDERootViewContentType SDERootViewContentType;
         return;
     }
 
-    NSLog(@"update Assets...");
+    //NSLog(@"update Assets...");
     dispatch_async(dispatch_get_main_queue(), ^{
         self.updateIndicator.hidden = NO;
         self.navigationItem.rightBarButtonItem.enabled = NO;

@@ -248,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJv-Sr-RGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3914" y="2128"/>
+            <point key="canvasLocation" x="-4674" y="2284"/>
         </scene>
         <!--Scan Room-->
         <scene sceneID="hbB-3X-cdK">
@@ -395,7 +395,7 @@
                     <connections>
                         <outlet property="assetCollectionView" destination="9Va-1O-m5e" id="JLN-wW-wDs"/>
                         <outlet property="faceCollectionView" destination="Pvi-kF-v33" id="w0Q-yH-Rxi"/>
-                        <outlet property="processIndicator" destination="9hU-gG-bkg" id="A13-km-ilQ"/>
+                        <outlet property="indicatorLabel" destination="9hU-gG-bkg" id="Mb8-sL-XaS"/>
                         <outlet property="scanButton" destination="uIS-kh-nXO" id="jTk-6K-acb"/>
                         <segue destination="3O8-fZ-xdw" kind="push" identifier="enterMontageRoom" id="cXo-XD-Ik9"/>
                     </connections>
@@ -997,7 +997,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gn0-8Q-kQj"/>
+        <segue reference="cXo-XD-Ik9"/>
         <segue reference="fYU-IF-XFj"/>
     </inferredMetricsTieBreakers>
 </document>

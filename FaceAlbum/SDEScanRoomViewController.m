@@ -24,7 +24,7 @@ static NSInteger const MAXCellCount = 15;
 @property (nonatomic) NSMutableArray *avators;
 @property (nonatomic, assign) NSUInteger totalCount;
 @property (nonatomic, assign) NSUInteger faceCount;
-@property (nonatomic, assign) BOOL isScaning;
+@property (nonatomic, assign, getter=isScaning) BOOL scaning;
 @property (nonatomic, assign) NSInteger startIndex;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -39,7 +39,7 @@ static NSInteger const MAXCellCount = 15;
 	// Do any additional setup after loading the view, typically from a nib.
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = YES;
-    self.isScaning = NO;
+    self.scaning = NO;
     self.startIndex = 0;
     self.avators = [NSMutableArray new];
     self.faceCount = 0;
@@ -68,7 +68,7 @@ static NSInteger const MAXCellCount = 15;
     if (!isFirstScan) {
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
-        self.processIndicator.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
+        self.indicatorLabel.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
         
     }
     [super viewWillAppear:animated];
@@ -106,7 +106,7 @@ static NSInteger const MAXCellCount = 15;
 
 - (void)cleanManagedObjectContext
 {
-    self.isScaning = NO;
+    self.scaning = NO;
     if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:nil];
     }
@@ -116,7 +116,7 @@ static NSInteger const MAXCellCount = 15;
 
 - (void)continueScan
 {
-    self.isScaning = YES;
+    self.scaning = YES;
     [self enumerateScanAssetAtIndexPath:@(self.startIndex)];;
 }
 
@@ -126,7 +126,7 @@ static NSInteger const MAXCellCount = 15;
     if ([self.photoFileFilter isPhotoAdded]) {
         self.assetsToScan = [self.photoFileFilter assetsNeedToScan];
         [self.assetCollectionView reloadData];
-        self.processIndicator.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
+        self.indicatorLabel.text = [NSString stringWithFormat:@"0/%lu", (unsigned long)self.assetsToScan.count];
     }
 }
 
@@ -174,12 +174,12 @@ static NSInteger const MAXCellCount = 15;
 
 - (IBAction)scanPhotos:(id)sender
 {
-    if (!self.isScaning) {
-        self.isScaning = YES;
+    if (![self isScaning]) {
+        [self setScaning:YES];
         [self.scanButton setTitle:@"Pause" forState:UIControlStateNormal];
         [self enumerateScanAssetAtIndexPath:@(self.startIndex)];
     }else{
-        self.isScaning = NO;
+        [self setScaning:NO];
         [self.scanButton setTitle:@"Continue" forState:UIControlStateNormal];
     }
     self.tabBarController.tabBar.hidden = YES;
@@ -193,11 +193,11 @@ static NSInteger const MAXCellCount = 15;
         return;
     }
     
-    if (!self.isScaning) {
+    if (![self isScaning]) {
         return;
     }
     
-    self.processIndicator.text = [NSString stringWithFormat:@"%ld/%lu", (long)self.startIndex, (unsigned long)self.assetsToScan.count];
+    self.indicatorLabel.text = [NSString stringWithFormat:@"%ld/%lu", (long)self.startIndex, (unsigned long)self.assetsToScan.count];
     NSInteger index = indexNumber.integerValue;
     [self.assetCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     UICollectionViewCell *cell = [self.assetCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
