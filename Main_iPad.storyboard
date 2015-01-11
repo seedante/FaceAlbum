@@ -404,10 +404,10 @@
             </objects>
             <point key="canvasLocation" x="-5020" y="984"/>
         </scene>
-        <!--Photo Scene-->
+        <!--PhotoScene-->
         <scene sceneID="C7l-Un-CYG">
             <objects>
-                <viewController title="Photo Scene" id="1Eb-oD-z6v" customClass="SDEPhotoSceneController" sceneMemberID="viewController">
+                <viewController title="PhotoScene" id="1Eb-oD-z6v" customClass="SDEPhotoSceneController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qt2-f2-7tf"/>
                         <viewControllerLayoutGuide type="bottom" id="2tg-53-Qno"/>
@@ -608,7 +608,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="taq-Md-nWQ">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jb6-Kz-UaI">
                             <size key="itemSize" width="150" height="150"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -997,7 +997,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cXo-XD-Ik9"/>
+        <segue reference="Gn0-8Q-kQj"/>
         <segue reference="fYU-IF-XFj"/>
     </inferredMetricsTieBreakers>
 </document>

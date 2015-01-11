@@ -29,6 +29,14 @@ typedef enum: NSUInteger {
     kTimelineType,
 } SDEPhotoSceneContentType;
 
+enum SDERootViewContentType {
+    SDERVAlbumType,
+    SDERVAlbumAndPhotoType,
+    SDERVTimelineType,
+};
+
+typedef enum SDERootViewContentType SDERootViewContentType;
+
 @interface SDEPhotoSceneController ()
 
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
@@ -38,10 +46,9 @@ typedef enum: NSUInteger {
 @property (nonatomic) NSMutableArray *timeHeaderArray;
 @property (nonatomic) SDEPhotoSceneContentType contentType;
 @property (nonatomic) SDEPhotoSceneContentType rootViewType;
-@property (nonatomic) BOOL isAlbumContentMode;
-@property (nonatomic) BOOL enableBlackBackGround;
-@property (nonatomic) NSUInteger albumIndex;
-@property (nonatomic, getter=isUpdatingAssets) BOOL updatingAssets;
+@property (nonatomic, assign) BOOL enableBlackBackGround;
+@property (nonatomic, assign) NSUInteger albumIndex;
+@property (nonatomic, assign, getter=isUpdatingAssets) BOOL updatingAssets;
 
 @end
 
@@ -52,24 +59,23 @@ typedef enum: NSUInteger {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(responseToAssetsChangeNotification) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
+    [notificationCenter addObserver:self selector:@selector(responseToAssetsChangeNotification) name:ALAssetsLibraryChangedNotification object:nil];
     self.updatingAssets = NO;
     self.navigationController.delegate = self;
     self.rootViewType = kAlbumType;
+    self.contentType = kAlbumType;
     [self preparePhotoData];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.updatingAssets = YES;
-    //[self checkALAuthorizationStatus];
     self.contentType = self.rootViewType;
-    self.isAlbumContentMode = NO;
+    self.tabBarController.tabBar.hidden = NO;
     [super viewWillAppear:animated];
 }
 
-- (void)checkPhotoEmpty
+- (void)checkIfNoAsset
 {
     if (self.assetsDictionary.count == 0) {
         self.photoCollectionView.hidden = YES;
@@ -78,25 +84,31 @@ typedef enum: NSUInteger {
         self.tabBarController.tabBar.hidden = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
         self.navigationItem.title = @"Get Some Photos";
+    }else{
+        self.photoCollectionView.hidden = NO;
+        self.accessErrorView.hidden = YES;
+        self.warnningView.hidden = YES;
+        self.tabBarController.tabBar.hidden = NO;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        NSString *title = nil;
+        switch (self.rootViewType) {
+            case kAlbumType:
+                title = @"Albums";
+                break;
+            case kAlbumAndPhotoType:
+                title = @"Albums and Photos";
+                break;
+            case kTimelineType:
+                title = @"Memonts";
+                break;
+            default:
+                break;
+        }
+        self.navigationItem.title = title;
     }
     
 }
 
-- (void)checkALAuthorizationStatus
-{
-    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-    switch (status) {
-        case ALAuthorizationStatusAuthorized:
-            self.tabBarController.tabBar.hidden = NO;
-            break;
-        default:
-            self.tabBarController.tabBar.hidden = YES;
-            self.navigationItem.title = @"Access Denied!";
-            self.navigationItem.rightBarButtonItem.enabled = NO;
-            self.warnningView.hidden = NO;
-            break;
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -109,8 +121,11 @@ typedef enum: NSUInteger {
         return;
     }
 
+    NSLog(@"update Assets...");
     dispatch_async(dispatch_get_main_queue(), ^{
         self.updateIndicator.hidden = NO;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.tabBarController.tabBar.hidden = YES;
     });
     
     self.updatingAssets = YES;
@@ -140,7 +155,6 @@ typedef enum: NSUInteger {
 - (void)preparePhotoData
 {
     self.contentType = self.rootViewType;
-    self.isAlbumContentMode = NO;
     self.albumIndex = 0;
     
     if (!self.photoLibrary) {
@@ -206,16 +220,18 @@ typedef enum: NSUInteger {
                             [sameDateArray addObject:assetInfo];
                         }
                     }else{
-                        NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
+                       // NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
                         [assetsOfAlbum sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Date" ascending:NO]]];
                     }
                 }];
             }
             
         }else{
+            //NSLog(@"...Scan Finish");
             [self.timeHeaderArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"DayDate" ascending:NO]]];
+            [self checkIfNoAsset];
             [self.photoCollectionView reloadData];
-            [self checkPhotoEmpty];
+            
             self.updatingAssets = NO;
             self.updateIndicator.hidden = YES;
         }
@@ -484,7 +500,6 @@ typedef enum: NSUInteger {
             self.tabBarController.tabBar.hidden = YES;
             self.albumIndex = indexPath.item;
             self.contentType = kAlbumContentType;
-            self.isAlbumContentMode = YES;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
             UICollectionViewController *albumVC = (UICollectionViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AlbumContentVC"];
             albumVC.collectionView.dataSource = self;
@@ -504,6 +519,7 @@ typedef enum: NSUInteger {
             detailVC.collectionView.delegate = self;
             [detailVC.collectionView reloadData];
             [detailVC specifyStartIndexPath:indexPath];
+            //此处使用 PUSH 的动画效果是错误的，下面一个也是，应该是 Photos 那样的放大效果（弹簧般的效果真是赞），不过暂时没时间弄了
             [self.navigationController pushViewController:detailVC animated:YES];
             detailVC.navigationItem.title = @"";
             break;
@@ -533,39 +549,23 @@ typedef enum: NSUInteger {
                 collectionView.backgroundColor = [UIColor blackColor];
             }
             break;
-        default:
-            break;
     }
 }
 
 #pragma mark - UINavigationViewController Delegate Method
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    NSLog(@"Navigation Delegate Method.");
     NSUInteger count = self.navigationController.viewControllers.count;
-    //NSLog(@"View Controller Count: %d", count);
     switch (self.contentType) {
         case kPhotoType:
-            if (count == 3) {
-                NSLog(@"Show Photo Detail.");
-            }else if (count == 2){
-                if (self.isAlbumContentMode) {
+            if (count == 2) {
+                if (self.rootViewType == kAlbumType) {
                     self.contentType = kAlbumContentType;
                 }
-            }else{
-                self.contentType = self.rootViewType;
-                NSLog(@"Go back Home.");
             }
             break;
-        case kAlbumContentType:
-            NSLog(@"AlbumContentType");
-            break;
-        case kAlbumType:
-        case kAlbumAndPhotoType:
-        case kTimelineType:
-            [self checkALAuthorizationStatus];
-            break;
         default:
+            //self.tabBarController.tabBar.hidden = NO;
             break;
     }
 }
