@@ -56,7 +56,7 @@
     self.goBackUpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.goBackUpButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
     [self.goBackUpButton sizeToFit];
-    self.goBackUpButton.center = CGPointMake(1000, self.view.center.y);
+    self.goBackUpButton.center = CGPointMake(1000, self.view.frame.size.height - 70);
     self.goBackUpButton.hidden = YES;
     [self.goBackUpButton addTarget:self action:@selector(goBackToTop) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.goBackUpButton];
@@ -186,9 +186,11 @@
     if (self.selectedFacesSet.count > 1) {
         newTitle = [NSString stringWithFormat:@"Select %lu avators", (unsigned long)self.selectedFacesSet.count];
         [self.DoneBarButton setTitle:@"Cancel"];
+        [self enableLeftBarButtonItems];
     }else if (self.selectedFacesSet.count == 1){
         newTitle = [NSString stringWithFormat:@"Select 1 avator"];
         [self.DoneBarButton setTitle:@"Cancel"];
+        [self enableLeftBarButtonItems];
     }else{
         newTitle = @"";
         [self unenableLeftBarButtonItems];
@@ -238,29 +240,33 @@
     [self.guardObjectIDsSet removeAllObjects];
     [self.triggeredDeletedSectionsSet removeAllObjects];
     
+    //if a item is in target section, do nothing to it. But remove indexpath from set.
     NSPredicate *targetViewSectionPredicate = [NSPredicate predicateWithFormat:@"section != %@", @(targetViewSection)];
     [self.selectedFacesSet filterUsingPredicate:targetViewSectionPredicate];
     [self.includedSectionsSet removeObject:@(targetViewSection)];
     
     //if all of items in a section are selected, this section will be deleted.
-    //if a item is in target section, do nothing to it.
-    for (NSNumber *sectionNumber in self.includedSectionsSet) {
-        NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
-        NSArray *matchedItems = [self.selectedFacesSet.allObjects filteredArrayUsingPredicate:sectionPredicate];
-        if (matchedItems.count > 0) {
-            NSInteger section = [sectionNumber integerValue];
-            NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
-            if (itemCount == matchedItems.count) {
-                //NSLog(@"All items at section: %d are choiced. This will trigger section deletion.", (int)section+1);
-                [self.triggeredDeletedSectionsSet addObject:sectionNumber];
-                [self.selectedFacesSet removeObject:[NSIndexPath indexPathForItem:0 inSection:section]];
+    if (self.includedSectionsSet.count > 0) {
+        for (NSNumber *sectionNumber in self.includedSectionsSet) {
+            NSPredicate *sectionPredicate = [NSPredicate predicateWithFormat:@"section == %@", sectionNumber];
+            NSArray *matchedItems = [self.selectedFacesSet.allObjects filteredArrayUsingPredicate:sectionPredicate];
+            if (matchedItems.count > 0) {
+                NSInteger section = [sectionNumber integerValue];
+                NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+                if (itemCount == matchedItems.count) {
+                    //NSLog(@"All items at section: %d are choiced. This will trigger section deletion.", (int)section+1);
+                    [self.triggeredDeletedSectionsSet addObject:sectionNumber];
+                    NSSet *removedIndexPathSet = [NSSet setWithObject:[NSIndexPath indexPathForItem:0 inSection:section]];
+                    [self removeSelectedFacesSet:removedIndexPathSet];
+                }
             }
         }
+        [self.includedSectionsSet removeAllObjects];
     }
-    [self.includedSectionsSet removeAllObjects];
+
 }
 
-- (void)processSelectedItemsWithTargetDataSection:(NSInteger)targetDataSection
+- (void)processSelectedItemsWithTargetDataSection:(int)targetDataSection
 {
     NSLog(@"STEP 2: move a part of items to target section.");
     if (self.triggeredDeletedSectionsSet.count > 0) {
@@ -268,7 +274,7 @@
             NSInteger section = sectionNumber.integerValue;
             if (section != targetDataSection) {
                 Face *copyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-                copyFaceItem.section = (int)targetDataSection;
+                copyFaceItem.section = targetDataSection;
                 copyFaceItem.whetherToDisplay = YES;
             }else
                 NSLog(@"It's impossible!!!");
@@ -282,7 +288,8 @@
                 Face *singleCopyFaceItem = (Face *)[self copyManagedObjectAtIndexPath:anyIndexPath];
                 singleCopyFaceItem.section = (int)targetDataSection;
                 singleCopyFaceItem.whetherToDisplay = YES;
-                [self.selectedFacesSet removeObject:anyIndexPath];
+                NSSet *indexPathSet = [NSSet setWithObject:anyIndexPath];
+                [self removeSelectedFacesSet:indexPathSet];
             }else
                 NSLog(@"Something is wrong, indexpath: %@ should be filterd at previous step.", anyIndexPath);
         }
@@ -308,7 +315,9 @@
     copyFaceItem.tag = originalFaceItem.tag;
     copyFaceItem.isMyStar = originalFaceItem.isMyStar;
     copyFaceItem.personOwner = originalFaceItem.personOwner;
+    originalFaceItem.personOwner = nil;
     copyFaceItem.photoOwner = originalFaceItem.photoOwner;
+    originalFaceItem.photoOwner = nil;
     
     return copyFaceItem;
 }
@@ -317,11 +326,11 @@
 {
     if (self.selectedFacesSet.count > 0) {
         NSLog(@"STEP 3: move remainder items to target section.");
-        NSInteger targetSection = [targetSectionNumber integerValue];
+        int targetSection = [targetSectionNumber intValue];
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-            if (selectedFaceItem.section != (int)targetSection) {
-                selectedFaceItem.section = (int)targetSection;
+            if (selectedFaceItem.section != targetSection) {
+                selectedFaceItem.section = targetSection;
             }
         }
         
@@ -329,7 +338,9 @@
     }
     
     self.collectionView.allowsSelection = YES;
-    [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.001];
+    if (self.guardObjectIDsSet.count > 0) {
+        [self performSelector:@selector(deleteOriginalItems) withObject:nil afterDelay:0.001];
+    }
 }
 
 - (void)deleteOriginalItems
@@ -342,19 +353,16 @@
         }
         [self.guardObjectIDsSet removeAllObjects];
     }
-    
-    [self performSelector:@selector(cleanUsedData) withObject:nil afterDelay:0.01];
 }
 
 - (void)cleanUsedData
 {
     [self.triggeredDeletedSectionsSet removeAllObjects];
     [self.guardObjectIDsSet removeAllObjects];
-    //[self removeSelectedFacesSet:[self.selectedFacesSet copy]];
+    [self removeSelectedFacesSet:[self.selectedFacesSet copy]];
     [self.includedSectionsSet removeAllObjects];
     
     [self saveEdit];
-    //[self performSelector:@selector(deselectAllSelectedItems) withObject:nil afterDelay:0.01];
 }
 
 
@@ -397,13 +405,13 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Selected Avators" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             for (NSIndexPath *indexPath in self.selectedFacesSet) {
-                Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-                face.whetherToDisplay = NO;
-                [self.dataSource removeCachedImageWithKey:face.storeFileName];
+                Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+                faceItem.whetherToDisplay = NO;
+                faceItem.personOwner = nil;
+                [self.dataSource removeCachedImageWithKey:faceItem.storeFileName];
             }
             
             [self cleanUsedData];
-            [self unenableLeftBarButtonItems];
         }];
         [alert addAction:OKAction];
         
@@ -421,13 +429,13 @@
 {
     if (buttonIndex == 1) {
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
-            Face *face = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-            face.whetherToDisplay = NO;
-            [self.dataSource removeCachedImageWithKey:face.storeFileName];
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            faceItem.whetherToDisplay = NO;
+            faceItem.personOwner = nil;
+            [self.dataSource removeCachedImageWithKey:faceItem.storeFileName];
         }
         
         [self cleanUsedData];
-        [self unenableLeftBarButtonItems];
     }
 }
 
@@ -456,10 +464,26 @@
             selectedFaceItem.personOwner = newPerson;
             selectedFaceItem.name = nil;
         }
+        
+        if (self.triggeredDeletedSectionsSet.count > 0) {
+            for (NSNumber *sectionNumber in self.triggeredDeletedSectionsSet) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:sectionNumber.integerValue];
+                Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+                faceItem.personOwner = newPerson;
+            }
+        }
+    }else if (self.triggeredDeletedSectionsSet.count > 0){
+        newPerson = [Person insertNewObjectInManagedObjectContext:self.managedObjectContext];
+        newPerson.whetherToDisplay = YES;
+        for (NSNumber *sectionNumber in self.triggeredDeletedSectionsSet) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:sectionNumber.integerValue];
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
+            faceItem.personOwner = newPerson;
+        }
     }
     
     Face *firstItemInLastSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount-1]];
-    NSInteger newSection = firstItemInLastSection.section + 1;
+    int newSection = firstItemInLastSection.section + 1;
     [self processSelectedItemsWithTargetDataSection:newSection];
     
     if (newPerson) {
@@ -630,41 +654,10 @@
 - (void)jumpToFaceRoomScene
 {
     NSUserDefaults *defaultConfig = [NSUserDefaults standardUserDefaults];
-    BOOL ThreeScene = [defaultConfig boolForKey:@"isNeedEdited"];
-    NSUInteger count = [[self.faceFetchedResultsController sections] count];
-    if (!ThreeScene){
-        NSLog(@"No Three.");
-        if (count > 1) {
-            [defaultConfig setBool:YES forKey:@"isNeedEdited"];
-            [defaultConfig synchronize];
-            NSLog(@"Open Three");
-        }else if (count == 1){
-            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-            if (faceItem.section != 0) {
-                [defaultConfig setBool:YES forKey:@"isNeedEdited"];
-                [defaultConfig synchronize];
-                NSLog(@"Open Three.");
-            }
-        }
-    }else{
-        NSLog(@"Yeah, Three");
-        if (count == 1) {
-            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-            if (faceItem.section == 0) {
-                [defaultConfig setBool:NO forKey:@"isNeedEdited"];
-                [defaultConfig synchronize];
-                NSLog(@"Close Three.");
-            }
-        }else if (count == 0){
-            [defaultConfig setBool:NO forKey:@"isNeedEdited"];
-            [defaultConfig synchronize];
-            NSLog(@"Close Three.");
-        }
-    }
+    [defaultConfig setBool:NO forKey:@"isNeedEdited"];
+    [defaultConfig synchronize];
 
-    //DLog(@"NV VC Count: %d", self.navigationController.viewControllers.count);
     [self.navigationController popToRootViewControllerAnimated:YES];
-    //NSLog(@"NV VC Count: %lu", (unsigned long)self.navigationController.viewControllers.count);
 }
 
 #pragma mark - Select Candidate UICollectionView Data Source
@@ -690,18 +683,24 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([collectionView isEqual:self.collectionView]) {
-        [self processCellAtIndexPath:indexPath type:@"Select"];
+        [self addSelectedFacesSet:[NSSet setWithObject:indexPath]];
         self.collectionView.bounces = NO;
         if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
             [self.includedSectionsSet addObject:@(indexPath.section)];
         }
     }else{
+        self.goBackUpButton.hidden = NO;
+        [self hiddenCandidateView];
+        [self unenableLeftBarButtonItems];
+        [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
+        
         Face *firstItemInSection = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item]];
         int targetSection = firstItemInSection.section;
+        [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
         
         Person *selectedPerson;
         NSFetchRequest *personFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"order == %@", @(targetSection)];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(order == %@) AND (whetherToDisplay == YES) AND (ownedFaces.@count > 0)", @(targetSection)];
         [personFetchRequest setPredicate:predicate];
         NSArray *Persons = [self.managedObjectContext executeFetchRequest:personFetchRequest error:nil];
         if (Persons && Persons.count > 0) {
@@ -709,49 +708,31 @@
             if (self.selectedFacesSet.count > 0) {
                 for (NSIndexPath *itemIndexPath in self.selectedFacesSet) {
                     Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:itemIndexPath];
-                    if (![selectedFaceItem.personOwner.objectID isEqual:selectedPerson.objectID]) {
-                        selectedFaceItem.personOwner = selectedPerson;
-                        if (selectedPerson.name.length > 0) {
-                            selectedFaceItem.name = selectedPerson.name;
-                        }
+                    selectedFaceItem.personOwner = selectedPerson;
+                    if (selectedPerson.name.length > 0) {
+                        selectedFaceItem.name = selectedPerson.name;
                     }
+                }
+            }
+            
+            if (self.triggeredDeletedSectionsSet.count > 0) {
+                for (NSNumber *sectionNumber in self.triggeredDeletedSectionsSet) {
+                    Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionNumber.integerValue]];
+                    faceItem.personOwner = selectedPerson;
                 }
             }
         }
         
-        [self hiddenCandidateView];
-        
-        [self filterSelectedItemSetWithTargetViewSection:indexPath.item];
         [self processSelectedItemsWithTargetDataSection:targetSection];
         
-        [self unenableLeftBarButtonItems];
-        [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.item] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-        
-        self.goBackUpButton.hidden = NO;
     }
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self processCellAtIndexPath:indexPath type:@"Deselect"];
-}
-
-- (void)processCellAtIndexPath:(NSIndexPath *)indexPath type:(NSString *)type
-{
-    if ([type isEqual:@"Select"]) {
-        [self addSelectedFacesSet:[NSSet setWithObject:indexPath]];
-        [self enableLeftBarButtonItems];
-    }
-    
-    if ([type isEqual:@"Deselect"]) {
-        [self removeSelectedFacesSet:[NSSet setWithObject:indexPath]];
-        
-        if (self.selectedFacesSet.count == 0) {
-            [self unenableLeftBarButtonItems];
-        }
-    }
+    [self removeSelectedFacesSet:[NSSet setWithObject:indexPath]];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -759,44 +740,11 @@
     return YES;
 }
 
-#pragma mark - UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    self.activedField = textField;
-    self.oldContent = textField.text;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
-        NSUInteger section = [[self.faceFetchedResultsController sections] count];
-        CGRect rectInCollectionView = [textField convertRect:textField.frame toView:self.collectionView];
-        //DLog(@"Text Field Frame: %f, %f, %f, %f", rectInCollectionView.origin.x, rectInCollectionView.origin.y, textField.frame.size.width, textField.frame.size.height);
-        for (int i = 0; i<section; i++) {
-            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:0 inSection:i];
-            CGRect frame = [[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:currentIndexPath] frame];
-            //DLog(@"HeadView Frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-            if (CGRectIntersectsRect(frame, rectInCollectionView)) {
-                //DLog(@"Match at IndexPath: %@", currentIndexPath);
-                Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
-                personItem.name = self.activedField.text;
-                for (Face *faceItem in personItem.ownedFaces) {
-                    faceItem.name = personItem.name;
-                }
-                [self saveEdit];
-                break;
-            }
-        }
-    }
-    self.activedField = nil;
-}
-
 
 #pragma mark - Handle keyboard show and dismiss
 // Call this method somewhere in your view controller setup code.
 - (void)registerForKeyboardNotifications
 {
-    NSLog(@"register for keyboard notification.");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -831,12 +779,39 @@
     
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
     self.collectionView.contentInset = contentInsets;
 }
 
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.activedField = textField;
+    self.oldContent = textField.text;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (self.activedField.text.length > 0 && ![self.activedField.text isEqualToString:self.oldContent]) {
+        NSUInteger section = [[self.faceFetchedResultsController sections] count];
+        CGRect rectInCollectionView = [textField convertRect:textField.frame toView:self.collectionView];
+        for (int i = 0; i<section; i++) {
+            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:0 inSection:i];
+            CGRect frame = [[self.dataSource collectionView:self.collectionView viewForSupplementaryElementOfKind:nil atIndexPath:currentIndexPath] frame];
+            if (CGRectIntersectsRect(frame, rectInCollectionView)) {
+                Person *personItem = [[self.faceFetchedResultsController objectAtIndexPath:currentIndexPath] personOwner];
+                personItem.name = self.activedField.text;
+                for (Face *faceItem in personItem.ownedFaces) {
+                    faceItem.name = personItem.name;
+                }
+                [self saveEdit];
+                break;
+            }
+        }
+    }
+    self.activedField = nil;
+}
 
 @end
