@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDESpecialItemVC : UICollectionViewController
+@interface SDEPhotoItemVC : UICollectionViewController
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 - (void)specifyStartIndexPath:(NSIndexPath *)indexPath;

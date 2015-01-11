@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDEPhotoViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate>
+@interface SDEPhotoSceneController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photoCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *warnningView;
 @property (weak, nonatomic) IBOutlet UIView *accessErrorView;
+@property (weak, nonatomic) IBOutlet UILabel *updateIndicator;
 
 - (IBAction)changeShowStyle:(id)sender;
 
-- (void)manualRefreshView;
 @end

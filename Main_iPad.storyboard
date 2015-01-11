@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="M6q-RR-Klx">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -405,10 +404,10 @@
             </objects>
             <point key="canvasLocation" x="-5020" y="984"/>
         </scene>
-        <!--Albums-->
+        <!--Photo Scene-->
         <scene sceneID="C7l-Un-CYG">
             <objects>
-                <viewController id="1Eb-oD-z6v" customClass="SDEPhotoViewController" sceneMemberID="viewController">
+                <viewController title="Photo Scene" id="1Eb-oD-z6v" customClass="SDEPhotoSceneController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qt2-f2-7tf"/>
                         <viewControllerLayoutGuide type="bottom" id="2tg-53-Qno"/>
@@ -560,6 +559,13 @@
                                     <constraint firstAttribute="centerY" secondItem="lv7-qw-8Be" secondAttribute="centerY" id="hWU-kX-Cbi"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   Photos have change. App is updating data...  " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcw-6M-Jlb">
+                                <rect key="frame" x="201" y="954" width="365" height="21"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -567,8 +573,10 @@
                             <constraint firstItem="TZp-Tp-asF" firstAttribute="leading" secondItem="XO6-UM-m51" secondAttribute="leading" id="2Rf-Vx-epV"/>
                             <constraint firstAttribute="centerY" secondItem="TZp-Tp-asF" secondAttribute="centerY" id="9N4-zd-XKY"/>
                             <constraint firstItem="NBw-RA-Mjx" firstAttribute="trailing" secondItem="TZp-Tp-asF" secondAttribute="trailing" id="9Sp-fr-XOh"/>
+                            <constraint firstAttribute="centerX" secondItem="hcw-6M-Jlb" secondAttribute="centerX" constant="0.5" id="BFJ-6T-d8Q"/>
                             <constraint firstAttribute="centerX" secondItem="TZp-Tp-asF" secondAttribute="centerX" id="Cqc-qy-Nlx"/>
                             <constraint firstItem="TZp-Tp-asF" firstAttribute="top" secondItem="Qt2-f2-7tf" secondAttribute="bottom" constant="-44" id="DbO-Dq-3XO"/>
+                            <constraint firstItem="2tg-53-Qno" firstAttribute="top" secondItem="hcw-6M-Jlb" secondAttribute="bottom" id="HGS-Fp-6as"/>
                             <constraint firstItem="NBw-RA-Mjx" firstAttribute="leading" secondItem="TZp-Tp-asF" secondAttribute="leading" id="IHK-sj-fQP"/>
                             <constraint firstItem="NBw-RA-Mjx" firstAttribute="centerY" secondItem="TZp-Tp-asF" secondAttribute="centerY" id="bjn-nn-QYK"/>
                         </constraints>
@@ -585,6 +593,7 @@
                     <connections>
                         <outlet property="accessErrorView" destination="6Iv-Ir-593" id="vrr-2b-hCJ"/>
                         <outlet property="photoCollectionView" destination="TZp-Tp-asF" id="qWv-Rg-kge"/>
+                        <outlet property="updateIndicator" destination="hcw-6M-Jlb" id="hn0-Jz-CUf"/>
                         <outlet property="warnningView" destination="NBw-RA-Mjx" id="PoS-DB-GEh"/>
                     </connections>
                 </viewController>
@@ -595,7 +604,7 @@
         <!--PhotoContent-->
         <scene sceneID="7kF-JH-rZm">
             <objects>
-                <collectionViewController storyboardIdentifier="PhotoVC" title="PhotoContent" automaticallyAdjustsScrollViewInsets="NO" id="y4F-xt-GWt" customClass="SDESpecialItemVC" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PhotoVC" title="PhotoContent" automaticallyAdjustsScrollViewInsets="NO" id="y4F-xt-GWt" customClass="SDEPhotoItemVC" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="taq-Md-nWQ">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

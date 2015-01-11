@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 seedante. All rights reserved.
 //
 
-#import "SDESpecialItemVC.h"
+#import "SDEPhotoItemVC.h"
 
-@interface SDESpecialItemVC ()
+@interface SDEPhotoItemVC ()
 
 @property (nonatomic) NSIndexPath *startIndexPath;
 
 @end
 
-@implementation SDESpecialItemVC
+@implementation SDEPhotoItemVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];

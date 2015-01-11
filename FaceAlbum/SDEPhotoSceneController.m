@@ -6,44 +6,54 @@
 //  Copyright (c) 2014 seedante. All rights reserved.
 //
 
-#import "SDEPhotoViewController.h"
-#import "SDESpecialItemVC.h"
+#import "SDEPhotoSceneController.h"
+#import "SDEPhotoItemVC.h"
 #import "SDEAssetsCache.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+
+/*  层次关系
+    kAlbumType,
+    ----kAlbumContentType,
+    --------kPhtoType,
+    kAlbumAndPhtoType,
+    ----kPhotoType,
+    kTimelineType,
+    ----kPhotoType,
+*/
 
 typedef enum: NSUInteger {
     kAlbumType,
     kAlbumContentType,
     kPhotoType,
-    kTimelineType,
     kAlbumAndPhotoType,
-} ContentType;
+    kTimelineType,
+} SDEPhotoSceneContentType;
 
-@interface SDEPhotoViewController ()
+@interface SDEPhotoSceneController ()
 
 @property (nonatomic) ALAssetsLibrary *photoLibrary;
 @property (nonatomic) NSMutableDictionary *assetsDictionary;
 @property (nonatomic) NSMutableArray *albumsArray;
 @property (nonatomic) NSMutableDictionary *timelineDictionary;
 @property (nonatomic) NSMutableArray *timeHeaderArray;
-@property (nonatomic) ContentType contentType;
-@property (nonatomic) ContentType rootViewType;
+@property (nonatomic) SDEPhotoSceneContentType contentType;
+@property (nonatomic) SDEPhotoSceneContentType rootViewType;
 @property (nonatomic) BOOL isAlbumContentMode;
 @property (nonatomic) BOOL enableBlackBackGround;
 @property (nonatomic) NSUInteger albumIndex;
-@property (nonatomic) BOOL enableRefresh;
+@property (nonatomic, getter=isUpdatingAssets) BOOL updatingAssets;
 
 @end
 
-@implementation SDEPhotoViewController
+@implementation SDEPhotoSceneController
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(manualRefreshView) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
-    //self.enableFresh = NO;
+    [notificationCenter addObserver:self selector:@selector(responseToAssetsChangeNotification) name:ALAssetsLibraryChangedNotification object:self.photoLibrary];
+    self.updatingAssets = NO;
     self.navigationController.delegate = self;
     self.rootViewType = kAlbumType;
     [self preparePhotoData];
@@ -52,8 +62,7 @@ typedef enum: NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"Show albums.");
-    self.enableRefresh = YES;
+    self.updatingAssets = YES;
     //[self checkALAuthorizationStatus];
     self.contentType = self.rootViewType;
     self.isAlbumContentMode = NO;
@@ -78,7 +87,6 @@ typedef enum: NSUInteger {
     ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
     switch (status) {
         case ALAuthorizationStatusAuthorized:
-            //NSLog(@"AssetsLibrary can acess.");
             self.tabBarController.tabBar.hidden = NO;
             break;
         default:
@@ -95,16 +103,19 @@ typedef enum: NSUInteger {
     // Dispose of any resources that can be recreated.
 }
 
-- (void)manualRefreshView
+- (void)responseToAssetsChangeNotification
 {
-    //NSLog(@"Photos change.");
-    if (self.enableRefresh) {
-        //NSLog(@"refresh just once.");
-        [self cleanCache];
-        [self preparePhotoData];
-        self.enableRefresh = NO;
+    if ([self isUpdatingAssets]) {
+        return;
     }
 
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.updateIndicator.hidden = NO;
+    });
+    
+    self.updatingAssets = YES;
+    [self cleanCache];
+    [self preparePhotoData];
 }
 
 - (void)cleanCache
@@ -135,7 +146,6 @@ typedef enum: NSUInteger {
     if (!self.photoLibrary) {
         self.photoLibrary = [[ALAssetsLibrary alloc] init];
     }
-    
     
     if (!self.assetsDictionary) {
         self.assetsDictionary = [[SDEAssetsCache sharedData] assetsDictionary];
@@ -196,7 +206,7 @@ typedef enum: NSUInteger {
                             [sameDateArray addObject:assetInfo];
                         }
                     }else{
-                        //NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
+                        NSLog(@"Group %@ scan finish", [group valueForProperty:ALAssetsGroupPropertyName]);
                         [assetsOfAlbum sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Date" ascending:NO]]];
                     }
                 }];
@@ -206,6 +216,8 @@ typedef enum: NSUInteger {
             [self.timeHeaderArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"DayDate" ascending:NO]]];
             [self.photoCollectionView reloadData];
             [self checkPhotoEmpty];
+            self.updatingAssets = NO;
+            self.updateIndicator.hidden = YES;
         }
     } failureBlock:^(NSError *error){
         self.photoCollectionView.hidden = YES;
@@ -252,7 +264,6 @@ typedef enum: NSUInteger {
             section = self.albumsArray.count;
             break;
     }
-   // NSLog(@"Section: %d", section);
     return section;
 }
 
@@ -482,15 +493,13 @@ typedef enum: NSUInteger {
             albumVC.navigationItem.title = self.albumsArray[indexPath.item][@"AlbumName"];
             albumVC.navigationItem.backBarButtonItem.title = self.albumsArray[indexPath.item][@"AlbumName"];
             [self.navigationController pushViewController:albumVC animated:YES];
-            //UIStoryboardSegue *segue = [[UIStoryboardSegue alloc] initWithIdentifier:@"showAlbum" source:self destination:albumVC];
-            //[segue perform];
             break;
         }
         case kAlbumContentType:{
             self.contentType = kPhotoType;
             self.enableBlackBackGround = NO;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-            SDESpecialItemVC *detailVC = (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+            SDEPhotoItemVC *detailVC = (SDEPhotoItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
             detailVC.collectionView.dataSource = self;
             detailVC.collectionView.delegate = self;
             [detailVC.collectionView reloadData];
@@ -505,7 +514,7 @@ typedef enum: NSUInteger {
             self.contentType = kPhotoType;
             self.enableBlackBackGround = NO;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-            SDESpecialItemVC *detailVC = (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+            SDEPhotoItemVC *detailVC = (SDEPhotoItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
             detailVC.collectionView.dataSource = self;
             detailVC.collectionView.delegate = self;
             [detailVC.collectionView reloadData];
@@ -532,7 +541,7 @@ typedef enum: NSUInteger {
 #pragma mark - UINavigationViewController Delegate Method
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    //NSLog(@"Navigation Delegate Method.");
+    NSLog(@"Navigation Delegate Method.");
     NSUInteger count = self.navigationController.viewControllers.count;
     //NSLog(@"View Controller Count: %d", count);
     switch (self.contentType) {
@@ -590,14 +599,4 @@ typedef enum: NSUInteger {
 }
 @end
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 

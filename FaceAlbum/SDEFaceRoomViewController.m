@@ -9,7 +9,7 @@
 #import "SDEFaceRoomViewController.h"
 #import "HorizontalCollectionViewLayout.h"
 #import "SDEAssetsCache.h"
-#import "SDESpecialItemVC.h"
+#import "SDEPhotoItemVC.h"
 #import "SDEPhotoFileFilter.h"
 #import "Face.h"
 #import "Photo.h"
@@ -63,8 +63,8 @@ static CGFloat const kPhotoHeight = 654.0;
 @property (nonatomic) UIPinchGestureRecognizer *pinchGestureRecognizer;
 @property (nonatomic) SDEPhotoFileFilter *photoFileFilter;
 @property (nonatomic) NSIndexPath *specialIndexPath;
-@property (nonatomic) SDESpecialItemVC *libraryVC;
-@property (nonatomic) SDESpecialItemVC *photoVC;
+@property (nonatomic) SDEPhotoItemVC *libraryVC;
+@property (nonatomic) SDEPhotoItemVC *photoVC;
 
 @end
 
@@ -94,9 +94,7 @@ static CGFloat const kPhotoHeight = 654.0;
     self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controlShowOfTabBar:)];
     [self.galleryView addGestureRecognizer:self.tapGestureRecognizer];
-    //[self.galleryView addGestureRecognizer:self.pinchGestureRecognizer];
-    //[self.galleryView setCollectionViewLayout:[[FJFlowLayoutWithAnimations alloc] init]];
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Aged-Paper"]];
+
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(responseToPhotoLibraryNotification) name:ALAssetsLibraryChangedNotification object:nil];
@@ -559,7 +557,7 @@ static CGFloat const kPhotoHeight = 654.0;
             }];
             
             self.contentType = kLibraryType;
-            self.libraryVC = (SDESpecialItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+            self.libraryVC = (SDEPhotoItemVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
             self.libraryVC.collectionView.frame = self.galleryView.frame;
             HorizontalCollectionViewLayout *springboardLayout = [[HorizontalCollectionViewLayout alloc] init];
             [self.libraryVC.collectionView setCollectionViewLayout:springboardLayout];
@@ -656,7 +654,7 @@ static CGFloat const kPhotoHeight = 654.0;
     [self.libraryVC.collectionView removeGestureRecognizer:self.pinchGestureRecognizer];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    self.photoVC= (SDESpecialItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
+    self.photoVC= (SDEPhotoItemVC *)[storyboard instantiateViewControllerWithIdentifier:@"PhotoVC"];
     LineLayoutWithAnimation *lineLayout = [[LineLayoutWithAnimation alloc] init];
     [self.photoVC.collectionView setCollectionViewLayout:lineLayout];
     self.photoVC.collectionView.frame = self.galleryView.frame;

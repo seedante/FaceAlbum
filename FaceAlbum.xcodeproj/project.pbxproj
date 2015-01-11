@@ -44,8 +44,8 @@
 		FD7D2FA0197E97C7004E8FFD /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2F9F197E97C7004E8FFD /* Person.m */; };
 		FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D2FA2197E97C7004E8FFD /* Photo.m */; };
 		FD7D2FA5197E9AB2004E8FFD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */; };
-		FD7D430A1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoViewController.m */; };
-		FD7D430B1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoViewController.m */; };
+		FD7D430A1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */; };
+		FD7D430B1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */; };
 		FD7D430F1A19FB4500551093 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430D1A19FB4500551093 /* face.png */; };
 		FD7D43101A19FB4500551093 /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430D1A19FB4500551093 /* face.png */; };
 		FD7D43111A19FB4500551093 /* face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D430E1A19FB4500551093 /* face@2x.png */; };
@@ -54,8 +54,8 @@
 		FD7D43161A1A04BF00551093 /* drawer.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43131A1A04BF00551093 /* drawer.png */; };
 		FD7D43171A1A04BF00551093 /* drawer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43141A1A04BF00551093 /* drawer@2x.png */; };
 		FD7D43181A1A04BF00551093 /* drawer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D43141A1A04BF00551093 /* drawer@2x.png */; };
-		FD7D431B1A1A089C00551093 /* SDESpecialItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDESpecialItemVC.m */; };
-		FD7D431C1A1A089C00551093 /* SDESpecialItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDESpecialItemVC.m */; };
+		FD7D431B1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */; };
+		FD7D431C1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */; };
 		FD7D431F1A1A40F900551093 /* Album.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431D1A1A40F900551093 /* Album.png */; };
 		FD7D43201A1A40F900551093 /* Album.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431D1A1A40F900551093 /* Album.png */; };
 		FD7D43211A1A40F900551093 /* Album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7D431E1A1A40F900551093 /* Album@2x.png */; };
@@ -238,14 +238,14 @@
 		FD7D2FA1197E97C7004E8FFD /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		FD7D2FA2197E97C7004E8FFD /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		FD7D2FA4197E9AB2004E8FFD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		FD7D43081A19F9FF00551093 /* SDEPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoViewController.h; sourceTree = "<group>"; };
-		FD7D43091A19F9FF00551093 /* SDEPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoViewController.m; sourceTree = "<group>"; };
+		FD7D43081A19F9FF00551093 /* SDEPhotoSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoSceneController.h; sourceTree = "<group>"; };
+		FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoSceneController.m; sourceTree = "<group>"; };
 		FD7D430D1A19FB4500551093 /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		FD7D430E1A19FB4500551093 /* face@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face@2x.png"; sourceTree = "<group>"; };
 		FD7D43131A1A04BF00551093 /* drawer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawer.png; sourceTree = "<group>"; };
 		FD7D43141A1A04BF00551093 /* drawer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drawer@2x.png"; sourceTree = "<group>"; };
-		FD7D43191A1A089C00551093 /* SDESpecialItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDESpecialItemVC.h; sourceTree = "<group>"; };
-		FD7D431A1A1A089C00551093 /* SDESpecialItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDESpecialItemVC.m; sourceTree = "<group>"; };
+		FD7D43191A1A089C00551093 /* SDEPhotoItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDEPhotoItemVC.h; sourceTree = "<group>"; };
+		FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDEPhotoItemVC.m; sourceTree = "<group>"; };
 		FD7D431D1A1A40F900551093 /* Album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Album.png; sourceTree = "<group>"; };
 		FD7D431E1A1A40F900551093 /* Album@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Album@2x.png"; sourceTree = "<group>"; };
 		FD7D43231A1A432D00551093 /* changeStyle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = changeStyle.png; sourceTree = "<group>"; };
@@ -531,12 +531,12 @@
 		FD7D430C1A19FA0400551093 /* PhotoScene */ = {
 			isa = PBXGroup;
 			children = (
-				FD7D43081A19F9FF00551093 /* SDEPhotoViewController.h */,
-				FD7D43091A19F9FF00551093 /* SDEPhotoViewController.m */,
+				FD7D43081A19F9FF00551093 /* SDEPhotoSceneController.h */,
+				FD7D43091A19F9FF00551093 /* SDEPhotoSceneController.m */,
 				FD7D43391A1DA4A300551093 /* SDEAssetsCache.h */,
 				FD7D433A1A1DA4A300551093 /* SDEAssetsCache.m */,
-				FD7D43191A1A089C00551093 /* SDESpecialItemVC.h */,
-				FD7D431A1A1A089C00551093 /* SDESpecialItemVC.m */,
+				FD7D43191A1A089C00551093 /* SDEPhotoItemVC.h */,
+				FD7D431A1A1A089C00551093 /* SDEPhotoItemVC.m */,
 			);
 			name = PhotoScene;
 			sourceTree = "<group>";
@@ -833,7 +833,7 @@
 				FD7D43811A1EDB5200551093 /* FaceppError.m in Sources */,
 				FD7D2F9D197E97C7004E8FFD /* Face.m in Sources */,
 				FD67D890197DFCFB00D2CCDA /* main.m in Sources */,
-				FD7D430A1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */,
+				FD7D430A1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */,
 				FD7D43831A1EDB5200551093 /* FaceppResult.m in Sources */,
 				FDB3607F19CEC33300AAE34D /* SDEPopupPanel.m in Sources */,
 				FD62DDBB1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
@@ -848,7 +848,7 @@
 				FD7D433B1A1DA4A300551093 /* SDEAssetsCache.m in Sources */,
 				FD7D2FA3197E97C7004E8FFD /* Photo.m in Sources */,
 				FD7D43961A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
-				FD7D431B1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
+				FD7D431B1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */,
 				FDB3608219CF1EE800AAE34D /* SDEPhotoFileFilter.m in Sources */,
 				FD41313A19974A5E00141578 /* SDEPhotoScanManager.mm in Sources */,
 				FDBF6EF119D1A78F00352DFA /* FaceAlbum.xcdatamodeld in Sources */,
@@ -890,7 +890,7 @@
 				FD7D43821A1EDB5200551093 /* FaceppError.m in Sources */,
 				FDBF6BFF19D1038000352DFA /* Face.m in Sources */,
 				FDBF6C0019D1038000352DFA /* main.m in Sources */,
-				FD7D430B1A19F9FF00551093 /* SDEPhotoViewController.m in Sources */,
+				FD7D430B1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */,
 				FD7D43841A1EDB5200551093 /* FaceppResult.m in Sources */,
 				FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */,
 				FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
@@ -905,7 +905,7 @@
 				FD7D433C1A1DA4A300551093 /* SDEAssetsCache.m in Sources */,
 				FDBF6C1019D1038000352DFA /* Photo.m in Sources */,
 				FD7D43971A20D5D200551093 /* LineLayoutWithAnimation.m in Sources */,
-				FD7D431C1A1A089C00551093 /* SDESpecialItemVC.m in Sources */,
+				FD7D431C1A1A089C00551093 /* SDEPhotoItemVC.m in Sources */,
 				FDBF6C1519D1038000352DFA /* SDEPhotoFileFilter.m in Sources */,
 				FDBF6C1719D1038000352DFA /* SDEPhotoScanManager.mm in Sources */,
 				FDBF6C1819D1038000352DFA /* SDEAvatorCheckmarkView.m in Sources */,

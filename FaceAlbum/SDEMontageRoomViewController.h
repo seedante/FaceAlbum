@@ -14,7 +14,6 @@
 #define DLog( s, ... )
 #endif
 #import "SDEPersonProfileHeaderView.h"
-//@class SDEPersonProfileHeaderView;
 
 @interface SDEMontageRoomViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITextFieldDelegate, UICollectionViewDelegate>
 
