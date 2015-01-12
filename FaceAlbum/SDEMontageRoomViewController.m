@@ -63,7 +63,6 @@
     
     [self.navigationItem setLeftBarButtonItem:self.selectBarButton];
     [self.navigationItem setRightBarButtonItem:self.jumpToFaceRoomBarButton];
-    [self registerForKeyboardNotifications];
     
     self.selectedFacesSet = [[NSMutableSet alloc] init];
     self.includedSectionsSet = [[NSMutableSet alloc] init];
@@ -166,6 +165,15 @@
 - (void)registerAsObserver
 {
     [self addObserver:self forKeyPath:@"selectedFacesSet" options:0 context:NULL];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
 }
 
 - (void)cancelObserver
@@ -380,6 +388,7 @@
 {
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
+    self.collectionView.bounces = NO;
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem = self.DoneBarButton;
     
@@ -512,14 +521,11 @@
         
         [self createPosterFileFromAsset:anyFaceItem.assetURLString WithArea:anyFaceItem.portraitAreaRect AtPath:savePath];
     }
-    //NSLog(@"New person get %lu avators", (unsigned long)newPerson.ownedFaces.count);
+    
     [self saveEdit];
     
     self.goBackUpButton.hidden = NO;
-    //奇怪，记得当时是因为正常的调用不起作用，才使用 performSelector 的，这里完全可以正常调用啊。是不是当时写迷糊了？
-    //[self performSelector:@selector(unenableLeftBarButtonItems) withObject:nil afterDelay:0.01];
-    [self unenableLeftBarButtonItems];
-    //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionCount]];
+
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
@@ -626,6 +632,7 @@
         [self.collectionView setContentInset:UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f)];
     }
     
+    self.collectionView.bounces = YES;
     self.navigationItem.title = @"";
     self.navigationItem.leftBarButtonItems = nil;
     self.navigationItem.leftBarButtonItem = self.selectBarButton;
@@ -711,7 +718,6 @@
 {
     if ([collectionView isEqual:self.collectionView]) {
         [self addSelectedFacesSet:[NSSet setWithObject:indexPath]];
-        self.collectionView.bounces = NO;
         if (![self.includedSectionsSet containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
             [self.includedSectionsSet addObject:@(indexPath.section)];
         }
@@ -769,19 +775,6 @@
 
 
 #pragma mark - Handle keyboard show and dismiss
-// Call this method somewhere in your view controller setup code.
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-}
-
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardDidShown:(NSNotification*)aNotification
 {
@@ -792,17 +785,6 @@
     edgeInsets.bottom = kbHeight + 140;
     UIEdgeInsets contentInsets = edgeInsets;
     self.collectionView.contentInset = contentInsets;
-    //self.collectionView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-    //I found the follow code effect nothing.
-    //CGRect aRect = self.collectionView.frame;
-    //aRect.size.height -= kbSize.width;
-    //if (!CGRectContainsPoint(aRect, textFiledRect.origin) ) {
-    //    DLog(@"I am hidden.");
-    //    [self.collectionView scrollRectToVisible:textFiledRect animated:YES];
-    //}
     
 }
 
