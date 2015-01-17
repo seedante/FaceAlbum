@@ -170,7 +170,6 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
     if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
         NSLog(@"Scan Finish and Save Error: %@", error);
     }
-    //[self.managedObjectContext reset];
 }
 
 - (NSArray *)allAvatorsInPhoto
@@ -301,7 +300,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
             newFace.section = 0;
             newFace.photoOwner = newPhoto;
             newFace.assetURLString = newPhoto.uniqueURLString;
-            //newFace.name = @"";
+            newFace.name = @"";
             
             CGRect avatorBound = CGRectAvatorBound(imageSize, detectedFace.bounds);
             CGImageRef avatorCGImage = CGImageCreateWithImageInRect(sourceCGImage, avatorBound);
@@ -344,6 +343,7 @@ CGRect (^CGRectPortraitBound)(CGSize imageSize, CGRect faceBound) = ^CGRect(CGSi
             newFace.order = self.numberOfItemsInFirstSection;
             
         }
+        NSLog(@"Detect %lu faces", (unsigned long)detectResult.faces.count);
         newPhoto.faceCount = (int32_t)detectResult.faces.count;
         newPhoto.whetherToDisplay = YES;
     }else{

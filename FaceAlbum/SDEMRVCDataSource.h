@@ -18,6 +18,5 @@
 - (void)fetchDataAtBackground;
 - (void)removeCachedImageWithKey:(id)key;
 - (void)removeAllCachedImages;
-//- (UIImage *)cachedAvatorImageForKey:(NSString *)cachedKey;
 
 @end

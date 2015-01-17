@@ -445,7 +445,8 @@ static CGFloat const kPhotoHeight = 654.0;
             break;
         }
         case kPhotoType:{
-            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:self.portraitIndex]];
+            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:indexPath.item inSection:self.portraitIndex];
+            Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:currentIndexPath];
             ALAsset *asset = self.assetsDictionary[faceItem.assetURLString];
             if (asset) {
                 //NSLog(@"asset cache");
@@ -461,7 +462,7 @@ static CGFloat const kPhotoHeight = 654.0;
                 }];
             }
             
-            [self updateHeaderViewAtIndexPath:indexPath];
+            [self updateHeaderViewAtIndexPath:currentIndexPath];
             //set shadow
             CALayer *layer = cell.layer;
             [layer setShadowOffset:CGSizeMake(0, 5)];
@@ -1125,6 +1126,7 @@ static CGFloat const kPhotoHeight = 654.0;
     Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
     Photo *photoItem = faceItem.photoOwner;
     NSMutableString *commentString = [NSMutableString new];
+    NSLog(@"%lu person", (unsigned long)photoItem.faceCount);
     for (Face *face in photoItem.faceset) {
         if (face.name && face.name.length > 0) {
             [commentString appendString:[NSString stringWithFormat:@"%@ ", faceItem.name]];

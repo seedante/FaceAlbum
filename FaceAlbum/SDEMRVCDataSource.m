@@ -18,16 +18,14 @@
 static NSString * const cellIdentifier = @"avatorCell";
 
 @interface SDEMRVCDataSource ()
-{
-    NSMutableArray *sectionChanges;
-    NSMutableArray *objectChanges;
-}
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic) BOOL blendBatchUpdateMode;
+@property (nonatomic, assign, getter=isBlendBatchUpdateMode) BOOL blendBatchUpdateMode;
 @property (nonatomic) NSCache *imageCache;
 @property (nonatomic) dispatch_queue_t imageLoadQueue;
 @property (nonatomic, copy) NSString *storeDirectory;
+@property (nonatomic) NSMutableArray *sectionChanges;
+@property (nonatomic) NSMutableArray *objectChanges;
 
 @end
 
@@ -37,8 +35,8 @@ static NSString * const cellIdentifier = @"avatorCell";
 {
     self = [super init];
     if (self) {
-        sectionChanges = [[NSMutableArray alloc] init];
-        objectChanges = [[NSMutableArray alloc] init];
+        self.sectionChanges = [[NSMutableArray alloc] init];
+        self.objectChanges = [[NSMutableArray alloc] init];
         self.blendBatchUpdateMode = NO;
         self.imageCache = [[NSCache alloc] init];
         self.imageLoadQueue = dispatch_queue_create("com.seedante.FaceAlbum", DISPATCH_QUEUE_SERIAL);
@@ -121,97 +119,93 @@ static NSString * const cellIdentifier = @"avatorCell";
     
 }
 
-- (UIImage *)cachedAvatorImageForKey:(NSString *)cachedKey
-{
-    UIImage *avatorImage = nil;
-    avatorImage = [self.imageCache objectForKey:cachedKey];
-    return avatorImage;
-}
-
 #pragma mark - NSFetchedResultsControllerDelegate
+/*
+UICollectionView has no beginUpdates and endUpdates method
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     NSLog(@"Process I: WILL UPDATE SCREEN");
 }
+ */
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    NSLog(@"Process II: Record Section Change");
+    //NSLog(@"Process II: Record Section Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            //NSLog(@"ADD New Section At Index: %lu", (unsigned long)sectionIndex);
+            NSLog(@"ADD New Section At Index: %lu", (unsigned long)sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
         case NSFetchedResultsChangeDelete:
-            //NSLog(@"Delete Section: %lu", (unsigned long)sectionIndex);
+            NSLog(@"Delete Section: %lu", (unsigned long)sectionIndex);
             change[@(type)] = @(sectionIndex);
             break;
         default:
             break;
     }
     
-    [sectionChanges addObject:change];
+    [self.sectionChanges addObject:change];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    NSLog(@"Process III: Record Cell Change");
+    //NSLog(@"Process III: Record Cell Change");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            //NSLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Insert Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
-            //NSLog(@"Delete Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Delete Cell At Section: %ld Index: %ld", (long)indexPath.section, (long)indexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
-            //NSLog(@"Update Cell At Section: %ld Index: %ld", (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Update Cell At Section: %ld Index: %ld", (long)indexPath.section, (long)indexPath.item);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
-            //NSLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
+            NSLog(@"Move Cell From S%ldI%ld To S%ldI%ld", (long)indexPath.section, (long)indexPath.item, (long)newIndexPath.section, (long)newIndexPath.item);
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
-    [objectChanges addObject:change];
+    [self.objectChanges addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     NSLog(@"Process IV: Batch Update");
-    if ([sectionChanges count] > 0)
+    if ([self.sectionChanges count] > 0)
     {
-        NSDictionary *firstJob = sectionChanges[0];
+        NSDictionary *firstJob = self.sectionChanges[0];
         NSNumber * changeTypeNumber = (NSNumber *)firstJob.allKeys[0];
         NSFetchedResultsChangeType changeType = [changeTypeNumber unsignedIntegerValue];
         
         switch (changeType) {
             case NSFetchedResultsChangeDelete:{
                 //NSLog(@"Section Change Type: Delete Section");
-                for (NSDictionary *change in sectionChanges) {
-                    NSNumber * section = (NSNumber *)[change objectForKey:@(NSFetchedResultsChangeDelete)];
+                for (NSDictionary *change in self.sectionChanges) {
+                    NSNumber * sectionIndexNumber = (NSNumber *)[change objectForKey:@(NSFetchedResultsChangeDelete)];
                     //NSLog(@"section: %@", section);
-                    NSUInteger itemNumberInSection = [self.collectionView numberOfItemsInSection:[section unsignedIntegerValue]];
+                    NSUInteger itemNumberInSection = [self.collectionView numberOfItemsInSection:[sectionIndexNumber unsignedIntegerValue]];
                     //NSLog(@"Item Number: %d", itemNumberInSection);
                     for (NSUInteger i = 0; i < itemNumberInSection; i++) {
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:[section unsignedIntegerValue]];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:[sectionIndexNumber unsignedIntegerValue]];
                         NSDictionary *deletedItemInfo = @{@(NSFetchedResultsChangeDelete):indexPath};
-                        [objectChanges removeObject:deletedItemInfo];
+                        [self.objectChanges removeObject:deletedItemInfo];
                     }
                 }
-                if (objectChanges.count > 0) {
+                if (self.objectChanges.count > 0) {
                     self.blendBatchUpdateMode = YES;
-                    //NSLog(@"Blend Change");
+                    NSLog(@"Blend Change");
                 }else{
                     self.blendBatchUpdateMode = NO;
-                    //NSLog(@"Regular Change");
+                    NSLog(@"Regular Change");
                 }
                 break;
             }
@@ -230,22 +224,22 @@ static NSString * const cellIdentifier = @"avatorCell";
         }
     }
     
-    if (self.blendBatchUpdateMode)
+    if ([self isBlendBatchUpdateMode])
     {
         [self blendBatchUpdate];
     }else{
-        if (sectionChanges.count > 0) {
+        if (self.sectionChanges.count > 0) {
             //NSLog(@"Regular Update Section");
             [self batchUpdateSection];
         }
         
-        if (objectChanges.count > 0 && sectionChanges.count == 0) {
+        if (self.objectChanges.count > 0 && self.sectionChanges.count == 0) {
             //NSLog(@"Regular Update Content");
             [self batchUpdateCell];
         }
         
-        [sectionChanges removeAllObjects];
-        [objectChanges removeAllObjects];
+        [self.sectionChanges removeAllObjects];
+        [self.objectChanges removeAllObjects];
     }
     
 }
@@ -253,7 +247,7 @@ static NSString * const cellIdentifier = @"avatorCell";
 - (void)batchUpdateSection
 {
     [self.collectionView performBatchUpdates:^{
-        for (NSDictionary *change in sectionChanges)
+        for (NSDictionary *change in self.sectionChanges)
         {
             [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
@@ -272,7 +266,7 @@ static NSString * const cellIdentifier = @"avatorCell";
                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
                         break;
                     case NSFetchedResultsChangeMove:
-                        //NSLog(@"MOVE Section. NOT FINISHED NOW.");
+                        [self.collectionView moveSection:[obj[0] unsignedIntegerValue] toSection:[obj[1] unsignedIntegerValue]];
                         break;
                 }
             }];
@@ -294,7 +288,7 @@ static NSString * const cellIdentifier = @"avatorCell";
      */
     
     [self.collectionView performBatchUpdates:^{
-        for (NSDictionary *change in objectChanges)
+        for (NSDictionary *change in self.objectChanges)
         {
             [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
@@ -325,7 +319,7 @@ static NSString * const cellIdentifier = @"avatorCell";
     [self.collectionView performBatchUpdates:^{
         //NSLog(@"BlendBatchUpdate:");
         //NSLog(@"First: objectChanges: %@", objectChanges);
-        for (NSDictionary *change in objectChanges) {
+        for (NSDictionary *change in self.objectChanges) {
             //NSLog(@"object change: %@", change);
             [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
                 NSFetchedResultsChangeType type = [key unsignedIntegerValue];
@@ -351,7 +345,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         }
         
         //NSLog(@"Then SectionChanges: %@", sectionChanges);
-        for (NSDictionary *sectionChange in sectionChanges)
+        for (NSDictionary *sectionChange in self.sectionChanges)
         {
             //NSLog(@"Section Change: %@", sectionChange);
             [sectionChange enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
@@ -377,14 +371,14 @@ static NSString * const cellIdentifier = @"avatorCell";
         }
     }completion:^(BOOL finished){
         self.blendBatchUpdateMode = NO;
-        [sectionChanges removeAllObjects];
-        [objectChanges removeAllObjects];
+        [self.sectionChanges removeAllObjects];
+        [self.objectChanges removeAllObjects];
     }];
 }
 
 - (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
     __block BOOL shouldReload = NO;
-    for (NSDictionary *change in objectChanges) {
+    for (NSDictionary *change in self.objectChanges) {
         [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSFetchedResultsChangeType type = [key unsignedIntegerValue];
             NSIndexPath *indexPath = obj;
@@ -442,7 +436,7 @@ static NSString * const cellIdentifier = @"avatorCell";
         //NSLog(@"No Cache for cell at %@", indexPath);
         __weak SDEAvatorCell *weakCellSelf = cell;
         NSString *cacheKey = faceItem.storeFileName;
-        [self fetchImageForCacheKey:cacheKey WithIndexPath:indexPath completionHandler:^(){
+        [self fetchImageForCacheKey:cacheKey completionHandler:^(){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 UIImage *cachedImage = (UIImage *)[self.imageCache objectForKey:cacheKey];
                 weakCellSelf.avatorView.image = cachedImage;
@@ -457,8 +451,8 @@ static NSString * const cellIdentifier = @"avatorCell";
     return cell;
 }
 
-//原来的方法通过 IndexPath来定位需要读取的头像文件时，会出现一个问题，当你新建人物后，界面会跳转至该人物处，可能会有部分 cell 还没有出现过，这时候就会去显示该 cell 的内容，这时候该 cell 的位置相对于原来已经变化了，这时候传递的 IndexPath 是不对的，于是fetch 越界。从程序设计的角度来讲，缓存的键更改为头像文件的文件名更好，缓存的 UIImage不会因为 indexpath 变化而失效，这样是对的，同样，异步读取时也应该传递文件名而不是对应的索引位置，这样也避免了重复 fetch Face。问题的原因是，新建人物后界面跳转，这时候获取的索引位置还是原来的，这应该是是 CoreData内部的机制导致的问题。这样说来，下面备选的索引参数其实是没有必要的，因为这时候依然是错误的，没有意义。无解。
-- (void)fetchImageForCacheKey:(NSString *)cacheKey WithIndexPath:(NSIndexPath *)indexPath completionHandler:(void(^)(void))Handler
+//原来的方法通过 IndexPath来定位需要读取的头像文件时，会出现一个问题，当你新建人物后，界面会跳转至该人物处，可能会有部分 cell 还没有出现过，这时候就会去显示该 cell 的内容，这时候该 cell 的位置相对于原来已经变化了，这时候传递的 IndexPath 是不对的，于是fetch 越界。从程序设计的角度来讲，缓存的键更改为头像文件的文件名更好，缓存的 UIImage不会因为 indexpath 变化而失效，这样是对的，同样，异步读取时也应该传递文件名而不是对应的索引位置，这样也避免了重复 fetch Face。问题的原因是，新建人物后界面跳转，这时候获取的索引位置还是原来的，这应该是是 CoreData内部的机制导致的问题。
+- (void)fetchImageForCacheKey:(NSString *)cacheKey completionHandler:(void(^)(void))Handler
 {
     dispatch_async(self.imageLoadQueue, ^{
         NSString *imagePath = [self.storeDirectory stringByAppendingPathComponent:cacheKey];
@@ -470,16 +464,7 @@ static NSString * const cellIdentifier = @"avatorCell";
             UIGraphicsEndImageContext();
             [self.imageCache setObject:thubnailImage forKey:cacheKey];
         }else{
-            NSLog(@"Read Image File Error");
-            if (indexPath) {
-                Face *faceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
-                image = faceItem.avatorImage;
-                UIGraphicsBeginImageContext(CGSizeMake(100.0f, 100.0f));
-                [image drawInRect:CGRectMake(0, 0, 100.0f, 100.0f)];
-                UIImage *thubnailImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                [self.imageCache setObject:thubnailImage forKey:cacheKey];
-            }
+            NSLog(@"Read Image File Error. But can do nothing, because indexpath doesn't work.");
         }
         
         Handler();

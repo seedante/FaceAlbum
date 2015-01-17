@@ -39,10 +39,10 @@
 
 @property (nonatomic) UITextField *activedField;
 @property (nonatomic) UIButton *goBackUpButton;
-@property (nonatomic) NSString *oldContent;
+@property (nonatomic, copy) NSString *oldContent;
 
 @property (nonatomic)FaceppDetection *onlineDetector;
-@property (nonatomic) BOOL onLine;
+@property (nonatomic, assign) BOOL onLine;
 
 
 @end
@@ -303,7 +303,6 @@
         }
     }
     
-    //[self moveOtherItemsToSection:@(targetDataSection)];
     self.collectionView.allowsSelection = NO;
     [self performSelector:@selector(moveOtherItemsToSection:) withObject:@(targetDataSection) afterDelay:0.01];
 }
@@ -473,7 +472,7 @@
         for (NSIndexPath *indexPath in self.selectedFacesSet) {
             Face *selectedFaceItem = [self.faceFetchedResultsController objectAtIndexPath:indexPath];
             selectedFaceItem.personOwner = newPerson;
-            selectedFaceItem.name = nil;
+            selectedFaceItem.name = @"";
         }
         
         if (self.triggeredDeletedSectionsSet.count > 0) {
