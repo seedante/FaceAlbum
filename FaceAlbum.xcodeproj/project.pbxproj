@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		FD5695A61A5BF3AB0096B884 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */; };
-		FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */; };
 		FD67D8A0197DFCFB00D2CCDA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D89F197DFCFB00D2CCDA /* XCTest.framework */; };
 		FD67D8A1197DFCFB00D2CCDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D881197DFCFB00D2CCDA /* Foundation.framework */; };
 		FD67D8A2197DFCFB00D2CCDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67D885197DFCFB00D2CCDA /* UIKit.framework */; };
@@ -110,8 +109,6 @@
 		FD4ED7ED1A4FF2E20047FA22 /* FaceAlbum 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "FaceAlbum 6.xcdatamodel"; sourceTree = "<group>"; };
 		FD5695A31A5BF3AB0096B884 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
 		FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
-		FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJFlowLayoutWithAnimations.h; sourceTree = "<group>"; };
-		FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJFlowLayoutWithAnimations.m; sourceTree = "<group>"; };
 		FD67D881197DFCFB00D2CCDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD67D883197DFCFB00D2CCDA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FD67D885197DFCFB00D2CCDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -491,8 +488,6 @@
 				FD7D438C1A1F6DDF00551093 /* SDEFaceRoomViewController.m */,
 				FD5695A31A5BF3AB0096B884 /* UIView+Glow.h */,
 				FD5695A41A5BF3AB0096B884 /* UIView+Glow.m */,
-				FD62DDB91A371452002B20D2 /* FJFlowLayoutWithAnimations.h */,
-				FD62DDBA1A371452002B20D2 /* FJFlowLayoutWithAnimations.m */,
 				FD7D43901A1F6E3A00551093 /* HorizontalCollectionViewLayout.h */,
 				FD7D43911A1F6E3A00551093 /* HorizontalCollectionViewLayout.m */,
 				FD7D43941A20D5D200551093 /* LineLayoutWithAnimation.h */,
@@ -684,7 +679,6 @@
 				FD7D430B1A19F9FF00551093 /* SDEPhotoSceneController.m in Sources */,
 				FD7D43841A1EDB5200551093 /* FaceppResult.m in Sources */,
 				FDBF6C0119D1038000352DFA /* SDEPopupPanel.m in Sources */,
-				FD62DDBC1A371452002B20D2 /* FJFlowLayoutWithAnimations.m in Sources */,
 				FDBF6C0219D1038000352DFA /* AlbumGroup.m in Sources */,
 				FD7D43781A1EDB5200551093 /* FaceppGrouping.m in Sources */,
 				FDB99A1A1A5313EC00916A1E /* SDECrytalBallLayout.m in Sources */,

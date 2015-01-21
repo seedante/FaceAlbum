@@ -385,7 +385,7 @@ static CGFloat const kPhotoHeight = 654.0;
                 CABasicAnimation *fly = [CABasicAnimation animationWithKeyPath:@"position"];
                 fly.fromValue = [NSValue valueWithCGPoint:self.assemblePoint];
                 fly.toValue = [NSValue valueWithCGPoint:attr.center];
-                fly.duration = 0.5;
+                fly.duration = 0.3;
                 [cell.layer addAnimation:fly forKey:@"FlyCell"];
             }
             
